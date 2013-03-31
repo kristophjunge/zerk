@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Debug - Zerk Engine</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="./style.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="./src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
+		<script type="text/javascript" src="./src/zerk/zerk.js"></script>
+	</head>
+	<body>
+		<script>
+			zerk.init({
+				game: 'jumpandrun',
+				gameDir: './demo/jumpandrun',
+				zerkDir: './src/zerk',
+				engine: {
+					mode: 'debug'
+				},
+				debug: {
+					logEnabled: true
+				},
+				viewport: {
+					showBodyBuffer: false,
+					showFixtureBuffer: false,
+					showGrid: false,
+					showFPS: true,
+					showZoom: true,
+					showPosition: true,
+					showEntityBoundingBox: false,
+					showEntityOriginIndicator: true,
+					showFixtureBoundingBox: true,
+					showBodyAngleIndicator: true,
+					showWorldCenterIndicator: true,
+					showViewCenterIndicator: true,
+					trackPlayer: true
+				},
+				physics: {
+					debugDraw: false,
+					gravityX: 0,
+					gravityY: 40
+				},
+				control: {
+					mouse: {
+						enableJoint: true,
+						enableWheelZoom: true
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

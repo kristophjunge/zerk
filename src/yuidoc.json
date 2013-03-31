@@ -1,0 +1,8 @@
+{
+	"name": "Zerk Documentation",
+	"description": "Zerk Game Engine Documentation",
+	"version": "0.1.0",
+	"options": {
+		"outdir": "./doc"
+	}
+}

@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+
+@import url('http://fonts.googleapis.com/css?family=Abel');
+
+
+/* --- RESET CSS --- */
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td
+{
+	margin:0;
+	padding:0;
+}
+table
+{
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img
+{ 
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var
+{
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul
+{
+	list-style:none;
+}
+caption,th
+{
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6
+{
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after
+{
+	content:'';
+}
+abbr,acronym
+{
+	border:0;
+}
+body
+{
+	background-color: #202020;
+	text-align: center;
+	font-family: Helvetica,Arial,sans-serif;
+}
+#zerk_canvas_main
+{
+	background-color: black;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+#zerk_canvas_bodybuffer
+{
+	background-color: black;
+	margin-left: 50px;	
+}
+#zerk_canvas_fixturebuffer
+{
+	background-color: black;
+	margin-left: 50px;	
+}
+#zerk_canvas_physics_debug
+{
+	background-color: black;
+	margin-left: 50px;
+}
+#zerk_demo_description
+{
+	font-size: 13.5px;
+	background: #333333;
+	width: 610px;
+	margin: auto auto;
+	margin-top: 25px;
+	text-align: left;
+	padding: 15px;
+	color: #AAAAAA;
+}
+#zerk_demo_description table {
+	margin: 0.5em 0 1em 1em;
+}
+#zerk_demo_description table td {
+	padding-right: 20px;
+}
+#zerk_demo_description table th {
+	text-decoration: underline;
+	padding-bottom: 5px;
+}
+.notice {
+	font-style: italic;
+}
+h1 {
+	font-size: 40px;
+	margin-top: 25px;
+	font-family: Abel,sans-serif;
+	color: #CCCCCC;
+}
+h2 {
+	font-size: 1.25em;
+	margin-bottom: 0.75em;
+}
+ul {
+	margin: 0.5em 0 1em 1em;
+}
+.demo #zerk_canvas_main {
+	
+	margin-top: 25px;
+	margin-bottom: 50px;
+}
