@@ -176,6 +176,7 @@ zerk.define({
 	 * 
 	 * @property _control
 	 * @type zerk.game.engine.control
+	 * @protected
 	 */
 	_control: null,
 	

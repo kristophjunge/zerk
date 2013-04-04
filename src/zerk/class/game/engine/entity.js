@@ -320,7 +320,7 @@ zerk.define({
 	/**
 	 * Sets the linear velocity of given body
 	 * 
-	 * @method __setLinearVelocity
+	 * @method _setLinearVelocity
 	 * @param {String} bodyKey
 	 * @param {Integer} degrees
 	 * @param {Integer} power
@@ -392,7 +392,7 @@ zerk.define({
 	/**
 	 * Sets given body to be kinematic
 	 * 
-	 * @method __setBodyKinematic
+	 * @method _setBodyKinematic
 	 * @param {String} bodyKey
 	 * @protected
 	 */

@@ -27,6 +27,7 @@ zerk.define({
 	 * 
 	 * @property _config
 	 * @type Object
+	 * @protected
 	 */
 	_config: null,
 	
@@ -183,6 +184,7 @@ zerk.define({
 	 * 
 	 * @method _log
 	 * @param {String} msg Log message
+	 * @protected
 	 */
 	_log: function(msg) {
 		

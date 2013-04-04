@@ -1319,6 +1319,7 @@ zerk.define({
 	 * @param {zerk.game.engine.physics.body} body
 	 * @param {zerk.game.engine.physics.fixture} fixture
 	 * @param {zerk.game.engine.viewport.sprite} sprite
+	 * @protected
 	 */
 	_renderSprite: function(
 		entity,
