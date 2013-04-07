@@ -61,6 +61,15 @@ var zerk={
 	_classMap: {},
 	
 	/**
+	 * Class name to parent class map
+	 * 
+	 * @property _parentClassMap
+	 * @type object
+	 * @private
+	 */
+	_parentClassMap: {},
+	
+	/**
 	 * Defines that got delayed by requires
 	 * 
 	 * @property _delayedDefine
@@ -177,10 +186,7 @@ var zerk={
 	 */
 	parent: function(name) {
 		
-		/*
-		 * TODO Make the __proto__ usage crossbrowser safe
-		 */
-		return this._classMap[name].__proto__;
+		return this._parentClassMap[name];
 		
 	},
 	
@@ -323,6 +329,9 @@ var zerk={
 		
 		// Add an entry to the class map
 		this._classMap[meta.name]=i;
+		
+		// Add an entry to the parent class map
+		this._parentClassMap[meta.name]=baseClass;
 		
 		if (meta.callback) {
 			
