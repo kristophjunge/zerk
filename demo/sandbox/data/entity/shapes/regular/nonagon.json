@@ -1,0 +1,31 @@
+{
+	name: 'nonagon',
+	components: {
+		position: {},
+		sprite: {},
+		physics: {
+			bodies: {
+				main: {
+					moveable: true,
+					origin: true,
+					fixtures: {
+						main: {
+							shape: 'polygon',
+							vertices: [
+								[1.28,-1.54],
+								[1.96,-0.34],
+								[1.74,1],
+								[0.68,1.88],
+								[-0.68,1.88],
+								[-1.74,1],
+								[-1.96,-0.34],
+								[-1.28,-1.54],
+								[0,-2]
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

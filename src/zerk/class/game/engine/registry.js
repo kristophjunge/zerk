@@ -1,9 +1,12 @@
 /**
- * Game engine registry
+ * Game Engine Registry
  * 
- * @class zerk.game.engine.registry
+ * Configuration manager.
+ * 
+ * @class registry
+ * @namespace zerk.game.engine
  * @module zerk
- */
+ **/
 zerk.define({
 	
 	name: 'zerk.game.engine.registry'
@@ -33,10 +36,11 @@ zerk.define({
 	 * @param {zerk.game.engine} engine Game engine
 	 * @param {Object} data Initial configuration
 	 */
-	init: function(engine,data) {
+	init: function(data) {
 		
-		this._engine=engine;
+		this._data=data;
 		
+		/*
 		// Parse user defined config data
 		for (var key in data) {
 			
@@ -52,6 +56,7 @@ zerk.define({
 			}
 			
 		}
+		*/
 		
 	},
 	
@@ -70,15 +75,20 @@ zerk.define({
 		zerk.apply(entry,defaults);
 		
 		// Look if user defined config data is present already
-		if (typeof this._data[register]!='undefined') {
+		
+		var previousData=this.getValue(register);
+		
+		if (previousData) {
 			
-			zerk.apply(entry,this._data[register]);
+			zerk.apply(entry,previousData);
 			
 		}
 		
-		this._data[register]=entry;
+		//this._data[register]=entry;
 		
-		return this._data[register];
+		//return this._data[register];
+		
+		return this.setValue(register,entry);;
 		
 	},
 	
@@ -107,9 +117,7 @@ zerk.define({
 			
 			if (i==pathArr.length-1) {
 				
-				obj[pathArr[i]]=value;
-				
-				return true;
+				return obj[pathArr[i]]=value;
 				
 			}
 			
@@ -135,6 +143,13 @@ zerk.define({
 		var pathArr=key.split('.');
 		
 		for (var i=0;i<pathArr.length;i++) {
+			
+			if (typeof obj=='undefined') {
+				
+				console.log('Missing config value "'+key+'"');
+				return;
+				
+			}
 			
 			obj=obj[pathArr[i]];
 			

@@ -1,13 +1,14 @@
 /**
- * Observable class
+ * Observable
  * 
  * This class implements the observer pattern.
  * 
  * All observable classes should inherit from here.
  * 
- * @class zerk.observable
+ * @class observable
+ * @namespace zerk
  * @module zerk
- */
+ **/
 zerk.define({
 	
 	name: 'zerk.observable'
@@ -114,6 +115,9 @@ zerk.define({
 	 * @method fireEvent
 	 * @param {String} event Event name
 	 * @return {Boolen} Returns false when the bubble was canceled
+	 */
+	/*
+	 * TODO Shouldnt "fireEvent" be a protected method?
 	 */
 	fireEvent: function(event) {
 		

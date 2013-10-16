@@ -1,9 +1,30 @@
 zerk.define({
-
+	
 	name: 'jumpandrun.game',
 	extend: 'zerk.game',
 	require: [
-		'jumpandrun.game.engine.world.level'
+		'zerk.game.engine.component.physics',
+		'zerk.game.engine.component.position',
+		'zerk.game.engine.component.sprite',
+		'zerk.game.engine.component.player',
+		'zerk.game.engine.component.damager',
+		'zerk.game.engine.component.fall',
+		'zerk.game.engine.component.trigger',
+		'zerk.game.engine.component.elevator',
+		'jumpandrun.game.engine.component.madStone', // Custom component
+		'zerk.game.engine.system.physics.box2d',
+		'zerk.game.engine.system.viewport.canvas',
+		'zerk.game.engine.system.sprite',
+		'zerk.game.engine.system.wireframe',
+		'zerk.game.engine.system.message',
+		'zerk.game.engine.system.debuginfo',
+		'zerk.game.engine.system.control',
+		'zerk.game.engine.system.player',
+		'zerk.game.engine.system.damager',
+		'zerk.game.engine.system.fall',
+		'zerk.game.engine.system.trigger',
+		'zerk.game.engine.system.elevator',
+		'jumpandrun.game.engine.system.madStone' // Custom system
 	]
 	
 },{
@@ -14,68 +35,191 @@ zerk.define({
 	
 	_won: false,
 	
-	init: function(config) {
+	_systemControl: null,
+	
+	_systemMessage: null,
+	
+	_systemPlayer: null,
+	
+	_firstRun: true,
+	
+	run: function(config) {
 		
-		zerk.parent('jumpandrun.game').init.apply(this,arguments);
+		var self=this;
 		
-		this.engine.start();
+		if (!zerk.parent('jumpandrun.game').run.apply(
+			this,
+			arguments
+		)) {
+			
+			return;
+			
+		}
 		
-		this.engine.viewport.registerMessage(
-			zerk.create(
-				'zerk.game.engine.viewport.message',
-				'click-to-start',
-				0,
-				0,
-				'Click to start',
-				30,
-				'rgb(0,255,0)'
-			)
+		if (!this._engine.start()) {
+			
+			return;
+			
+		}
+		
+		this._engine.loadWorld(
+			'jumpandrun.world.level',
+			function() {
+				
+				self._onLoadWorld();
+				
+			},
+			function(error) {
+				
+				console.log(error);
+				
+			}
 		);
 		
-		this.engine.loadWorld('jumpandrun.game.engine.world.level');
+	},
+	
+	_onLoadWorld: function() {
 		
-		this.engine.control.keyboard.on(
+		this._startGame();
+		
+	},
+	
+	_startGame: function() {
+		
+		this._systemControl=this._engine.getSystem('control');
+		
+		this._systemMessage=this._engine.getSystem('message');
+		
+		this._systemPlayer=this._engine.getSystem('player');
+		
+		if (this._firstRun) {
+		
+			this._systemMessage.registerMessage(
+				zerk.create(
+					'zerk.game.engine.system.message.message',
+					'click-to-start',
+					0,
+					0,
+					'Click to start',
+					30,
+					'rgb(0,255,0)'
+				)
+			);
+			
+			this._firstRun=false;
+			
+		} else {
+			
+			this._running=true;
+			
+			this._setControlsEnabled(true);
+			
+		}
+		
+		this._systemControl.keyboard.on(
 			'keypress',
 			this._onKeyPress,
 			this
 		);
 		
-		this.engine.control.mouse.on(
+		this._systemControl.mouse.on(
 			'mousedown',
 			this._onMouseDown,
 			this
 		);
 		
-		this.engine.on(
-			'worldunloaded',
-			this._onWorldUnloaded,
+		this._systemPlayer.on(
+			'dead',
+			this._onPlayerDead,
+			this
+		);
+		
+		this._systemPlayer.on(
+			'win',
+			this._onPlayerWin,
 			this
 		);
 		
 	},
 	
+	_stopGame: function() {
+		
+		this._systemControl.keyboard.un(
+			'keypress',
+			this._onKeyPress,
+			this
+		);
+		
+		this._systemControl.mouse.un(
+			'mousedown',
+			this._onMouseDown,
+			this
+		);
+		
+		this._systemPlayer.un(
+			'dead',
+			this._onPlayerDead,
+			this
+		);
+		
+		this._systemPlayer.un(
+			'win',
+			this._onPlayerWin,
+			this
+		);
+		
+	},
+	
+	_getConfigDefaults: function() {
+		
+		return {
+			version: '1.0.0'
+		};
+		
+	},
+	
+	/* --- CUSTOM GAME METHODS --- */
+	
 	restartGame: function() {
 		
 		if (!this._running) return;
 		
-		this.engine.viewport.clearMessages();
-			
-		this.engine.unloadWorld();
+		this._stopGame();
+		
+		this._setControlsEnabled(false);
+		
+		this._engine.reset();
+		
+		var self=this;
+		
+		this._engine.loadWorld(
+			'jumpandrun.world.level',
+			function() {
+				
+				self._onLoadWorld();
+				
+			},
+			function(error) {
+				
+				console.log(error);
+				
+			}
+		);
 		
 		this._dead=false;
 		this._won=false;
 		
 	},
 	
-	playerDead: function() {
+	_onPlayerDead: function(entity) {
 		
 		this._setControlsEnabled(false);
 		
 		this._dead=true;
 		
-		this.engine.viewport.registerMessage(
+		this._systemMessage.registerMessage(
 			zerk.create(
-				'zerk.game.engine.viewport.message',
+				'zerk.game.engine.system.message.message',
 				'you-are-dead',
 				0,
 				-25,
@@ -85,9 +229,9 @@ zerk.define({
 			)
 		);
 		
-		this.engine.viewport.registerMessage(
+		this._systemMessage.registerMessage(
 			zerk.create(
-				'zerk.game.engine.viewport.message',
+				'zerk.game.engine.system.message.message',
 				'press-return-to-restart',
 				0,
 				25,
@@ -99,15 +243,15 @@ zerk.define({
 		
 	},
 	
-	playerWin: function() {
+	_onPlayerWin: function(entity) {
 		
 		this._setControlsEnabled(false);
 		
 		this._won=true;
 		
-		this.engine.viewport.registerMessage(
+		this._systemMessage.registerMessage(
 			zerk.create(
-				'zerk.game.engine.viewport.message',
+				'zerk.game.engine.system.message.message',
 				'you-win',
 				0,
 				-25,
@@ -117,9 +261,9 @@ zerk.define({
 			)
 		);
 		
-		this.engine.viewport.registerMessage(
+		this._systemMessage.registerMessage(
 			zerk.create(
-				'zerk.game.engine.viewport.message',
+				'zerk.game.engine.system.message.message',
 				'press-return-to-restart',
 				0,
 				25,
@@ -135,15 +279,13 @@ zerk.define({
 		
 		if (typeof enabled=='undefined') enabled=false;
 		
-		this.engine.world.getEntityById('player').config.enableControl=enabled;
+		var players=this._engine.getEntitiesByTags('player');
 		
-	},
-	
-	_onWorldUnloaded: function() {
+		if (zerk.isEmpty(players)) return;
 		
-		this.engine.loadWorld('jumpandrun.game.engine.world.level');
+		var entity=players[0];
 		
-		this._setControlsEnabled(true);
+		entity.components.player.enableControl=enabled;
 		
 	},
 	
@@ -155,7 +297,7 @@ zerk.define({
 			
 		} else if (event.keyCode==27) {
 			
-			this.engine.stop();
+			this._engine.stop();
 			
 		}
 		
@@ -164,13 +306,13 @@ zerk.define({
 	_onMouseDown: function(event) {
 		
 		if (!this._running
-		&& this.engine.control.mouse.mouseLeftDown) {
+		&& this._systemControl.mouse.mouseLeftDown) {
 			
 			this._running=true;
 			
 			this._setControlsEnabled(true);
 			
-			this.engine.viewport.unregisterMessage('click-to-start');
+			this._systemMessage.unregisterMessage('click-to-start');
 			
 		}
 		

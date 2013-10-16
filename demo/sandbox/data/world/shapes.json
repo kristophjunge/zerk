@@ -1,0 +1,198 @@
+{
+	name: 'shapes',
+	config: {
+		systems: {
+			physics: {
+				gravityX: 0,
+				gravityY: 0
+			}
+		}
+	},
+	entities: [
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: -10,
+					y: 0
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 1,
+							height: 16
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 10,
+					y: 0
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 1,
+							height: 16
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 0,
+					y: -7.5
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 19,
+							height: 1
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 0,
+					y: 7.5
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 19,
+							height: 1
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.circle',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.triangle',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.rectangle',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.pentagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.hexagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},/*
+		{
+			name: 'sandbox.entity.shapes.regular.heptagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.octagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.nonagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.regular.decagon',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},*/
+		{
+			name: 'sandbox.entity.shapes.irregular.criton',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.irregular.brimborium',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.irregular.klumpatsch',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.shapes.irregular.fliwatuut',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		}
+	]
+}

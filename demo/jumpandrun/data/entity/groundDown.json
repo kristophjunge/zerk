@@ -1,0 +1,36 @@
+{
+	name: 'groundDown',
+	components: {
+		position: {},
+		sprite: {},
+		physics: {
+			bodies: {
+				main: {
+					x: 0,
+					y: 0,
+					width: 10,
+					height: 5,
+					angle: 0,
+					origin: true,
+					moveable: false,
+					fixtures: {
+						main: {
+							shape: 'polygon',
+							x: 0,
+							y: 0,
+							width: 10,
+							height: 5,
+							angle: 0,
+							vertices: [
+								[-5, 0.5],
+								[-5, -0.5],
+								[5, 4.5],
+								[5, 5.5]
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

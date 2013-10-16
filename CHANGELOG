@@ -1,0 +1,27 @@
+0.1.0
+* Application base structure
+* Class system with classical inheritance
+* Experimental autoloader
+* Entity system
+* World definition
+* Basic canvas rendering, currently without sprites
+* Box2DWeb physics implementation
+* Keyboard and mouse input processing
+* DOM abstraction layer
+* Configuration system
+* Debug message system
+* Jump and run game demo
+
+0.2.0
+* Entity-Component-System architecture
+* Data driven entities and worlds (JSON)
+* Entity ids and tags
+* Rendering backend abstraction (first step to use WebGL)
+* Physics engine abstraction (Another physics engine than Box2D can be used)
+* Wireframe renderer system (Seperate wireframe renderer system)
+* Advanced error handling
+* Advanced log system
+* Game configuration file (JSON)
+* Refactored helper and cross browser functions
+* JSON resource loader
+* Sandbox and procedural generation demo

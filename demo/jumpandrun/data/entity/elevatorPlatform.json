@@ -1,0 +1,35 @@
+{
+	name: 'elevatorPlatform',
+	components: {
+		position: {},
+		sprite: {},
+		elevator: {},
+		physics: {
+			bodies: {
+				main: {
+					x: 0,
+					y: 0,
+					width: 4,
+					height: 0.5,
+					angle: 0,
+					moveable: false,
+					kinematic: true,
+					origin: true,
+					fixedRotation: true,
+					fixtures: {
+						fixture1: {
+							shape: 'box',
+							x: 0,
+							y: 0,
+							angle: 0,
+							width: '100%',
+							height: '100%',
+							sprites: {}
+						}
+					}
+				}
+			},
+			joints: {}
+		}
+	}
+}

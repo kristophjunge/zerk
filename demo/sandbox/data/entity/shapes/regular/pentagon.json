@@ -1,0 +1,27 @@
+{
+	name: 'pentagon',
+	components: {
+		position: {},
+		sprite: {},
+		physics: {
+			bodies: {
+				main: {
+					moveable: true,
+					origin: true,
+					fixtures: {
+						main: {
+							shape: 'polygon',
+							vertices: [
+								[1.9,-0.62],
+								[1.18,1.62],
+								[-1.18,1.62],
+								[-1.9,-0.62],
+								[0,-2]
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

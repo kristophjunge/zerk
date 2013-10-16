@@ -1,0 +1,91 @@
+{
+	name: 'hotrod',
+	config: {
+		systems: {
+			physics: {
+				gravityX: 0,
+				gravityY: 20
+			}
+		}
+	},
+	entities: [
+	
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: -10,
+					y: 0
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 1,
+							height: 16
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 10,
+					y: 0
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 1,
+							height: 16
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 0,
+					y: -7.5
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 19,
+							height: 1
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.box',
+			components: {
+				position: {
+					x: 0,
+					y: 7.5
+				},
+				physics: {
+					bodies: {
+						main: {
+							width: 19,
+							height: 1
+						}
+					}
+				}
+			}
+		},
+		{
+			name: 'sandbox.entity.hotrod',
+			components: {
+				position: {
+					x: 0,
+					y: 0
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,86 @@
+{
+	name: 'madStone',
+	components: {
+		position: {},
+		sprite: {},
+		madStone: {},
+		physics: {
+			bodies: {
+				main: {
+					x: 0,
+					y: 0,
+					width: 3,
+					height: 3,
+					angle: 0,
+					moveable: false,
+					origin: true,
+					fixedRotation: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							x: 0,
+							y: 0,
+							angle: 0,
+							width: 3,
+							height: 3
+						}
+					}
+				},
+				body2: {
+					x: 0,
+					y: -2,
+					width: 5,
+					height: 1,
+					angle: 0,
+					moveable: false,
+					fixtures: {
+						main: {
+							shape: 'box',
+							x: 0,
+							y: 0,
+							angle: 0,
+							width: 5,
+							height: 1
+						}
+					}
+				},
+				body3: {
+					x: -2,
+					y: -0.5,
+					width: 1,
+					height: 2,
+					angle: 0,
+					moveable: false,
+					fixtures: {
+						main: {
+							shape: 'box',
+							x: 0,
+							y: 0,
+							angle: 0,
+							width: 1,
+							height: 2
+						}
+					}
+				},
+				body4: {
+					x: 2,
+					y: -0.5,
+					width: 1,
+					height: 2,
+					angle: 0,
+					moveable: false,
+					fixtures: {
+						main: {
+							shape: 'box',
+							x: 0,
+							y: 0,
+							angle: 0,
+							width: 1,
+							height: 2
+						}
+					}
+				}
+			}
+		}
+	}
+}

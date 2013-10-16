@@ -7,16 +7,26 @@ Zerk is licensed under the [MIT License](http://www.opensource.org/licenses/mit-
 
 Zerk is a JavaScript game engine prototype developed by Kristoph Junge. 
 
+Zerk is based on an [Entity-Component-System](http://en.wikipedia.org/wiki/Entity_component_system) architecture.
+
 Zerk aims to be able to run various types of 2D games on desktop and mobile devices.
 
-It uses [Box2DWeb](http://code.google.com/p/box2dweb/) a JavaScript port of the [Box2D](http://box2d.org/) physics library written by Erin Catto.
+More information can be found on my [blog](http://www.kristophjunge.com).
+
+
+###Other Software that Zerk is using
+
+[JSON5](https://github.com/aseemk/json5) by Aseem Kishore and others.
+
+[Box2DWeb](http://code.google.com/p/box2dweb/) a JavaScript port of the [Box2D](http://box2d.org/) physics library written by Erin Catto and others.
+
 
 
 ##Using Zerk
 
-Zerk is currently at an early development stage, use it at your own risk.
-
 See a demo running at [http://dev.kristophjunge.com/zerk/demo/latest](http://dev.kristophjunge.com/zerk/demo/latest)
+
+Zerk is currently at an early development stage, use it at your own risk.
 
 
 ##Documentation
@@ -25,12 +35,6 @@ The Zerk API documentation is available at [http://dev.kristophjunge.com/zerk/do
 
 
 ##Roadmap
-
-This is an initial roadmap. Its not complete but should give an overview of what iam planning to do.
-
-0.2.0
-* Entity-Component-System Architecture
-* Data Driven Design, World Definition, Entity Definition
 
 0.3.0
 * Sprite Rendering

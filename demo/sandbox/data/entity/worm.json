@@ -1,0 +1,226 @@
+{
+	name: 'worm',
+	components: {
+		position: {},
+		sprite: {},
+		physics: {
+			bodies: {
+				body1: {
+					width: 3.2,
+					height: 2.8,
+					origin: true,
+					moveable: true,
+					fixtures: {
+						head1: {
+							shape: 'box',
+							x: 0,
+							y: -0.25,
+							angle: -12.732395447351628,
+							width: 3,
+							height: 1.5
+						},
+						head2: {
+							shape: 'box',
+							x: 0,
+							y: 0.25,
+							angle: 12.732395447351628,
+							width: 3,
+							height: 1.5
+						}
+					}
+				},
+				body2: {
+					x: 2,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body3: {
+					x: 4,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body4: {
+					x: 6,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body5: {
+					x: 8,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body6: {
+					x: 10,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body7: {
+					x: 12,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body8: {
+					x: 14,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body9: {
+					x: 16,
+					width: 2,
+					height: 1.5,
+					angle: 0,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				},
+				body10: {
+					x: 18,
+					y: 0,
+					width: 2,
+					height: 1.5,
+					moveable: true,
+					fixtures: {
+						main: {
+							shape: 'box',
+							width: 2,
+							height: 1.5
+						}
+					}
+				}
+			},
+			joints: {
+				joint1: {
+					type: 'revolute',
+					source: 'body1',
+					target: 'body2',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint2: {
+					type: 'revolute',
+					source: 'body2',
+					target: 'body3',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint3: {
+					type: 'revolute',
+					source: 'body3',
+					target: 'body4',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint4: {
+					type: 'revolute',
+					source: 'body4',
+					target: 'body5',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint5: {
+					type: 'revolute',
+					source: 'body5',
+					target: 'body6',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint6: {
+					type: 'revolute',
+					source: 'body6',
+					target: 'body7',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint7: {
+					type: 'revolute',
+					source: 'body7',
+					target: 'body8',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint8: {
+					type: 'revolute',
+					source: 'body8',
+					target: 'body9',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				},
+				joint9: {
+					type: 'revolute',
+					source: 'body9',
+					target: 'body10',
+					anchorSourceX: 1,
+					anchorSourceY: 0
+				}
+			}
+		}
+	}
+}
