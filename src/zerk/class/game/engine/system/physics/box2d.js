@@ -1453,10 +1453,10 @@ zerk.define({
 		/*
 		 * TODO Remove global call zerk.game._engine._system.physics
 		 */
-		var me=zerk.game._engine._system.physics;
+		var self=zerk.game._engine._system.physics;
 		
 		if (fixture.GetBody().GetType()
-		!=me._b2Body.b2_staticBody) {
+		!=self._b2Body.b2_staticBody) {
 			
 			if (fixture.GetShape().TestPoint(
 				fixture.GetBody().GetTransform(),
