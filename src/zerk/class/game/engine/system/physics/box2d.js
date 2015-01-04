@@ -225,34 +225,52 @@ zerk.define({
 		
 		// Box2D debug draw
 		
-		if (this._config.debugDraw) {
-			
-			this.canvas=this._getSystem('viewport').getCanvasPhysicsDebug();
-			
-			/*
-			 * TODO Sync the view position with the game viewport
-			 * 
-			 * this.canvas.getContext("2d").translate(200,200);
-			 */
-			
-			var debugDraw = new this._b2DebugDraw();
-			debugDraw.SetSprite(this.canvas.getContext("2d"));
-			debugDraw.SetDrawScale(30.0);
-			debugDraw.SetFillAlpha(0.5);
-			debugDraw.SetLineThickness(1.0);
-			debugDraw.SetFlags(
-				this._b2DebugDraw.e_shapeBit | this._b2DebugDraw.e_jointBit
-			);
-			
-			this._world.SetDebugDraw(debugDraw);
-			
-		}
+
 		
 		this._addContactListener();
 		
 		this._log('Ready');
 		
 	},
+
+    /**
+     * Starts the system
+     *
+     * @method start
+     **/
+    start: function() {
+
+        if (this._config.debugDraw) {
+
+            //console.log('VP',this._getSystem('viewport'));
+
+            this.canvas=this._getSystem('viewport').getCanvasPhysicsDebug();
+
+            /*
+             * TODO Sync the view position with the game viewport
+             *
+             * this.canvas.getContext("2d").translate(200,200);
+             */
+
+            var debugDraw = new this._b2DebugDraw();
+            debugDraw.SetSprite(this.canvas.getContext("2d"));
+            debugDraw.SetDrawScale(30.0);
+            debugDraw.SetFillAlpha(0.5);
+            debugDraw.SetLineThickness(1.0);
+            debugDraw.SetFlags(
+                this._b2DebugDraw.e_shapeBit | this._b2DebugDraw.e_jointBit
+            );
+
+            this._world.SetDebugDraw(debugDraw);
+
+        }
+
+        zerk.parent('zerk.game.engine.system.physics.box2d').start.apply(
+            this,
+            arguments
+        );
+
+    },
 	
 	/**
 	 * Physics engine tick

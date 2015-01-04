@@ -50,7 +50,7 @@ zerk.define({
 		//this.loadDemo('sandbox.world.hotrod');
 		
 		this._engine.loadWorld(
-			'sandbox.world.shapes',
+			'sandbox.world.spritetest',
 			function() {
 				
 			},

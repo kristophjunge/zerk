@@ -2,7 +2,6 @@
 	name: 'hotrod',
 	components: {
 		position: {},
-		sprite: {},
 		physics: {
 			bodies: {
 				body1: {
@@ -69,6 +68,32 @@
 					//enableMotor: true
 				}
 			}
-		}
+		},
+        sprite: {
+            bodies: {
+                body2: {
+                    render: {
+                        test2: {
+                            type: 'sprite',
+                            sheet: 'sandbox.sprite.demo',
+                            key: 'ball-1',
+                            x: 0,
+                            y: 0
+                        }
+                    }
+                },
+                body3: {
+                    render: {
+                        test2: {
+                            type: 'sprite',
+                            sheet: 'sandbox.sprite.demo',
+                            key: 'ball-2',
+                            x: 0,
+                            y: 0
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

@@ -50,12 +50,12 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
 		zerk.parent('zerk.game.engine.system.elevator').init.apply(
 			this,
 			arguments
 		);
-		
+
 		this._physics=this._getSystem('physics');
 		
 	},

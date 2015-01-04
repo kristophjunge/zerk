@@ -290,7 +290,7 @@ zerk.define({
 	 **/
 	fillRect: function(buffer,x,y,width,height,image) {
 		
-		image=document.getElementById('test-texture-grey');
+		image=document.getElementById('debug-texture-white');
 		
 		var context=this._getContext(buffer);
 		
@@ -386,7 +386,7 @@ zerk.define({
 		image
 	) {
 		
-		image=document.getElementById('test-texture-grey');
+		image=document.getElementById('debug-texture-white');
 		
 		var context=this._getContext(buffer);
 		
@@ -484,7 +484,7 @@ zerk.define({
 	 **/	
 	fillPolygon: function(buffer,vertices,image) {
 		
-		image=document.getElementById('test-texture-grey');
+		image=document.getElementById('debug-texture-white');
 		
 		var context=this._getContext(buffer);
 		
@@ -610,33 +610,14 @@ zerk.define({
 		
 	},
 	
-	/**
-	 * Returns the physics debug canvas DOM element
-	 * 
-	 * @method getCanvasPhysicsDebug
-	 * @return {DOMElement} Physics debug canvas DOM element
-	 **/
-	getCanvasPhysicsDebug: function() {
-	
-		/*
-		 * TODO Restore physics debug rendering
-		 */
-		/*
-		// Create canvas on first usage
-		if (!this._canvasPhysicsDebug) {
-			this._canvasPhysicsDebug=this._createCanvas(
-				'zerk_canvas_physics_debug',
-				650,
-				450,
-				true
-			);
-		}
+	drawImage: function(buffer,image,targetX,targetY,targetWidth,targetHeight,sourceX,sourceY,sourceWidth,sourceHeight,angle) {
 		
-		return this._canvasPhysicsDebug;
-		*/
-		
+		var context=this._getContext(buffer);
+
+		context.drawImage(image,sourceX,sourceY,sourceWidth,sourceHeight,targetX,targetY,targetWidth,targetHeight);
+
 	},
-	
+
 	/**
 	 * Creates a canvas DOM element
 	 * 
@@ -679,9 +660,28 @@ zerk.define({
 			
 		}
 		
-		var body=document.getElementsByTagName('body')[0];
+		var container;
 		
-		return body.appendChild(canvas);
+		if (this._config.canvasContainerId) {
+			
+			container=document.getElementById(this._config.canvasContainerId);
+			
+			if (!container) {
+				
+				zerk.error({
+					message: 'Could not find element for canvasContainerId "'
+						+this._config.canvasContainerId+'"'
+				});
+				
+			}
+			
+		} else {
+			
+			container=document.getElementsByTagName('body')[0];
+			
+		}
+		
+		return container.appendChild(canvas);
 		
 	},
 	
@@ -717,6 +717,28 @@ zerk.define({
 		
 		return this._context[buffer];
 		
-	}
+	},
+
+    /**
+     * Returns the physics debug canvas DOM element
+     *
+     * @method getCanvasPhysicsDebug
+     * @return {DOMElement} Physics debug canvas DOM element
+     **/
+    getCanvasPhysicsDebug: function() {
+
+         // Create canvas on first usage
+         if (!this._canvasPhysicsDebug) {
+             this._canvasPhysicsDebug=this._createCanvas(
+                 'zerk_canvas_physics_debug',
+                 650,
+                 450,
+                 true
+             );
+         }
+
+         return this._canvasPhysicsDebug;
+
+    }
 	
 });

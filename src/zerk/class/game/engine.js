@@ -16,7 +16,8 @@ zerk.define({
 		'zerk.game.engine.registry',
 		'zerk.game.engine.entityLoader',
 		'zerk.game.engine.componentLoader',
-		'zerk.game.engine.worldLoader'
+		'zerk.game.engine.worldLoader',
+		'zerk.game.engine.spriteLoader'
 	]
 	
 },{
@@ -65,6 +66,15 @@ zerk.define({
 	 * @protected
 	 **/
 	_worldLoader: null,
+	
+	/**
+	 * Sprite loader instance
+	 * 
+	 * @property _spriteLoader
+	 * @type zerk.game.engine.spriteLoader
+	 * @protected
+	 **/
+	_spriteLoader: null,
 	
 	/**
 	 * Engine configuration
@@ -232,11 +242,17 @@ zerk.define({
 			this._componentLoader
 		);
 		
+		this._spriteLoader=zerk.create(
+			'zerk.game.engine.spriteLoader',
+			this._jsonLoader
+		);
+		
 		this._worldLoader=zerk.create(
 			'zerk.game.engine.worldLoader',
 			this._jsonLoader,
 			this._componentLoader,
-			this._entityLoader
+			this._entityLoader,
+			this._spriteLoader
 		);
 		
 		// Setup renderer thread

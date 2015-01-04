@@ -21,8 +21,7 @@ zerk.define({
 		
 		var defaultConfig={
 			visible: true,
-			width: 0,
-			height: 0
+			render: []
 		};
 		
 		// Create new state
@@ -39,6 +38,27 @@ zerk.define({
 			state,
 			entityConfig
 		);
+		
+		state._bodyList=[];
+		
+		// Extend bodies
+		for (var index in entityConfig.bodies) {
+			
+			var extendedBody={
+				render: {}
+			};
+			
+			zerk.apply(extendedBody,entityConfig.bodies[index]);
+			
+			extendedBody.key=index;
+			
+			extendedBody._renderList=zerk.objectValues(extendedBody.render);
+			
+			state.bodies[index]=extendedBody;
+			
+			state._bodyList.push(state.bodies[index]);
+			
+		}
 		
 		// Apply world configuration
 		zerk.apply(

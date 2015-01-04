@@ -21,13 +21,33 @@
 						enabled: true,
 						severity: 3
 					}
+				},
+				engine: {
+					systems: {
+						control: {
+							mouse: {
+								enableWheelZoom: true,
+								enableJoint: false
+							}
+						},
+						viewport: {
+							showBodyBuffer: true,
+							showFixtureBuffer: true
+						},
+                        physics: {
+                            debugDraw: true
+                        }
+					}
 				}
 			});
 		</script>
 		<select onchange="zerk.game.loadDemo(this.value);">
+			<option value="sandbox.world.spritetest">Sprite Test</option>
 			<option value="sandbox.world.shapes">Shapes</option>
 			<option value="sandbox.world.worm">Worm</option>
 			<option value="sandbox.world.hotrod">HotRod</option>
 		</select>
+		<img id="sprite" src="./demo/sandbox/media/sprite/demo.png" style="display: none;">
+		<img id="debug-texture-white" src="./demo/sandbox/media/sprite/debug-white.png" style="display: none;">
 	</body>
 </html>

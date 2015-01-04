@@ -93,7 +93,11 @@ zerk.define({
 		}
 		
 		var path=this._getResourcePath(resource);
-		
+
+        if (!path) {
+            zerk.error('Resource not found "'+resource+'"');
+        }
+
 		var target=path+'?r='+Math.random();
 		
 		var self=this;
@@ -283,7 +287,7 @@ zerk.define({
 	 * @protected
 	 **/
 	_getResourcePath: function(id) {
-		
+
 		for (var ns in this._namespace) {
 			
 			if (ns.length>id.length) continue;

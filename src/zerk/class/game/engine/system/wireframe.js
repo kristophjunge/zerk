@@ -355,7 +355,10 @@ zerk.define({
 		
 		if (!bodyState) return;
 		if (!fixtureState) return;
-		
+
+        /*
+        TODO Remove possibility of relative sized fixtures
+         */
 		var fixtureWidth=((typeof fixture.width=='string') 
 			? (body.width/100)*parseInt(fixture.width)
 			: fixture.width);
@@ -365,23 +368,32 @@ zerk.define({
 			: fixture.height);
 		
 		// Tranform rectangle into polygon
-		var rectangleVertices=[
-			[fixtureState.x-(fixtureWidth/2),fixtureState.y-(fixtureHeight/2)],
-			[fixtureState.x+(fixtureWidth/2),fixtureState.y-(fixtureHeight/2)],
-			[fixtureState.x+(fixtureWidth/2),fixtureState.y+(fixtureHeight/2)],
-			[fixtureState.x-(fixtureWidth/2),fixtureState.y+(fixtureHeight/2)]
-		];
+        var rectangleVertices=[
+            [-(fixtureWidth/2),-(fixtureHeight/2)],
+            [(fixtureWidth/2),-(fixtureHeight/2)],
+            [(fixtureWidth/2),(fixtureHeight/2)],
+            [-(fixtureWidth/2),(fixtureHeight/2)]
+        ];
 		
 		var vertices=[];
 		
 		for (var i=0;i<rectangleVertices.length;i++) {
-			
+
+            var rotatedVertice=zerk.helper.rotatePosition(
+                rectangleVertices[i][0],
+                rectangleVertices[i][1],
+                fixtureState.angle
+            );
+
+            rotatedVertice.x+=+fixtureState.x;
+            rotatedVertice.y+=fixtureState.y;
+
 			var rotatedVertice=zerk.helper.rotatePosition(
-				rectangleVertices[i][0],
-				rectangleVertices[i][1],
+                rotatedVertice.x,
+                rotatedVertice.y,
 				bodyState.angle
 			);
-			
+
 			var x=this._viewport._getCanvasX(
 				position.x
 				+bodyState.x

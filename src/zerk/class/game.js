@@ -69,6 +69,10 @@ zerk.define({
 					path: config.bootstrap.gameDir+'/data/config'
 				},
 				{
+					namespace: config.bootstrap.game+'.sprite',
+					path: config.bootstrap.gameDir+'/media/sprite'
+				},
+				{
 					namespace: 'zerk.entity',
 					path: config.bootstrap.zerkDir+'/data/entity'
 				},

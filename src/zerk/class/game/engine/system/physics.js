@@ -61,6 +61,7 @@ zerk.define({
 	_getConfigDefaults: function() {
 		
 		return {
+			enabled: true,
 			gravityX: 0,
 			gravityY: 0,
 			debugDraw: false,
@@ -156,6 +157,8 @@ zerk.define({
 			arguments
 		);
 		
+		if (!this._config.enabled) return;
+		
 		// Run physics tick
 		this._tick();
 		
@@ -167,6 +170,17 @@ zerk.define({
 			);
 			
 		}
+		
+	},
+	
+	/**
+	 * Enable/Disable the physics system
+	 * 
+	 * @method setEnabled
+	 **/
+	setEnabled: function(value) {
+		
+		this._config.enabled=(value==true);
 		
 	},
 	

@@ -191,182 +191,77 @@ zerk.define({
 	 **/
 	_renderEntity: function(entity) {
 		
+		//console.log(entity);
+		//return;
+		
+		// Render all sprites of the entity
+		/*
+		var render=entity.components.sprite._renderList;
+		
+		for (var i=0;i<render.length;i++) {
+			
+			switch (render[i].type) {
+				case 'texture':
+					//this._renderTexture(entity,render[i]);
+					break;
+				case 'sprite':
+					this._renderSprite(entity,render[i]);
+					break;
+			}
+			
+			//this._renderBody(entity,sprites[i]);
+			
+		}
+		*/
+		
+		
 		// Render all bodies of the entity
 		
-		var bodies=entity.components.physics._bodyList;
+		var bodies=entity.components.sprite._bodyList;
 		
 		for (var i=0;i<bodies.length;i++) {
 			
-			this._renderBody(entity,bodies[i]);
+			var physicsBody=entity.components.physics.bodies[bodies[i].key];
+			
+			this._renderBody(entity,physicsBody,bodies[i]);
 			
 		}
 		
 	},
-	
-	/**
-	 * Calculate buffer size of a body
-	 * 
-	 * @method __getBodyBufferSize
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @return {Object} An object containing width and height
-	 * @protected
-	 **/
-	_getBodyBufferSize: function(entity,body) {
-		
-		// Check for primitive body
-		if (zerk.objectCount(entity.bodies)>1) {
-			
-			// Use static configuration, we currently dont calculate that
-			
-			var sprite=entity.components.sprite;
-			
-			return {
-				width: sprite.combinedWidth,
-				height: sprite.combinedHeight
-			};
-			
-		} else {
-			
-			// Get first fixture
-			
-			var fixture;
-			
-			for (var key in body.fixtures) {
-				
-				/*
-				 * TODO Replace this with index access [0]
-				 */
-				fixture=body.fixtures[key];
-				break;
-				
-			}
-			
-			return this._getFixtureBufferSize(entity,body,fixture);
-		
-		}
-		
+
+	/*
+	_renderTexture: function(entity,texture) {
+
+		console.log('render texture');
+
+		var body=entity.components.physics.bodies[texture.body];
+		var fixture=body.fixtures[texture.fixture];
+
+		var bufferSize=this._getFixtureBufferSize(entity,body,fixture);
+
+		this._viewport.bufferInit(
+			'fixture',
+			bufferSize.width,
+			bufferSize.height,
+			bufferSize.width/2,
+			bufferSize.height/2,
+			fixture.angle
+		);
+
+		this._renderFixtureBoundingShape(entity,body,fixture);
+
+		this._viewport.bufferFlush(
+			'fixture',
+			'body',
+			zerk.helper.fromMeter(fixture.x)-(bufferSize.width/2),
+			zerk.helper.fromMeter(fixture.y)-(bufferSize.height/2),
+			bufferSize.width,
+			bufferSize.height
+		);
+
 	},
-	
-	/**
-	 * Calculate buffer size of a fixture
-	 * 
-	 * @method _getFixtureBufferSize
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @return {Object} An object containing width and height
-	 * @protected
-	 **/
-	_getFixtureBufferSize: function(entity,body,fixture) {
-		
-		switch (fixture.shape) {
-			
-			case 'box':
-				
-				/*
-				 * TODO Remove the possibility of making relative sized rectangle fixtures
-				 */
-				var width=((typeof fixture.width=='string') 
-					? (body.width/100)*parseInt(fixture.width)
-					: fixture.width);
-				
-				var height=((typeof fixture.height=='string') 
-					? (body.height/100)*parseInt(fixture.height)
-					: fixture.height);
-				
-				
-				if (true) { // Rotateable
-					
-					/*
-					 * TODO Check if ceil is really needed here
-					 */
-					var diagonal=Math.ceil(
-						zerk.helper.fromMeter(
-							Math.sqrt(
-								Math.pow(width,2)
-								+Math.pow(height,2)
-							)
-						)
-					);
-					
-					return {
-						width: diagonal,
-						height: diagonal
-					};
-					
-				} else {
-					
-					return {
-						width: width,
-						height: height
-					};
-					
-				}
-				
-				break;
-			
-			case 'circle':
-				
-				var diagonal=Math.ceil(
-					zerk.helper.fromMeter(fixture.radius*2)
-				);
-				
-				return {
-					width: diagonal,
-					height: diagonal
-				};
-				
-				break;
-				
-			case 'polygon':
-				
-				if (true) { // Rotateable
-					
-					var maxDistance=0;
-					
-					var center=zerk.helper.getCenterOfPolygon(fixture.vertices);
-					
-					for (var i=0;i<fixture.vertices.length;i++) {
-						
-						var distance=zerk.helper.calculateDistance(
-							//0,
-							//0,
-							center.x,
-							center.y,
-							fixture.vertices[i][0],
-							fixture.vertices[i][1]
-						);
-						
-						if (distance>maxDistance) {
-							
-							maxDistance=distance;
-							
-						}
-						
-					}
-					
-					var diagonal=zerk.helper.fromMeter(maxDistance*2);
-					
-					return {
-						width: diagonal,
-						height: diagonal
-					};
-					
-				} else {
-					
-					/*
-					 * TODO Implement code for non rotatable polygons
-					 */
-					
-				}
-				
-				break;
-				
-		}
-		
-	},
-	
+	*/
+
 	/**
 	 * Renders a body onto the game canvas
 	 * 
@@ -375,13 +270,15 @@ zerk.define({
 	 * @param {config.component.physics.body} body Body state
 	 * @protected
 	 **/
-	_renderBody: function(entity,body) {
+	_renderBody: function(entity,body,render) {
 		
 		var bodyState=entity.components.physics.bodies[body.key];
 		var position=entity.components.position;
 		
-		var bufferSize=this._getBodyBufferSize(entity,bodyState);
-		
+		var bufferSize=this._getBodyBufferSize(entity,bodyState,render);
+
+        //console.log('BS',bufferSize);
+
 		this._viewport.bufferInit(
 			'body',
 			bufferSize.width,
@@ -390,14 +287,11 @@ zerk.define({
 			bufferSize.height/2,
 			bodyState.angle
 		);
-		
-		// Render all the fixtures of the body
-		for (var i=0;i<body._fixtureList.length;i++) {
-			
-			this._renderFixture(entity,body,body._fixtureList[i]);
-			
+
+		for (var i=0;i<render._renderList.length;i++) {
+			this._renderSprite(entity,body,render._renderList[i]);
 		}
-		
+
 		// Draw the buffer onto the display
 		this._viewport.bufferFlush(
 			'body',
@@ -411,193 +305,202 @@ zerk.define({
 	},
 	
 	/**
-	 * Renders a fixture onto the body buffer canvas
-	 * 
-	 * @method _renderFixture
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @protected
-	 **/
-	_renderFixture: function(entity,body,fixture) {
-		
-		if (fixture.isSensor) return;
-		
-		var bufferSize=this._getFixtureBufferSize(entity,body,fixture);
-		
-		this._viewport.bufferInit(
-			'fixture',
-			bufferSize.width,
-			bufferSize.height,
-			bufferSize.width/2,
-			bufferSize.height/2,
-			fixture.angle
-		);
-		
-		// Render all sprites of the fixture
-		
-		for (var i=0;i<fixture.sprites.length;i++) {
-			
-			this._renderSprite(entity,body,fixture,fixture.sprites[i]);
-			
-		}
-		
-		this._renderFixtureBoundingShape(entity,body,fixture);
-		
-		
-		this._viewport.bufferFlush(
-			'fixture',
-			'body',
-			zerk.helper.fromMeter(fixture.x)-(bufferSize.width/2),
-			zerk.helper.fromMeter(fixture.y)-(bufferSize.height/2),
-			bufferSize.width,
-			bufferSize.height
-		);
-		
-	},
-	
-	/**
-	 * Renders a shape indicating the bounding area of a fixture
-	 * 
-	 * Delegate method for the fixture bounding shape methods.
-	 * 
-	 * @method _renderFixtureBoundingShape
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @protected
-	 **/
-	_renderFixtureBoundingShape: function(entity,body,fixture) {
-		
-		switch (fixture.shape) {
-			case 'box':
-				this._renderFixtureBoundingBox(entity,body,fixture);
-				break;
-			case 'circle':
-				this._renderFixtureBoundingCircle(entity,body,fixture);
-				break;
-			case 'polygon':
-				this._renderFixtureBoundingPolygon(entity,body,fixture);
-				break;
-		}
-		
-	},
-	
-	/**
-	 * Renders the bounding area for a box shaped fixture
-	 * 
-	 * @method _renderFixtureBoundingShape
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @protected
-	 **/
-	_renderFixtureBoundingBox: function(entity,body,fixture) {
-		
-		var width=((typeof fixture.width=='string') 
-			? (body.width/100)*parseInt(fixture.width)
-			: fixture.width);
-		
-		var height=((typeof fixture.height=='string') 
-			? (body.height/100)*parseInt(fixture.height)
-			: fixture.height);
-			
-		if (fixture.isSensor) {
-			
-			var style='rgb(255,0,0)';
-			
-		} else {
-			
-			var style='rgb(0,255,0)';
-			
-		}
-		
-		this._viewport.fillRect(
-			'fixture',
-			zerk.helper.fromMeter(-(width/2)),
-			zerk.helper.fromMeter(-(height/2)),
-			zerk.helper.fromMeter(width),
-			zerk.helper.fromMeter(height),
-			null
-		);
-		
-	},
-	
-	/**
-	 * Renders the bounding area for a circle shaped fixture
-	 * 
-	 * @method _renderFixtureBoundingCircle
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @protected
-	 **/
-	_renderFixtureBoundingCircle: function(entity,body,fixture) {
-		
-		this._viewport.fillArc(
-			'body',
-			0,
-			0,
-			zerk.helper.fromMeter(fixture.radius),
-			0,
-			Math.PI*2,
-			true,
-			null
-		);
-		
-	},
-	
-	/**
-	 * Renders the bounding area for a polygon shaped fixture
-	 * 
-	 * @method _renderFixtureBoundingPolygon
-	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
-	 * @param {config.component.physics.fixture} fixture Fixture state
-	 * @protected
-	 **/
-	_renderFixtureBoundingPolygon: function(entity,body,fixture) {
-		
-		var vertices=[];
-		
-		for (var i=0;i<fixture.vertices.length;i++) {
-			
-			vertices.push([
-				zerk.helper.fromMeter(fixture.vertices[i][0]),
-				zerk.helper.fromMeter(fixture.vertices[i][1])
-			]);
-			
-		}
-		
-		this._viewport.fillPolygon(
-			'fixture',
-			vertices,
-			null
-		);
-		
-	},
-	
-	/**
 	 * Render sprite
 	 * 
 	 * @method _renderSprite
 	 * @param {config.entity} entity Entity state
-	 * @param {config.component.physics.body} body Body state
 	 * @param {config.component.physics.fixture} fixture Fixture state
 	 * @param {config.component.sprite} sprite
 	 * @protected
 	 **/
 	_renderSprite: function(
 		entity,
-		body,
-		fixture,
+        body,
 		sprite
 	) {
+
+		var spriteInfo=this._engine._spriteLoader.getSprite(sprite.sheet,sprite.key);
+
+		var image=document.getElementById('sprite');
+
+		this._viewport.drawImage(
+			'body',
+			image,
+            zerk.helper.fromMeter(sprite.x)-(spriteInfo.width/2),
+            zerk.helper.fromMeter(sprite.y)-(spriteInfo.height/2),
+			spriteInfo.width,
+			spriteInfo.height,
+			spriteInfo.offsetX,
+			spriteInfo.offsetY,
+			spriteInfo.width,
+			spriteInfo.height,
+            sprite.angle
+		);
 		
-		/*
-		 * TODO Create code for fixture oriented sprite rendering
-		 */
-		
-	}
-	
+	},
+
+    /**
+     * Calculate buffer size of a body
+     *
+     * @method __getBodyBufferSize
+     * @param {config.entity} entity Entity state
+     * @param {config.component.physics.body} body Body state
+     * @return {Object} An object containing width and height
+     * @protected
+     **/
+    _getBodyBufferSize: function(entity,body,render) {
+
+        /*
+        TODO Create the closest buffer possible
+         */
+
+        var min=null;
+        var max=null;
+        var fixtureMinX=0;
+        var fixtureMaxX=0;
+        var fixtureMinY=0;
+        var fixtureMaxY=0;
+
+        for (var i=0;i<render._renderList.length;i++) {
+
+            var sprite=render._renderList[i];
+
+            var spriteInfo=this._engine._spriteLoader.getSprite(sprite.sheet,sprite.key);
+
+            fixtureMinX=zerk.helper.fromMeter(sprite.x)-(spriteInfo.width/2);
+            fixtureMaxX=zerk.helper.fromMeter(sprite.x)+(spriteInfo.width/2);
+
+            if (min==null || fixtureMinX<min) {
+                min=fixtureMinX;
+            }
+            if (max==null || fixtureMaxX>max) {
+                max=fixtureMaxX;
+            }
+
+            fixtureMinY=zerk.helper.fromMeter(sprite.y)-(spriteInfo.height/2);
+            fixtureMaxY=zerk.helper.fromMeter(sprite.y)+(spriteInfo.height/2);
+
+            if (min==null || fixtureMinY<min) {
+                min=fixtureMinY;
+            }
+            if (max==null || fixtureMaxY>max) {
+                max=fixtureMaxY;
+            }
+
+        }
+
+        var size=Math.ceil(
+            Math.sqrt(
+                Math.pow(((min*-1>max) ? min*-1 : max)*2,2)*2
+            )
+        );
+
+        return {
+            width: size,
+            height: size
+        }
+
+    },
+
+    /**
+     * Calculate buffer size of a fixture
+     *
+     * @method _getFixtureBufferSize
+     * @param {config.entity} entity Entity state
+     * @param {config.component.physics.body} body Body state
+     * @param {config.component.physics.fixture} fixture Fixture state
+     * @return {Object} An object containing width and height
+     * @protected
+     **/
+    _getFixtureBufferSize: function(entity,body,fixture) {
+
+        /*
+         TODO Remove method if unused
+         */
+
+        switch (fixture.type) {
+
+            case 'box':
+
+                /*
+                 * TODO Remove the possibility of making relative sized rectangle fixtures
+                 */
+                var width=((typeof fixture.width=='string')
+                    ? (body.width/100)*parseInt(fixture.width)
+                    : fixture.width);
+
+                var height=((typeof fixture.height=='string')
+                    ? (body.height/100)*parseInt(fixture.height)
+                    : fixture.height);
+
+                /*
+                 * TODO Check if ceil is really needed here
+                 */
+                var diagonal=Math.ceil(
+                    zerk.helper.fromMeter(
+                        Math.sqrt(
+                            Math.pow(width,2)
+                            +Math.pow(height,2)
+                        )
+                    )
+                );
+
+                return {
+                    width: diagonal,
+                    height: diagonal
+                };
+
+                break;
+
+            case 'circle':
+
+                var diagonal=Math.ceil(
+                    zerk.helper.fromMeter(fixture.radius*2)
+                );
+
+                return {
+                    width: diagonal,
+                    height: diagonal
+                };
+
+                break;
+
+            case 'polygon':
+
+                var maxDistance=0;
+
+                var center=zerk.helper.getCenterOfPolygon(fixture.vertices);
+
+                for (var i=0;i<fixture.vertices.length;i++) {
+
+                    var distance=zerk.helper.calculateDistance(
+                        //0,
+                        //0,
+                        center.x,
+                        center.y,
+                        fixture.vertices[i][0],
+                        fixture.vertices[i][1]
+                    );
+
+                    if (distance>maxDistance) {
+
+                        maxDistance=distance;
+
+                    }
+
+                }
+
+                var diagonal=zerk.helper.fromMeter(maxDistance*2);
+
+                return {
+                    width: diagonal,
+                    height: diagonal
+                };
+
+                break;
+
+        }
+
+    }
+
 });

@@ -41,16 +41,26 @@ zerk.define({
 	_entityLoader: null,
 	
 	/**
+	 * Sprite loader instance
+	 * 
+	 * @property _spriteLoader
+	 * @type zerk.game.engine.spriteLoader
+	 * @protected
+	 **/
+	_spriteLoader: null,
+	
+	/**
 	 * Class constructor
 	 * 
 	 * @method init
 	 * @param {zerk.game.engine} engine Game engine
 	 */
-	init: function(jsonLoader,componentLoader,entityLoader) {
+	init: function(jsonLoader,componentLoader,entityLoader,spriteLoader) {
 		
 		this._jsonLoader=jsonLoader;
 		this._componentLoader=componentLoader;
 		this._entityLoader=entityLoader;
+		this._spriteLoader=spriteLoader;
 		
 	},
 	
@@ -155,6 +165,59 @@ zerk.define({
 	 * @protected
 	 **/
 	_onLoadEntities: function(world,entities,successHandler,errorHandler) {
+
+		var sprites=[
+			'sandbox.sprite.demo'
+		];
+		
+		this._loadSprites(world,entities,sprites,successHandler,errorHandler);
+		
+	},
+	
+	/**
+	 * Loads given sprites
+	 * 
+	 * @method _loadEntities
+	 * @param {Object} world World definition
+	 * @param {Array} entities Array of entities
+	 * @param {Array} sprites Array of sprites
+	 * @param {Function} successHandler Event handler for success
+	 * @param {Function} errorHandler Event handler for error
+	 * @protected
+	 * @async
+	 **/
+	_loadSprites: function(world,entities,sprites,successHandler,errorHandler) {
+		
+		var self=this;
+		
+		this._spriteLoader.loadSprites(
+			sprites,
+			function() {
+				
+				self._onLoadSprites(world,entities,sprites,successHandler,errorHandler);
+				
+			},
+			function(error) {
+				
+				errorHandler(error);
+				
+			}
+		);
+		
+	},
+	
+	/**
+	 * Fires when the sprites are loaded
+	 * 
+	 * @method _onLoadSprites
+	 * @param {Object} world World definition
+	 * @param {Array} entities Array of entities
+	 * @param {Array} sprites Array of sprites
+	 * @param {Function} successHandler Event handler for success
+	 * @param {Function} errorHandler Event handler for error
+	 * @protected
+	 **/
+	_onLoadSprites: function(world,entities,sprites,successHandler,errorHandler) {
 		
 		successHandler(world);
 		

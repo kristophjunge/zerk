@@ -27,7 +27,7 @@
 		defaultSystems: [
 			'physics',
 			'viewport',
-			//'sprite',
+			'sprite',
 			'wireframe',
 			'message',
 			'debuginfo',

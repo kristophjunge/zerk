@@ -226,7 +226,8 @@ zerk.define({
 			trackPlayer: false,
 			// How many 1m boxes will be drawn on the grid
 			gridOuterWidth: 50,
-			gridOuterHeight: 50
+			gridOuterHeight: 50,
+			canvasContainerId: ''
 		};
 		
 	},
@@ -679,8 +680,8 @@ zerk.define({
 		);
 		
 	},
-	
-	/**
+
+    /**
 	 * Renders the grid
 	 * 
 	 * @method _debugDrawGrid

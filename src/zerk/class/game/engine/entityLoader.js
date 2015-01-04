@@ -32,6 +32,15 @@ zerk.define({
 	_componentLoader: null,
 	
 	/**
+	 * Entity register
+	 * 
+	 * @property _entities
+	 * @type Array
+	 * @protected
+	 **/
+	_entities: null,
+	
+	/**
 	 * Class constructor
 	 * 
 	 * @method init
