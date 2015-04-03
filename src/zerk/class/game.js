@@ -12,7 +12,8 @@ zerk.define({
 	name: 'zerk.game',
 	require: [
 		'zerk.game.engine',
-		'zerk.jsonLoader'
+		'zerk.jsonLoader',
+        'zerk.imageLoader'
 	]
 	
 },{
@@ -48,7 +49,7 @@ zerk.define({
 		
 		this._config={};
 		
-		// Setup JSON loader namespaces
+		// Setup JSON loader
 		this._jsonLoader=zerk.create(
 			'zerk.jsonLoader',
 			[
@@ -69,8 +70,8 @@ zerk.define({
 					path: config.bootstrap.gameDir+'/data/config'
 				},
 				{
-					namespace: config.bootstrap.game+'.sprite',
-					path: config.bootstrap.gameDir+'/media/sprite'
+					namespace: config.bootstrap.game+'.spritesheet',
+					path: config.bootstrap.gameDir+'/media/spritesheet'
 				},
 				{
 					namespace: 'zerk.entity',
@@ -86,15 +87,30 @@ zerk.define({
 				}
 			]
 		);
+
+        // Setup image loader
+        this._imageLoader=zerk.create(
+            'zerk.imageLoader',
+            [
+                {
+                    namespace: config.bootstrap.game+'.texture',
+                    path: config.bootstrap.gameDir+'/media/texture'
+                },
+                {
+                    namespace: config.bootstrap.game+'.spritesheet',
+                    path: config.bootstrap.gameDir+'/media/spritesheet'
+                }
+            ]
+        );
 		
 		var configResource=config.bootstrap.game+'.config.default';
 		
 		// Load game configuration
-		this._jsonLoader.loadResource(
-			configResource,
+		this._jsonLoader.require(
+			[configResource],
 			function(data) {
 				
-				self._onLoadGameConfiguration(data,config);
+				self._onLoadGameConfiguration(data[configResource],config);
 				
 			},
 			function(e) {
@@ -146,6 +162,7 @@ zerk.define({
 		this._engine=zerk.create(
 			'zerk.game.engine',
 			this._jsonLoader,
+            this._imageLoader,
 			config
 		);
 		

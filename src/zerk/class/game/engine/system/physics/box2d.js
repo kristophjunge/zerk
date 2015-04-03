@@ -212,7 +212,6 @@ zerk.define({
 		);
 		
 		this._destroyBodyList=[];
-			
 		this._destroyJointList=[];
 		
 		this._world=new this._b2World(
@@ -220,13 +219,9 @@ zerk.define({
 				this._config.gravityX,
 				this._config.gravityY
 			), // Setup gravity
-			true // allow sleep
+			true // Allow sleep
 		);
-		
-		// Box2D debug draw
-		
 
-		
 		this._addContactListener();
 		
 		this._log('Ready');
@@ -241,8 +236,6 @@ zerk.define({
     start: function() {
 
         if (this._config.debugDraw) {
-
-            //console.log('VP',this._getSystem('viewport'));
 
             this.canvas=this._getSystem('viewport').getCanvasPhysicsDebug();
 
@@ -1251,21 +1244,26 @@ zerk.define({
 		}
 		
 		// Create array of vertice instances
-		
 		var arr=[];
-		
+		var position=null;
 		for (var i=0;i<fixture.vertices.length;i++) {
-			
+
+            var position=zerk.helper.rotatePosition(
+                fixture.vertices[i][0],
+                fixture.vertices[i][1],
+                fixture.angle
+            );
+
 			arr.push(
 				new this._b2Vec2(
-					fixture.vertices[i][0],
-					fixture.vertices[i][1]
+                    fixture.x+position.x,
+                    fixture.y+position.y
 				)
 			);
 		}
 		
 		fixDef.shape.SetAsArray(arr, arr.length);
-		
+
 		return fixDef;
 		
 	},

@@ -368,13 +368,9 @@ zerk.define({
 			: fixture.height);
 		
 		// Tranform rectangle into polygon
-        var rectangleVertices=[
-            [-(fixtureWidth/2),-(fixtureHeight/2)],
-            [(fixtureWidth/2),-(fixtureHeight/2)],
-            [(fixtureWidth/2),(fixtureHeight/2)],
-            [-(fixtureWidth/2),(fixtureHeight/2)]
-        ];
-		
+
+        var rectangleVertices=zerk.helper.getPolygonOfRectangle(fixtureWidth,fixtureHeight);
+
 		var vertices=[];
 		
 		for (var i=0;i<rectangleVertices.length;i++) {
@@ -527,13 +523,19 @@ zerk.define({
 		var vertices=[];
 		
 		for (var i=0;i<fixture.vertices.length;i++) {
-			
+
 			var rotatedVertice=zerk.helper.rotatePosition(
-				fixture.vertices[i][0],
-				fixture.vertices[i][1],
-				bodyState.angle
+                fixture.vertices[i][0],
+                fixture.vertices[i][1],
+                fixture.angle
 			);
-			
+
+            rotatedVertice=zerk.helper.rotatePosition(
+                fixture.x+rotatedVertice.x,
+                fixture.y+rotatedVertice.y,
+                bodyState.angle
+            );
+
 			var x=this._viewport._getCanvasX(
 				position.x
 				+bodyState.x

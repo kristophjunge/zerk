@@ -71,25 +71,33 @@
 		},
         sprite: {
             bodies: {
+                body1: {
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white'
+                            }
+                        }
+                    }
+                },
                 body2: {
-                    render: {
-                        test2: {
-                            type: 'sprite',
-                            sheet: 'sandbox.sprite.demo',
-                            key: 'ball-1',
-                            x: 0,
-                            y: 0
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white'
+                            }
                         }
                     }
                 },
                 body3: {
-                    render: {
-                        test2: {
-                            type: 'sprite',
-                            sheet: 'sandbox.sprite.demo',
-                            key: 'ball-2',
-                            x: 0,
-                            y: 0
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white'
+                            }
                         }
                     }
                 }

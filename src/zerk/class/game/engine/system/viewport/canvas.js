@@ -140,7 +140,7 @@ zerk.define({
 		canvas.height=height;
 		
 		context.translate(x,y);
-		context.rotate(angle);
+		//context.rotate(angle);
 		
 	},
 	
@@ -150,28 +150,60 @@ zerk.define({
 	 * @method bufferFlush
 	 * @param {String} source Source buffer id
 	 * @param {String} target Target buffer id
+     * @param {Float} x Target horizontal position
+     * @param {Float} y Target vertical position
 	 * @param {Float} width Target width
 	 * @param {Float} height Target height
-	 * @param {Float} x Target horizontal position
-	 * @param {Float} y Target vertical position
+     * @param {Float} angle Rotation angle
 	 **/
-	bufferFlush: function(source,target,x,y,width,height) {
+	bufferFlush: function(
+        source,
+        target,
+        x,
+        y,
+        width,
+        height,
+        angle
+    ) {
 		
 		var sourceCanvas=this._getCanvas(source);
 		var targetContext=this._getContext(target);
-		
-		targetContext.drawImage(
-			sourceCanvas,
-			0,
-			0,
-			sourceCanvas.width,
-			sourceCanvas.height,
-			x,
-			y,
-			width,
-			height
-		);
-		
+
+        if (angle) {
+
+            targetContext.save();
+            targetContext.translate(x,y);
+            targetContext.rotate(angle);
+            targetContext.drawImage(
+                sourceCanvas,
+                0,
+                0,
+                sourceCanvas.width,
+                sourceCanvas.height,
+                -width/2,
+                -height/2,
+                width,
+                height
+            );
+
+            targetContext.restore();
+
+        } else {
+
+            targetContext.drawImage(
+                sourceCanvas,
+                0,
+                0,
+                sourceCanvas.width,
+                sourceCanvas.height,
+                x-width/2,
+                y-height/2,
+                width,
+                height
+            );
+
+        }
+
 	},
 	
 	/**
@@ -228,7 +260,7 @@ zerk.define({
 	},
 	
 	/**
-	 * Draw a rectangle
+	 * Draw rectangle
 	 * 
 	 * @method drawRect
 	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
@@ -281,43 +313,63 @@ zerk.define({
 	},
 	
 	/**
-	 * PUBLIC_METHOD_DESCRIPTION
+	 * Fill rectangle
 	 * 
 	 * @method fillRect
-	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
-	 * 	SECOND_LINE
-	 * @return {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} RETURN_DESCRIPTION
+	 * @param {String} buffer Buffer id
+     * @param {Float} x Horizontal position
+     * @param {Float} y Vertical position
+     * @param {Float} width Width
+     * @param {Float} height Height
+     * @param {Float} angle Rotation angle
+     * @param {Object} image Image
+     * @param {Float} textureX Texture offset x
+     * @param {Float} textureY Texture offset y
+     * @param {Float} textureAngle Texture rotation angle
 	 **/
-	fillRect: function(buffer,x,y,width,height,image) {
-		
-		image=document.getElementById('debug-texture-white');
-		
-		var context=this._getContext(buffer);
-		
-		var pattern=context.createPattern(image,'repeat');
-		
-		context.save();
-		
-		context.beginPath();
-		context.fillStyle=pattern;
-		context.fillRect(
-			x,
-			y,
-			width,
-			height
-		);
-		
-		context.restore();
+	fillRect: function(
+        buffer,
+        x,
+        y,
+        width,
+        height,
+        angle,
+        image,
+        textureX,
+        textureY,
+        textureAngle
+    ) {
+
+        var vertices=zerk.helper.getPolygonOfRectangle(width,height);
+
+        this.fillPolygon(
+            buffer,
+            x,
+            y,
+            vertices,
+            angle,
+            image,
+            textureX,
+            textureY,
+            textureAngle
+        );
 		
 	},
 	
 	/**
-	 * PUBLIC_METHOD_DESCRIPTION
+	 * Draw arc
 	 * 
 	 * @method drawArc
-	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
-	 * 	SECOND_LINE
-	 * @return {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} RETURN_DESCRIPTION
+	 * @param {String} buffer Buffer id
+     * @param {Float} x Horizontal position
+     * @param {Float} y Vertical position
+     * @param {Float} radius Radius
+     * @param {Float} startAngle Start angle
+     * @param {Float} endAngle End angle
+     * @param {Boolean} anticlockwise Draw the circle in anticlockwise order
+     * @param {String} fillColor Fill color
+     * @param {String} strokeColor Stroke color
+     * @param {Float} lineWidth Stroke line width
 	 **/
 	drawArc: function(
 		buffer,
@@ -368,12 +420,20 @@ zerk.define({
 	},
 	
 	/**
-	 * PUBLIC_METHOD_DESCRIPTION
+	 * Fill arc
 	 * 
 	 * @method fillArc
-	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
-	 * 	SECOND_LINE
-	 * @return {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} RETURN_DESCRIPTION
+     * @param {String} buffer Buffer id
+     * @param {Float} x Horizontal position
+     * @param {Float} y Vertical position
+     * @param {Float} radius Radius
+     * @param {Float} startAngle Start angle
+     * @param {Float} endAngle End angle
+     * @param {Boolean} anticlockwise Draw the circle in anticlockwise order
+     * @param {Object} image Image
+     * @param {Float} textureX Texture offset x
+     * @param {Float} textureY Texture offset y
+     * @param {Float} textureAngle Texture rotation angle
 	 **/
 	fillArc: function(
 		buffer,
@@ -383,11 +443,12 @@ zerk.define({
 		startAngle,
 		endAngle,
 		anticlockwise,
-		image
+		image,
+        textureX,
+        textureY,
+        textureAngle
 	) {
-		
-		image=document.getElementById('debug-texture-white');
-		
+
 		var context=this._getContext(buffer);
 		
 		var pattern=context.createPattern(image,'repeat');
@@ -405,6 +466,15 @@ zerk.define({
 			anticlockwise
 		);
 		context.closePath();
+
+        if (textureAngle) {
+            context.rotate(textureAngle);
+        }
+
+        if (zerk.isDefined(textureX) && zerk.isDefined(textureY)) {
+            context.translate(textureX,textureY);
+        }
+
 		context.fill();
 		
 		context.restore();
@@ -412,12 +482,14 @@ zerk.define({
 	},
 	
 	/**
-	 * PUBLIC_METHOD_DESCRIPTION
+	 * Draw polygon
 	 * 
 	 * @method drawPolygon
-	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
-	 * 	SECOND_LINE
-	 * @return {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} RETURN_DESCRIPTION
+	 * @param {String} buffer Buffer id
+     * @param {Array} vertices Array of vertices
+     * @param {String} fillColor Fill color
+     * @param {String} strokeColor Stroke color
+     * @param {Float} lineWidth Stroke line width
 	 **/
 	drawPolygon: function(
 		buffer,
@@ -475,40 +547,60 @@ zerk.define({
 	},
 	
 	/**
-	 * PUBLIC_METHOD_DESCRIPTION
+	 * Fill polygon
 	 * 
 	 * @method fillPolygon
-	 * @param {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} PARAM_NAME PARAM_DESCRIPTION
-	 * 	SECOND_LINE
-	 * @return {Boolean|Integer|Float|String|Object|Array|Function|Mixed|Any|CLASS_NAME} RETURN_DESCRIPTION
+     * @param {String} buffer Buffer id
+     * @param {Float} x Horizontal position
+     * @param {Float} y Vertical position
+     * @param {Array} vertices Array of vertices
+     * @param {Float} angle Rotation angle
+     * @param {Object} image Image
+     * @param {Float} textureX Texture offset x
+     * @param {Float} textureY Texture offset y
+     * @param {Float} textureAngle Texture rotation angle
 	 **/	
-	fillPolygon: function(buffer,vertices,image) {
-		
-		image=document.getElementById('debug-texture-white');
-		
+	fillPolygon: function(
+        buffer,
+        x,
+        y,
+        vertices,
+        angle,
+        image,
+        textureX,
+        textureY,
+        textureAngle
+    ) {
+
 		var context=this._getContext(buffer);
 		
 		var pattern=context.createPattern(image,'repeat');
 		
 		context.save();
-		
 		context.beginPath();
 		context.fillStyle=pattern;
-		
+
+        var rotatedVertice=null;
 		for (var i=0;i<vertices.length;i++) {
-			
+
+            rotatedVertice=zerk.helper.rotatePosition(
+                vertices[i][0],
+                vertices[i][1],
+                angle
+            );
+
 			if (i==0) {
 				
 				context.moveTo(
-					vertices[i][0],
-					vertices[i][1]
+					x+rotatedVertice.x,
+					y+rotatedVertice.y
 				);
 				
 			} else {
 				
 				context.lineTo(
-					vertices[i][0],
-					vertices[i][1]
+                    x+rotatedVertice.x,
+                    y+rotatedVertice.y
 				);
 				
 			}
@@ -516,6 +608,15 @@ zerk.define({
 		}
 		
 		context.closePath();
+
+        if (textureAngle) {
+            context.rotate(textureAngle);
+        }
+
+        if (zerk.isDefined(textureX) && zerk.isDefined(textureY)) {
+            context.translate(textureX,textureY);
+        }
+
 		context.fill();
 		
 		context.restore();
@@ -610,11 +711,58 @@ zerk.define({
 		
 	},
 	
-	drawImage: function(buffer,image,targetX,targetY,targetWidth,targetHeight,sourceX,sourceY,sourceWidth,sourceHeight,angle) {
+	drawImage: function(
+        buffer,
+        image,
+        targetX,
+        targetY,
+        targetWidth,
+        targetHeight,
+        sourceX,
+        sourceY,
+        sourceWidth,
+        sourceHeight,
+        angle
+    ) {
 		
 		var context=this._getContext(buffer);
 
-		context.drawImage(image,sourceX,sourceY,sourceWidth,sourceHeight,targetX,targetY,targetWidth,targetHeight);
+        if (angle) { // Rotated image
+
+            context.save();
+
+            context.translate(targetX,targetY);
+            context.rotate(angle);
+
+            context.drawImage(
+                image,
+                sourceX,
+                sourceY,
+                sourceWidth,
+                sourceHeight,
+                -targetWidth/2,
+                -targetHeight/2,
+                targetWidth,
+                targetHeight
+            );
+
+            context.restore();
+
+        } else {
+
+            context.drawImage(
+                image,
+                sourceX,
+                sourceY,
+                sourceWidth,
+                sourceHeight,
+                targetX-(targetWidth/2),
+                targetY-(targetHeight/2),
+                targetWidth,
+                targetHeight
+            );
+
+        }
 
 	},
 

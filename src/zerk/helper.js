@@ -236,3 +236,75 @@ zerk.helper.random=function(min,max) {
 	//return Math.floor(Math.random()*(max-min+1))+min;
 	
 };
+
+zerk.helper.getPolygonOfRectangle=function(width,height) {
+
+    return [
+        [-(width/2),-(height/2)],
+        [(width/2),-(height/2)],
+        [(width/2),(height/2)],
+        [-(width/2),(height/2)]
+    ];
+
+};
+
+
+zerk.helper.rotatePolygon=function(vertices,angle) {
+
+    var result=[];
+    var position=null;
+
+    for (var i=0;i<vertices.length;i++) {
+
+        position=zerk.helper.rotatePosition(
+            vertices[i][0],
+            vertices[i][1],
+            angle
+        )
+
+        result.push([position.x,position.y]);
+
+    }
+
+    return result;
+
+};
+
+
+zerk.helper.getBoundingBoxOfPolygon=function(vertices) {
+
+    var minX=0;
+    var maxX=0;
+    var minY=0;
+    var maxY=0;
+
+    for (var i=0;i<vertices.length;i++) {
+
+        var verticeMinX=vertices[i][0]*-1;
+        if (maxX==null || verticeMinX>maxX) {
+            maxX=verticeMinX;
+        }
+
+        var verticeMaxX=vertices[i][0];
+        if (maxX==null || verticeMaxX>maxX) {
+            maxX=verticeMaxX;
+        }
+
+        var verticeMinY=vertices[i][1]*-1;
+        if (maxY==null || verticeMinY>maxY) {
+            maxY=verticeMinY;
+        }
+
+        var verticeMaxY=vertices[i][1];
+        if (maxY==null || verticeMaxY>maxY) {
+            maxY=verticeMaxY;
+        }
+
+    }
+
+    return {
+        width: maxX*2,
+        height: maxY*2
+    }
+
+};

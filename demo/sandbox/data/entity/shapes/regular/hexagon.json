@@ -2,7 +2,6 @@
 	name: 'hexagon',
 	components: {
 		position: {},
-		sprite: {},
 		physics: {
 			bodies: {
 				main: {
@@ -23,6 +22,20 @@
 					}
 				}
 			}
-		}
+		},
+        sprite: {
+            bodies: {
+                main: {
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white'
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

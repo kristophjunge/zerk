@@ -81,7 +81,9 @@ var zerk={
 	 * @private
 	 **/
 	_delayedDefine: {},
-	
+
+    emptyFn: function() {},
+
 	/**
 	 * The main bootstrap method
 	 * 

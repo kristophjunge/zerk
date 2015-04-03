@@ -2,7 +2,6 @@
 	name: 'circle',
 	components: {
 		position: {},
-		sprite: {},
 		physics: {
 			bodies: {
 				main: {
@@ -11,11 +10,28 @@
 					fixtures: {
 						main: {
 							shape: 'circle',
-							radius: 1.5
+							radius: 2
 						}
 					}
 				}
 			}
-		}
+		},
+        sprite: {
+            bodies: {
+                main: {
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white',
+                                x: 0.75,
+                                y: 0.75,
+                                angle: 130
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

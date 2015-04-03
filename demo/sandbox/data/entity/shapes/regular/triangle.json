@@ -2,7 +2,6 @@
 	name: 'triangle',
 	components: {
 		position: {},
-		sprite: {},
 		physics: {
 			bodies: {
 				main: {
@@ -20,6 +19,23 @@
 					}
 				}
 			}
-		}
+		},
+        sprite: {
+            bodies: {
+                main: {
+                    fixtures: {
+                        main: {
+                            texture1: {
+                                render: 'texture',
+                                texture: 'sandbox.texture.debug-white',
+                                x: 0.33,
+                                y: 0.33,
+                                angle: 130
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

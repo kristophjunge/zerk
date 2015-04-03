@@ -21,8 +21,19 @@ zerk.define({
 	 * @protected
 	 **/
 	_jsonLoader: null,
+
+    /**
+     * Image loader instance
+     *
+     * @property _imageLoader
+     * @type zerk.imageoader
+     * @protected
+     **/
+    _imageLoader: null,
 	
-	_sprites: null,
+	_images: null,
+
+    _maps: null,
 	
 	/**
 	 * Class constructor
@@ -32,11 +43,13 @@ zerk.define({
 	 * @param {zerk.game.engine.componentLoader} componentLoader Component 
 	 * 	loader instance
 	 */
-	init: function(jsonLoader) {
+	init: function(jsonLoader,imageLoader) {
 		
 		this._jsonLoader=jsonLoader;
-		
-		this._sprites={};
+        this._imageLoader=imageLoader;
+
+        this._images={};
+		this._maps={};
 		
 	},
 	
@@ -48,13 +61,27 @@ zerk.define({
 	 * @param {String} key Sprite key
 	 * @return {config.sprite} Sprite information
 	 **/
-	getSprite: function(sheet,key) {
-		
-		if (typeof this._sprites[sheet]=='undefined') return null;
-		if (typeof this._sprites[sheet][key]=='undefined') return null;
-		
-		return this._sprites[sheet][key];
-		
+	getSprite: function(spritesheet,sprite) {
+
+        var me=this;
+
+        if (!zerk.isDefined(me._maps[spritesheet])) {
+            zerk.error('Spritesheet map not found "'+spritesheet+'"');
+        }
+
+        if (!zerk.isDefined(me._maps[spritesheet][sprite])) {
+            zerk.error('Spritesheet map entry "'+sprite+'" not found "'+spritesheet+'"');
+        }
+
+        if (!zerk.isDefined(me._images[spritesheet])) {
+            zerk.error('Spritesheet image not found "'+spritesheet+'"');
+        }
+
+        return {
+            info: me._maps[spritesheet][sprite],
+            image: me._images[spritesheet]
+        };
+
 	},
 	
 	/**
@@ -62,78 +89,82 @@ zerk.define({
 	 * 
 	 * @method loadEntities
 	 * @param {Array} entities Array of entities
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
 	 * @async
 	 **/
-	loadSprites: function(sprites,successHandler,errorHandler) {
+	loadSprites: function(sprites,successFn,errorFn) {
 		
-		var self=this;
-		
-		this._jsonLoader.require(
+		var me=this;
+
+        var loadedImages=false;
+        var loadedMaps=false;
+
+        me._jsonLoader.require(
 			sprites,
-			function() {
-				
-				self._onLoadSprites(sprites,successHandler,errorHandler);
-				
+			function(maps) {
+
+                for (var mapId in maps) {
+                    me._maps[mapId]=me._parseSpriteData(maps[mapId]);
+                }
+
+                loadedMaps=true;
+                if (loadedImages) {
+                    successFn();
+                }
+
 			},
-			function (error) {
-				
-				errorHandler(error);
-				
-			}
+			errorFn
 		);
-		
+
+        me._imageLoader.require(
+            sprites,
+            function(images) {
+
+                for (var imagesId in images) {
+                    me._images[imagesId]=images[imagesId];
+                }
+                
+                loadedImages=true;
+                if (loadedMaps) {
+                    successFn();
+                }
+
+            },
+            errorFn
+        );
+
 	},
-	
-	_parseSpriteData: function(sprite) {
-		
-		var result={};
-		
-		for (var i=0;i<sprite.frames.length;i++) {
-			
-			var spriteInfo={
-				name: sprite.frames[i].filename.replace(/\.[^/.]+$/, ''),
-				offsetX: sprite.frames[i].frame.x,
-				offsetY: sprite.frames[i].frame.y,
-				width: sprite.frames[i].frame.w,
-				height: sprite.frames[i].frame.h
-			};
-			
-			result[spriteInfo.name]=spriteInfo;
-			
-		}
-		
-		return result;
-		
-	},
-	
-	/**
-	 * Fires when entities are loaded
-	 * 
-	 * @method _onLoadEntities
-	 * @param {Array} entities Array of entities
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
-	 * @protected
-	 * @async
-	 **/
-	_onLoadSprites: function(sprites,successHandler,errorHandler) {
-		
-		var componentNames=[];
-		
-		for (var i=0;i<sprites.length;i++) {
-			
-			// Get the resource
-			var sprite=this._jsonLoader.getResource(sprites[i]);
-			
-			// Store in entity register
-			this._sprites[sprites[i]]=this._parseSpriteData(sprite);
-			
-		}
-		
-		successHandler(sprites);
-		
-	}
+
+    clear: function() {
+
+        var me=this;
+
+        this._images={};
+        this._maps={};
+
+    },
+
+    _parseSpriteData: function(sprite) {
+
+        var result={};
+
+        for (var i=0;i<sprite.frames.length;i++) {
+
+            var spriteInfo={
+                name: sprite.frames[i].filename.replace(/\.[^/.]+$/, ''),
+                offsetX: sprite.frames[i].frame.x,
+                offsetY: sprite.frames[i].frame.y,
+                width: sprite.frames[i].frame.w,
+                height: sprite.frames[i].frame.h
+            };
+
+            result[spriteInfo.name]=spriteInfo;
+
+        }
+
+        return result;
+
+    }
 	
 });

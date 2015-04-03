@@ -12,7 +12,7 @@ zerk.define({
 	name: 'zerk.game.engine.worldLoader'
 	
 },{
-	
+
 	/**
 	 * JSON loader instance
 	 * 
@@ -21,6 +21,15 @@ zerk.define({
 	 * @protected
 	 **/
 	_jsonLoader: null,
+
+    /**
+     * Image loader instance
+     *
+     * @property _imageLoader
+     * @type zerk.imageLoader
+     * @protected
+     **/
+    _imageLoader: null,
 	
 	/**
 	 * Component loader instance
@@ -48,19 +57,42 @@ zerk.define({
 	 * @protected
 	 **/
 	_spriteLoader: null,
-	
+
+    /**
+     * Texture loader instance
+     *
+     * @property _textureLoader
+     * @type zerk.game.engine.textureLoader
+     * @protected
+     **/
+    _textureLoader: null,
+
 	/**
 	 * Class constructor
 	 * 
 	 * @method init
 	 * @param {zerk.game.engine} engine Game engine
 	 */
-	init: function(jsonLoader,componentLoader,entityLoader,spriteLoader) {
-		
+	init: function(
+        jsonLoader,
+        imageLoader,
+        componentLoader,
+        entityLoader,
+        spriteLoader,
+        textureLoader
+    ) {
+
+        this._entities=[];
+        this._components=[];
+        this._textures=[];
+        this._spritesheets=[];
+
 		this._jsonLoader=jsonLoader;
+        this._imageLoader=imageLoader;
 		this._componentLoader=componentLoader;
 		this._entityLoader=entityLoader;
 		this._spriteLoader=spriteLoader;
+        this._textureLoader=textureLoader;
 		
 	},
 	
@@ -69,26 +101,31 @@ zerk.define({
 	 * 
 	 * @method loadWorld
 	 * @param {String} name World resource id
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
 	 * @async
 	 **/
-	loadWorld: function(name,successHandler,errorHandler) {
+	loadWorld: function(name,successFn,errorFn) {
 		
-		var self=this;
+		var me=this;
+
+        me._componentLoader.clear();
+        me._entityLoader.clear();
+        me._spriteLoader.clear();
+        me._textureLoader.clear();
+
+        // @TOOD Make cachable config
+        if (true) {
+            me._jsonLoader.clear();
+            me._imageLoader.clear();
+        }
 		
-		this._jsonLoader.loadResource(
-			name,
+		this._jsonLoader.require(
+			[name],
 			function(data) {
-				
-				self._onLoadWorld(data,successHandler,errorHandler);
-				
+                me._onLoadWorld(data[name],successFn,errorFn);
 			},
-			function(error) {
-				
-				errorHandler(error);
-				
-			}
+			errorFn
 		);
 		
 	},
@@ -98,60 +135,30 @@ zerk.define({
 	 * 
 	 * @method _onLoadWorld
 	 * @param {Object} world World definition
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
 	 * @protected
 	 * @async
 	 **/
-	_onLoadWorld: function(world,successHandler,errorHandler) {
-		
-		// Load contained entities
-		
-		var entities=[];
-		
+	_onLoadWorld: function(world,successFn,errorFn) {
+
+        var me=this;
+
+		var entityIdList=[];
 		for (var i=0;i<world.entities.length;i++) {
-			
-			entities.push(world.entities[i].name);
-			
+            entityIdList.push(world.entities[i].name);
 		}
-		
-		entities=zerk.arrayUnique(entities);
-		
-		this._loadEntities(world,entities,successHandler,errorHandler);
-		
-	},
-	
-	/**
-	 * Loads given entities
-	 * 
-	 * @method _loadEntities
-	 * @param {Object} world World definition
-	 * @param {Array} entities Array of entities
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
-	 * @protected
-	 * @async
-	 **/
-	_loadEntities: function(world,entities,successHandler,errorHandler) {
-		
-		var self=this;
-		
-		this._entityLoader.loadEntities(
-			entities,
-			function() {
-				
-				self._onLoadEntities(world,entities,successHandler,errorHandler);
-				
-			},
-			function(error) {
-				
-				errorHandler(error);
-				
-				//console.log('ERROR: Cant load contained entities',error);
-				
-			}
-		);
-		
+
+        entityIdList=zerk.arrayUnique(entityIdList);
+
+        this._entityLoader.loadEntities(
+            entityIdList,
+            function(entities) {
+                me._onLoadEntities(world,entities,successFn,errorFn);
+            },
+            errorFn
+        );
+
 	},
 	
 	/**
@@ -160,67 +167,97 @@ zerk.define({
 	 * @method _onLoadEntities
 	 * @param {Object} world World definition
 	 * @param {Array} entities Array of entities
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
 	 * @protected
 	 **/
-	_onLoadEntities: function(world,entities,successHandler,errorHandler) {
+	_onLoadEntities: function(world,entities,successFn,errorFn) {
 
-		var sprites=[
-			'sandbox.sprite.demo'
-		];
-		
-		this._loadSprites(world,entities,sprites,successHandler,errorHandler);
-		
-	},
-	
-	/**
-	 * Loads given sprites
-	 * 
-	 * @method _loadEntities
-	 * @param {Object} world World definition
-	 * @param {Array} entities Array of entities
-	 * @param {Array} sprites Array of sprites
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
-	 * @protected
-	 * @async
-	 **/
-	_loadSprites: function(world,entities,sprites,successHandler,errorHandler) {
-		
-		var self=this;
-		
-		this._spriteLoader.loadSprites(
-			sprites,
-			function() {
-				
-				self._onLoadSprites(world,entities,sprites,successHandler,errorHandler);
-				
-			},
-			function(error) {
-				
-				errorHandler(error);
-				
-			}
-		);
-		
-	},
-	
-	/**
-	 * Fires when the sprites are loaded
-	 * 
-	 * @method _onLoadSprites
-	 * @param {Object} world World definition
-	 * @param {Array} entities Array of entities
-	 * @param {Array} sprites Array of sprites
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
-	 * @protected
-	 **/
-	_onLoadSprites: function(world,entities,sprites,successHandler,errorHandler) {
-		
-		successHandler(world);
-		
+        var me=this;
+
+        var components=[];
+        var spritesheets=[];
+        var textures=[];
+
+        for (var entityKey in entities) {
+
+            var entity=entities[entityKey];
+
+            for (var component in entity.components) {
+
+                components.push(component);
+
+                if (component=='sprite') {
+
+                    for (var bodyKey in entity.components[component].bodies) {
+
+                        for (var fixtureKey in entity.components[component].bodies[bodyKey].fixtures) {
+
+                            var fixture=entity.components[component].bodies[bodyKey].fixtures[fixtureKey];
+
+                            for (var renderKey in fixture) {
+                                switch (fixture[renderKey].render) {
+                                    case 'texture':
+                                        textures.push(fixture[renderKey].texture);
+                                        break;
+                                    case 'sprite':
+                                        spritesheets.push(fixture[renderKey].spritesheet);
+                                        break;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        // Remove duplicates
+        components=zerk.arrayUnique(components);
+        textures=zerk.arrayUnique(textures);
+        spritesheets=zerk.arrayUnique(spritesheets);
+
+        var loadedComponenets=false;
+        var loadedSprites=false;
+        var loadedTextures=false;
+
+        me._componentLoader.loadComponents(
+            components,
+            function() {
+                loadedComponenets=true;
+                if (loadedTextures && loadedSprites) {
+                    successFn(world);
+                }
+            },
+            errorFn
+        );
+
+        me._textureLoader.loadTextures(
+            textures,
+            function() {
+                loadedTextures=true;
+                if (loadedComponenets && loadedSprites) {
+                    successFn(world);
+                }
+            },
+            errorFn
+        );
+
+        me._spriteLoader.loadSprites(
+            spritesheets,
+            function() {
+                loadedSprites=true;
+                if (loadedTextures && loadedComponenets) {
+                    successFn(world);
+                }
+            },
+            errorFn
+        );
+
 	}
-	
+
 });

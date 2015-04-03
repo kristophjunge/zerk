@@ -1,32 +1,26 @@
 /**
- * JSON Loader
+ * Image Loader
  * 
- * Loads JSON resources via Ajax.
+ * Loads images via html tags
  * 
- * @class jsonLoader
+ * @class imageLoader
  * @namespace zerk
  * @module zerk
  **/
-/*
- * TODO Ensure its possible to use comments inside the JSON files
- */
 zerk.define({
 	
-	name: 'zerk.jsonLoader',
-	require: [
-		'zerk.network.ajax'
-	]
+	name: 'zerk.imageLoader'
 	
 },{
 	
 	/**
 	 * Register of loaded resources
 	 * 
-	 * @property _data
+	 * @property _images
 	 * @type Object
 	 * @protected
 	 **/
-	_data: {},
+	_images: {},
 	
 	/**
 	 * Namespace configuration
@@ -36,15 +30,6 @@ zerk.define({
 	 * @protected
 	 **/
 	_namespace: {},
-	
-	/**
-	 * AJAX interface to load the resources
-	 * 
-	 * @property _ajax
-	 * @type zerk.network.ajax
-	 * @protected
-	 **/
-	_ajax: null,
 	
 	/**
 	 * Class constructor
@@ -57,9 +42,7 @@ zerk.define({
 		if (config) {
 			this.setConfig(config);
 		}
-		
-		this._ajax=zerk.create('zerk.network.ajax');
-		
+
 	},
 	
 	/**
@@ -71,67 +54,41 @@ zerk.define({
 	 * @param {String} resource Resource id
 	 * @param {Function} successFn Event handler for success
 	 * @param {Function} errorFn Event handler for error
-     * @protected
 	 * @async
 	 **/
-	_loadJSON: function(id,successFn,errorFn) {
+	_loadImage: function(id,successFn,errorFn) {
 
-		var path=this._getResourcePath(id);
+        var me=this;
+
+		if (me.isLoaded(id)) {
+			if (zerk.isFunction(successFn)) {
+				successFn(zerk.clone(me._images[id]));
+			}
+			return true;
+		}
+		
+		var path=me._getResourcePath(id);
         if (!path) {
             zerk.error('Resource not found "'+id+'"');
         }
 
-		var self=this;
-		
-		this._ajax.request(
-            path,
-			false,
-			function (request) {
+        var image=new Image();
+        image.id='zerk-image-'+id;
+        image.src=path;
+        image.addEventListener('load',function() {
+            me._images[id]=image;
+            if (zerk.isFunction(successFn)) {
+                successFn(id,image);
+            }
+        });
 
-				try {
-					
-					var jsondata=JSON5.parse(request.responseText);
-					
-					self._data[id]=jsondata;
-					
-					if (zerk.isFunction(successFn)) {
-						
-						successFn(id,zerk.clone(self._data[id]));
-						
-					}
-					
-				} catch(e) {
+        image.addEventListener('error',function() {
+            zerk.error('Cannot load image "'+path+'" for resource "'+id+'"');
+        });
 
-					console.log(
-						'Parse error "'+e.message+'" at position '+e.at
-					);
-					console.log(e.text);
-					
-					if (typeof error=='function') {
-						
-						error({
-							at: e.at,
-							message: e.message,
-							text: e.text
-						});
-						
-					}
+        var container=document.getElementById('zerk-images');
+        container.appendChild(image);
 
-				}
-				
-			},
-			function (request) {
-				
-				errorFn({
-					resource: id,
-					path: path,
-					message: 'Couldnt load',
-					status: request.status
-				});
-				
-			}
-		);
-		
 	},
 	
 	/**
@@ -146,9 +103,7 @@ zerk.define({
 	 * @async
 	 **/
 	require: function(idList,successFn,errorFn) {
-
-        var me=this;
-
+		
         if (!zerk.isDefined(successFn)) {
             successFn=zerk.emptyFn();
         }
@@ -156,31 +111,32 @@ zerk.define({
             errorFn=zerk.emptyFn();
         }
         
+        var me=this;
 		var completed=[];
-		var unloaded=[];
+        var unloaded=[];
         var result={};
 		
 		for (var i=0;i<idList.length;i++) {
 			if (this.isLoaded(idList[i])) {
                 result[idList[i]]=me.getResource(idList[i]);
-            } else {
-				unloaded.push(idList[i]);
-			}
+			} else {
+                unloaded.push(idList[i]);
+            }
 		}
 
 		if (unloaded.length==0) {
-			successFn(result);
+            successFn(result);
 		}
 		
 		for (var i=0;i<unloaded.length;i++) {
-			this._loadJSON(
+			this._loadImage(
 				unloaded[i],
-				function(id,data) {
+				function(id,image) {
 					completed.push(unloaded[i]);
-                    result[id]=data;
+                    result[id]=image;
 					if (completed.length==unloaded.length) {
-                        successFn(result);
-                    }
+						successFn(result);
+					}
 				},
 				errorFn
 			);
@@ -191,10 +147,19 @@ zerk.define({
     clear: function() {
 
         var me=this;
-        me._data={};
+        var image=null;
+        var container=document.getElementById('zerk-images');
+
+        for (var imageId in me._images) {
+            me._images[imageId]=null;
+            image=document.getElementById('zerk-image-'+imageId);
+            container.removeChild(image);
+        }
+
+        me._images={};
 
     },
-
+	
 	/**
 	 * Returns a preloaded resource
 	 * 
@@ -204,9 +169,11 @@ zerk.define({
 	 **/
 	getResource: function(id) {
 		
-		if (typeof this._data[id]=='undefined') return;
+		if (!zerk.isDefined(this._images[id])) {
+            return;
+        }
 		
-		return zerk.clone(this._data[id]);
+		return this._images[id];
 		
 	},
 	
@@ -219,9 +186,7 @@ zerk.define({
 	setConfig: function(config) {
 		
 		for (var i=0;i<config.length;i++) {
-			
 			this._namespace[config[i].namespace]=config[i].path;
-			
 		}
 		
 	},
@@ -235,7 +200,7 @@ zerk.define({
 	 **/
 	isLoaded: function(id) {
 		
-		return zerk.isDefined(this._data[id]);
+		return zerk.isDefined(this._images[id]);
 		
 	},
 	
@@ -252,19 +217,12 @@ zerk.define({
 	_getResourcePath: function(id) {
 
 		for (var ns in this._namespace) {
-			
 			if (ns.length>id.length) continue;
-			
 			if (ns==id.substr(0,ns.length)) {
-				
 				var localPart = id.substr(ns.length+1);
-				
 				localPart=localPart.replace(/\./g,'/');
-				
-				return this._namespace[ns]+'/'+localPart+'.json?r='+Math.random();
-				
+				return this._namespace[ns]+'/'+localPart+'.png?r='+Math.random();
 			}
-			
 		}
 		
 		return false;
