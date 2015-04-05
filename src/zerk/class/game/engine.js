@@ -389,6 +389,26 @@ zerk.define({
 		);
 		
 	},
+
+    loadWorldConfig: function(config,successHandler,errorHandler) {
+
+        var self=this;
+
+        this._log('Loading world by config');
+
+        this._log('Loading world resources',2);
+
+        this._worldLoader.loadWorldConfig(
+            config,
+            function (data) {
+                self._onLoadWorld(data,successHandler,errorHandler);
+            },
+            function (error) {
+                errorHandler(error);
+            }
+        );
+
+    },
 	
 	/**
 	 * Reset the engine

@@ -657,13 +657,13 @@ zerk.define({
                 /*
                  * TODO Check if ceil is really needed here
                  */
-                var diagonal=Math.ceil(
+                var diagonal=//Math.ceil(
                     zerk.helper.fromMeter(
                         Math.sqrt(
                             Math.pow(width,2)
                             +Math.pow(height,2)
                         )
-                    )
+                    //)
                 );
 
                 return {
@@ -675,9 +675,9 @@ zerk.define({
 
             case 'circle':
 
-                var diagonal=Math.ceil(
-                    zerk.helper.fromMeter(fixture.radius*2)
-                );
+                var diagonal=//Math.ceil(
+                    zerk.helper.fromMeter(fixture.radius*2);
+                //);
 
                 return {
                     width: diagonal,

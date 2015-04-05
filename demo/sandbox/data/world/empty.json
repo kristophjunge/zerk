@@ -1,0 +1,77 @@
+{
+	"name": "empty",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 0
+			},
+            "viewport": {
+                "zoomDefault": 100
+            }
+		}
+	},
+    "entities": [
+        /*
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+        */
+/*
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+        */
+
+/*
+        {
+            "name": "sandbox.entity.crate",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+        */
+
+
+/*
+        {
+            "name": "sandbox.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+        */
+
+
+/*
+        {
+            "name": "sandbox.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+        */
+
+	]
+}

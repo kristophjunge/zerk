@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zerk Entity Editor</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../../src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
+		<script type="text/javascript" src="../../src/json5/json5.js"></script>
+		<script type="text/javascript" src="../../src/zerk/zerk.js"></script>
+		<script type="text/javascript" src="../../src/zerk/helper.js"></script>
+		<script type="text/javascript" src="../../src/zerk/browser.js"></script>
+	</head>
+	<body>
+		<script>
+            zerk.init({
+                bootstrap: {
+                    game: 'entityeditor',
+                    gameDir: './',
+                    zerkDir: './../../src/zerk',
+                    log: {
+                        enabled: true,
+                        severity: 3
+                    }
+                },
+                engine: {
+                    systems: {
+                        debuginfo: {
+                            showViewCenterIndicator: false
+                        },
+                        control: {
+                            mouse: {
+                                enableWheelZoom: true,
+                                enableJoint: false
+                            }
+                        },
+                        wireframe: {
+                            showBodyAngleIndicator: false,
+                            showEntityOriginIndicator: false,
+                            showFixtureBoundingBox: true
+                        },
+                        viewport: {
+                            zoomMax: 500,
+                            zoomMin: 10,
+                            showWorldCenterIndicator: false
+                            //backgroundColor: 'white'
+                            //showBodyBuffer: true,
+                            //showFixtureBuffer: true
+                        }
+                        /*
+                         physics: {
+                         debugDraw: true
+                         }
+                         */
+                    }
+                }
+            });
+		</script>
+        Spritesheet: <input id="editor-spritesheet" value="sandbox.spritesheet.demo"/>
+        Sprite: <input id="editor-sprite" value="rock-10"/>
+        <button onclick="zerk.game.editorAddFixture(
+            document.getElementById('editor-spritesheet').value,
+            document.getElementById('editor-sprite').value
+        )">Add Fixture</button>
+        <div id="zerk-images" style="display: none;"></div>
+	</body>
+</html>

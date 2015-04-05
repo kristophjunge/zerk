@@ -23,7 +23,7 @@ zerk.helper={};
 zerk.helper.toMeter=function(value) {
 
 	if (typeof value==='undefined' || value==0) return 0;
-	return value/30;
+	return value/120;
 	
 };
 
@@ -37,7 +37,7 @@ zerk.helper.toMeter=function(value) {
 zerk.helper.fromMeter=function(value) {
 	
 	if (typeof value==='undefined' || value==0) return 0;
-	return value*30;
+	return value*120;
 	
 };
 

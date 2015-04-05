@@ -1492,6 +1492,16 @@ var zerk={
 		
 		return false;
 		
-	}
+	},
+
+    screenshot: function() {
+
+        var canvas=document.getElementById('zerk_canvas_display');
+
+        var data=canvas.toDataURL('image/png');
+
+        window.open(data);
+
+    }
 	
 };

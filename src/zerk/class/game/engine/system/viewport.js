@@ -176,8 +176,8 @@ zerk.define({
 		
 		this.createBuffers({
 			display: {
-				width: 640,
-				height: 480,
+                width: this._config.width,
+                height: this._config.height,
 				visible: true
 			},
 			body: {
@@ -197,6 +197,8 @@ zerk.define({
 		// Sync viwport with canvas size
 		this._width=viewportSize.width;
 		this._height=viewportSize.height;
+
+        this._zoom=this._config.zoomDefault;
 		
 		this._log(
 			'Scale '
@@ -219,6 +221,11 @@ zerk.define({
 	_getConfigDefaults: function() {
 		
 		return {
+            width: 1280,
+            height: 720,
+            zoomDefault: 50,
+            zoomMin: 1,
+            zoomMax: 100,
 			showBodyBuffer: false,
 			showFixtureBuffer: false,
 			showGrid: false,
@@ -227,7 +234,8 @@ zerk.define({
 			// How many 1m boxes will be drawn on the grid
 			gridOuterWidth: 50,
 			gridOuterHeight: 50,
-			canvasContainerId: ''
+			canvasContainerId: '',
+            backgroundColor: 'rgb(0,0,0)'
 		};
 		
 	},
@@ -504,9 +512,18 @@ zerk.define({
 	 * @method zoomIn
 	 **/
 	zoomIn: function() {
-		
-		this._zoom+=(10*(this._zoom/100));
-		
+
+        //var value=this._zoom+10;
+		var value=this._zoom+(10*(this._zoom/100));
+
+        value=Math.ceil(value);
+
+        if (value>=this._config.zoomMax) {
+            this._zoom=this._config.zoomMax;
+        } else {
+            this._zoom=value;
+        }
+
 	},
 
 	/**
@@ -515,8 +532,17 @@ zerk.define({
 	 * @method zoomOut
 	 **/
 	zoomOut: function() {
-		
-		this._zoom-=(10*(this._zoom/100));
+
+        //var value=this._zoom-10;
+        var value=this._zoom-(10*(this._zoom/100));
+
+        value=Math.ceil(value);
+
+        if (value<=this._config.zoomMin) {
+            this._zoom=this._config.zoomMin;
+        } else {
+            this._zoom=value;
+        }
 		
 	},
 	

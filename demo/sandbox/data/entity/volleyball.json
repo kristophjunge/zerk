@@ -1,0 +1,38 @@
+{
+    "name": "volleyball",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "circle",
+                            "density": 0.5,
+                            "friction": 0.2,
+                            "restitution": 0.75,
+                            "radius": 0.111
+						}
+					}
+				}
+			}
+		},
+        "sprite": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "sprite1": {
+                                "render": "sprite",
+                                "spritesheet": "sandbox.spritesheet.demo",
+                                "sprite": "volleyball"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	}
+}

@@ -144,10 +144,18 @@ zerk.define({
 
         var me=this;
 
-		var entityIdList=[];
-		for (var i=0;i<world.entities.length;i++) {
+        me.loadWorldConfig(world,successFn,errorFn);
+
+	},
+
+    loadWorldConfig: function(world,successFn,errorFn) {
+
+        var me=this;
+
+        var entityIdList=[];
+        for (var i=0;i<world.entities.length;i++) {
             entityIdList.push(world.entities[i].name);
-		}
+        }
 
         entityIdList=zerk.arrayUnique(entityIdList);
 
@@ -159,7 +167,7 @@ zerk.define({
             errorFn
         );
 
-	},
+    },
 	
 	/**
 	 * Fires when the entities are loaded

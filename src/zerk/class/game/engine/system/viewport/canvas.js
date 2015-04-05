@@ -66,6 +66,8 @@ zerk.define({
 				buffers[buffer].height,
 				buffers[buffer].visible
 			);
+
+            canvas.style.backgroundColor=this._config.backgroundColor;
 			
 			this._canvas[buffer]=canvas;
 			this._context[buffer]=canvas.getContext('2d');

@@ -82,7 +82,7 @@ zerk.define({
         }
 
 		var self=this;
-		
+
 		this._ajax.request(
             path,
 			false,
@@ -91,34 +91,32 @@ zerk.define({
 				try {
 					
 					var jsondata=JSON5.parse(request.responseText);
-					
-					self._data[id]=jsondata;
-					
-					if (zerk.isFunction(successFn)) {
-						
-						successFn(id,zerk.clone(self._data[id]));
-						
-					}
-					
-				} catch(e) {
 
-					console.log(
-						'Parse error "'+e.message+'" at position '+e.at
-					);
-					console.log(e.text);
-					
-					if (typeof error=='function') {
-						
-						error({
-							at: e.at,
-							message: e.message,
-							text: e.text
-						});
-						
-					}
+                } catch(e) {
 
-				}
-				
+                    console.log(
+                        'Parse error "'+e.message+'" at position '+e.at
+                    );
+                    console.log(e.text);
+
+                    if (typeof error=='function') {
+
+                        error({
+                            at: e.at,
+                            message: e.message,
+                            text: e.text
+                        });
+
+                    }
+
+                }
+
+                self._data[id]=jsondata;
+
+                if (zerk.isFunction(successFn)) {
+                    successFn(id,zerk.clone(self._data[id]));
+                }
+
 			},
 			function (request) {
 				
@@ -171,7 +169,7 @@ zerk.define({
 		if (unloaded.length==0) {
 			successFn(result);
 		}
-		
+
 		for (var i=0;i<unloaded.length;i++) {
 			this._loadJSON(
 				unloaded[i],
@@ -269,6 +267,12 @@ zerk.define({
 		
 		return false;
 		
-	}
-	
+	},
+
+    addNamespace: function(ns,path) {
+
+        this._namespace[ns]=path;
+
+    }
+
 });

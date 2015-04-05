@@ -87,6 +87,11 @@ zerk.define({
         });
 
         var container=document.getElementById('zerk-images');
+
+        if (!container) {
+            zerk.error('Image container not found \'zerk-images\'');
+        }
+
         container.appendChild(image);
 
 	},
@@ -227,6 +232,12 @@ zerk.define({
 		
 		return false;
 		
-	}
+	},
+
+    addNamespace: function(ns,path) {
+
+        this._namespace[ns]=path;
+
+    }
 	
 });

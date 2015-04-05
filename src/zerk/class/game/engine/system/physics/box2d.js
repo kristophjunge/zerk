@@ -197,7 +197,25 @@ zerk.define({
 	 * @protected
 	 */
 	_b2ContactListener: Box2D.Dynamics.b2ContactListener,
-	
+
+    /**
+     * Minimum fixture size in meters
+     *
+     * @property _minFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _minFixtureSize: 0.1,
+
+    /**
+     * Maximum fixture size in meters
+     *
+     * @property _maxFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _maxFixtureSize: 10,
+
 	/**
 	 * Class constructor
 	 * 
@@ -444,10 +462,7 @@ zerk.define({
 		);
 		
 	},
-	
-	
-	
-	
+
 	/**
 	 * Returns position of given body
 	 * 
@@ -1124,7 +1139,33 @@ zerk.define({
 		var height=((typeof fixture.height=='string') 
 			? (body.height/100)*parseInt(fixture.height)
 			: fixture.height);
-		
+
+        if (width>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture width is too high \''+width+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (height>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture height is too high \''+height+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (width<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture width is too small \''+width+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (height<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture height is too small \''+height+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        }
+
 		fixDef.shape.SetAsOrientedBox(
 			width/2,
 			height/2,
@@ -1174,7 +1215,23 @@ zerk.define({
 			body: body.key,
 			fixture: fixture.key
 		};
-		
+
+        var diameter=fixture.radius*2;
+
+        if (diameter>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture diameter too high \''+diameter+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (diameter<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture diameter too small \''+diameter+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        }
+
 		fixDef.shape=new this._b2CircleShape(
 			fixture.radius
 		);
@@ -1248,9 +1305,40 @@ zerk.define({
 		var position=null;
 		for (var i=0;i<fixture.vertices.length;i++) {
 
+            var x=fixture.vertices[i][0];
+            var y=fixture.vertices[i][1];
+
+            /*
+            if (x>this._maxFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position x too high \''+x+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (y>this._maxFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position y too high \''+y+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (x<this._minFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position x too small \''+x+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (y<this._minFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position y too small \''+y+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            }
+            */
+
             var position=zerk.helper.rotatePosition(
-                fixture.vertices[i][0],
-                fixture.vertices[i][1],
+                x,
+                y,
                 fixture.angle
             );
 
