@@ -1,226 +1,246 @@
 {
-	"name": "worm",
+    "name": "pendulum",
     "components": {
         "position": {},
         "sprite": {},
         "physics": {
             "bodies": {
-                "body1": {
-                    "width": 3.2,
-                    "height": 2.8,
+                "head": {
                     "origin": true,
-                    "moveable": true,
+                    "moveable": false,
                     "fixtures": {
-                        "head1": {
+                        "main": {
                             "shape": "box",
                             "x": 0,
-                            "y": -0.25,
-                            "angle": -12.732395447351628,
-                            "width": 3,
-                            "height": 1.5
-						},
-                        "head2": {
-                            "shape": "box",
-                            "x": 0,
-                            "y": 0.25,
-                            "angle": 12.732395447351628,
-                            "width": 3,
-                            "height": 1.5
-						}
-					}
-				},
-                "body2": {
-                    "x": 2,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
+                            "y": 0,
+                            "angle": 0,
+                            "width": 0.5,
+                            "height": 0.25
+                        }
+                    }
+                },
+                "chain1": {
+                    "x": 0,
+                    "y": 3,
                     "moveable": true,
                     "fixtures": {
-                        "main": {
+                        "stick": {
                             "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body3": {
-                    "x": 4,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body4": {
-                    "x": 6,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body5": {
-                    "x": 8,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body6": {
-                    "x": 10,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body7": {
-                    "x": 12,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body8": {
-                    "x": 14,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body9": {
-                    "x": 16,
-                    "width": 2,
-                    "height": 1.5,
-                    "angle": 0,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				},
-                "body10": {
-                    "x": 18,
-                    "y": 0,
-                    "width": 2,
-                    "height": 1.5,
-                    "moveable": true,
-                    "fixtures": {
-                        "main": {
-                            "shape": "box",
-                            "width": 2,
-                            "height": 1.5
-						}
-					}
-				}
-			},
+                            "width": 0.15,
+                            "height": 6
+                        },
+                        "ball": {
+                            "y": 3,
+                            "shape": "circle",
+                            "radius": 0.65,
+                            "density": 10,
+                            "friction": 0,
+                            "restitution": 1
+                        }
+                    }
+                },
+                // "chain2": {
+                //     "x": 0,
+                //     "y": 0.5,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain3": {
+                //     "x": 0,
+                //     "y": 0.7,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain4": {
+                //     "x": 0,
+                //     "y": 0.9,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain5": {
+                //     "x": 0,
+                //     "y": 1.1,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain6": {
+                //     "x": 0,
+                //     "y": 1.3,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain7": {
+                //     "x": 0,
+                //     "y": 1.5,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain8": {
+                //     "x": 0,
+                //     "y": 1.7,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain9": {
+                //     "x": 0,
+                //     "y": 1.9,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "chain10": {
+                //     "x": 0,
+                //     "y": 2.1,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "box",
+                //             "width": 0.15,
+                //             "height": 0.3
+                //         }
+                //     }
+                // },
+                // "ball": {
+                //     "x": 0,
+                //     "y": 6,
+                //     "moveable": true,
+                //     "fixtures": {
+                //         "main": {
+                //             "shape": "circle",
+                //             "radius": 0.65,
+                //             "density": 10,
+                //             "friction": 0,
+                //             "restitution": 1
+                //         }
+                //     }
+                // }
+            },
             "joints": {
                 "joint1": {
                     "type": "revolute",
-                    "source": "body1",
-                    "target": "body2",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint2": {
-                    "type": "revolute",
-                    "source": "body2",
-                    "target": "body3",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint3": {
-                    "type": "revolute",
-                    "source": "body3",
-                    "target": "body4",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint4": {
-                    "type": "revolute",
-                    "source": "body4",
-                    "target": "body5",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint5": {
-                    "type": "revolute",
-                    "source": "body5",
-                    "target": "body6",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint6": {
-                    "type": "revolute",
-                    "source": "body6",
-                    "target": "body7",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint7": {
-                    "type": "revolute",
-                    "source": "body7",
-                    "target": "body8",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint8": {
-                    "type": "revolute",
-                    "source": "body8",
-                    "target": "body9",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				},
-                "joint9": {
-                    "type": "revolute",
-                    "source": "body9",
-                    "target": "body10",
-                    "anchorSourceX": 1,
-                    "anchorSourceY": 0
-				}
-			}
-		}
-	}
+                    "source": "head",
+                    "target": "chain1",
+                    "anchorSourceX": 0,//0.075,
+                    "anchorSourceY": 0//-0.15
+                },
+                // "joint2": {
+                //     "type": "revolute",
+                //     "source": "chain1",
+                //     "target": "chain2",
+                //     "anchorSourceX": 0,//0.075,
+                //     "anchorSourceY": 0//-0.15
+                // },
+                // "joint3": {
+                //     "type": "revolute",
+                //     "source": "chain2",
+                //     "target": "chain3",
+                //     "anchorSourceX": 0,//0.075,
+                //     "anchorSourceY": 0//-0.15
+                // },
+                // "joint4": {
+                //     "type": "revolute",
+                //     "source": "chain3",
+                //     "target": "chain4",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint5": {
+                //     "type": "revolute",
+                //     "source": "chain4",
+                //     "target": "chain5",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint6": {
+                //     "type": "revolute",
+                //     "source": "chain5",
+                //     "target": "chain6",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint7": {
+                //     "type": "revolute",
+                //     "source": "chain6",
+                //     "target": "chain7",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint8": {
+                //     "type": "revolute",
+                //     "source": "chain7",
+                //     "target": "chain8",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint9": {
+                //     "type": "revolute",
+                //     "source": "chain8",
+                //     "target": "chain9",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint10": {
+                //     "type": "revolute",
+                //     "source": "chain9",
+                //     "target": "chain10",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 0
+                // },
+                // "joint11": {
+                //     "type": "revolute",
+                //     "source": "chain1",
+                //     "target": "ball",
+                //     "anchorSourceX": 0,
+                //     "anchorSourceY": 3
+                // }
+            }
+        }
+    }
 }
