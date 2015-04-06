@@ -4,7 +4,7 @@
         "systems": {
             "physics": {
                 "gravityX": 0,
-                "gravityY": 20
+                "gravityY": 40
             }
         }
     },
@@ -189,50 +189,41 @@
 				}
 			}
 		},
-        // {
-        //     "name": "sandbox.entity.worm",
-        //     "components": {
-        //         "position": {
-        //             "x": -1.5,
-        //             "y": -6
-        //         }
-        //     }
-        // },
-        // {
-        //     "name": "sandbox.entity.worm",
-        //     "components": {
-        //         "position": {
-        //             "x": 0,
-        //             "y": -6
-        //         }
-        //     }
-        // },
-        // {
-        //     "name": "sandbox.entity.worm",
-        //     "components": {
-        //         "position": {
-        //             "x": 1.5,
-        //             "y": -6
-        //         }
-        //     }
-        // },
-        // {
-        //     "name": "sandbox.entity.worm",
-        //     "components": {
-        //         "position": {
-        //             "x": 3,
-        //             "y": -6
-        //         }
-        //     }
-        // },
-        // {
-        //     "name": "sandbox.entity.worm",
-        //     "components": {
-        //         "position": {
-        //             "x": 4.5,
-        //             "y": -6
-        //         }
-        //     }
-        // }
+        {
+            "name": "sandbox.entity.worm",
+            "components": {
+                "position": {
+                    "x": -1.5,
+                    "y": -6
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.worm",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -6
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.worm",
+            "components": {
+                "position": {
+                    "x": 1.5,
+                    "y": -6
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.worm",
+            "components": {
+                "position": {
+                    "x": 3,
+                    "y": -6
+                }
+            }
+        }
 	]
 }
