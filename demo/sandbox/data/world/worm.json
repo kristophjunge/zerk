@@ -7,7 +7,7 @@
                 "gravityY": 20
             },
             "viewport": {
-                "zoomDefault": 100
+                "zoomDefault": 50
             }
         }
     },
@@ -187,10 +187,55 @@
             "name": "sandbox.entity.worm",
             "components": {
                 "position": {
-                    "x": -10,
-                    "y": 0
+                    "x": -3,
+                    "y": -6
 				}
 			}
-		}
+		},
+        // {
+        //     "name": "sandbox.entity.worm",
+        //     "components": {
+        //         "position": {
+        //             "x": -1.5,
+        //             "y": -6
+        //         }
+        //     }
+        // },
+        // {
+        //     "name": "sandbox.entity.worm",
+        //     "components": {
+        //         "position": {
+        //             "x": 0,
+        //             "y": -6
+        //         }
+        //     }
+        // },
+        // {
+        //     "name": "sandbox.entity.worm",
+        //     "components": {
+        //         "position": {
+        //             "x": 1.5,
+        //             "y": -6
+        //         }
+        //     }
+        // },
+        // {
+        //     "name": "sandbox.entity.worm",
+        //     "components": {
+        //         "position": {
+        //             "x": 3,
+        //             "y": -6
+        //         }
+        //     }
+        // },
+        // {
+        //     "name": "sandbox.entity.worm",
+        //     "components": {
+        //         "position": {
+        //             "x": 4.5,
+        //             "y": -6
+        //         }
+        //     }
+        // }
 	]
 }
