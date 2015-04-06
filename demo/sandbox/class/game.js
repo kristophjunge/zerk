@@ -1,5 +1,5 @@
 zerk.define({
-	
+
 	name: 'sandbox.game',
 	extend: 'zerk.game',
 	require: [
@@ -11,7 +11,7 @@ zerk.define({
 		'zerk.game.engine.component.fall',
 		'zerk.game.engine.component.trigger',
 		'zerk.game.engine.component.elevator',
-		
+
 		'zerk.game.engine.system.physics.box2d',
 		'zerk.game.engine.system.viewport.canvas',
 		'zerk.game.engine.system.sprite',
@@ -25,52 +25,52 @@ zerk.define({
 		'zerk.game.engine.system.trigger',
 		'zerk.game.engine.system.elevator'
 	]
-	
+
 },{
-	
+
 	run: function(config) {
-		
+
 		if (!zerk.parent('sandbox.game').run.apply(
 			this,
 			arguments
 		)) {
 			return;
 		}
-		
+
 		if (!this._engine.start()) {
 			return;
 		}
 
 		this._engine.loadWorld(
-			'sandbox.world.crates',
+			'sandbox.world.worm',
 			function() {
-				
+
 			},
 			function(error) {
-				
+
 				console.log(error);
-				
+
 			}
 		);
-		
+
 	},
-	
+
 	loadDemo: function(world) {
-		
+
 		this._engine.reset();
-		
+
 		this._engine.loadWorld(
 			world,
 			function() {
-				
+
 			},
 			function(error) {
-				
+
 				console.log(error);
-				
+
 			}
 		);
-		
+
 	}
-	
+
 });
