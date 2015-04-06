@@ -12,46 +12,44 @@
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "width": 3,
-                            "height": 3
+                            "width": 1.5,
+                            "height": 1.5
 						}
 					}
 				},
                 "frame1": {
                     "x": 0,
-                    "y": -2,
+                    "y": -1,
                     "moveable": false,
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "width": 5,
-                            "height": 1
+                            "width": 2.5,
+                            "height": 0.5
 						}
 					}
 				},
                 "frame2": {
-                    "x": -2,
-                    "y": -0.5,
+                    "x": -1,
+                    "y": -0.25,
                     "moveable": false,
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "width": 1,
-                            "height": 2
+                            "width": 0.5,
+                            "height": 1
 						}
 					}
 				},
                 "frame3": {
-                    "x": 2,
-                    "y": -0.5,
+                    "x": 1,
+                    "y": -0.25,
                     "moveable": false,
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "x": 0,
-                            "y": 0,
-                            "width": 1,
-                            "height": 2
+                            "width": 0.5,
+                            "height": 1
 						}
 					}
 				}

@@ -389,13 +389,12 @@ zerk.define({
 		
 		if (!componentState.jumping) return;
 		
-		var maxPower=15;
+		var maxPower=3;
 		var steps=5;
 		
 		if (componentState.jumpCounter==steps) return;
 		
-		var power=(100-(componentState.jumpCounter*(100/steps)))
-			*(maxPower/100);
+		var power=(100-(componentState.jumpCounter*(100/steps)))*(maxPower/100);
 		
 		this._physics.bodyApplyImpulse(entity,'main',270,power);
 		

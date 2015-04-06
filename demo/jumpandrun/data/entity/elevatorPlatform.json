@@ -13,8 +13,8 @@
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "width": 4,
-                            "height": 0.5
+                            "width": 2,
+                            "height": 0.25
 						}
 					}
 				}

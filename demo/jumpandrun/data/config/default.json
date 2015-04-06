@@ -2,12 +2,12 @@
 	engine: {
 		systems: {
 			viewport: {
-                zoomDefault: 50,
+                zoomDefault: 100,
 				showWorldCenterIndicator: false,
-				trackPlayer: true
+				trackPlayer: false
 			},
 			wireframe: {
-				showFixtureBoundingBox: false
+				showFixtureBoundingBox: true
 			},
 			debuginfo: {
 				showViewCenterIndicator: false,

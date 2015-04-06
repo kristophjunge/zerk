@@ -69,8 +69,8 @@ zerk.define({
                 },
                 "entities": [
                     {
-                        "name": "entityeditor.entity.empty",
-                        //"name": "sandbox.entity.crate",
+                        //"name": "entityeditor.entity.empty",
+                        "name": "sandbox.entity.crate",
                         tags: [
                             'editor'
                         ],
@@ -85,7 +85,7 @@ zerk.define({
             },
 			function() {
 
-                me._engine.getSystem('physics').setEnabled(false);
+                //me._engine.getSystem('physics').setEnabled(false);
 
                 var control=me._engine.getSystem('control');
                 control.mouse.on('mousedown',me._onMouseDown,me);
