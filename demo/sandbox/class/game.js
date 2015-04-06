@@ -34,23 +34,15 @@ zerk.define({
 			this,
 			arguments
 		)) {
-			
 			return;
-			
 		}
 		
 		if (!this._engine.start()) {
-			
 			return;
-			
 		}
-		
-		//this.loadDemo('sandbox.world.shapes');
-		//this.loadDemo('sandbox.world.worm');
-		//this.loadDemo('sandbox.world.hotrod');
-		
+
 		this._engine.loadWorld(
-			'sandbox.world.empty',
+			'sandbox.world.crates',
 			function() {
 				
 			},

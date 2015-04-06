@@ -2,24 +2,25 @@
 	engine: {
 		systems: {
 			viewport: {
-				showWorldCenterIndicator: true,
+                zoomDefault: 50,
+				showWorldCenterIndicator: false,
 				trackPlayer: true
 			},
 			wireframe: {
-				showFixtureBoundingBox: true
+				showFixtureBoundingBox: false
 			},
 			debuginfo: {
-				showViewCenterIndicator: true,
+				showViewCenterIndicator: false,
 				showFPS: true,
 				showZoom: true,
 				showPosition: true
 			},
 			physics: {
-				enableMouseJoint: true
+				enableMouseJoint: false
 			},
 			control: {
 				mouse: {
-					enableJoint: true,
+					enableJoint: false,
 					enableWheelZoom: true
 				}
 			}
@@ -27,7 +28,7 @@
 		defaultSystems: [
 			'physics',
 			'viewport',
-			//'sprite',
+			'sprite',
 			'wireframe',
 			'message',
 			'debuginfo',

@@ -1,86 +1,105 @@
 {
-	name: 'madStone',
-	components: {
-		position: {},
-		sprite: {},
-		madStone: {},
-		physics: {
-			bodies: {
-				main: {
-					x: 0,
-					y: 0,
-					width: 3,
-					height: 3,
-					angle: 0,
-					moveable: false,
-					origin: true,
-					fixedRotation: true,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 3,
-							height: 3
+	"name": "madStone",
+    "components": {
+        "position": {},
+        "madStone": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixedRotation": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 3,
+                            "height": 3
 						}
 					}
 				},
-				body2: {
-					x: 0,
-					y: -2,
-					width: 5,
-					height: 1,
-					angle: 0,
-					moveable: false,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 5,
-							height: 1
+                "frame1": {
+                    "x": 0,
+                    "y": -2,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 5,
+                            "height": 1
 						}
 					}
 				},
-				body3: {
-					x: -2,
-					y: -0.5,
-					width: 1,
-					height: 2,
-					angle: 0,
-					moveable: false,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 1,
-							height: 2
+                "frame2": {
+                    "x": -2,
+                    "y": -0.5,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 2
 						}
 					}
 				},
-				body4: {
-					x: 2,
-					y: -0.5,
-					width: 1,
-					height: 2,
-					angle: 0,
-					moveable: false,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 1,
-							height: 2
+                "frame3": {
+                    "x": 2,
+                    "y": -0.5,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "x": 0,
+                            "y": 0,
+                            "width": 1,
+                            "height": 2
 						}
 					}
 				}
 			}
-		}
+		},
+        "sprite": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-red"
+                            }
+                        }
+                    }
+                },
+                "frame1": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                },
+                "frame2": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                },
+                "frame3": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

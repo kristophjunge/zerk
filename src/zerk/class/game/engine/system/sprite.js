@@ -170,7 +170,9 @@ zerk.define({
 		
 		for (var i=0;i<bodies.length;i++) {
 			var physicsBody=entity.components.physics.bodies[bodies[i].key];
-			this._renderBody(entity,physicsBody,bodies[i]);
+            if (physicsBody) {
+			    this._renderBody(entity,physicsBody,bodies[i]);
+            }
 		}
 
 	},

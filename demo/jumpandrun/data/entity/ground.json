@@ -1,24 +1,22 @@
 {
-	"name": "elevatorPlatform",
+	"name": "ground",
     "components": {
         "position": {},
-        "elevator": {},
         "physics": {
             "bodies": {
                 "main": {
                     "moveable": false,
-                    "kinematic": true,
                     "origin": true,
-                    "fixedRotation": true,
                     "fixtures": {
                         "main": {
                             "shape": "box",
-                            "width": 4,
-                            "height": 0.5
+                            "width": 1,
+                            "height": 1
 						}
 					}
 				}
-			}
+			},
+            "joints": {}
 		},
         "sprite": {
             "bodies": {
@@ -27,7 +25,7 @@
                         "main": {
                             "texture1": {
                                 "render": "texture",
-                                "texture": "jumpandrun.texture.zerk-debug-purple"
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
                             }
                         }
                     }

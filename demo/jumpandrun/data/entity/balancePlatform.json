@@ -1,51 +1,60 @@
 {
-	name: 'balancePlatform',
-	components: {
-		position: {},
-		sprite: {},
-		physics: {
-			bodies: {
-				main: {
-					x: 0,
-					y: 0,
-					width: 4,
-					height: 0.5,
-					angle: 0,
-					moveable: true,
-					origin: true,
-					fixedRotation: false,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 4,
-							height: 0.5,
-							friction: 0.2
+	"name": "balancePlatform",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixedRotation": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 4,
+                            "height": 0.5,
+                            "friction": 0.2
 						}
 					}
 				},
-				axis: {
-					x: 0,
-					y: 0.7,
-					width: 1,
-					height: 1,
-					angle: 0,
-					moveable: false,
-					origin: false,
-					fixtures: {
-						main: {
-							shape: 'circle',
-							x: 0,
-							y: 0,
-							angle: 0,
-							radius: 0.5,
-							density: 3
+                "axis": {
+                    "x": 0,
+                    "y": 0.7,
+                    "moveable": false,
+                    "origin": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "circle",
+                            "radius": 0.5,
+                            "density": 3
 						}
 					}
 				}
 			}
-		}
+		},
+        "sprite": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-purple"
+                            }
+                        }
+                    }
+                },
+                "axis": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

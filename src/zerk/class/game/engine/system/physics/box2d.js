@@ -1019,9 +1019,7 @@ zerk.define({
 		
 		var bodyState=entity.components.physics.bodies[body.key];
 		var position=entity.components.position;
-		
-		
-		
+
 		// Setup position
 		bodyDef.position.x=position.x+bodyState.x;
 		bodyDef.position.y=position.y+bodyState.y;

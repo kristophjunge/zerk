@@ -1,46 +1,48 @@
 {
-	name: 'player',
-	components: {
-		position: {},
-		player: {
-			enableControl: false
+	"name": "player",
+    "components": {
+        "position": {},
+        "player": {
+            "enableControl": false
 		},
-		physics: {
-			bodies: {
-				main: {
-					x: 0,
-					y: 0,
-					width: 1,
-					height: 2,
-					angle: 0,
-					moveable: true,
-					origin: true,
-					fixedRotation: true,
-					fixtures: {
-						torso: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: 1,
-							height: 2,
-							friction: 0.2
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixedRotation": true,
+                    "fixtures": {
+                        "torso": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 2,
+                            "friction": 0.2
 						},
-						foot: {
-							shape: 'box',
-							x: 0,
-							y: 1,
-							angle: 0,
-							width: 0.9,
-							height: 0.25,
-							isSensor: true
+                        "foot": {
+                            "shape": "box",
+                            "x": 0,
+                            "y": 1,
+                            "width": 0.9,
+                            "height": 0.25,
+                            "isSensor": true
 						}
 					}
 				}
 			}
 		},
-		sprite: {
-			/* Not implemented yet */
-		}
+        "sprite": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "torso": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-green"
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }

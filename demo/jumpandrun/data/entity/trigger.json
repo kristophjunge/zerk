@@ -1,28 +1,19 @@
 {
-	name: 'trigger',
-	components: {
-		position: {},
-		trigger: {},
-		physics: {
-			bodies: {
-				main: {
-					x: 0,
-					y: 0,
-					width: 3,
-					height: 3,
-					angle: 0,
-					moveable: false,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'box',
-							x: 0,
-							y: 0,
-							angle: 0,
-							width: '100%',
-							height: '100%',
-							isSensor: true,
-							sprites: {}
+	"name": "trigger",
+    "components": {
+        "position": {},
+        "trigger": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 3,
+                            "height": 3,
+                            "isSensor": true
 						}
 					}
 				}
