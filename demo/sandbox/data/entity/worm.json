@@ -2,7 +2,36 @@
     "name": "pendulum",
     "components": {
         "position": {},
-        "sprite": {},
+        "sprite": {
+            "bodies": {
+                "head": {
+                    "fixtures": {
+                        "main": {
+                            "main": {
+                                "render": "texture",
+                                "texture": "sandbox.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                },
+                "chain1": {
+                    "fixtures": {
+                        "stick": {
+                            "main": {
+                                "render": "texture",
+                                "texture": "sandbox.texture.zerk-debug-blue"
+                            }
+                        },
+                        "ball": {
+                            "main": {
+                                "render": "texture",
+                                "texture": "sandbox.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "physics": {
             "bodies": {
                 "head": {

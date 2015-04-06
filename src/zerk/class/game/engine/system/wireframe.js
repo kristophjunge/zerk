@@ -375,16 +375,19 @@ zerk.define({
 		
 		for (var i=0;i<rectangleVertices.length;i++) {
 
+            // Rotate with fixture angle
             var rotatedVertice=zerk.helper.rotatePosition(
                 rectangleVertices[i][0],
                 rectangleVertices[i][1],
                 fixtureState.angle
             );
 
+            // Add fixture offset
             rotatedVertice.x+=+fixtureState.x;
             rotatedVertice.y+=fixtureState.y;
 
-			var rotatedVertice=zerk.helper.rotatePosition(
+            // Rotate with body angle
+			rotatedVertice=zerk.helper.rotatePosition(
                 rotatedVertice.x,
                 rotatedVertice.y,
 				bodyState.angle
@@ -449,16 +452,28 @@ zerk.define({
 		
 		if (!bodyState) return;
 		if (!fixtureState) return;
-		
+
+        var fixturePosition={
+            x: fixtureState.x,
+            y: fixtureState.y
+        };
+
+        // Rotate with body angle
+        fixturePosition=zerk.helper.rotatePosition(
+            fixturePosition.x,
+            fixturePosition.y,
+            bodyState.angle
+        );
+
 		var x=this._viewport._getCanvasX(
 			position.x
 			+bodyState.x
-			+fixtureState.x
+			+fixturePosition.x
 		);
 		var y=this._viewport._getCanvasY(
 			position.y
 			+bodyState.y
-			+fixtureState.y
+			+fixturePosition.y
 		);
 		
 		this._viewport.drawArc(
@@ -473,7 +488,7 @@ zerk.define({
 			style.strokeColor,
 			style.lineWidth
 		);
-		
+
 		var rotatedAngleIndicator=zerk.helper.rotatePosition(
 			fixtureState.x,
 			fixtureState.y-fixtureState.radius,
