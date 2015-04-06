@@ -10,8 +10,8 @@
 					fixtures: {
 						main: {
 							shape: 'box',
-							width: 3,
-							height: 3
+							width: 1.5,
+							height: 1.5
 						}
 					}
 				}

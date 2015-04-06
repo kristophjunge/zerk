@@ -10,7 +10,7 @@
 					fixtures: {
 						main: {
 							shape: 'circle',
-							radius: 2
+							radius: 1
 						}
 					}
 				}

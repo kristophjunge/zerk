@@ -42,7 +42,7 @@ zerk.define({
 		}
 
 		this._engine.loadWorld(
-			'sandbox.world.worm',
+			'sandbox.world.crates',
 			function() {
 
 			},
