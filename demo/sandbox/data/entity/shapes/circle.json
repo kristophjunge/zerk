@@ -1,5 +1,5 @@
 {
-	name: 'klumpatsch',
+	name: 'circle',
 	components: {
 		position: {},
 		physics: {
@@ -9,19 +9,8 @@
 					origin: true,
 					fixtures: {
 						main: {
-							shape: 'polygon',
-							vertices: [
-								[-1.68,1.54],
-								[-1.89,-0.56],
-								[-1.12,-1.96],
-								[0,-2.24],
-								[1.12,-1.96],
-								[1.68,-1.54],
-								[1.89,0.56],
-								[1.12,1.96],
-								[0,2.24],
-								[-1.12,1.96]
-							]
+							shape: 'circle',
+							radius: 2
 						}
 					}
 				}
@@ -34,7 +23,10 @@
                         main: {
                             texture1: {
                                 render: 'texture',
-                                texture: 'sandbox.texture.debug-white'
+                                texture: 'sandbox.texture.zerk-debug-blue',
+                                x: 0.75,
+                                y: 0.75,
+                                angle: 130
                             }
                         }
                     }

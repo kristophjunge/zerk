@@ -5,9 +5,6 @@
             "physics": {
                 "gravityX": 0,
                 "gravityY": 20
-            },
-            "viewport": {
-                "zoomDefault": 100
             }
         }
     },
@@ -184,7 +181,7 @@
         },
         /* Content */
 		{
-			name: 'sandbox.entity.shapes.regular.circle',
+			name: 'sandbox.entity.shapes.circle',
 			components: {
 				position: {
 					x: 0,
@@ -193,7 +190,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.triangle',
+			name: 'sandbox.entity.shapes.triangle',
 			components: {
 				position: {
 					x: 0,
@@ -202,7 +199,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.rectangle',
+			name: 'sandbox.entity.shapes.rectangle',
 			components: {
 				position: {
 					x: 0,
@@ -211,7 +208,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.pentagon',
+			name: 'sandbox.entity.shapes.pentagon',
 			components: {
 				position: {
 					x: 0,
@@ -220,16 +217,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.hexagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},/*
-		{
-			name: 'sandbox.entity.shapes.regular.heptagon',
+			name: 'sandbox.entity.shapes.hexagon',
 			components: {
 				position: {
 					x: 0,
@@ -238,7 +226,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.octagon',
+			name: 'sandbox.entity.shapes.heptagon',
 			components: {
 				position: {
 					x: 0,
@@ -247,7 +235,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.nonagon',
+			name: 'sandbox.entity.shapes.octagon',
 			components: {
 				position: {
 					x: 0,
@@ -256,16 +244,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.decagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},*/
-		{
-			name: 'sandbox.entity.shapes.irregular.criton',
+			name: 'sandbox.entity.shapes.nonagon',
 			components: {
 				position: {
 					x: 0,
@@ -274,25 +253,7 @@
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.irregular.brimborium',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.irregular.klumpatsch',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.irregular.fliwatuut',
+			name: 'sandbox.entity.shapes.decagon',
 			components: {
 				position: {
 					x: 0,

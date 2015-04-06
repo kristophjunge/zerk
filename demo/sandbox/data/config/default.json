@@ -23,6 +23,7 @@
                 "height": 720,
                 "zoomMax": 100,
                 "zoomMin": 10,
+                "zoomDefault": 100,
                 "showWorldCenterIndicator": false,
                 "trackPlayer": false,
                 "backgroundColor": "rgb(0,0,0)",

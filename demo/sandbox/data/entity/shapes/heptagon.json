@@ -1,5 +1,5 @@
 {
-	name: 'octagon',
+	name: 'heptagon',
 	components: {
 		position: {},
 		physics: {
@@ -11,14 +11,13 @@
 						main: {
 							shape: 'polygon',
 							vertices: [
-								[1.84,-0.76],
-								[1.84,0.76],
-								[0.76,1.84],
-								[-0.76,1.84],
-								[-1.84,0.76],
-								[-1.84,-0.76],
-								[-0.76,-1.84],
-								[0.76,-1.84]
+								[1.56,-1.24],
+								[1.94,0.44],
+								[0.86,1.8],
+								[-0.86,1.8],
+								[-1.94,0.44],
+								[-1.56,-1.24],
+								[0,-2]
 							]
 						}
 					}
@@ -32,7 +31,7 @@
                         main: {
                             texture1: {
                                 render: 'texture',
-                                texture: 'sandbox.texture.debug-white'
+                                texture: 'sandbox.texture.zerk-debug-orange'
                             }
                         }
                     }

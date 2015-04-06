@@ -389,8 +389,8 @@ zerk.define({
 		
 		if (!componentState.jumping) return;
 		
-		var maxPower=3;
-		var steps=5;
+		var maxPower=3.3;
+		var steps=3;
 		
 		if (componentState.jumpCounter==steps) return;
 		
@@ -414,9 +414,9 @@ zerk.define({
 		
 		var velocity=this._physics.getBodyLinearVelocity(entity,'main');
 		
-		if (velocity.x<=-7) return;
+		if (velocity.x<=-6) return;
 		
-		var power=1;
+		var power=0.3;
 		
 		if (componentState.jumping) {
 			power=0.75;
@@ -438,9 +438,9 @@ zerk.define({
 		
 		var velocity=this._physics.getBodyLinearVelocity(entity,'main');
 		
-		if (velocity.x>=7) return;
+		if (velocity.x>=6) return;
 		
-		var power=1;
+		var power=0.3;
 		
 		if (componentState.jumping) {
 			power=0.75;

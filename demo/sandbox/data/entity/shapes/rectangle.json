@@ -1,5 +1,5 @@
 {
-	name: 'brimborium',
+	name: 'rectangle',
 	components: {
 		position: {},
 		physics: {
@@ -9,17 +9,9 @@
 					origin: true,
 					fixtures: {
 						main: {
-							shape: 'polygon',
-							vertices: [
-								[0,-1.95],
-								[1.95,-1.2],
-								[2.4,0.6],
-								[1.95,1.2],
-								[0,1.65],
-								[-1.95,1.2],
-								[-2.4,0.6],
-								[-1.95,-1.2]
-							]
+							shape: 'box',
+							width: 3,
+							height: 3
 						}
 					}
 				}
@@ -32,7 +24,10 @@
                         main: {
                             texture1: {
                                 render: 'texture',
-                                texture: 'sandbox.texture.debug-white'
+                                texture: 'sandbox.texture.zerk-debug-orange',
+                                x: 0.33,
+                                y: 0.33,
+                                angle: 130
                             }
                         }
                     }

@@ -443,28 +443,6 @@
             "components": {
                 "position": {
                     "x": 66.25,
-                    "y": -5
-				},
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-						}
-					}
-				}
-			}
-		},
-		{
-            "name": "jumpandrun.entity.ground",
-            "components": {
-                "position": {
-                    "x": 137,
                     "y": -2.5
 				},
                 "physics": {
@@ -473,8 +451,8 @@
                             "fixtures": {
                                 "main": {
                                     "shape": "box",
-                                    "width": 1,
-                                    "height": 4
+                                    "width": 5,
+                                    "height": 0.5
                                 }
                             }
 						}
@@ -482,24 +460,13 @@
 				}
 			}
 		},
+
 		{
-            "name": "jumpandrun.entity.madStone",
-            "tags": [
-				"madStone3"
-			],
+            "name": "jumpandrun.entity.ground",
             "components": {
                 "position": {
-                    "x": 132.5,
-                    "y": -11
-				}
-			}
-		},
-		{
-            "name": "jumpandrun.entity.trigger",
-            "components": {
-                "position": {
-                    "x": 132.5,
-                    "y": -8
+                    "x": 69,
+                    "y": -1.75
 				},
                 "physics": {
                     "bodies": {
@@ -507,8 +474,43 @@
                             "fixtures": {
                                 "main": {
                                     "shape": "box",
-                                    "width": 5,
-                                    "height": 5
+                                    "width": 0.5,
+                                    "height": 2
+                                }
+                            }
+						}
+					}
+				}
+			}
+		},
+
+		{
+            "name": "jumpandrun.entity.madStone",
+            "tags": [
+				"madStone3"
+			],
+            "components": {
+                "position": {
+                    "x": 66.25,
+                    "y": -5.5
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.trigger",
+            "components": {
+                "position": {
+                    "x": 66.25,
+                    "y": -4
+				},
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 2.5,
+                                    "height": 2.5
                                 }
                             }
 						}
@@ -525,8 +527,8 @@
             "name": "jumpandrun.entity.ground",
             "components": {
                 "position": {
-                    "x": 142.5,
-                    "y": -1
+                    "x": 71.25,
+                    "y": -0.5
 				},
                 "physics": {
                     "bodies": {
@@ -534,8 +536,8 @@
                             "fixtures": {
                                 "main": {
                                     "shape": "box",
-                                    "width": 10,
-                                    "height": 1
+                                    "width": 5,
+                                    "height": 0.5
                                 }
                             }
 						}
@@ -547,8 +549,8 @@
             "name": "jumpandrun.entity.balancePlatform",
             "components": {
                 "position": {
-                    "x": 152.5,
-                    "y": -1
+                    "x": 76.25,
+                    "y": -0.5
 				}
 			}
 		},
@@ -556,8 +558,8 @@
             "name": "jumpandrun.entity.balancePlatform",
             "components": {
                 "position": {
-                    "x": 159.5,
-                    "y": -1
+                    "x": 79.75,
+                    "y": -0.5
 				}
 			}
 		},
@@ -565,8 +567,8 @@
             "name": "jumpandrun.entity.balancePlatform",
             "components": {
                 "position": {
-                    "x": 167.5,
-                    "y": 2
+                    "x": 83.75,
+                    "y": 1
 				}
 			}
 		},
@@ -574,11 +576,11 @@
             "name": "jumpandrun.entity.elevatorPlatform",
             "components": {
                 "position": {
-                    "x": 172.5,
-                    "y": -7
+                    "x": 86.25,
+                    "y": -3.5
 				},
                 "elevator": {
-                    "distance": 8,
+                    "distance": 4,
                     "axis": "vertical",
                     "position": 0,
                     "enabled": true
@@ -589,8 +591,8 @@
             "name": "jumpandrun.entity.ground",
             "components": {
                 "position": {
-                    "x": 182.5,
-                    "y": -7
+                    "x": 91.25,
+                    "y": -3.5
 				},
                 "physics": {
                     "bodies": {
@@ -598,8 +600,8 @@
                             "fixtures": {
                                 "main": {
                                     "shape": "box",
-                                    "width": 10,
-                                    "height": 1
+                                    "width": 5,
+                                    "height": 0.5
                                 }
                             }
 						}
@@ -611,8 +613,8 @@
             "name": "jumpandrun.entity.ground",
             "components": {
                 "position": {
-                    "x": 187,
-                    "y": -10.5
+                    "x": 93.5,
+                    "y": -5.25
 				},
                 "physics": {
                     "bodies": {
@@ -620,8 +622,8 @@
                             "fixtures": {
                                 "main": {
                                     "shape": "box",
-                                    "width": 1,
-                                    "height": 6
+                                    "width": 0.5,
+                                    "height": 3
                                 }
                             }
 						}
@@ -633,8 +635,8 @@
             "name": "jumpandrun.entity.trigger",
             "components": {
                 "position": {
-                    "x": 182.5,
-                    "y": -9
+                    "x": 91.25,
+                    "y": -5.25
 				},
                 "physics": {
                     "bodies": {
@@ -660,8 +662,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": -2.5,
-                    "y": 10
+                    "x": 1.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -670,7 +672,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -682,8 +684,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 7.5,
-                    "y": 10
+                    "x": 11.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -692,7 +694,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -704,8 +706,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 17.5,
-                    "y": 10
+                    "x": 21.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -714,7 +716,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -726,8 +728,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 27.5,
-                    "y": 10
+                    "x": 31.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -736,7 +738,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -748,8 +750,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 37.5,
-                    "y": 10
+                    "x": 41.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -758,7 +760,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -770,8 +772,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 47.5,
-                    "y": 10
+                    "x": 51.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -780,7 +782,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -792,8 +794,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 57.5,
-                    "y": 10
+                    "x": 61.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -802,7 +804,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -814,8 +816,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 67.5,
-                    "y": 10
+                    "x": 71.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -824,7 +826,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -836,8 +838,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 77.5,
-                    "y": 10
+                    "x": 81.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -846,7 +848,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }
@@ -858,8 +860,8 @@
             "name": "jumpandrun.entity.damager",
             "components": {
                 "position": {
-                    "x": 87.5,
-                    "y": 10
+                    "x": 91.25,
+                    "y": 5
                 },
                 "physics": {
                     "bodies": {
@@ -868,227 +870,7 @@
                                 "main": {
                                     "shape": "box",
                                     "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 97.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 107.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 117.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 127.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 137.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 147.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 157.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 167.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 177.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "name": "jumpandrun.entity.damager",
-            "components": {
-                "position": {
-                    "x": 187.5,
-                    "y": 10
-                },
-                "physics": {
-                    "bodies": {
-                        "main": {
-                            "fixtures": {
-                                "main": {
-                                    "shape": "box",
-                                    "width": 10,
-                                    "height": 1
+                                    "height": 0.5
                                 }
                             }
                         }

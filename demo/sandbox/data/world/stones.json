@@ -5,10 +5,7 @@
             "physics": {
                 "gravityX": 0,
                 "gravityY": 0
-			},
-            "viewport": {
-                "zoomDefault": 100
-            }
+			}
 		}
 	},
     "entities": [

@@ -142,7 +142,7 @@ zerk.define({
 				 * @property moveable
 				 * @type Boolean
 				 */
-				moveable: true,
+				moveable: false,
 				
 				/**
 				 * Sets the body to be kinematic

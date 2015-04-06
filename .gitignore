@@ -1,4 +1,6 @@
 .*
 !.gitignore
-doc
-tools
+local.html
+
+/doc
+/tools

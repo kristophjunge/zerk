@@ -1,5 +1,5 @@
 {
-	name: 'hexagon',
+	name: 'decagon',
 	components: {
 		position: {},
 		physics: {
@@ -11,12 +11,16 @@
 						main: {
 							shape: 'polygon',
 							vertices: [
+								[1.62,-1.18],
 								[2,0],
-								[1,1.74],
-								[-1,1.74],
+								[1.62,1.18],
+								[0.62,1.9],
+								[-0.62,1.9],
+								[-1.62,1.18],
 								[-2,0],
-								[-1,-1.74],
-								[1,-1.74]
+								[-1.62,-1.18],
+								[-0.62,-1.9],
+								[0.62,-1.9]
 							]
 						}
 					}
@@ -30,7 +34,7 @@
                         main: {
                             texture1: {
                                 render: 'texture',
-                                texture: 'sandbox.texture.debug-white'
+                                texture: 'sandbox.texture.zerk-debug-green'
                             }
                         }
                     }

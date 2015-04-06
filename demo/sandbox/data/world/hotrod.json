@@ -5,9 +5,6 @@
             "physics": {
                 "gravityX": 0,
                 "gravityY": 20
-            },
-            "viewport": {
-                "zoomDefault": 100
             }
         }
     },

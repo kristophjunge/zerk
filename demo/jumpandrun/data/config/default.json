@@ -4,10 +4,10 @@
 			viewport: {
                 zoomDefault: 100,
 				showWorldCenterIndicator: false,
-				trackPlayer: false
+				trackPlayer: true
 			},
 			wireframe: {
-				showFixtureBoundingBox: true
+				showFixtureBoundingBox: false
 			},
 			debuginfo: {
 				showViewCenterIndicator: false,

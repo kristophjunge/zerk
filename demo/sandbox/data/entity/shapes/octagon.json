@@ -1,5 +1,5 @@
 {
-	name: 'criton',
+	name: 'octagon',
 	components: {
 		position: {},
 		physics: {
@@ -11,11 +11,14 @@
 						main: {
 							shape: 'polygon',
 							vertices: [
-								[0,-3],
-								[2,-1],
-								[1,1],
-								[-1,1],
-								[-2,-1]
+								[1.84,-0.76],
+								[1.84,0.76],
+								[0.76,1.84],
+								[-0.76,1.84],
+								[-1.84,0.76],
+								[-1.84,-0.76],
+								[-0.76,-1.84],
+								[0.76,-1.84]
 							]
 						}
 					}
@@ -29,7 +32,7 @@
                         main: {
                             texture1: {
                                 render: 'texture',
-                                texture: 'sandbox.texture.debug-white'
+                                texture: 'sandbox.texture.zerk-debug-blue'
                             }
                         }
                     }
