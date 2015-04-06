@@ -56,14 +56,16 @@
                         "stick": {
                             "shape": "box",
                             "width": 0.15,
+                            "density": 0,
+                            "friction": 0,
                             "height": 6
                         },
                         "ball": {
                             "y": 3,
                             "shape": "circle",
-                            "radius": 0.65,
-                            "density": 10,
-                            "friction": 0,
+                            "radius": 0.74,
+                            "density": 30000, //moar density!!11
+                            "friction": 1,
                             "restitution": 1
                         }
                     }
