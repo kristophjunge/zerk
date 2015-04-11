@@ -1,0 +1,24 @@
+{
+    "name": "sky",
+    "components": {
+        "position": {},
+        "sprite": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "fixture1": {
+                            "shape": "box",
+                            "width": 5,
+                            "height": 1,
+                            "friction": 0.75
+						}
+					}
+				}
+			},
+            "joints": {}
+		}
+	}
+}

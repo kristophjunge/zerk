@@ -188,7 +188,17 @@ zerk.define({
 	 * @protected
 	 */
 	_b2DistanceJointDef: Box2D.Dynamics.Joints.b2DistanceJointDef,
-	
+
+
+    /**
+     * Shortcut for Box2D.Dynamics.Joints.b2PrismaticJointDef
+     *
+     * @property _b2PrismaticJointDef
+     * @type Object
+     * @protected
+     */
+    _b2PrismaticJointDef: Box2D.Dynamics.Joints.b2PrismaticJointDef,
+
 	/**
 	 * Shortcut for Box2D.Dynamics.b2ContactListener
 	 * 
@@ -341,6 +351,30 @@ zerk.define({
 		);
 		
 	},
+
+    jointSetMotorSpeed: function(entity,jointKey,speed) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMotorSpeed(speed);
+
+    },
+
+    jointSetMotorForce: function(entity,jointKey,force) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMotorForce(force);
+
+    },
+
+    jointSetMaxMotorTorque: function(entity,jointKey,torque) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMaxMotorTorque(torque);
+
+    },
 	
 	/**
 	 * Sets the linear velocity of given body
@@ -1106,14 +1140,10 @@ zerk.define({
 		var fixDef=new this._b2FixtureDef;
 		
 		if (fixture.categoryBits!=null) {
-			
 			fixDef.filter.categoryBits=fixture.categoryBits;
-			
 		}
 		if (fixture.maskBits!=null) {
-			
 			fixDef.filter.maskBits=fixture.maskBits;
-			
 		}
 		
 		fixDef.density=fixture.density;
@@ -1259,7 +1289,7 @@ zerk.define({
 	) {
 		
 		var fixDef=new this._b2FixtureDef;
-		
+
 		if (fixture.categoryBits!=null) {
 			
 			fixDef.filter.categoryBits=fixture.categoryBits;
@@ -1364,15 +1394,24 @@ zerk.define({
 	 * @protected
 	 */
 	_createJoint: function(entity,joint) {
-		
+
+        var physicsHandle=null;
+
 		switch (joint.type) {
 			case 'distance':
-				return this._createJointDistance(entity,joint);
+                physicsHandle=this._createJointDistance(entity,joint);
+                break;
 			case 'revolute':
-				return this._createJointRevolute(entity,joint);
+                physicsHandle=this._createJointRevolute(entity,joint);
+                break;
+            case 'prismatic':
+                physicsHandle=this._createJointPrismatic(entity,joint);
+                break;
 		}
-		
-	},
+
+        entity.components.physics.joints[joint.key]._physicsHandle=physicsHandle;
+
+    },
 	
 	/**
 	 * Creates a distance joint
@@ -1455,7 +1494,50 @@ zerk.define({
 		return this._world.CreateJoint(jointDef);
 		
 	},
-	
+
+    /**
+     * Creates a prismatic join
+     *
+     * @method _createJointPrismatic
+     * @param {zerk.game.engine.entity} entity Entity
+     * @param {zerk.game.engine.system.physics.box2d.joint} joint Joint
+     * @return {Object} Joint handle
+     * @protected
+     */
+    _createJointPrismatic: function(entity,joint) {
+
+        var bodySource=this.getBody(entity,joint.source)._physicsHandle;
+        var bodyTarget=this.getBody(entity,joint.target)._physicsHandle;
+
+        var jointDef=new this._b2PrismaticJointDef();
+
+        jointDef.enableMotor=joint.enableMotor;
+        jointDef.enableLimit=joint.enableLimit;
+        jointDef.motorSpeed=joint.motorSpeed;
+        jointDef.lowerTranslation=joint.lowerTranslation;
+        jointDef.upperTranslation=joint.upperTranslation;
+        jointDef.maxMotorForce=joint.maxMotorForce;
+
+        var anchorSource=bodySource.GetWorldCenter();
+        anchorSource.x+=joint.anchorSourceX;
+        anchorSource.y+=joint.anchorSourceY;
+
+        var worldAxis=new this._b2Vec2(
+            0,
+            1
+        );
+
+        jointDef.Initialize(
+            bodySource,
+            bodyTarget,
+            anchorSource,
+            worldAxis
+        );
+
+        return this._world.CreateJoint(jointDef);
+
+    },
+
 	/**
 	 * Creates a mouse joint
 	 * 

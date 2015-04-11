@@ -1,0 +1,193 @@
+{
+	"name": "balls",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 10
+			}
+		}
+	},
+    "entities": [
+        /* Ground middle */
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Ground right */
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Ground left */
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "tars.entity.ground",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Wall left */
+		{
+            "name": "tars.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": 0
+				}
+			}
+		},
+        {
+            "name": "tars.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": -5
+                }
+            }
+        },
+        /* Wall right */
+        {
+            "name": "tars.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "tars.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": -5
+                }
+            }
+        },
+        /* Sky middle */
+		{
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -8
+				}
+			}
+		},
+        /* Sky left */
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": -8
+                }
+            }
+        },
+        /* Sky right */
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "tars.entity.sky",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": -8
+                }
+            }
+        },
+        /* Content */
+        {
+            "name": "tars.entity.tars",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+	]
+}

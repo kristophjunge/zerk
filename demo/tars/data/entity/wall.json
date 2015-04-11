@@ -1,0 +1,39 @@
+{
+    "name": "wall",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 5,
+                            "friction": 0.75,
+                            "sprites": {}
+						}
+					}
+				}
+			},
+            "joints": {}
+		},
+        "sprite": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "sprite1": {
+                                "render": "sprite",
+                                "spritesheet": "tars.spritesheet.demo",
+                                "sprite": "wall"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	}
+}

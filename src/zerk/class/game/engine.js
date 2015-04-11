@@ -775,7 +775,7 @@ zerk.define({
 			this,
 			config
 		);
-		
+
 		var thread=system.getThread();
 		
 		// Register the system under its name

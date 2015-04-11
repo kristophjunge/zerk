@@ -16,7 +16,7 @@
             "wireframe": {
                 "showBodyAngleIndicator": false,
                 "showEntityOriginIndicator": false,
-                "showFixtureBoundingBox": false
+                "showFixtureBoundingBox": true
             },
             "viewport": {
                 "width": 1280,
@@ -46,7 +46,8 @@
             "damager",
             "fall",
             "trigger",
-            "elevator"
+            "elevator",
+            "tars"
         ],
         "componentMap": {
             "position": "zerk.game.engine.component.position",
@@ -56,7 +57,8 @@
             "player": "zerk.game.engine.component.player",
             "sprite": "zerk.game.engine.component.sprite",
             "trigger": "zerk.game.engine.component.trigger",
-            "damager": "zerk.game.engine.component.damager"
+            "damager": "zerk.game.engine.component.damager",
+            "tars": "tars.game.engine.component.tars"
         },
         "systemMap": {
             "physics": "zerk.game.engine.system.physics.box2d",
@@ -70,7 +72,8 @@
             "damager": "zerk.game.engine.system.damager",
             "fall": "zerk.game.engine.system.fall",
             "trigger": "zerk.game.engine.system.trigger",
-            "elevator": "zerk.game.engine.system.elevator"
+            "elevator": "zerk.game.engine.system.elevator",
+            "tars": "tars.game.engine.system.tars"
         }
     }
 }
