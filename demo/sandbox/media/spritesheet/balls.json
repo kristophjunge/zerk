@@ -1,0 +1,30 @@
+{"frames": [
+
+{
+	"filename": "medicineball.png",
+	"frame": {"x":2,"y":2,"w":44,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":44},
+	"sourceSize": {"w":44,"h":44},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "volleyball.png",
+	"frame": {"x":48,"y":2,"w":26,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":26},
+	"sourceSize": {"w":26,"h":26},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "balls.png",
+	"format": "RGBA8888",
+	"size": {"w":76,"h":48},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:99dd2f63e7276abee206c8c61b31ee68:557b6be021dc1c90d7e8bf5f09f98586:af019c9df43c0315bbf2d16d758faea9$"
+}
+}

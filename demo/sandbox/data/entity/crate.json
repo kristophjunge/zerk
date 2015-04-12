@@ -16,8 +16,7 @@
 						}
 					}
 				}
-			},
-            "joints": {}
+			}
 		},
         "sprite": {
             "bodies": {
@@ -26,8 +25,8 @@
                         "main": {
                             "sprite1": {
                                 "render": "sprite",
-                                "spritesheet": "sandbox.spritesheet.demo",
-                                "sprite": "crate"
+                                "spritesheet": "sandbox.spritesheet.crates",
+                                "sprite": "wooden-1"
                             }
                         }
                     }

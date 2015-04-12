@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Zerk Demo: SandBox</title>
+		<title>Zerk Demo: SnakeBot</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="../../src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
@@ -14,7 +14,7 @@
 		<script>
 			zerk.init({
 				bootstrap: {
-					game: 'sandbox',
+					game: 'snakebot',
 					gameDir: './',
 					zerkDir: './../../src/zerk',
 					log: {
@@ -35,13 +35,6 @@
                 }*/
 			});
 		</script>
-		<select onchange="zerk.game.loadDemo(this.value);">
-            <option value="sandbox.world.crates">Crates</option>
-            <option value="sandbox.world.balls">Balls</option>
-            <option value="sandbox.world.stones">Stones</option>
-            <option value="sandbox.world.shapes">Shapes</option>
-        </select>
-        <button onclick="zerk.screenshot();">Screenshot</button>
         <div id="zerk-images" style="display: none;"></div>
     </body>
 </html>

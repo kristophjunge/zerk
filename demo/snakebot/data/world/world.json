@@ -1,16 +1,17 @@
 {
-	"name": "stones",
+	"name": "balls",
     "config": {
         "systems": {
             "physics": {
                 "gravityX": 0,
-                "gravityY": 0
+                "gravityY": 10
 			}
 		}
 	},
     "entities": [
+        /* Ground middle */
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": 0,
@@ -18,8 +19,9 @@
                 }
             }
         },
+        /* Ground right */
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": 5,
@@ -28,7 +30,7 @@
             }
         },
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": 10,
@@ -37,7 +39,7 @@
             }
         },
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": 15,
@@ -45,17 +47,9 @@
                 }
             }
         },
+        /* Ground left */
         {
-            "name": "sandbox.entity.groundRight",
-            "components": {
-                "position": {
-                    "x": 18.5,
-                    "y": 3.5
-                }
-            }
-        },
-        {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": -5,
@@ -64,7 +58,7 @@
             }
         },
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": -10,
@@ -73,7 +67,7 @@
             }
         },
         {
-            "name": "sandbox.entity.groundMiddle",
+            "name": "snakebot.entity.ground",
             "components": {
                 "position": {
                     "x": -15,
@@ -81,132 +75,119 @@
                 }
             }
         },
-        {
-            "name": "sandbox.entity.groundLeft",
+        /* Wall left */
+		{
+            "name": "snakebot.entity.wall",
             "components": {
                 "position": {
-                    "x": -18.5,
-                    "y": 3.5
+                    "x": -17,
+                    "y": 0
+				}
+			}
+		},
+        {
+            "name": "snakebot.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": -5
                 }
             }
         },
+        /* Wall right */
         {
-            "name": "sandbox.entity.wallLeft",
+            "name": "snakebot.entity.wall",
             "components": {
                 "position": {
-                    "x": -18.5,
+                    "x": 17,
                     "y": 0
                 }
             }
         },
         {
-            "name": "sandbox.entity.wallLeft",
+            "name": "snakebot.entity.wall",
             "components": {
                 "position": {
-                    "x": -18.5,
+                    "x": 17,
                     "y": -5
                 }
             }
         },
-        {
-            "name": "sandbox.entity.wallRight",
-            "components": {
-                "position": {
-                    "x": 18.5,
-                    "y": 0
-                }
-            }
-        },
-        {
-            "name": "sandbox.entity.wallRight",
-            "components": {
-                "position": {
-                    "x": 18.5,
-                    "y": -5
-                }
-            }
-        },
-        {
-            "name": "sandbox.entity.skyMiddle",
+        /* Sky middle */
+		{
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": 0,
-                    "y": -8.5
-                }
-            }
-        },
+                    "y": -8
+				}
+			}
+		},
+        /* Sky left */
         {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": -5,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
         {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": -10,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
         {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": -15,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
+        /* Sky right */
         {
-            "name": "sandbox.entity.skyLeft",
-            "components": {
-                "position": {
-                    "x": -18.5,
-                    "y": -8.5
-                }
-            }
-        },
-        {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": 5,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
         {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": 10,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
         {
-            "name": "sandbox.entity.skyMiddle",
+            "name": "snakebot.entity.sky",
             "components": {
                 "position": {
                     "x": 15,
-                    "y": -8.5
+                    "y": -8
                 }
             }
         },
+        /* Content */
         {
-            "name": "sandbox.entity.skyRight",
+            "name": "snakebot.entity.snakebot",
             "components": {
                 "position": {
-                    "x": 18.5,
-                    "y": -8.5
+                    "x": 0,
+                    "y": 0
                 }
             }
         }
-        /* Content */
 	]
 }

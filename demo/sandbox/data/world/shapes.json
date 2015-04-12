@@ -9,9 +9,8 @@
         }
     },
     "entities": [
-        /* Ground middle */
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": 0,
@@ -19,9 +18,8 @@
                 }
             }
         },
-        /* Ground right */
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": 5,
@@ -30,7 +28,7 @@
             }
         },
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": 10,
@@ -39,7 +37,7 @@
             }
         },
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": 15,
@@ -47,9 +45,17 @@
                 }
             }
         },
-        /* Ground left */
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": -5,
@@ -58,7 +64,7 @@
             }
         },
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": -10,
@@ -67,7 +73,7 @@
             }
         },
         {
-            "name": "sandbox.entity.ground",
+            "name": "sandbox.entity.groundMiddle",
             "components": {
                 "position": {
                     "x": -15,
@@ -75,107 +81,129 @@
                 }
             }
         },
-        /* Wall left */
         {
-            "name": "sandbox.entity.wall",
+            "name": "sandbox.entity.groundLeft",
             "components": {
                 "position": {
-                    "x": -17,
+                    "x": -18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
                     "y": 0
                 }
             }
         },
         {
-            "name": "sandbox.entity.wall",
+            "name": "sandbox.entity.wallLeft",
             "components": {
                 "position": {
-                    "x": -17,
+                    "x": -18.5,
                     "y": -5
                 }
             }
         },
-        /* Wall right */
         {
-            "name": "sandbox.entity.wall",
+            "name": "sandbox.entity.wallRight",
             "components": {
                 "position": {
-                    "x": 17,
+                    "x": 18.5,
                     "y": 0
                 }
             }
         },
         {
-            "name": "sandbox.entity.wall",
+            "name": "sandbox.entity.wallRight",
             "components": {
                 "position": {
-                    "x": 17,
+                    "x": 18.5,
                     "y": -5
                 }
             }
         },
-        /* Sky middle */
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": 0,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
-        /* Sky left */
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": -5,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": -10,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": -15,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
-        /* Sky right */
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": 5,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": 10,
-                    "y": -8
+                    "y": -8.5
                 }
             }
         },
         {
-            "name": "sandbox.entity.sky",
+            "name": "sandbox.entity.skyMiddle",
             "components": {
                 "position": {
                     "x": 15,
-                    "y": -8
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": -8.5
                 }
             }
         },
@@ -185,7 +213,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -194,7 +222,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -203,7 +231,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -212,7 +240,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -221,7 +249,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -230,7 +258,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -239,7 +267,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -248,7 +276,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
@@ -257,7 +285,7 @@
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		}

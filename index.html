@@ -11,60 +11,22 @@
 		<script type="text/javascript" src="./src/zerk/browser.js"></script>
 	</head>
 	<body class="demo">
-		<h1>Zerk Game Engine Demo</h1>
-		<div id="zerk_demo_description">
-			<h2>Jump And Run</h2>
-			Controls:
-			<table>
-				<tr>
-					<th>Key</th>
-					<th>Function</th>
-				</tr>
-				<tr>
-					<td>Left Arrow</td>
-					<td>Walk left</td>
-				</tr>
-				<tr>
-					<td>Right Arrow</td>
-					<td>Walk right</td>
-				</tr>
-				<tr>
-					<td>Space</td>
-					<td>Jump</td>
-				</tr>
-				<tr>
-					<td>Return</td>
-					<td>Restart</td>
-				</tr>
-			</table>
-			<p class="notice">Notice: If you are facing performance issues (&lt;60 FPS) please try to play the demo in a clean browser process without other tabs opened.</p>
-		</div>
-		<script>
-			zerk.init({
-				bootstrap: {
-					game: 'jumpandrun',
-					gameDir: './demo/jumpandrun',
-					zerkDir: './src/zerk',
-					log: {
-						enabled: false
-					}
-				},
-				engine: {
-					systems: {
-						control: {
-							mouse: {
-								enableWheelZoom: false
-							}
-						},
-						debuginfo: {
-							showViewCenterIndicator: false,
-							showFPS: true,
-							showZoom: false,
-							showPosition: false
-						}
-					}
-				}
-			});
-		</script>
+		<h1>Zerk Game Engine</h1>
+        <img src="./resources/image/zerk-logo-256.png"/>
+        <ul>
+            <li>Demos
+                <ul>
+                    <li><a href="./demo/sandbox">Sandbox</a></li>
+                    <li><a href="./demo/jumpandrun">Jump and Run</a></li>
+                    <li><a href="./demo/proceduralgeneration">World generation</a></li>
+                    <li><a href="./demo/snakebot">Snakebot</a> (Experimental)</li>
+                </ul>
+            </li>
+            <li>Tools
+                <ul>
+                    <li><a href="./tools/entityeditor">Entity Editor</a> (Experimental)</li>
+                </ul>
+            </li>
+        </ul>
 	</body>
 </html>
