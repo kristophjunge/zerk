@@ -19,8 +19,11 @@
                 "showFixtureBoundingBox": true
             },
             "viewport": {
+                "autoSize": true,
                 "width": 1280,
                 "height": 720,
+                "maxWidth": 1280,
+                "maxHeight": 720,
                 "zoomMax": 100,
                 "zoomMin": 10,
                 "zoomDefault": 100,

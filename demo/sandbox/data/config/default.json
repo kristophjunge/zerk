@@ -5,7 +5,8 @@
                 "showViewCenterIndicator": false,
                 "showFPS": true,
                 "showZoom": true,
-                "showPosition": true
+                "showPosition": true,
+                "showViewportSize": true
             },
             "control": {
                 "mouse": {
@@ -19,8 +20,11 @@
                 "showFixtureBoundingBox": false
             },
             "viewport": {
-                "width": 1920, //1280,
-                "height": 1280, //720,
+                "autoSize": true,
+                "width": 1280,
+                "height": 720,
+                "maxWidth": 1280,
+                "maxHeight": 720,
                 "zoomMax": 100,
                 "zoomMin": 10,
                 "zoomDefault": 100,

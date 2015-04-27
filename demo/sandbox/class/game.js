@@ -28,24 +28,41 @@ zerk.define({
 
 },{
 
+    _systemControl: null,
+
+    _systemMessage: null,
+
+    _demoWorldIndex: 0,
+
+    _demoWorlds: [
+        'sandbox.world.crates',
+        'sandbox.world.balls',
+        'sandbox.world.stones',
+        'sandbox.world.shapes'
+    ],
+
 	run: function(config) {
 
+        var me=this;
+
 		if (!zerk.parent('sandbox.game').run.apply(
-			this,
+                me,
 			arguments
 		)) {
 			return;
 		}
 
-		if (!this._engine.start()) {
+		if (!me._engine.start()) {
 			return;
 		}
 
-		this._engine.loadWorld(
+        me._engine.loadWorld(
 			'sandbox.world.crates',
 			function() {
 
-			},
+                me._onLoadWorld();
+
+            },
 			function(error) {
 
 				console.log(error);
@@ -54,6 +71,56 @@ zerk.define({
 		);
 
 	},
+
+    _onLoadWorld: function() {
+
+        this._startGame();
+
+    },
+
+    _startGame: function() {
+
+        this._systemControl=this._engine.getSystem('control');
+
+        this._systemMessage=this._engine.getSystem('message');
+
+        this._systemControl.keyboard.on(
+            'keypress',
+            this._onKeyPress,
+            this
+        );
+
+    },
+
+    _onKeyPress: function(event) {
+
+        var me=this;
+
+        if (event.keyCode==43) {
+
+            me._demoWorldIndex++;
+            if (me._demoWorldIndex>me._demoWorlds.length-1) {
+                me._demoWorldIndex=0;
+            }
+
+            me.loadDemo(me._demoWorlds[me._demoWorldIndex]);
+
+        } else if (event.keyCode==45) {
+
+            me._demoWorldIndex--;
+            if (me._demoWorldIndex<0) {
+                me._demoWorldIndex=me._demoWorlds.length-1;
+            }
+
+            me.loadDemo(me._demoWorlds[me._demoWorldIndex]);
+
+        } else if (event.keyCode==115) {
+
+            zerk.screenshot();
+
+        }
+
+    },
 
 	loadDemo: function(world) {
 

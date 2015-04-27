@@ -47,6 +47,7 @@ body
 	background-color: #202020;
 	font-family: Helvetica,Arial,sans-serif;
     color: white;
+    overflow: hidden;
 }
 #zerk_canvas_display
 {
@@ -121,4 +122,7 @@ canvas {
 	-moz-user-select: -moz-none;
 	-ms-user-select: none;
 	user-select: none;
+}
+#zerk-canvas {
+    text-align: center;
 }

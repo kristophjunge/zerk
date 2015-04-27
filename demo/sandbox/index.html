@@ -21,27 +21,13 @@
 						enabled: true,
 						severity: 3
 					}
-				}/*,
-                engine: {
-                    systems: {
-                        viewport: {
-                            width: 1280,
-                            height: 720,
-                            zoomDefault: 100,
-                            zoomMax: 100,
-                            zoomMin: 10
-                        }
-                    }
-                }*/
+				}
 			});
 		</script>
-		<select onchange="zerk.game.loadDemo(this.value);">
-            <option value="sandbox.world.crates">Crates</option>
-            <option value="sandbox.world.balls">Balls</option>
-            <option value="sandbox.world.stones">Stones</option>
-            <option value="sandbox.world.shapes">Shapes</option>
-        </select>
+        <!--
         <button onclick="zerk.screenshot();">Screenshot</button>
+        -->
+        <div id="zerk-canvas"></div>
         <div id="zerk-images" style="display: none;"></div>
     </body>
 </html>

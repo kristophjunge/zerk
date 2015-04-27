@@ -82,7 +82,8 @@ zerk.define({
 			showViewCenterIndicator: false,
 			showFPS: false,
 			showZoom: false,
-			showPosition: false
+			showPosition: false,
+            showViewportSize: false
 		};
 		
 	},
@@ -185,6 +186,12 @@ zerk.define({
 			this._renderDebugInfoLine(offsetX+':'+offsetY,3);
 			
 		}
+
+        if (this._config.showViewportSize) {
+
+            this._renderDebugInfoLine(this._viewport.getWidth()+':'+this._viewport.getHeight(),4);
+
+        }
 		
 	},
 	

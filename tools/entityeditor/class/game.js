@@ -61,9 +61,6 @@ zerk.define({
                         "physics": {
                             "gravityX": 0,
                             "gravityY": 0
-                        },
-                        "viewport": {
-                            "zoomDefault": 100
                         }
                     }
                 },
@@ -85,7 +82,7 @@ zerk.define({
             },
 			function() {
 
-                //me._engine.getSystem('physics').setEnabled(false);
+                me._engine.getSystem('physics').setEnabled(false);
 
                 var control=me._engine.getSystem('control');
                 control.mouse.on('mousedown',me._onMouseDown,me);

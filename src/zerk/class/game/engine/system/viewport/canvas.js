@@ -121,6 +121,15 @@ zerk.define({
 		};
 		
 	},
+
+    setBufferSize: function(buffer,width,height) {
+
+        var canvas=this._getCanvas(buffer);
+
+        canvas.width=width;
+        canvas.height=height;
+
+    },
 	
 	/**
 	 * Initializes a buffer for drawing

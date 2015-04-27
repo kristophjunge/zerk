@@ -39,8 +39,12 @@
                             showFixtureBoundingBox: true
                         },
                         viewport: {
+                            autoSize: false,
+                            width: 600,
+                            height: 600,
                             zoomMax: 500,
                             zoomMin: 10,
+                            zoomDefault: 200,
                             showWorldCenterIndicator: false
                             //backgroundColor: 'white'
                             //showBodyBuffer: true,
@@ -55,12 +59,13 @@
                 }
             });
 		</script>
-        Spritesheet: <input id="editor-spritesheet" value="sandbox.spritesheet.demo"/>
-        Sprite: <input id="editor-sprite" value="rock-10"/>
+        Spritesheet: <input id="editor-spritesheet" value="sandbox.spritesheet.stones"/>
+        Sprite: <input id="editor-sprite" value="stone-10"/>
         <button onclick="zerk.game.editorAddFixture(
             document.getElementById('editor-spritesheet').value,
             document.getElementById('editor-sprite').value
         )">Add Fixture</button>
+        <div id="zerk-canvas"></div>
         <div id="zerk-images" style="display: none;"></div>
 	</body>
 </html>

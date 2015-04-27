@@ -159,6 +159,11 @@ zerk.define({
 	 * @protected
 	 **/
 	_height: 0,
+
+
+    _autoSize: 0,
+    _maxWidth: 0,
+    _maxHeight: 0,
 	
 	/**
 	 * Class constructor
@@ -168,49 +173,87 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.viewport').init.apply(
-			this,
+            me,
 			arguments
 		);
-		
-		this.createBuffers({
+
+        me.createBuffers({
 			display: {
-                width: this._config.width,
-                height: this._config.height,
+                width: me._config.width,
+                height: me._config.height,
 				visible: true
 			},
 			body: {
 				width: 1,
 				height: 1,
-				visible: this._config.showBodyBuffer
+				visible: me._config.showBodyBuffer
 			},
 			fixture: {
 				width: 1,
 				height: 1,
-				visible: this._config.showFixtureBuffer
+				visible: me._config.showFixtureBuffer
 			}
 		});
-		
-		var viewportSize=this.getBufferSize('display');
-		
-		// Sync viwport with canvas size
-		this._width=viewportSize.width;
-		this._height=viewportSize.height;
 
-        this._zoom=this._config.zoomDefault;
-		
-		this._log(
-			'Scale '
-			+this._x+':'+this._y
-			+' at '
-			+this._width+'x'+this._height
-		);
-		
-		this._log('Ready');
+        me._zoom=me._config.zoomDefault;
+
+        me._maxWidth=me._config.maxWidth;
+        me._maxHeight=me._config.maxHeight;
+        me._autoSize=me._config.autoSize;
+
+        if (me._autoSize) {
+            me.autoSizeViewport();
+            zerk.browser.registerEvent(window,'resize',function(e) {
+                me.autoSizeViewport(e);
+            });
+        } else {
+            me.setViewportSize(me._config.width,me._config.height);
+        }
+
+        me._log('Ready');
 		
 	},
-	
+
+    autoSizeViewport: function(e) {
+
+        var me=this;
+        var windowSize=zerk.browser.getViewportSize();
+
+        me.setViewportSize(windowSize.width,windowSize.height);
+
+    },
+
+    setViewportSize: function(width,height) {
+
+        //var viewportSize=me.getBufferSize('display');
+        var me=this;
+
+        if (me._maxWidth>0 && width>me._maxWidth) {
+            width=me._maxWidth;
+        }
+
+        if (me._maxHeight>0 && height>me._maxHeight) {
+            height=me._maxHeight;
+        }
+
+        me._width=width;
+        me._height=height;
+
+        me.setBufferSize('display',width,height);
+
+        me._log(
+            'Scale '
+            +me._x+':'+me._y
+            +' at '
+            +me._width+'x'+me._height
+        );
+
+    },
+
 	/**
 	 * Returns the configuration defaults of the system
 	 * 
@@ -221,8 +264,11 @@ zerk.define({
 	_getConfigDefaults: function() {
 		
 		return {
+            autoSize: false,
             width: 1280,
             height: 720,
+            maxWidth: 0,
+            maxHeight: 0,
             zoomDefault: 50,
             zoomMin: 1,
             zoomMax: 100,
@@ -234,7 +280,7 @@ zerk.define({
 			// How many 1m boxes will be drawn on the grid
 			gridOuterWidth: 50,
 			gridOuterHeight: 50,
-			canvasContainerId: '',
+			canvasContainerId: 'zerk-canvas',
             backgroundColor: 'rgb(0,0,0)'
 		};
 		
