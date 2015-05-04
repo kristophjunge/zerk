@@ -42,7 +42,7 @@
                             autoSize: false,
                             width: 600,
                             height: 600,
-                            zoomMax: 500,
+                            zoomMax: 1000,
                             zoomMin: 10,
                             zoomDefault: 200,
                             showWorldCenterIndicator: false
@@ -65,6 +65,7 @@
             document.getElementById('editor-spritesheet').value,
             document.getElementById('editor-sprite').value
         )">Add Fixture</button>
+        <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button>
         <div id="zerk-canvas"></div>
         <div id="zerk-images" style="display: none;"></div>
 	</body>

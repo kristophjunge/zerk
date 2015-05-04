@@ -222,6 +222,69 @@ zerk.helper.isPolygonClockwise=function(polygon) {
 };
 
 /**
+ * Checks if the given polygon is convex
+ *
+ * The polygon has to be in counter clockwise order
+ *
+ * @method isPolygonConvex
+ * @param {Array} polygon Polygon array
+ * @return {Boolean} Returns true if the polygon is convex
+ **/
+zerk.helper.isPolygonConvex=function(polygon) {
+
+    if (polygon.length<4) {
+        return true;
+    }
+
+    var sign=false;
+    var n=polygon.length;
+
+    for (var i=0;i<n;i++) {
+        var dx1=polygon[(i+2)%n][0]-polygon[(i+1)%n][0];
+        var dy1=polygon[(i+2)%n][1]-polygon[(i+1)%n][1];
+        var dx2=polygon[i][0]-polygon[(i+1)%n][0];
+        var dy2=polygon[i][1]-polygon[(i+1)%n][1];
+        var zcrossproduct=dx1*dy2-dy1*dx2;
+        if (i==0) {
+            sign=zcrossproduct>0;
+        } else {
+            if (sign!=(zcrossproduct>0)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+};
+
+
+zerk.helper.getVectorOfPoints=function(a,b) {
+
+    return [
+        a[0]-b[0],
+        a[1]-b[1]
+    ];
+
+};
+
+
+zerk.helper.vectorScalar=function(a,b) {
+
+    return (a[0]*b[0])+(a[1]*b[1]);
+
+};
+
+
+zerk.helper.vectorMagnitude=function(a) {
+
+    return Math.sqrt(Math.pow(a[0],2)+Math.pow(a[1],2));
+
+};
+
+
+
+/**
  * Returns a random number between min and max
  * 
  * @method random

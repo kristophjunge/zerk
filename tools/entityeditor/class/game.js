@@ -66,8 +66,8 @@ zerk.define({
                 },
                 "entities": [
                     {
-                        //"name": "entityeditor.entity.empty",
-                        "name": "sandbox.entity.crate",
+                        "name": "entityeditor.entity.empty",
+                        //"name": "sandbox.entity.crate",
                         tags: [
                             'editor'
                         ],
@@ -85,7 +85,6 @@ zerk.define({
                 me._engine.getSystem('physics').setEnabled(false);
 
                 var control=me._engine.getSystem('control');
-                control.mouse.on('mousedown',me._onMouseDown,me);
 
 			},
 			function(error) {
@@ -97,54 +96,6 @@ zerk.define({
 
 	},
 
-    _onMouseDown: function(event) {
-
-        var me=this;
-
-        var control=me._engine.getSystem('control');
-
-        var viewport=me._engine.getSystem('viewport');
-
-        var editor=me._engine.getSystem('entityeditor');
-
-        console.log('CLICK',control.mouse.mouseX+':'+control.mouse.mouseY);
-
-        if (control.mouse.mouseRightDown) {
-            editor.addVertice(control.mouse.mouseX,control.mouse.mouseY);
-        } else if (control.mouse.mouseLeftDown) {
-
-            //viewport.toScaleX()
-
-            var pointSize=zerk.helper.toMeter(2);
-
-            console.log('POINTSIZE',pointSize);
-
-
-            for (var i=0;i<editor._editorVertices.length;i++) {
-
-                console.log('POINT',editor._editorVertices[i][0]+':'+editor._editorVertices[i][1]);
-
-                if (
-                control.mouse.mouseX>=editor._editorVertices[i][0]-pointSize
-                && control.mouse.mouseX<=editor._editorVertices[i][0]+pointSize
-                && control.mouse.mouseY>=editor._editorVertices[i][1]-pointSize
-                && control.mouse.mouseY<=editor._editorVertices[i][1]+pointSize
-                ) {
-
-                    console.log('CLICKED ON A POINT');
-
-                }
-
-            }
-
-        }
-
-
-
-        //console.log('MOUSEDOWN',event);
-
-    },
-
     editorAddFixture: function(spritesheet,sprite) {
 
         var me=this;
@@ -152,6 +103,16 @@ zerk.define({
         var editor=me._engine.getSystem('entityeditor');
 
         editor.addFixture(spritesheet,sprite);
+
+    },
+
+    editorDumpFixture: function() {
+
+        var me=this;
+
+        var editor=me._engine.getSystem('entityeditor');
+
+        editor.editorDumpFixture();
 
     }
 	

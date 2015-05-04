@@ -4,7 +4,7 @@
         "systems": {
             "physics": {
                 "gravityX": 0,
-                "gravityY": 0
+                "gravityY": 20
 			}
 		}
 	},
@@ -206,7 +206,188 @@
                     "y": -8.5
                 }
             }
-        }
+        },
         /* Content */
+        {
+            "name": "sandbox.entity.stones.stone1",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone2",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone3",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone4",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone5",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone6",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone7",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone8",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone9",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone10",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        /* Duplicates */
+        {
+            "name": "sandbox.entity.stones.stone1",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone2",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone3",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone4",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone5",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone6",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone7",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone8",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone9",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone10",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
 	]
 }

@@ -122,7 +122,7 @@ zerk.define({
 		canvas.addEventListener(
 			'mousemove',
 			function(event) {
-				
+
 				return self._onMouseMove(event);
 				
 			}
@@ -302,6 +302,14 @@ zerk.define({
 			);
 		
 		this._lastMousePosition=this._getCursorPosition(event);
+
+        /**
+         * Fires when the cursor is moved
+         *
+         * @param {DOMEvent} event
+         * @event mousemove
+         */
+        this.fireEvent('mousemove',event);
 		
 	},
 	
