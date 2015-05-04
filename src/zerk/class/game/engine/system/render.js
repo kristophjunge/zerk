@@ -1,16 +1,16 @@
 /**
- * Sprite Systems
+ * Render System
  * 
- * Renders sprites.
+ * Renders sprites, textures and animations
  * 
- * @class sprite
+ * @class render
  * @namespace zerk.game.engine.system
  * @extends zerk.game.engine.system
  * @module zerk
  **/
 zerk.define({
 	
-	name: 'zerk.game.engine.system.sprite',
+	name: 'zerk.game.engine.system.render',
 	extend: 'zerk.game.engine.system'
 	
 },{
@@ -22,7 +22,7 @@ zerk.define({
 	 * @type String
 	 * @protected
 	 */
-	_name: 'sprite',
+	_name: 'render',
 	
 	/**
 	 * Thread that runs this system
@@ -60,7 +60,7 @@ zerk.define({
 	 **/
 	init: function(engine,config) {
 		
-		zerk.parent('zerk.game.engine.system.sprite').init.apply(
+		zerk.parent('zerk.game.engine.system.render').init.apply(
 			this,
 			arguments
 		);
@@ -78,7 +78,7 @@ zerk.define({
 	 **/
 	useComponent: function(name) {
 		
-		return (name=='sprite');
+		return (name=='render');
 		
 	},
 	
@@ -89,7 +89,7 @@ zerk.define({
 	 **/
 	start: function() {
 		
-		zerk.parent('zerk.game.engine.system.sprite').start.apply(
+		zerk.parent('zerk.game.engine.system.render').start.apply(
 			this,
 			arguments
 		);
@@ -103,7 +103,7 @@ zerk.define({
 	 **/
 	stop: function() {
 		
-		zerk.parent('zerk.game.engine.system.sprite').stop.apply(
+		zerk.parent('zerk.game.engine.system.render').stop.apply(
 			this,
 			arguments
 		);
@@ -118,7 +118,7 @@ zerk.define({
 	 **/
 	addEntity: function(entity) {
 		
-		zerk.parent('zerk.game.engine.system.sprite').addEntity.apply(
+		zerk.parent('zerk.game.engine.system.render').addEntity.apply(
 			this,
 			arguments
 		);
@@ -132,7 +132,7 @@ zerk.define({
 	 **/
 	update: function() {
 		
-		zerk.parent('zerk.game.engine.system.sprite').update.apply(
+		zerk.parent('zerk.game.engine.system.render').update.apply(
 			this,
 			arguments
 		);
@@ -143,13 +143,13 @@ zerk.define({
 		for (var i=0;i<entityStates.length;i++) {
 			
 			// Check if this entity has the sprite component
-			if (typeof entityStates[i].components.sprite=='undefined') {
+			if (typeof entityStates[i].components.render=='undefined') {
 				
 				continue;
 				
 			}
 			
-			if (!entityStates[i].components.sprite.visible) continue;
+			if (!entityStates[i].components.render.visible) continue;
 			
 			this._renderEntity(entityStates[i]);
 		}
@@ -166,7 +166,7 @@ zerk.define({
 	_renderEntity: function(entity) {
 
 		// Render all bodies of the entity
-		var bodies=entity.components.sprite._bodyList;
+		var bodies=entity.components.render._bodyList;
 		
 		for (var i=0;i<bodies.length;i++) {
 			var physicsBody=entity.components.physics.bodies[bodies[i].key];

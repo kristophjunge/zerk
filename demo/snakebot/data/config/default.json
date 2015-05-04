@@ -40,7 +40,7 @@
         "defaultSystems": [
             "physics",
             "viewport",
-            "sprite",
+            "render",
             "wireframe",
             "message",
             "debuginfo",
@@ -58,7 +58,7 @@
             "fall": "zerk.game.engine.component.fall",
             "elevator": "zerk.game.engine.component.elevator",
             "player": "zerk.game.engine.component.player",
-            "sprite": "zerk.game.engine.component.sprite",
+            "render": "zerk.game.engine.component.render",
             "trigger": "zerk.game.engine.component.trigger",
             "damager": "zerk.game.engine.component.damager",
             "snakebot": "snakebot.game.engine.component.snakebot"
@@ -66,7 +66,7 @@
         "systemMap": {
             "physics": "zerk.game.engine.system.physics.box2d",
             "viewport": "zerk.game.engine.system.viewport.canvas",
-            "sprite": "zerk.game.engine.system.sprite",
+            "render": "zerk.game.engine.system.render",
             "wireframe": "zerk.game.engine.system.wireframe",
             "message": "zerk.game.engine.system.message",
             "debuginfo": "zerk.game.engine.system.debuginfo",

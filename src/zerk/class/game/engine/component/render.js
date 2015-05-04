@@ -1,21 +1,21 @@
 /**
- * Sprite Component
+ * Render Component
  * 
  * CLASS_DESCRIPTION
  * 
- * @class sprite
+ * @class render
  * @namespace zerk.game.engine.component
  * @extends zerk.game.engine.component
  * @module zerk
  **/
 zerk.define({
 	
-	name: 'zerk.game.engine.component.sprite',
+	name: 'zerk.game.engine.component.render',
 	extend: 'zerk.game.engine.component'
 	
 },{
 	
-	_name: 'sprite',
+	_name: 'render',
 	
 	build: function(entityConfig,worldConfig) {
 		

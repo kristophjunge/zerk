@@ -12,14 +12,13 @@
                             "shape": "box",
                             "width": 2,
                             "height": 5,
-                            "friction": 0.75,
-                            "sprites": {}
+                            "friction": 0.75
 						}
 					}
 				}
 			}
 		},
-        "sprite": {
+        "render": {
             "bodies": {
                 "main": {
                     "fixtures": {

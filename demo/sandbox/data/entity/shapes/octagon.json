@@ -25,7 +25,7 @@
 				}
 			}
 		},
-        sprite: {
+        render: {
             bodies: {
                 main: {
                     fixtures: {

@@ -64,7 +64,7 @@ zerk.define({
 	 **/
 	init: function(engine,config) {
 		
-		zerk.parent('zerk.game.engine.system.sprite').init.apply(
+		zerk.parent('tools.game.engine.system.entityeditor').init.apply(
 			this,
 			arguments
 		);
@@ -83,8 +83,8 @@ zerk.define({
 	 * @return {Boolean} True when the system is intereseted in given component
 	 **/
 	useComponent: function(name) {
-		
-		return (name=='sprite');
+
+        return false;
 		
 	},
 	
@@ -97,7 +97,7 @@ zerk.define({
 
         var me=this;
 
-		zerk.parent('zerk.game.engine.system.sprite').start.apply(
+		zerk.parent('tools.game.engine.system.entityeditor').start.apply(
 			me,
 			arguments
 		);
@@ -135,7 +135,7 @@ zerk.define({
 	 **/
 	stop: function() {
 		
-		zerk.parent('zerk.game.engine.system.sprite').stop.apply(
+		zerk.parent('tools.game.engine.system.entityeditor').stop.apply(
 			this,
 			arguments
 		);
@@ -150,7 +150,7 @@ zerk.define({
 	 **/
 	addEntity: function(entity) {
 		
-		zerk.parent('zerk.game.engine.system.sprite').addEntity.apply(
+		zerk.parent('tools.game.engine.system.entityeditor').addEntity.apply(
 			this,
 			arguments
 		);
@@ -166,7 +166,7 @@ zerk.define({
 
         var me=this;
 
-		zerk.parent('zerk.game.engine.system.sprite').update.apply(
+		zerk.parent('tools.game.engine.system.entityeditor').update.apply(
 			me,
 			arguments
 		);

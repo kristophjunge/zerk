@@ -195,7 +195,7 @@ zerk.define({
 
                 components.push(component);
 
-                if (component=='sprite') {
+                if (component=='render') {
 
                     for (var bodyKey in entity.components[component].bodies) {
 
