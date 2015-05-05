@@ -34,6 +34,17 @@ zerk.define({
 	 * @protected
 	 **/
 	_thread: 'simulation',
+
+    /**
+     * Physics scale factor
+     *
+     * Conversion factor between world meters and physics meters
+     *
+     * @property _physicsScale
+     * @type Float
+     * @protected
+     **/
+    _physicsScale: 1,
 	
 	/**
 	 * Class constructor
@@ -43,13 +54,17 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.physics').init.apply(
 			this,
 			arguments
 		);
-		
-	},
+
+        me._physicsScale=me._config.physicsScale;
+
+    },
 	
 	/**
 	 * Returns the configuration defaults of the system
@@ -65,7 +80,8 @@ zerk.define({
 			gravityX: 0,
 			gravityY: 0,
 			debugDraw: false,
-			enableMouseJoint: false
+			enableMouseJoint: false,
+            physicsScale: 1
 		};
 		
 	},
@@ -208,8 +224,44 @@ zerk.define({
 	 * @param {config.entity} entity Entity state
 	 * @protected
 	 **/
-	_removePhysics: function(entity) {}
-	
+	_removePhysics: function(entity) {},
+
+    /**
+     * Converts world meters into physics meters
+     *
+     * The value is calculated with the "physicsScale" factor.
+     *
+     * @method fromWorldScale
+     * @param {Float} value Value in world meters
+     * @return {Float} Value in physics meters
+     **/
+    fromWorldScale: function(value) {
+
+        var me=this;
+
+        if (typeof value==='undefined' || value==0) return 0;
+        return value*me._physicsScale;
+
+    },
+
+    /**
+     * Converts physics meters into world meters
+     *
+     * The value is calculated with the "physicsScale" factor.
+     *
+     * @method toWorldScale
+     * @param {Float} value Value in physics meters
+     * @return {Float} Value in world meters
+     **/
+    toWorldScale: function(value) {
+
+        var me=this;
+
+        if (typeof value==='undefined' || value==0) return 0;
+        return value/me._physicsScale;
+
+    }
+
 	/*
 	 * TODO Define missing physics interface methods that every physics system 
 	 * 	should implement 

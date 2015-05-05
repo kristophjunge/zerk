@@ -17,12 +17,15 @@
             "wireframe": {
                 "showBodyAngleIndicator": false,
                 "showEntityOriginIndicator": false,
-                "showFixtureBoundingBox": false
+                "showFixtureBoundingBox": true
             },
             "viewport": {
                 "autoSize": true,
                 "width": 1280,
                 "height": 720,
+                //"autoSize": false,
+                //"width": 650,
+                //"height": 450,
                 "maxWidth": 1280,
                 "maxHeight": 720,
                 "zoomMax": 100,
@@ -35,7 +38,9 @@
                 "showFixtureBuffer": false
             },
             "physics": {
-                "enableMouseJoint": true
+                "enableMouseJoint": true,
+                "debugDraw": false,
+                "physicsScale": 1
             }
         },
         "defaultSystems": [

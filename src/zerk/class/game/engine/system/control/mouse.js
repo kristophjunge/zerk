@@ -275,7 +275,7 @@ zerk.define({
 			 */
 			this._viewport.setX(
 				this._viewport.getX()
-				-this._viewport.fromScaleX(
+				-this._viewport.fromZoom(
 					(position.x-this._lastMousePosition.x)
 					*this._config.zoomSpeed
 				)
@@ -283,7 +283,7 @@ zerk.define({
 			
 			this._viewport.setY(
 				this._viewport.getY()
-				-this._viewport.fromScaleX(
+				-this._viewport.fromZoom(
 					(position.y-this._lastMousePosition.y)
 					*this._config.zoomSpeed
 				)
@@ -291,13 +291,13 @@ zerk.define({
 			
 		}
 		
-		this.mouseX=zerk.helper.toMeter(this._viewport.getX()
-			+this._viewport.fromScaleX(
+		this.mouseX=this._viewport.fromPixel(this._viewport.getX()
+			+this._viewport.fromZoom(
 				position.x-(this._viewport.getWidth()/2))
 			);
 			
-		this.mouseY=zerk.helper.toMeter(this._viewport.getY()
-			+this._viewport.fromScaleY(
+		this.mouseY=this._viewport.fromPixel(this._viewport.getY()
+			+this._viewport.fromZoom(
 				position.y-(this._viewport.getHeight()/2))
 			);
 		

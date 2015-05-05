@@ -216,8 +216,8 @@ zerk.define({
 			'display',
 			this._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
 			this._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
-			this._viewport.toScaleX(bufferSize.width),
-			this._viewport.toScaleY(bufferSize.height),
+			this._viewport.toZoom(bufferSize.width),
+			this._viewport.toZoom(bufferSize.height),
             bodyState.angle
 		);
 		
@@ -275,16 +275,18 @@ zerk.define({
 		sprite
 	) {
 
-		var image=this._engine._spriteLoader.getSprite(
+        var me=this;
+
+		var image=me._engine._spriteLoader.getSprite(
             sprite.spritesheet,
             sprite.sprite
         );
 
-		this._viewport.drawImage(
+        me._viewport.drawImage(
 			'body',
             image.image,
-            zerk.helper.fromMeter(physicsFixture.x+sprite.x),
-            zerk.helper.fromMeter(physicsFixture.y+sprite.y),
+            me._viewport.toPixel(physicsFixture.x+sprite.x),
+            me._viewport.toPixel(physicsFixture.y+sprite.y),
             image.info.width,
             image.info.height,
             image.info.offsetX,
@@ -305,6 +307,8 @@ zerk.define({
         texture
     ) {
 
+        var me=this;
+
         var image=this._engine._textureLoader.getTexture(
             texture.texture
         );
@@ -314,14 +318,14 @@ zerk.define({
             case 'box':
                 this._viewport.fillRect(
                     'body',
-                    zerk.helper.fromMeter(physicsFixture.x),
-                    zerk.helper.fromMeter(physicsFixture.y),
-                    zerk.helper.fromMeter(physicsFixture.width),
-                    zerk.helper.fromMeter(physicsFixture.height),
+                    me._viewport.toPixel(physicsFixture.x),
+                    me._viewport.toPixel(physicsFixture.y),
+                    me._viewport.toPixel(physicsFixture.width),
+                    me._viewport.toPixel(physicsFixture.height),
                     physicsFixture.angle,
                     image,
-                    zerk.helper.fromMeter(texture.x),
-                    zerk.helper.fromMeter(texture.y),
+                    me._viewport.toPixel(texture.x),
+                    me._viewport.toPixel(texture.y),
                     texture.angle
                 );
                 break;
@@ -330,15 +334,15 @@ zerk.define({
 
                 this._viewport.fillArc(
                     'body',
-                    zerk.helper.fromMeter(physicsFixture.x),
-                    zerk.helper.fromMeter(physicsFixture.y),
-                    zerk.helper.fromMeter(physicsFixture.radius),
+                    me._viewport.toPixel(physicsFixture.x),
+                    me._viewport.toPixel(physicsFixture.y),
+                    me._viewport.toPixel(physicsFixture.radius),
                     0,
                     2*Math.PI,
                     false,
                     image,
-                    zerk.helper.fromMeter(texture.x),
-                    zerk.helper.fromMeter(texture.y),
+                    me._viewport.toPixel(texture.x),
+                    me._viewport.toPixel(texture.y),
                     texture.angle
                 );
 
@@ -349,20 +353,20 @@ zerk.define({
                 var polygon=[];
                 for (var i=0;i<physicsFixture.vertices.length;i++) {
                     polygon.push([
-                        zerk.helper.fromMeter(physicsFixture.vertices[i][0]),
-                        zerk.helper.fromMeter(physicsFixture.vertices[i][1])
+                        me._viewport.toPixel(physicsFixture.vertices[i][0]),
+                        me._viewport.toPixel(physicsFixture.vertices[i][1])
                     ]);
                 }
 
                 this._viewport.fillPolygon(
                     'body',
-                    zerk.helper.fromMeter(physicsFixture.x),
-                    zerk.helper.fromMeter(physicsFixture.y),
+                    me._viewport.toPixel(physicsFixture.x),
+                    me._viewport.toPixel(physicsFixture.y),
                     polygon,
                     physicsFixture.angle,
                     image,
-                    zerk.helper.fromMeter(texture.x),
-                    zerk.helper.fromMeter(texture.y),
+                    me._viewport.toPixel(texture.x),
+                    me._viewport.toPixel(texture.y),
                     texture.angle
                 );
 
@@ -504,6 +508,8 @@ zerk.define({
         texture
     ) {
 
+        var me=this;
+
         var width=0;
         var height=0;
 
@@ -511,8 +517,8 @@ zerk.define({
             case 'box':
 
                 var polygon=zerk.helper.getPolygonOfRectangle(
-                    zerk.helper.fromMeter(physicsFixture.width),
-                    zerk.helper.fromMeter(physicsFixture.height)
+                    me._viewport.toPixel(physicsFixture.width),
+                    me._viewport.toPixel(physicsFixture.height)
                 );
 
                 if (physicsFixture.angle) {
@@ -528,8 +534,8 @@ zerk.define({
 
             case 'circle':
 
-                width=zerk.helper.fromMeter(physicsFixture.radius)*2;
-                height=zerk.helper.fromMeter(physicsFixture.radius)*2;
+                width=me._viewport.toPixel(physicsFixture.radius)*2;
+                height=me._viewport.toPixel(physicsFixture.radius)*2;
 
                 break;
             case 'polygon':
@@ -537,8 +543,8 @@ zerk.define({
                 polygon=[];
                 for (c=0;c<physicsFixture.vertices.length;c++) {
                     polygon.push([
-                        zerk.helper.fromMeter(physicsFixture.vertices[c][0]),
-                        zerk.helper.fromMeter(physicsFixture.vertices[c][1])
+                        me._viewport.toPixel(physicsFixture.vertices[c][0]),
+                        me._viewport.toPixel(physicsFixture.vertices[c][1])
                     ])
                 }
 
@@ -557,8 +563,8 @@ zerk.define({
                 break;
         }
 
-        var x=zerk.helper.fromMeter(physicsFixture.x);
-        var y=zerk.helper.fromMeter(physicsFixture.y);
+        var x=me._viewport.toPixel(physicsFixture.x);
+        var y=me._viewport.toPixel(physicsFixture.y);
         var minX=(x-(width/2))*-1;
         var maxX=x+(width/2);
         var minY=(y-(height/2))*-1;
@@ -579,6 +585,8 @@ zerk.define({
         renderFixture,
         sprite
     ) {
+
+        var me=this;
 
         var width=0;
         var height=0;
@@ -611,8 +619,8 @@ zerk.define({
 
         }
 
-        var x=zerk.helper.fromMeter(physicsFixture.x+sprite.x);
-        var y=zerk.helper.fromMeter(physicsFixture.y+sprite.y);
+        var x=me._viewport.toPixel(physicsFixture.x+sprite.x);
+        var y=me._viewport.toPixel(physicsFixture.y+sprite.y);
         var minX=(x-(width/2))*-1;
         var maxX=x+(width/2);
         var minY=(y-(height/2))*-1;
@@ -637,6 +645,8 @@ zerk.define({
      **/
     _getFixtureBufferSize: function(entity,body,fixture) {
 
+        var me=this;
+
         /*
          TODO Remove method if unused
          */
@@ -660,7 +670,7 @@ zerk.define({
                  * TODO Check if ceil is really needed here
                  */
                 var diagonal=//Math.ceil(
-                    zerk.helper.fromMeter(
+                    me._viewport.toPixel(
                         Math.sqrt(
                             Math.pow(width,2)
                             +Math.pow(height,2)
@@ -678,7 +688,7 @@ zerk.define({
             case 'circle':
 
                 var diagonal=//Math.ceil(
-                    zerk.helper.fromMeter(fixture.radius*2);
+                    me._viewport.toPixel(fixture.radius*2);
                 //);
 
                 return {
@@ -709,7 +719,7 @@ zerk.define({
 
                 }
 
-                var diagonal=zerk.helper.fromMeter(maxDistance*2);
+                var diagonal=me._viewport.toPixel(maxDistance*2);
 
                 return {
                     width: diagonal,

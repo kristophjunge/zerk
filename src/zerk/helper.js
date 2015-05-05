@@ -9,38 +9,6 @@
  **/
 zerk.helper={};
 
-/*
- * TODO Rename fromMeter and toMeter more convenient
- */
-
-/**
- * Converts pixels into meters
- * 
- * @method toMeter 
- * @param {Float} value Value in pixels
- * @return {Float} Value in meters
- **/
-zerk.helper.toMeter=function(value) {
-
-	if (typeof value==='undefined' || value==0) return 0;
-	return value/120;
-	
-};
-
-/**
- * Converts meters into pixels
- * 
- * @method fromMeter
- * @param {Float} value Value in meters
- * @return {Float} Value in pixels
- **/
-zerk.helper.fromMeter=function(value) {
-	
-	if (typeof value==='undefined' || value==0) return 0;
-	return value*120;
-	
-};
-
 /**
  * Formats a number in percent notation
  * 
@@ -257,32 +225,6 @@ zerk.helper.isPolygonConvex=function(polygon) {
     return true;
 
 };
-
-
-zerk.helper.getVectorOfPoints=function(a,b) {
-
-    return [
-        a[0]-b[0],
-        a[1]-b[1]
-    ];
-
-};
-
-
-zerk.helper.vectorScalar=function(a,b) {
-
-    return (a[0]*b[0])+(a[1]*b[1]);
-
-};
-
-
-zerk.helper.vectorMagnitude=function(a) {
-
-    return Math.sqrt(Math.pow(a[0],2)+Math.pow(a[1],2));
-
-};
-
-
 
 /**
  * Returns a random number between min and max

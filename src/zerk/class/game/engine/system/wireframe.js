@@ -356,16 +356,8 @@ zerk.define({
 		if (!bodyState) return;
 		if (!fixtureState) return;
 
-        /*
-        TODO Remove possibility of relative sized fixtures
-         */
-		var fixtureWidth=((typeof fixture.width=='string') 
-			? (body.width/100)*parseInt(fixture.width)
-			: fixture.width);
-		
-		var fixtureHeight=((typeof fixture.height=='string') 
-			? (body.height/100)*parseInt(fixture.height)
-			: fixture.height);
+		var fixtureWidth=fixture.width;
+		var fixtureHeight=fixture.height;
 		
 		// Tranform rectangle into polygon
 
@@ -443,8 +435,10 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderFixtureBoundingCircle: function(entity,body,fixture) {
-		
-		var style=this._getFixtureBoundingStyle(entity,body,fixture);
+
+        var me=this;
+
+		var style=me._getFixtureBoundingStyle(entity,body,fixture);
 		
 		var position=entity.components.position;
 		var bodyState=entity.components.physics.bodies[body.key];
@@ -465,22 +459,22 @@ zerk.define({
             bodyState.angle
         );
 
-		var x=this._viewport._getCanvasX(
+		var x=me._viewport._getCanvasX(
 			position.x
 			+bodyState.x
 			+fixturePosition.x
 		);
-		var y=this._viewport._getCanvasY(
+		var y=me._viewport._getCanvasY(
 			position.y
 			+bodyState.y
 			+fixturePosition.y
 		);
-		
-		this._viewport.drawArc(
+
+        me._viewport.drawArc(
 			'display',
 			x,
 			y,
-			this._viewport.toScaleX(zerk.helper.fromMeter(fixture.radius)),
+            me._viewport.toZoom(me._viewport.toPixel(fixture.radius)),
 			0,
 			Math.PI*2,
 			true,
@@ -495,18 +489,18 @@ zerk.define({
 			bodyState.angle
 		);
 		
-		var angleIndicatorX=this._viewport._getCanvasX(
+		var angleIndicatorX=me._viewport._getCanvasX(
 			position.x
 			+bodyState.x
 			+rotatedAngleIndicator.x
 		);
-		var angleIndicatorY=this._viewport._getCanvasY(
+		var angleIndicatorY=me._viewport._getCanvasY(
 			position.y
 			+bodyState.y
 			+rotatedAngleIndicator.y
 		);
-		
-		this._viewport.drawLines(
+
+        me._viewport.drawLines(
 			'display',
 			[[angleIndicatorX,angleIndicatorY,x,y]],
 			style.strokeColor,

@@ -199,7 +199,7 @@ zerk.define({
             var fixtureAngle=0;
             var spriteAngle=0;
 
-            this._viewport.bufferInit(
+            me._viewport.bufferInit(
                 'body',
                 bufferSize.width,
                 bufferSize.height,
@@ -211,8 +211,8 @@ zerk.define({
             me._viewport.drawImage(
                 'body',
                 image.image,
-                zerk.helper.fromMeter(fixtureX+spriteX),
-                zerk.helper.fromMeter(fixtureY+spriteY),
+                me._viewport.toPixel(fixtureX+spriteX),
+                me._viewport.toPixel(fixtureY+spriteY),
                 image.info.width,
                 image.info.height,
                 image.info.offsetX,
@@ -223,13 +223,13 @@ zerk.define({
             );
 
             // Draw the buffer onto the display
-            this._viewport.bufferFlush(
+            me._viewport.bufferFlush(
                 'body',
                 'display',
-                this._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
-                this._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
-                this._viewport.toScaleX(bufferSize.width),
-                this._viewport.toScaleY(bufferSize.height),
+                me._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
+                me._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
+                me._viewport.toZoom(bufferSize.width),
+                me._viewport.toZoom(bufferSize.height),
                 bodyState.angle
             );
 
@@ -237,9 +237,9 @@ zerk.define({
             var x=0;
             var y=0;
 
-            for (var i=0;i<this._editorVertices.length;i++) {
-                x=this._viewport._getCanvasX(this._editorVertices[i][0]);
-                y=this._viewport._getCanvasY(this._editorVertices[i][1]);
+            for (var i=0;i<me._editorVertices.length;i++) {
+                x=me._viewport._getCanvasX(me._editorVertices[i][0]);
+                y=me._viewport._getCanvasY(me._editorVertices[i][1]);
                 vertices.push([x,y]);
             }
 
@@ -249,7 +249,7 @@ zerk.define({
             }
 
             if (vertices.length>=3) {
-                this._viewport.drawPolygon(
+                me._viewport.drawPolygon(
                     'display',
                     vertices,
                     color,
@@ -265,7 +265,7 @@ zerk.define({
                     var color='rgba(0,255,0,0.75)';
                 }
 
-                this._viewport.drawArc(
+                me._viewport.drawArc(
                     'display',
                     vertices[i][0],
                     vertices[i][1],
@@ -340,8 +340,8 @@ zerk.define({
 
             var pointSizePixel=10;
 
-            var pointWidth=zerk.helper.toMeter(viewport.fromScaleX(pointSizePixel));
-            var pointHeight=zerk.helper.toMeter(viewport.fromScaleY(pointSizePixel));
+            var pointWidth=me._viewport.fromPixel(viewport.fromZoom(pointSizePixel));
+            var pointHeight=me._viewport.fromPixel(viewport.fromZoom(pointSizePixel));
 
             for (var i=0;i<me._editorVertices.length;i++) {
 
