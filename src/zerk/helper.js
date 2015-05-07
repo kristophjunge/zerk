@@ -265,7 +265,7 @@ zerk.helper.rotatePolygon=function(vertices,angle) {
             vertices[i][0],
             vertices[i][1],
             angle
-        )
+        );
 
         result.push([position.x,position.y]);
 

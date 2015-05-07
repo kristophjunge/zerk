@@ -1,0 +1,135 @@
+{
+    "name": "rendertest",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "box": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 1,
+                            "angle": 45
+						}
+					}
+				},
+                "circle": {
+                    "moveable": true,
+                    "x": 1,
+                    "y": -1,
+                    //"angle": 45,
+                    "fixtures": {
+                         "main": {
+                             "shape": "box",
+                             "width": 1,
+                             "height": 1,
+                             "angle": 45,
+                             //"radius": 0.5,
+                             "x": 0.25,
+                             "y": -0.25
+                         }
+                    }
+                },
+                "triangle": {
+                    "moveable": true,
+                    "x": -1,
+                    "y": 1,
+                    "fixtures": {
+                        "main": {
+                            "shape": "polygon",
+                            "x": -0.25,
+                            "y": 0.25,
+                            "angle": 45,
+                            "vertices": [
+                                [0.435,0.25],
+                                [-0.435,0.25],
+                                [0,-0.5]
+                            ]
+                        }
+                    }
+                }
+			}
+		},
+        "render": {
+            "layers": {
+                "boxTexture1": {
+                    "body": "box",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.zerk-debug-blue",
+                    "x": 0.25,
+                    "y": -0.25
+                },
+                "boxSprite1": {
+                    "body": "box",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.balls",
+                    "sprite": "medicineball",
+                    "x": 0.25,
+                    "y": -0.25
+                },
+                "circleTexture1": {
+                    "body": "circle",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.zerk-debug-blue",
+                    "x": 0.25,
+                    "y": -0.25
+                    //"angle": -45
+                },
+                "circleSprite1": {
+                    "body": "circle",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.balls",
+                    "sprite": "medicineball",
+                    "x": 0.25,
+                    "y": -0.25
+                },
+                "triangleTexture1": {
+                    "body": "triangle",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.zerk-debug-blue",
+                    "x": 0.25,
+                    "y": -0.25
+                },
+                "triangleSprite1": {
+                    "body": "triangle",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.balls",
+                    "sprite": "medicineball",
+                    "x": 0.25,
+                    "y": -0.25
+                }
+            }
+
+
+            /*"root": {
+                "sprite2": {
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.crates",
+                    "sprite": "wooden-1"
+                }
+            },
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "sprite1": {
+                                "render": "sprite",
+                                "spritesheet": "sandbox.spritesheet.crates",
+                                "sprite": "wooden-1"
+                            }
+                        }
+                    }
+                }
+            }*/
+        }
+	}
+}

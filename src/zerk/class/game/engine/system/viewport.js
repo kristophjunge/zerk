@@ -203,6 +203,11 @@ zerk.define({
                 height: me._config.height,
 				visible: true
 			},
+            entity: {
+                width: 1,
+                height: 1,
+                visible: true //me._config.showBodyBuffer
+            },
 			body: {
 				width: 1,
 				height: 1,
@@ -359,7 +364,30 @@ zerk.define({
 		);
 		
 		this.bufferClear('display');
-		
+
+
+        /*
+        var bg=document.getElementById('bg');
+
+
+        this.drawImage(
+            'display',
+            bg,
+            300,
+            300,
+            1920,
+            1080,
+            0,
+            0,
+            1920,
+            1080,
+            0
+        );
+        */
+
+
+
+
 		// Sync view with player entity
 		if (this._config.trackPlayer) {
 			
@@ -694,8 +722,9 @@ zerk.define({
 		var value=this.toZoom(
             me.toPixel(meter)+pixel-this._x
 		);
-		
-		return ~~(0.5+value+(this._width/2));
+
+        return value+(this._width/2);
+		//return ~~(0.5+value+(this._width/2));
 		
 	},
 	
@@ -728,8 +757,9 @@ zerk.define({
 		var value=this.toZoom(
             me.toPixel(meter)+pixel-this._y
 		);
-		
-		return ~~(0.5+value+(this._height/2));
+
+        return value+(this._height/2);
+		//return ~~(0.5+value+(this._height/2));
 		
 	},
 	

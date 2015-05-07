@@ -197,23 +197,17 @@ zerk.define({
 
                 if (component=='render') {
 
-                    for (var bodyKey in entity.components[component].bodies) {
+                    for (var layerKey in entity.components[component].layers) {
 
-                        for (var fixtureKey in entity.components[component].bodies[bodyKey].fixtures) {
+                        var layer=entity.components[component].layers[layerKey];
 
-                            var fixture=entity.components[component].bodies[bodyKey].fixtures[fixtureKey];
-
-                            for (var renderKey in fixture) {
-                                switch (fixture[renderKey].render) {
-                                    case 'texture':
-                                        textures.push(fixture[renderKey].texture);
-                                        break;
-                                    case 'sprite':
-                                        spritesheets.push(fixture[renderKey].spritesheet);
-                                        break;
-                                }
-                            }
-
+                        switch (layer.render) {
+                            case 'texture':
+                                textures.push(layer.texture);
+                                break;
+                            case 'sprite':
+                                spritesheets.push(layer.spritesheet);
+                                break;
                         }
 
                     }

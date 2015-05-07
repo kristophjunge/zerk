@@ -57,7 +57,7 @@ zerk.define({
 		}
 
         me._engine.loadWorld(
-			'sandbox.world.crates',
+			'sandbox.world.rendertest',
 			function() {
 
                 me._onLoadWorld();

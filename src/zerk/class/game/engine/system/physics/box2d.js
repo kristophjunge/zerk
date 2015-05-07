@@ -800,7 +800,8 @@ zerk.define({
 	 * @param {zerk.game.engine.entity} entity Entity
 	 */
 	_syncEntityPhysics: function(entity) {
-		
+
+
 		var bodies=entity.components.physics.bodies;
 		
 		for (var key in bodies) {
@@ -838,6 +839,7 @@ zerk.define({
 			}
 			
 		}
+
 		
 	},
 	
@@ -1071,7 +1073,8 @@ zerk.define({
 		// Setup position
 		bodyDef.position.x=this.fromWorldScale(position.x+bodyState.x);
 		bodyDef.position.y=this.fromWorldScale(position.y+bodyState.y);
-		bodyDef.angle=bodyState.angle*Math.PI*2;
+		bodyDef.angle=bodyState.angle; //*Math.PI*2;
+
 		bodyDef.fixedRotation=body.fixedRotation;
 		
 		bodyDef.userData={

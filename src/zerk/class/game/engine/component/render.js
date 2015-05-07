@@ -21,7 +21,7 @@ zerk.define({
 		
 		var defaultConfig={
 			visible: true,
-			render: []
+			layers: []
 		};
 		
 		// Create new state
@@ -39,166 +39,190 @@ zerk.define({
 			entityConfig
 		);
 		
-		state._bodyList=[];
+		state._layerList=[];
 
         var renderConfig=null;
 
-        for (var bodyKey in entityConfig.bodies) {
+        for (var layerKey in entityConfig.layers) {
 
-            state.bodies[bodyKey]._fixtureList=[];
+            var renderItem=state.layers[layerKey];
 
-            for (var fixtureKey in entityConfig.bodies[bodyKey].fixtures) {
+            switch (renderItem.render) {
+                case 'texture':
 
-                state.bodies[bodyKey].fixtures[fixtureKey]._renderList=[];
+                    /**
+                     * *** THIS IS NOT A CLASS! ITS A CONFIGURATION OBJECT. ***
+                     *
+                     * Sprite.
+                     *
+                     * Used by {{#crossLink "zerk.game.engine.component.sprite"}}{{/crossLink}}
+                     *
+                     * @class texture
+                     * @namespace config.component.sprite
+                     **/
+                    textureConfig = {
+                        /**
+                         * The horizontal position of the texture
+                         *
+                         * @property x
+                         * @type Float
+                         */
+                        x: 0,
 
-                for (var renderKey in state.bodies[bodyKey].fixtures[fixtureKey]) {
+                        /**
+                         * The vertical position of the texture
+                         *
+                         * @property y
+                         * @type Float
+                         */
+                        y: 0,
 
-                    var renderItem=state.bodies[bodyKey].fixtures[fixtureKey][renderKey];
+                        /**
+                         * The horizontal texture offset
+                         *
+                         * @property offsetX
+                         * @type Float
+                         */
+                        offsetX: 0,
 
-                    switch (renderItem.render) {
-                        case 'texture':
+                        /**
+                         * The vertical texture offset
+                         *
+                         * @property offsetY
+                         * @type Float
+                         */
+                        offsetY: 0,
 
-                            /**
-                             * *** THIS IS NOT A CLASS! ITS A CONFIGURATION OBJECT. ***
-                             *
-                             * Sprite.
-                             *
-                             * Used by {{#crossLink "zerk.game.engine.component.sprite"}}{{/crossLink}}
-                             *
-                             * @class texture
-                             * @namespace config.component.sprite
-                             **/
-                            textureConfig = {
-                                /**
-                                 * The horizontal position of the sprite
-                                 *
-                                 * @property x
-                                 * @type Float
-                                 */
-                                x: 0,
+                        /**
+                         * Rotation angle of the layer
+                         *
+                         * @property angle
+                         * @type Float
+                         */
+                        angle: 0,
 
-                                /**
-                                 * The vertical position of the sprite
-                                 *
-                                 * @property y
-                                 * @type Float
-                                 */
-                                y: 0,
+                        /**
+                         * Rotation angle of the texture
+                         *
+                         * @property textureAngle
+                         * @type Float
+                         */
+                        textureAngle: 0,
 
-                                /**
-                                 * Rotation angle of the sprite
-                                 *
-                                 * @property angle
-                                 * @type Float
-                                 */
-                                angle: 0,
+                        /**
+                         * Texture
+                         *
+                         * @property texture
+                         * @type string
+                         */
+                        texture: '',
 
-                                /**
-                                 * Texture
-                                 *
-                                 * @property texture
-                                 * @type string
-                                 */
-                                texture: ''
-                            };
+                        /**
+                         * Physics body
+                         *
+                         * @property body
+                         * @type string
+                         */
+                        body: '',
 
-                            zerk.apply(textureConfig,entityConfig.bodies[bodyKey].fixtures[fixtureKey][renderKey]);
+                        /**
+                         * Physics fixture
+                         *
+                         * @property fixture
+                         * @type string
+                         */
+                        fixture: ''
+                    };
 
-                            state.bodies[bodyKey].fixtures[fixtureKey][renderKey].key=renderKey;
+                    zerk.apply(textureConfig,entityConfig.layers[layerKey]);
+                    textureConfig.key=layerKey;
 
-                            textureConfig.key=renderKey;
+                    state.layers[layerKey]=textureConfig;
 
-                            state.bodies[bodyKey].fixtures[fixtureKey][renderKey]=textureConfig;
+                    state._layerList.push(state.layers[layerKey]);
 
-                            state.bodies[bodyKey].fixtures[fixtureKey]._renderList.push(
-                                state.bodies[bodyKey].fixtures[fixtureKey][renderKey]
-                            );
+                    break;
 
-                            break;
+                case 'sprite':
 
-                        case 'sprite':
+                    /**
+                     * *** THIS IS NOT A CLASS! ITS A CONFIGURATION OBJECT. ***
+                     *
+                     * Sprite.
+                     *
+                     * Used by {{#crossLink "zerk.game.engine.component.sprite"}}{{/crossLink}}
+                     *
+                     * @class sprite
+                     * @namespace config.component.sprite
+                     **/
+                    spriteConfig = {
+                        /**
+                         * The horizontal position of the sprite
+                         *
+                         * @property x
+                         * @type Float
+                         */
+                        x: 0,
 
-                            /**
-                             * *** THIS IS NOT A CLASS! ITS A CONFIGURATION OBJECT. ***
-                             *
-                             * Sprite.
-                             *
-                             * Used by {{#crossLink "zerk.game.engine.component.sprite"}}{{/crossLink}}
-                             *
-                             * @class sprite
-                             * @namespace config.component.sprite
-                             **/
-                            spriteConfig = {
-                                /**
-                                 * The horizontal position of the sprite
-                                 *
-                                 * @property x
-                                 * @type Float
-                                 */
-                                x: 0,
+                        /**
+                         * The vertical position of the sprite
+                         *
+                         * @property y
+                         * @type Float
+                         */
+                        y: 0,
 
-                                /**
-                                 * The vertical position of the sprite
-                                 *
-                                 * @property y
-                                 * @type Float
-                                 */
-                                y: 0,
+                        /**
+                         * Rotation angle of the sprite
+                         *
+                         * @property angle
+                         * @type Float
+                         */
+                        angle: 0,
 
-                                /**
-                                 * Rotation angle of the sprite
-                                 *
-                                 * @property angle
-                                 * @type Float
-                                 */
-                                angle: 0,
+                        /**
+                         * Sprite sheet
+                         *
+                         * @property spritesheet
+                         * @type string
+                         */
+                        spritesheet: '',
 
-                                /**
-                                 * Sprite sheet
-                                 *
-                                 * @property spritesheet
-                                 * @type string
-                                 */
-                                spritesheet: '',
+                        /**
+                         * Image ID to use from the sprite sheet
+                         *
+                         * @property sprite
+                         * @type string
+                         */
+                        sprite: '',
 
-                                /**
-                                 * Image ID to use from the sprite sheet
-                                 *
-                                 * @property sprite
-                                 * @type string
-                                 */
-                                sprite: ''
-                            };
+                        /**
+                         * Physics body
+                         *
+                         * @property body
+                         * @type string
+                         */
+                        body: '',
 
-                            zerk.apply(spriteConfig,entityConfig.bodies[bodyKey].fixtures[fixtureKey][renderKey]);
+                        /**
+                         * Physics fixture
+                         *
+                         * @property fixture
+                         * @type string
+                         */
+                        fixture: ''
+                    };
 
-                            spriteConfig.key=renderKey;
+                    zerk.apply(spriteConfig,entityConfig.layers[layerKey]);
+                    spriteConfig.key=layerKey;
 
-                            state.bodies[bodyKey].fixtures[fixtureKey][renderKey]=spriteConfig;
+                    state.layers[layerKey]=spriteConfig;
 
-                            state.bodies[bodyKey].fixtures[fixtureKey][renderKey].key=renderKey;
+                    state._layerList.push(state.layers[layerKey]);
 
-                            state.bodies[bodyKey].fixtures[fixtureKey]._renderList.push(
-                                state.bodies[bodyKey].fixtures[fixtureKey][renderKey]
-                            );
-
-                            break;
-
-                    }
-
-                }
-
-                state.bodies[bodyKey].fixtures[fixtureKey].key=fixtureKey;
-
-                state.bodies[bodyKey]._fixtureList.push(
-                    state.bodies[bodyKey].fixtures[fixtureKey]
-                );
+                    break;
 
             }
-
-            state.bodies[bodyKey].key=bodyKey;
-
-            state._bodyList.push(state.bodies[bodyKey]);
 
         }
 
@@ -207,7 +231,7 @@ zerk.define({
 			state,
 			worldConfig
 		);
-		
+
 		return state;
 		
 	}
