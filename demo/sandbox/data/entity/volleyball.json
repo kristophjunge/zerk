@@ -20,17 +20,13 @@
 			}
 		},
         "render": {
-            "bodies": {
-                "main": {
-                    "fixtures": {
-                        "main": {
-                            "sprite1": {
-                                "render": "sprite",
-                                "spritesheet": "sandbox.spritesheet.balls",
-                                "sprite": "volleyball"
-                            }
-                        }
-                    }
+            "layers": {
+                "sprite1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.balls",
+                    "sprite": "volleyball"
                 }
             }
         }

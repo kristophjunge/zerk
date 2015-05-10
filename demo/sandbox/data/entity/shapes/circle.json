@@ -17,19 +17,15 @@
 			}
 		},
         render: {
-            bodies: {
-                main: {
-                    fixtures: {
-                        main: {
-                            texture1: {
-                                render: 'texture',
-                                texture: 'sandbox.texture.zerk-debug-blue',
-                                x: 0.75,
-                                y: 0.75,
-                                angle: 130
-                            }
-                        }
-                    }
+            layers: {
+                texture1: {
+                    "body": "main",
+                    "fixture": "main",
+                    render: 'texture',
+                    texture: 'sandbox.texture.zerk-debug-blue',
+                    textureOffsetX: 0.75,
+                    textureOffsetY: 0.75,
+                    textureAngle: 130
                 }
             }
         }

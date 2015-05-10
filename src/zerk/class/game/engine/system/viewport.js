@@ -206,7 +206,7 @@ zerk.define({
             entity: {
                 width: 1,
                 height: 1,
-                visible: true //me._config.showBodyBuffer
+                visible: me._config.showEntityBuffer
             },
 			body: {
 				width: 1,
@@ -287,6 +287,7 @@ zerk.define({
             zoomDefault: 50,
             zoomMin: 1,
             zoomMax: 100,
+            showEntityBuffer: false,
 			showBodyBuffer: false,
 			showFixtureBuffer: false,
 			showGrid: false,
@@ -723,6 +724,8 @@ zerk.define({
             me.toPixel(meter)+pixel-this._x
 		);
 
+        //return Math.ceil(value+(this._width/2));
+
         return value+(this._width/2);
 		//return ~~(0.5+value+(this._width/2));
 		
@@ -758,6 +761,7 @@ zerk.define({
             me.toPixel(meter)+pixel-this._y
 		);
 
+        //return Math.ceil(value+(this._height/2));
         return value+(this._height/2);
 		//return ~~(0.5+value+(this._height/2));
 		

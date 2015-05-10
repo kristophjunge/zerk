@@ -313,3 +313,39 @@ zerk.helper.getBoundingBoxOfPolygon=function(vertices) {
     }
 
 };
+
+zerk.helper.getBoundingBoxOfPolygon2=function(vertices) {
+
+    var mostLeft=0;
+    var mostRight=0;
+    var mostTop=0;
+    var mostBottom=0;
+
+    for (var i=0;i<vertices.length;i++) {
+
+        if (vertices[i][0]<mostLeft) {
+            mostLeft=vertices[i][0];
+        }
+
+        if (vertices[i][0]>mostRight) {
+            mostRight=vertices[i][0];
+        }
+
+        if (vertices[i][1]<mostTop) {
+            mostTop=vertices[i][1];
+        }
+
+        if (vertices[i][1]>mostBottom) {
+            mostBottom=vertices[i][1];
+        }
+
+    }
+
+    return {
+        x: mostLeft,
+        y: mostTop,
+        width: mostRight-mostLeft,
+        height: mostBottom-mostTop
+    }
+
+};

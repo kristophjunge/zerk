@@ -26,16 +26,12 @@
 			}
 		},
         render: {
-            bodies: {
-                main: {
-                    fixtures: {
-                        main: {
-                            texture1: {
-                                render: 'texture',
-                                texture: 'sandbox.texture.zerk-debug-blue'
-                            }
-                        }
-                    }
+            layers: {
+                texture1: {
+                    "body": "main",
+                    "fixture": "main",
+                    render: 'texture',
+                    texture: 'sandbox.texture.zerk-debug-blue'
                 }
             }
         }

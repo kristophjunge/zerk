@@ -230,7 +230,9 @@ zerk.define({
                 me._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
                 me._viewport.toZoom(bufferSize.width),
                 me._viewport.toZoom(bufferSize.height),
-                bodyState.angle
+                bodyState.angle,
+                me._viewport.toZoom(-bufferSize.width/2),
+                me._viewport.toZoom(-bufferSize.height/2)
             );
 
             var vertices=[];

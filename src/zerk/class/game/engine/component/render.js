@@ -78,44 +78,12 @@ zerk.define({
                         y: 0,
 
                         /**
-                         * The horizontal texture offset
-                         *
-                         * @property offsetX
-                         * @type Float
-                         */
-                        offsetX: 0,
-
-                        /**
-                         * The vertical texture offset
-                         *
-                         * @property offsetY
-                         * @type Float
-                         */
-                        offsetY: 0,
-
-                        /**
                          * Rotation angle of the layer
                          *
                          * @property angle
                          * @type Float
                          */
                         angle: 0,
-
-                        /**
-                         * Rotation angle of the texture
-                         *
-                         * @property textureAngle
-                         * @type Float
-                         */
-                        textureAngle: 0,
-
-                        /**
-                         * Texture
-                         *
-                         * @property texture
-                         * @type string
-                         */
-                        texture: '',
 
                         /**
                          * Physics body
@@ -131,7 +99,39 @@ zerk.define({
                          * @property fixture
                          * @type string
                          */
-                        fixture: ''
+                        fixture: '',
+
+                        /**
+                         * Texture
+                         *
+                         * @property texture
+                         * @type string
+                         */
+                        texture: '',
+
+                        /**
+                         * The horizontal texture offset
+                         *
+                         * @property textureOffsetX
+                         * @type Float
+                         */
+                        textureOffsetX: 0,
+
+                        /**
+                         * The vertical texture offset
+                         *
+                         * @property textureOffsetY
+                         * @type Float
+                         */
+                        textureOffsetY: 0,
+
+                        /**
+                         * Rotation angle of the texture
+                         *
+                         * @property textureAngle
+                         * @type Float
+                         */
+                        textureAngle: 0
                     };
 
                     zerk.apply(textureConfig,entityConfig.layers[layerKey]);

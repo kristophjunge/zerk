@@ -226,6 +226,17 @@ zerk.define({
      */
     _maxFixtureSize: 10,
 
+    /**
+     * Box2D fixture skin size
+     *
+     * @see http://box2d.org/forum/viewtopic.php?f=4&t=5903
+     *
+     * @property _maxFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _fixtureSkinSize: 0.01,
+
 	/**
 	 * Class constructor
 	 * 
@@ -1214,8 +1225,8 @@ zerk.define({
         }
 
 		fixDef.shape.SetAsOrientedBox(
-			width/2,
-			height/2,
+            (width/2)-(this._fixtureSkinSize/2),
+            (height/2)-(this._fixtureSkinSize/2),
 			center,
 			fixture.angle
 		);
@@ -1360,6 +1371,20 @@ zerk.define({
 
             var x=fixture.vertices[i][0];
             var y=fixture.vertices[i][1];
+
+
+            if (x>0) {
+                x-=(this._fixtureSkinSize/2);
+            } else {
+                x+=(this._fixtureSkinSize/2);
+            }
+
+            if (y>0) {
+                y-=(this._fixtureSkinSize/2);
+            } else {
+                y+=(this._fixtureSkinSize/2);
+            }
+
 
             // @TODO Implement polygon size check
             /*

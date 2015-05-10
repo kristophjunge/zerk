@@ -166,6 +166,8 @@ zerk.define({
 	 * @param {Float} width Target width
 	 * @param {Float} height Target height
      * @param {Float} angle Rotation angle
+     * @param {Float} originX Horizontal origin
+     * @param {Float} originY Vertical origin
 	 **/
 	bufferFlush: function(
         source,
@@ -174,13 +176,15 @@ zerk.define({
         y,
         width,
         height,
-        angle
+        angle,
+        originX,
+        originY
     ) {
 		
 		var sourceCanvas=this._getCanvas(source);
 		var targetContext=this._getContext(target);
 
-        if (angle) {
+        //if (angle) {
 
             targetContext.save();
             targetContext.translate(x,y);
@@ -191,14 +195,15 @@ zerk.define({
                 0,
                 sourceCanvas.width,
                 sourceCanvas.height,
-                -width/2,
-                -height/2,
+                originX,
+                originY,
                 width,
                 height
             );
 
             targetContext.restore();
 
+            /*
         } else {
 
             targetContext.drawImage(
@@ -214,6 +219,7 @@ zerk.define({
             );
 
         }
+        */
 
 	},
 	
@@ -292,11 +298,11 @@ zerk.define({
 		
 		context.save();
 		
-		if (zerk.isDefined(fillColor)) {
+		if (zerk.isDefined(fillColor) && fillColor) { //&& fillColor!=null
 			
 			context.fillStyle=fillColor;
 			
-			context.strokeRect(
+			context.fillRect(
 				x,
 				y,
 				width,
@@ -305,7 +311,7 @@ zerk.define({
 			
 		}
 		
-		if (zerk.isDefined(strokeColor)) {
+		if (zerk.isDefined(strokeColor) && strokeColor) { // && strokeColor!=null
 			
 			context.strokeStyle=strokeColor;
 			context.lineWidth=lineWidth;

@@ -35,6 +35,7 @@ zerk.define({
     _demoWorldIndex: 0,
 
     _demoWorlds: [
+        'sandbox.world.rendertest',
         'sandbox.world.crates',
         'sandbox.world.balls',
         'sandbox.world.stones',

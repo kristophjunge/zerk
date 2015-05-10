@@ -7,17 +7,19 @@
                 "box": {
                     "moveable": true,
                     "origin": true,
+                    //"fixedRotation": true,
                     "fixtures": {
                         "main": {
                             "shape": "box",
                             "width": 1,
                             "height": 1,
-                            "angle": 45
+                            //"angle": 45
 						}
 					}
 				},
                 "circle": {
                     "moveable": true,
+                    //"fixedRotation": true,
                     "x": 1,
                     "y": -1,
                     //"angle": 45,
@@ -25,16 +27,18 @@
                          "main": {
                              "shape": "box",
                              "width": 1,
-                             "height": 1,
-                             "angle": 45,
+                             "height": 1
+                             //"shape": "circle",
                              //"radius": 0.5,
-                             "x": 0.25,
-                             "y": -0.25
+                             //"angle": 45,
+                             //"x": 0.25,
+                             //"y": -0.25
                          }
                     }
                 },
                 "triangle": {
                     "moveable": true,
+                    //"fixedRotation": true,
                     "x": -1,
                     "y": 1,
                     "fixtures": {
@@ -55,6 +59,21 @@
 		},
         "render": {
             "layers": {
+                "bgTexture1": {
+                    "render": "texture",
+                    "texture": "sandbox.texture.zerk-debug-green",
+                    "x": -1,
+                    "y": -1,
+                    "width": 2,
+                    "height": 2
+                },
+                "bgSprite1": {
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.crates",
+                    "sprite": "wooden-1",
+                    "x": -1,
+                    "y": -1
+                },
                 "boxTexture1": {
                     "body": "box",
                     "fixture": "main",
@@ -78,17 +97,23 @@
                     "render": "texture",
                     "texture": "sandbox.texture.zerk-debug-blue",
                     "x": 0.25,
-                    "y": -0.25
-                    //"angle": -45
+                    "y": -0.25,
+                    "angle": -45,
+                    "textureOffsetX": 0.1,
+                    "textureOffsetY": 0.1,
+                    "textureAngle": 45
                 },
                 "circleSprite1": {
                     "body": "circle",
                     "fixture": "main",
                     "render": "sprite",
-                    "spritesheet": "sandbox.spritesheet.balls",
-                    "sprite": "medicineball",
+                    //"spritesheet": "sandbox.spritesheet.balls",
+                    //"sprite": "medicineball",
+                    "spritesheet": "sandbox.spritesheet.crates",
+                    "sprite": "wooden-1",
                     "x": 0.25,
-                    "y": -0.25
+                    "y": -0.25,
+                    "angle": -45
                 },
                 "triangleTexture1": {
                     "body": "triangle",
@@ -108,28 +133,6 @@
                     "y": -0.25
                 }
             }
-
-
-            /*"root": {
-                "sprite2": {
-                    "render": "sprite",
-                    "spritesheet": "sandbox.spritesheet.crates",
-                    "sprite": "wooden-1"
-                }
-            },
-            "bodies": {
-                "main": {
-                    "fixtures": {
-                        "main": {
-                            "sprite1": {
-                                "render": "sprite",
-                                "spritesheet": "sandbox.spritesheet.crates",
-                                "sprite": "wooden-1"
-                            }
-                        }
-                    }
-                }
-            }*/
         }
 	}
 }

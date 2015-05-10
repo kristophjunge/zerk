@@ -9,6 +9,17 @@
         }
     },
     "entities": [
+        /*
+        {
+            name: 'sandbox.entity.shapes.circle',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        }
+        */
 		{
 			name: 'sandbox.entity.rendertest',
 			components: {
@@ -18,5 +29,6 @@
 				}
 			}
 		}
+
 	]
 }

@@ -20,41 +20,14 @@
 		},
         "render": {
             "layers": {
-                "sprite2": {
-                    "render": "sprite",
-                    "spritesheet": "sandbox.spritesheet.crates",
-                    "sprite": "wooden-1"
-                },
                 "sprite1": {
-                    "attachBody": "main",
-                    "attachFixture": "main",
+                    "body": "main",
+                    "fixture": "main",
                     "render": "sprite",
                     "spritesheet": "sandbox.spritesheet.crates",
                     "sprite": "wooden-1"
                 }
             }
-
-
-            /*"root": {
-                "sprite2": {
-                    "render": "sprite",
-                    "spritesheet": "sandbox.spritesheet.crates",
-                    "sprite": "wooden-1"
-                }
-            },
-            "bodies": {
-                "main": {
-                    "fixtures": {
-                        "main": {
-                            "sprite1": {
-                                "render": "sprite",
-                                "spritesheet": "sandbox.spritesheet.crates",
-                                "sprite": "wooden-1"
-                            }
-                        }
-                    }
-                }
-            }*/
         }
 	}
 }

@@ -108,6 +108,22 @@
                     //"anchorSourceY": 0
                 }
             }
+        },
+        "render": {
+            "layers": {
+                "texture1": {
+                    "body": "limbMiddle",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "snakebot.texture.zerk-debug-blue"
+                },
+                "texture2": {
+                    "body": "limbLeft",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "snakebot.texture.zerk-debug-blue"
+                }
+            }
         }
     }
 }
