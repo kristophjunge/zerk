@@ -43,6 +43,8 @@ zerk.define({
 
     _control: null,
 
+    _physics: null,
+
     _editorState: '',
 
     _editorSpritesheet: '',
@@ -70,6 +72,8 @@ zerk.define({
 		);
 
 		this._viewport=this._getSystem('viewport');
+
+        this._physics=this._getSystem('physics');
 
         this._control=this._getSystem('control');
 
@@ -308,6 +312,16 @@ zerk.define({
 
 	},
 
+    getEntity: function() {
+
+        var me=this;
+
+        var entities=me._engine.getEntitiesByTags('editor');
+
+        return entities[0];
+
+    },
+
     addVertice: function(x,y) {
 
         var me=this;
@@ -373,6 +387,26 @@ zerk.define({
 
 
         var vertices=me._editorVertices;
+
+        var entity=me.getEntity();
+        var body=entity.components.physics._bodyList[0];
+
+        var fixture={
+            key: 'new',
+            x: 0,
+            y: 0,
+            angle: 0,
+            shape: 'polygon',
+            vertices: vertices
+        };
+
+        me._physics.addFixture(
+            entity,
+            body,
+            'new',
+            fixture
+        );
+
 
 
 

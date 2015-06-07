@@ -68,12 +68,16 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.wireframe').init.apply(
-			this,
+			me,
 			arguments
 		);
-		
+
+        me._showEntityOriginIndicator=me._config.showEntityOriginIndicator;
+
 		this._viewport=this._getSystem('viewport');
 		
 		this._physics=this._getSystem('physics');
@@ -194,7 +198,9 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderEntity: function(entity) {
-		
+
+        var me=this;
+
 		// Render all bodies of the entity
 		
 		var bodies=entity.components.physics._bodyList;
@@ -204,9 +210,9 @@ zerk.define({
 			this._renderBody(entity,bodies[i]);
 			
 		}
-		
-		if (this._config.showEntityOriginIndicator) {
-			
+
+		if (me._showEntityOriginIndicator) {
+
 			this._renderEntityOriginIndicator(entity);
 			
 		}
@@ -665,9 +671,23 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderEntityOriginIndicator: function(entity) {
-		
+
 		var position=entity.components.position;
-		
+
+
+
+        /*
+        var value=this.toZoom(
+            me.toPixel(meter)+pixel-this._x
+        );
+
+        //return Math.ceil(value+(this._width/2));
+
+        return value+(this._width/2);
+        */
+
+
+
 		this._viewport.drawLines(
 			'display',
 			[
