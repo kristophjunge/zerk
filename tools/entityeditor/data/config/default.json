@@ -1,70 +1,61 @@
 {
-	engine: {
-		systems: {
-			viewport: {
-				showWorldCenterIndicator: true,
-				trackPlayer: false,
-                worldScale: 60
+	"engine": {
+		"systems": {
+			"viewport": {
+				"showWorldCenterIndicator": false,
+				"trackPlayer": false,
+                "worldScale": 60,
+                "autoSize": true,
+                "zoomMax": 1000,
+                "zoomMin": 10,
+                "zoomDefault": 200
 			},
-			wireframe: {
-				showFixtureBoundingBox: true
+            "wireframe": {
+                "showFixtureBoundingBox": true,
+                "showBodyAngleIndicator": false,
+                "showEntityOriginIndicator": true
 			},
-			debuginfo: {
-				showViewCenterIndicator: true,
-				showFPS: true,
-				showZoom: true,
-				showPosition: true
+            "debuginfo": {
+                "showViewCenterIndicator": false,
+                "showFPS": true,
+                "showZoom": true,
+                "showPosition": true
 			},
-			physics: {
-				enableMouseJoint: true,
-                physicsScale: 1
+            "physics": {
+                "enableMouseJoint": true,
+                "physicsScale": 1
 			},
-			control: {
-				mouse: {
-					enableJoint: true,
-					enableWheelZoom: true
+            "control": {
+                "mouse": {
+                    "enableJoint": true,
+                    "enableWheelZoom": true
 				}
 			}
 		},
-		defaultSystems: [
-			'physics',
-			'viewport',
-			'render',
-			'wireframe',
-			'message',
-			'debuginfo',
-			'control',/*
-			'player',
-			'damager',
-			'fall',
-			'trigger',
-			'elevator',*/
-            'entityeditor'
+        "defaultSystems": [
+            "physics",
+            "viewport",
+            "render",
+            "wireframe",
+            "message",
+            "debuginfo",
+            "control",
+            "entityeditor"
 		],
-		componentMap: {
-			position: 'zerk.game.engine.component.position',
-			physics: 'zerk.game.engine.component.physics',
-            render: 'zerk.game.engine.component.render'/*,
-			fall: 'zerk.game.engine.component.fall',
-			elevator: 'zerk.game.engine.component.elevator',
-			player: 'zerk.game.engine.component.player',
-			trigger: 'zerk.game.engine.component.trigger',
-			damager: 'zerk.game.engine.component.damager'*/
+        "componentMap": {
+            "position": "zerk.game.engine.component.position",
+            "physics": "zerk.game.engine.component.physics",
+            "render": "zerk.game.engine.component.render"
 		},
-		systemMap: {
-			physics: 'zerk.game.engine.system.physics.box2d',
-			viewport: 'zerk.game.engine.system.viewport.canvas',
-            render: 'zerk.game.engine.system.render',
-			wireframe: 'zerk.game.engine.system.wireframe',
-			message: 'zerk.game.engine.system.message',
-			debuginfo: 'zerk.game.engine.system.debuginfo',
-			control: 'zerk.game.engine.system.control',/*
-			player: 'zerk.game.engine.system.player',
-			damager: 'zerk.game.engine.system.damager',
-			fall: 'zerk.game.engine.system.fall',
-			trigger: 'zerk.game.engine.system.trigger',
-			elevator: 'zerk.game.engine.system.elevator',*/
-            entityeditor: 'entityeditor.game.engine.system.entityeditor'
+        "systemMap": {
+            "physics": "zerk.game.engine.system.physics.box2d",
+            "viewport": "zerk.game.engine.system.viewport.canvas",
+            "render": "zerk.game.engine.system.render",
+            "wireframe": "zerk.game.engine.system.wireframe",
+            "message": "zerk.game.engine.system.message",
+            "debuginfo": "zerk.game.engine.system.debuginfo",
+            "control": "zerk.game.engine.system.control",
+            "entityeditor": "entityeditor.game.engine.system.entityeditor"
 		}
 	}
 }

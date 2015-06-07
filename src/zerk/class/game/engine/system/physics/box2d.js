@@ -1111,6 +1111,24 @@ zerk.define({
 		
 		return body._physicsHandle;
 	},
+
+    addFixture: function(entity,body,key,fixture) {
+
+        console.log('BODY', body);
+
+        body.fixtures[key]=fixture;
+        body._fixtureList.push(fixture);
+
+        body.fixtures[key]._physicsHandle=body._physicsHandle.CreateFixture(
+            this._createFixture(
+                entity,
+                body,
+                body.fixtures[key]
+            )
+        );
+
+
+    },
 	
 	/**
 	 * Delegate method for fixture creation
@@ -1323,7 +1341,10 @@ zerk.define({
 		body,
 		fixture
 	) {
-		
+
+
+        console.log('CREATE POLY');
+
 		var fixDef=new this._b2FixtureDef;
 
 		if (fixture.categoryBits!=null) {
@@ -1346,6 +1367,8 @@ zerk.define({
 			body: body.key,
 			fixture: fixture.key
 		};
+
+        console.log('UDATA',fixDef.userData);
 		
 		fixDef.shape=new this._b2PolygonShape;
 		

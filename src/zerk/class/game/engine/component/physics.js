@@ -314,7 +314,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'box',
+                            shape: 'box',
 							
 							/**
 							 * Width of the rectangle
@@ -461,7 +461,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'circle',
+                            shape: 'circle',
 							
 							/**
 							 * Radius of the circle
@@ -600,7 +600,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'polygon',
+							shape: 'polygon',
 							
 							/**
 							 * List of vertices
