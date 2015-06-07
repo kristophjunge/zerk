@@ -381,18 +381,35 @@ zerk.define({
         console.log('APPLY FIXTURE');
 
         if (!me._editorVerticesValid) {
-            alert('Polygon is not valid');
-            return;
+            console.log('Polygon is not valid');
+
+            var concave = new decomp.Polygon();
+            var convex = new decomp.Polygon();
+            concave.vertices = me._editorVertices;
+            convex.vertices = concave.decomp();
+            for (var i = 0; i < convex.vertices.length; i++) {
+                me.applyFixtureVertices(convex.vertices[i].vertices, i);
+            };
+        } else {
+            me.applyFixtureVertices(me._editorVertices);
         }
 
+        me._editorVerticesValid=true;
+        me._editorMovingPoint=false;
+        me._editorVerticeIndex=null;
+        me._editorVertices=[];
+        me._editorState='';
+    },
 
-        var vertices=me._editorVertices;
-
+    applyFixtureVertices: function(vertices, key) {
+        var me=this;
         var entity=me.getEntity();
         var body=entity.components.physics._bodyList[0];
 
+        key = (!zerk.isDefined(key)) ? 'new' : 'new_' + key;
+
         var fixture={
-            key: 'new',
+            key: key,
             x: 0,
             y: 0,
             angle: 0,
@@ -403,21 +420,9 @@ zerk.define({
         me._physics.addFixture(
             entity,
             body,
-            'new',
+            key,
             fixture
         );
-
-
-
-
-
-
-        me._editorVerticesValid=true;
-        me._editorMovingPoint=false;
-        me._editorVerticeIndex=null;
-        me._editorVertices=[];
-        me._editorState='';
-
     },
 
     cancelAddFixture: function() {
