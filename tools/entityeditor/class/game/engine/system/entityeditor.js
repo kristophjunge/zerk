@@ -1,40 +1,40 @@
 zerk.define({
-	
+
 	name: 'entityeditor.game.engine.system.entityeditor',
 	extend: 'zerk.game.engine.system'
-	
+
 },{
-	
+
 	/**
 	 * Name of the system
-	 * 
+	 *
 	 * @property _name
 	 * @type String
 	 * @protected
 	 */
 	_name: 'entityeditor',
-	
+
 	/**
 	 * Thread that runs this system
-	 * 
+	 *
 	 * @property _thread
 	 * @type String
 	 * @protected
 	 **/
 	_thread: 'render',
-	
+
 	/**
 	 * Priority of this system
-	 * 
+	 *
 	 * @property _priority
 	 * @type Integer
 	 * @protected
 	 **/
 	_priority: 105,
-	
+
 	/**
 	 * Viewport system instance
-	 * 
+	 *
 	 * @property _viewport
 	 * @type zerk.game.engine.system.viewport
 	 * @protected
@@ -54,30 +54,30 @@ zerk.define({
 
     _editorMovingPoint: false,
     _editorVerticeIndex: null,
-	
+
 	/**
 	 * Class constructor
-	 * 
+	 *
 	 * @method init
 	 * @param {zerk.game.engine} engine Game engine
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
 		zerk.parent('entityeditor.game.engine.system.entityeditor').init.apply(
 			this,
 			arguments
 		);
-		
+
 		this._viewport=this._getSystem('viewport');
 
         this._control=this._getSystem('control');
-		
+
 	},
-	
+
 	/**
 	 * Returns true when the system is interested in given component
-	 * 
+	 *
 	 * @method useComponent
 	 * @param {String} name Component name
 	 * @return {Boolean} True when the system is intereseted in given component
@@ -85,12 +85,12 @@ zerk.define({
 	useComponent: function(name) {
 
         return false;
-		
+
 	},
-	
+
 	/**
 	 * Starts the system
-	 * 
+	 *
 	 * @method start
 	 **/
 	start: function() {
@@ -125,36 +125,36 @@ zerk.define({
             me._onMouseMove,
             me
         );
-		
+
 	},
-	
+
 	/**
 	 * Stops the system
-	 * 
+	 *
 	 * @method stop
 	 **/
 	stop: function() {
-		
+
 		zerk.parent('entityeditor.game.engine.system.entityeditor').stop.apply(
 			this,
 			arguments
 		);
-		
+
 	},
-	
+
 	/**
 	 * Adds an entity to the system
-	 * 
+	 *
 	 * @method addEntity
 	 * @param {config.entity} entity Entity state
 	 **/
 	addEntity: function(entity) {
-		
+
 		zerk.parent('entityeditor.game.engine.system.entityeditor').addEntity.apply(
 			this,
 			arguments
 		);
-		
+
 	},
 
     drawBackground: function(entity) {
@@ -282,7 +282,7 @@ zerk.define({
 
 	/**
 	 * Updates the system
-	 * 
+	 *
 	 * @method update
 	 **/
 	update: function() {
