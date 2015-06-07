@@ -11,7 +11,7 @@ zerk.define({
 		'zerk.game.engine.component.fall',
 		'zerk.game.engine.component.trigger',
 		'zerk.game.engine.component.elevator',
-		
+
 		'zerk.game.engine.system.physics.box2d',
 		'zerk.game.engine.system.viewport.canvas',
 		'zerk.game.engine.system.render',
@@ -22,9 +22,9 @@ zerk.define({
 		'zerk.game.engine.system.player',
 		'zerk.game.engine.system.damager',
 		'zerk.game.engine.system.fall',
-		'zerk.game.engine.system.trigger',
 		'zerk.game.engine.system.elevator',
-        'tools.game.engine.system.entityeditor'
+
+        'entityeditor.game.engine.system.entityeditor'
 
 	]
 	
@@ -45,13 +45,13 @@ zerk.define({
 			return;
 		}
 
-        me._engine._jsonLoader.addNamespace('sandbox.component','./../../demo/sandbox/data/component');
-        me._engine._jsonLoader.addNamespace('sandbox.entity','./../../demo/sandbox/data/entity');
-        me._engine._jsonLoader.addNamespace('sandbox.world','./../../demo/sandbox/data/world');
-        me._engine._jsonLoader.addNamespace('sandbox.config','./../../demo/sandbox/data/config');
-        me._engine._jsonLoader.addNamespace('sandbox.spritesheet','./../../demo/sandbox/media/spritesheet');
-        me._engine._imageLoader.addNamespace('sandbox.texture','./../../demo/sandbox/media/texture');
-        me._engine._imageLoader.addNamespace('sandbox.spritesheet','./../../demo/sandbox/media/spritesheet');
+        me._engine._jsonLoader.addNamespace('monstertruck.component','./../../demo/monstertruck/data/component');
+        me._engine._jsonLoader.addNamespace('monstertruck.entity','./../../demo/monstertruck/data/entity');
+        me._engine._jsonLoader.addNamespace('monstertruck.world','./../../demo/monstertruck/data/world');
+        me._engine._jsonLoader.addNamespace('monstertruck.config','./../../demo/monstertruck/data/config');
+        me._engine._jsonLoader.addNamespace('monstertruck.spritesheet','./../../demo/monstertruck/media/spritesheet');
+        me._engine._imageLoader.addNamespace('monstertruck.texture','./../../demo/monstertruck/media/texture');
+        me._engine._imageLoader.addNamespace('monstertruck.spritesheet','./../../demo/monstertruck/media/spritesheet');
 
 		me._engine.loadWorldConfig(
             {
@@ -66,7 +66,8 @@ zerk.define({
                 },
                 "entities": [
                     {
-                        "name": "entityeditor.entity.empty",
+                        //"name": "entityeditor.entity.empty",
+                        "name": "monstertruck.entity.monstertruck",
                         //"name": "sandbox.entity.crate",
                         tags: [
                             'editor'
@@ -96,15 +97,23 @@ zerk.define({
 
 	},
 
-    editorAddFixture: function(spritesheet,sprite) {
+    editorSetBackground: function(spritesheet,sprite) {
 
         var me=this;
 
         var editor=me._engine.getSystem('entityeditor');
 
-        console.log('EDITOr',editor);
+        editor.setBackground(spritesheet,sprite);
 
-        editor.addFixture(spritesheet,sprite);
+    },
+
+    editorAddFixture: function() {
+
+        var me=this;
+
+        var editor=me._engine.getSystem('entityeditor');
+
+        editor.addFixture();
 
     },
 

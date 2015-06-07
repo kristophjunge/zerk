@@ -739,7 +739,8 @@ zerk.define({
         sourceY,
         sourceWidth,
         sourceHeight,
-        angle
+        angle,
+        opacity
     ) {
 		
 		var context=this._getContext(buffer);
@@ -750,6 +751,10 @@ zerk.define({
 
             context.translate(targetX,targetY);
             context.rotate(angle);
+
+            if (zerk.isDefined(opacity)) {
+                context.globalAlpha = opacity;
+            }
 
             context.drawImage(
                 image,
@@ -766,6 +771,10 @@ zerk.define({
             context.restore();
 
         } else {
+
+            if (zerk.isDefined(opacity)) {
+                context.globalAlpha = opacity;
+            }
 
             context.drawImage(
                 image,

@@ -3,7 +3,8 @@
 		systems: {
 			viewport: {
 				showWorldCenterIndicator: true,
-				trackPlayer: false
+				trackPlayer: false,
+                worldScale: 60
 			},
 			wireframe: {
 				showFixtureBoundingBox: true
@@ -15,7 +16,8 @@
 				showPosition: true
 			},
 			physics: {
-				enableMouseJoint: true
+				enableMouseJoint: true,
+                physicsScale: 1
 			},
 			control: {
 				mouse: {
@@ -31,23 +33,23 @@
 			'wireframe',
 			'message',
 			'debuginfo',
-			'control',
+			'control',/*
 			'player',
 			'damager',
 			'fall',
 			'trigger',
-			'elevator',
+			'elevator',*/
             'entityeditor'
 		],
 		componentMap: {
 			position: 'zerk.game.engine.component.position',
 			physics: 'zerk.game.engine.component.physics',
+            render: 'zerk.game.engine.component.render'/*,
 			fall: 'zerk.game.engine.component.fall',
 			elevator: 'zerk.game.engine.component.elevator',
 			player: 'zerk.game.engine.component.player',
-            render: 'zerk.game.engine.component.render',
 			trigger: 'zerk.game.engine.component.trigger',
-			damager: 'zerk.game.engine.component.damager'
+			damager: 'zerk.game.engine.component.damager'*/
 		},
 		systemMap: {
 			physics: 'zerk.game.engine.system.physics.box2d',
@@ -56,13 +58,13 @@
 			wireframe: 'zerk.game.engine.system.wireframe',
 			message: 'zerk.game.engine.system.message',
 			debuginfo: 'zerk.game.engine.system.debuginfo',
-			control: 'zerk.game.engine.system.control',
+			control: 'zerk.game.engine.system.control',/*
 			player: 'zerk.game.engine.system.player',
 			damager: 'zerk.game.engine.system.damager',
 			fall: 'zerk.game.engine.system.fall',
 			trigger: 'zerk.game.engine.system.trigger',
-			elevator: 'zerk.game.engine.system.elevator',
-            entityeditor: 'tools.game.engine.system.entityeditor'
+			elevator: 'zerk.game.engine.system.elevator',*/
+            entityeditor: 'entityeditor.game.engine.system.entityeditor'
 		}
 	}
 }

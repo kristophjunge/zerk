@@ -1,6 +1,6 @@
 zerk.define({
 	
-	name: 'tools.game.engine.system.entityeditor',
+	name: 'entityeditor.game.engine.system.entityeditor',
 	extend: 'zerk.game.engine.system'
 	
 },{
@@ -64,7 +64,7 @@ zerk.define({
 	 **/
 	init: function(engine,config) {
 		
-		zerk.parent('tools.game.engine.system.entityeditor').init.apply(
+		zerk.parent('entityeditor.game.engine.system.entityeditor').init.apply(
 			this,
 			arguments
 		);
@@ -97,7 +97,7 @@ zerk.define({
 
         var me=this;
 
-		zerk.parent('tools.game.engine.system.entityeditor').start.apply(
+		zerk.parent('entityeditor.game.engine.system.entityeditor').start.apply(
 			me,
 			arguments
 		);
@@ -135,7 +135,7 @@ zerk.define({
 	 **/
 	stop: function() {
 		
-		zerk.parent('tools.game.engine.system.entityeditor').stop.apply(
+		zerk.parent('entityeditor.game.engine.system.entityeditor').stop.apply(
 			this,
 			arguments
 		);
@@ -150,13 +150,136 @@ zerk.define({
 	 **/
 	addEntity: function(entity) {
 		
-		zerk.parent('tools.game.engine.system.entityeditor').addEntity.apply(
+		zerk.parent('entityeditor.game.engine.system.entityeditor').addEntity.apply(
 			this,
 			arguments
 		);
 		
 	},
-	
+
+    drawBackground: function(entity) {
+
+        var me=this;
+
+        if (!me._editorSprite) {
+            return;
+        }
+
+        var image=me._engine._spriteLoader.getSprite(me._editorSpritesheet,me._editorSprite);
+        var position=entity.components.position;
+
+        var bodyState=null;
+        for (var i=0;i<entity.components.physics._bodyList.length;i++) {
+            var body=entity.components.physics._bodyList[i];
+            if (body.origin) {
+                bodyState=entity.components.physics._bodyList[i];
+            }
+        }
+
+        var bufferSize={
+            width: image.info.width,
+            height: image.info.height
+        };
+
+        var fixtureX=0;
+        var fixtureY=0;
+        var spriteX=0;
+        var spriteY=0;
+        var fixtureAngle=0;
+        var spriteAngle=0;
+
+        me._viewport.bufferInit(
+            'body',
+            bufferSize.width,
+            bufferSize.height,
+            bufferSize.width/2,
+            bufferSize.height/2,
+            bodyState.angle
+        );
+
+        me._viewport.drawImage(
+            'body',
+            image.image,
+            me._viewport.toPixel(fixtureX+spriteX),
+            me._viewport.toPixel(fixtureY+spriteY),
+            image.info.width,
+            image.info.height,
+            image.info.offsetX,
+            image.info.offsetY,
+            image.info.width,
+            image.info.height,
+            fixtureAngle+spriteAngle,
+            0.5
+        );
+
+        // Draw the buffer onto the display
+        me._viewport.bufferFlush(
+            'body',
+            'display',
+            me._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
+            me._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
+            me._viewport.toZoom(bufferSize.width),
+            me._viewport.toZoom(bufferSize.height),
+            bodyState.angle,
+            me._viewport.toZoom(-bufferSize.width/2),
+            me._viewport.toZoom(-bufferSize.height/2)
+        );
+
+    },
+
+    drawVertices: function() {
+
+        var me=this;
+
+        var vertices=[];
+        var x=0;
+        var y=0;
+
+        for (var i=0;i<me._editorVertices.length;i++) {
+            x=me._viewport._getCanvasX(me._editorVertices[i][0]);
+            y=me._viewport._getCanvasY(me._editorVertices[i][1]);
+            vertices.push([x,y]);
+        }
+
+        var color='rgba(127,127,76,0.5)';
+        if (!me._editorVerticesValid) {
+            color='rgba(255,0,0,0.5)';
+        }
+
+        if (vertices.length>=3) {
+            me._viewport.drawPolygon(
+                'display',
+                vertices,
+                color,
+                color,
+                0
+            );
+        }
+
+        for (var i=0;i<vertices.length;i++) {
+
+            var color='rgba(255,255,255,0.75)';
+            if (i==me._editorVerticeIndex-1) {
+                var color='rgba(0,255,0,0.75)';
+            }
+
+            me._viewport.drawArc(
+                'display',
+                vertices[i][0],
+                vertices[i][1],
+                5,
+                0,
+                Math.PI*2,
+                true,
+                color
+                //strokeColor,
+                //lineWidth
+            );
+        }
+
+    },
+
+
 	/**
 	 * Updates the system
 	 * 
@@ -166,120 +289,20 @@ zerk.define({
 
         var me=this;
 
-		zerk.parent('tools.game.engine.system.entityeditor').update.apply(
+		zerk.parent('entityeditor.game.engine.system.entityeditor').update.apply(
 			me,
 			arguments
 		);
 
+        var entities=me._engine.getEntitiesByTags('editor');
+        var entity=entities[0];
+
+        me.drawBackground(entity);
+
         if (me._editorState=='add_fixture') {
 
-            var entities=me._engine.getEntitiesByTags('editor');
-            var entity=entities[0];
+            me.drawVertices();
 
-            var image=me._engine._spriteLoader.getSprite(me._editorSpritesheet,me._editorSprite);
-            var position=entity.components.position;
-
-            var bodyState=null;
-            for (var i=0;i<entity.components.physics._bodyList.length;i++) {
-                var body=entity.components.physics._bodyList[i];
-                if (body.origin) {
-                    bodyState=entity.components.physics._bodyList[i];
-                }
-            }
-
-            var bufferSize={
-                width: image.info.width,
-                height: image.info.height
-            };
-
-            var fixtureX=0;
-            var fixtureY=0;
-            var spriteX=0;
-            var spriteY=0;
-            var fixtureAngle=0;
-            var spriteAngle=0;
-
-            me._viewport.bufferInit(
-                'body',
-                bufferSize.width,
-                bufferSize.height,
-                bufferSize.width/2,
-                bufferSize.height/2,
-                bodyState.angle
-            );
-
-            me._viewport.drawImage(
-                'body',
-                image.image,
-                me._viewport.toPixel(fixtureX+spriteX),
-                me._viewport.toPixel(fixtureY+spriteY),
-                image.info.width,
-                image.info.height,
-                image.info.offsetX,
-                image.info.offsetY,
-                image.info.width,
-                image.info.height,
-                fixtureAngle+spriteAngle
-            );
-
-            // Draw the buffer onto the display
-            me._viewport.bufferFlush(
-                'body',
-                'display',
-                me._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
-                me._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
-                me._viewport.toZoom(bufferSize.width),
-                me._viewport.toZoom(bufferSize.height),
-                bodyState.angle,
-                me._viewport.toZoom(-bufferSize.width/2),
-                me._viewport.toZoom(-bufferSize.height/2)
-            );
-
-            var vertices=[];
-            var x=0;
-            var y=0;
-
-            for (var i=0;i<me._editorVertices.length;i++) {
-                x=me._viewport._getCanvasX(me._editorVertices[i][0]);
-                y=me._viewport._getCanvasY(me._editorVertices[i][1]);
-                vertices.push([x,y]);
-            }
-
-            var color='rgba(127,127,76,0.5)';
-            if (!me._editorVerticesValid) {
-                color='rgba(255,0,0,0.5)';
-            }
-
-            if (vertices.length>=3) {
-                me._viewport.drawPolygon(
-                    'display',
-                    vertices,
-                    color,
-                    color,
-                    0
-                );
-            }
-
-            for (var i=0;i<vertices.length;i++) {
-
-                var color='rgba(255,255,255,0.75)';
-                if (i==me._editorVerticeIndex-1) {
-                    var color='rgba(0,255,0,0.75)';
-                }
-
-                me._viewport.drawArc(
-                    'display',
-                    vertices[i][0],
-                    vertices[i][1],
-                    5,
-                    0,
-                    Math.PI*2,
-                    true,
-                    color
-                    //strokeColor,
-                    //lineWidth
-                );
-            }
 
         }
 
@@ -289,17 +312,21 @@ zerk.define({
 
         var me=this;
 
-        if (me._editorVerticeIndex<me._editorVertices.length) {
-            me._editorVertices.splice(me._editorVerticeIndex,0,[x,y]);
-        } else {
-            me._editorVertices.push([x,y]);
+        if (me._editorState=='add_fixture') {
+
+            if (me._editorVerticeIndex < me._editorVertices.length) {
+                me._editorVertices.splice(me._editorVerticeIndex, 0, [x, y]);
+            } else {
+                me._editorVertices.push([x, y]);
+            }
+
+            me._editorVerticeIndex++;
+
+            //console.log('VERTICE INDEX AT',me._editorVerticeIndex);
+
+            me.validatePolygon();
+
         }
-
-        me._editorVerticeIndex++;
-
-        //console.log('VERTICE INDEX AT',me._editorVerticeIndex);
-
-        me.validatePolygon();
 
     },
 
@@ -310,17 +337,66 @@ zerk.define({
 
     },
 
-    addFixture: function(spritesheet,sprite) {
+    setBackground: function(spritesheet,sprite) {
 
         var me=this;
 
-        me._engine._spriteLoader.loadSprites([spritesheet],function() {
+         me._engine._spriteLoader.loadSprites([spritesheet],function() {
 
-            me._editorSpritesheet=spritesheet;
-            me._editorSprite=sprite;
-            me._editorState='add_fixture';
+             me._editorSpritesheet=spritesheet;
+             me._editorSprite=sprite;
 
-        });
+         });
+
+    },
+
+    addFixture: function() {
+
+        var me=this;
+
+        console.log('ADD FIXTURE');
+
+        me._editorState='add_fixture';
+
+    },
+
+    applyFixture: function() {
+
+        var me=this;
+
+        console.log('APPLY FIXTURE');
+
+        if (!me._editorVerticesValid) {
+            alert('Polygon is not valid');
+            return;
+        }
+
+
+        var vertices=me._editorVertices;
+
+
+
+
+
+        me._editorVerticesValid=true;
+        me._editorMovingPoint=false;
+        me._editorVerticeIndex=null;
+        me._editorVertices=[];
+        me._editorState='';
+
+    },
+
+    cancelAddFixture: function() {
+
+        var me=this;
+
+        console.log('CANCEL ADD FIXTURE');
+
+        me._editorVerticesValid=true;
+        me._editorMovingPoint=false;
+        me._editorVerticeIndex=null;
+        me._editorVertices=[];
+        me._editorState='';
 
     },
 
@@ -393,18 +469,32 @@ zerk.define({
 
         var me=this;
 
-        if (event.keyCode==114) { // r
+        if (me._editorState=='add_fixture') {
 
-            if (me._editorVerticeIndex!=null) {
-                me._editorVertices.splice(me._editorVerticeIndex-1,1);
+            console.log('KEY', event.keyCode);
 
-                me.validatePolygon();
+            if (event.keyCode == 114) { // r
 
-                if (me._editorVerticeIndex==0) {
-                    me._editorVerticeIndex=null;
-                } else {
-                    me._editorVerticeIndex--;
+                if (me._editorVerticeIndex != null) {
+                    me._editorVertices.splice(me._editorVerticeIndex - 1, 1);
+
+                    me.validatePolygon();
+
+                    if (me._editorVerticeIndex == 0) {
+                        me._editorVerticeIndex = null;
+                    } else {
+                        me._editorVerticeIndex--;
+                    }
                 }
+
+            } else if (event.keyCode == 13) { // Return
+
+                me.applyFixture();
+
+            } else if (event.keyCode == 99) { // c
+
+                me.cancelAddFixture();
+
             }
 
         }

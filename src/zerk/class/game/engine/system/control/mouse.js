@@ -41,7 +41,15 @@ zerk.define({
 	 * @type Boolean
 	 */
 	mouseLeftDown: false,
-	
+
+    /**
+     * State of the middle mouse button
+     *
+     * @property mouseMiddleDown
+     * @type Boolean
+     */
+    mouseMiddleDown: false,
+
 	/**
 	 * State of the right mouse button
 	 * 
@@ -196,7 +204,7 @@ zerk.define({
 	_onMouseDown: function(event) {
 		
 		event.preventDefault();
-		
+
 		if (event.button==0) {
 			
 			this.mouseLeftDown=true;
@@ -206,7 +214,11 @@ zerk.define({
 			 * directly on click position
 			 */
 			this._onMouseMove(event);
-			
+
+        } else if (event.button==1) {
+
+            this.mouseMiddleDown=true;
+
 		} else if (event.button==2) {
 			
 			this.mouseRightDown=true;
@@ -239,7 +251,11 @@ zerk.define({
 			
 			this.mouseLeftDown=false;
 			
-		} else if (event.button==2) {
+		} else if (event.button==1) {
+
+            this.mouseMiddleDown=false;
+
+        } else if (event.button==2) {
 			
 			this.mouseRightDown=false;
 			
@@ -268,7 +284,7 @@ zerk.define({
 		
 		var position=this._getCursorPosition(event);
 		
-		if (this.mouseRightDown) {
+		if (this.mouseMiddleDown) {
 			
 			/*
 			 * TODO Remove the mouse view from the controls system

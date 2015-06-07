@@ -39,9 +39,9 @@
                             showFixtureBoundingBox: true
                         },
                         viewport: {
-                            autoSize: false,
-                            width: 600,
-                            height: 600,
+                            autoSize: true,
+                            //width: 1000,
+                            //height: 700,
                             zoomMax: 1000,
                             zoomMin: 10,
                             zoomDefault: 200,
@@ -59,13 +59,23 @@
                 }
             });
 		</script>
-        Spritesheet: <input id="editor-spritesheet" value="sandbox.spritesheet.stones"/>
-        Sprite: <input id="editor-sprite" value="stone-10"/>
-        <button onclick="zerk.game.editorAddFixture(
-            document.getElementById('editor-spritesheet').value,
-            document.getElementById('editor-sprite').value
-        )">Add Fixture</button>
-        <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button>
+        <div style="width: 250px; background-color: #666666; position: fixed; left: 0; top: 0">
+
+            <div>
+                Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>
+                Sprite: <input id="editor-sprite" value="full"/>
+                <button onclick="zerk.game.editorSetBackground(
+                    document.getElementById('editor-spritesheet').value,
+                    document.getElementById('editor-sprite').value
+                )">Set Background</button>
+            </div>
+
+            <div>
+                <button onclick="zerk.game.editorAddFixture()">Add Fixture</button>
+            </div>
+
+            <!-- <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button> -->
+        </div>
         <div id="zerk-canvas"></div>
         <div id="zerk-images" style="display: none;"></div>
 	</body>

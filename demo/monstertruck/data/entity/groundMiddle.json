@@ -1,0 +1,33 @@
+{
+    "name": "groundMiddle",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 5,
+                            "height": 2,
+                            "friction": 0.75
+						}
+					}
+				}
+			}
+		},
+        "render": {
+            "layers": {
+                "sprite1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "monstertruck.spritesheet.world",
+                    "sprite": "ground-middle"
+                }
+            }
+        }
+	}
+}
