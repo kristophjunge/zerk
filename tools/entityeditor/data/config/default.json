@@ -13,7 +13,9 @@
             "wireframe": {
                 "showFixtureBoundingBox": true,
                 "showBodyAngleIndicator": false,
-                "showEntityOriginIndicator": true
+                "showEntityOriginIndicator": false,
+                "showBodyOriginIndicator": false,
+                "showFixtureOriginIndicator": true
 			},
             "debuginfo": {
                 "showViewCenterIndicator": false,

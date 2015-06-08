@@ -76,7 +76,11 @@ zerk.define({
 			arguments
 		);
 
+        me._showBodyAngleIndicator=me._config.showBodyAngleIndicator;
         me._showEntityOriginIndicator=me._config.showEntityOriginIndicator;
+        me._showFixtureBoundingBox=me._config.showFixtureBoundingBox;
+        me._showBodyOriginIndicator=me._config.showBodyOriginIndicator;
+        me._showFixtureOriginIndicator=me._config.showFixtureOriginIndicator;
 
 		this._viewport=this._getSystem('viewport');
 		
@@ -97,6 +101,8 @@ zerk.define({
 			showBodyAngleIndicator: true,
 			showEntityOriginIndicator: false,
 			showFixtureBoundingBox: true,
+            showBodyOriginIndicator: false,
+            showFixtureOriginIndicator: false,
 			style: {
 				bodyActive: {
 					strokeColor: 'rgba(127,127,76,1)',
@@ -228,21 +234,26 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderBody: function(entity,body) {
-		
+
+        var me=this;
+
 		// Render all the fixtures of the body
 		for (var i=0;i<body._fixtureList.length;i++) {
-			
-			this._renderFixture(entity,body,body._fixtureList[i]);
-			
+
+            me._renderFixture(entity,body,body._fixtureList[i]);
+
 		}
-		
-		if (this._config.showBodyAngleIndicator
-		&& body.moveable) {
-			
-			this._renderBodyAngleIndicator(entity,body);
-			
+
+		if (me._showBodyAngleIndicator && body.moveable) {
+
+            me._renderBodyAngleIndicator(entity,body);
+
 		}
-		
+
+        if (me._showBodyOriginIndicator) {
+            me._renderBodyOriginIndicator(entity,body);
+        }
+
 	},
 	
 	/**
@@ -255,13 +266,17 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderFixture: function(entity,body,fixture) {
-		
-		if (this._config.showFixtureBoundingBox) {
-			
-			this._renderFixtureBoundingShape(entity,body,fixture);
-			
+
+        var me=this;
+
+		if (me._showFixtureBoundingBox) {
+			me._renderFixtureBoundingShape(entity,body,fixture);
 		}
-		
+
+        if (me._showFixtureOriginIndicator) {
+            me._renderFixtureOriginIndicator(entity,body,fixture);
+        }
+
 	},
 	
 	/**
@@ -672,41 +687,111 @@ zerk.define({
 	 **/
 	_renderEntityOriginIndicator: function(entity) {
 
+        var me=this;
+
 		var position=entity.components.position;
 
-
-
-        /*
-        var value=this.toZoom(
-            me.toPixel(meter)+pixel-this._x
-        );
-
-        //return Math.ceil(value+(this._width/2));
-
-        return value+(this._width/2);
-        */
-
-
+        var size=0.2;
 
 		this._viewport.drawLines(
 			'display',
 			[
 				[
-					this._viewport._getCanvasX(position.x-0.2),
-					this._viewport._getCanvasY(position.y),
-					this._viewport._getCanvasX(position.x+0.2),
-					this._viewport._getCanvasY(position.y)
+                    me._viewport._getCanvasX(position.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(position.y),
+                    me._viewport._getCanvasX(position.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(position.y)
 				],
 				[
-					this._viewport._getCanvasX(position.x),
-					this._viewport._getCanvasY(position.y-0.2),
-					this._viewport._getCanvasX(position.x),
-					this._viewport._getCanvasY(position.y+0.2)
+                    me._viewport._getCanvasX(position.x),
+                    me._viewport._getCanvasY(position.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(position.x),
+                    me._viewport._getCanvasY(position.y)+me._viewport.toPixel(size)
 				]
 			],
 			'rgb(255,0,0)'
 		);
 		
-	}
+	},
+
+    _renderBodyOriginIndicator: function(entity,body) {
+
+        var me=this;
+
+        var position=entity.components.position;
+
+        var size=0.2;
+
+        var bodyPosition={
+            x: position.x+body.x,
+            y: position.y+body.y
+        };
+
+        this._viewport.drawLines(
+            'display',
+            [
+                [
+                    me._viewport._getCanvasX(bodyPosition.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(bodyPosition.y),
+                    me._viewport._getCanvasX(bodyPosition.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(bodyPosition.y)
+                ],
+                [
+                    me._viewport._getCanvasX(bodyPosition.x),
+                    me._viewport._getCanvasY(bodyPosition.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(bodyPosition.x),
+                    me._viewport._getCanvasY(bodyPosition.y)+me._viewport.toPixel(size)
+                ]
+            ],
+            'rgb(0,0,255)'
+        );
+
+    },
+
+    _renderFixtureOriginIndicator: function(entity,body,fixture) {
+
+        var me=this;
+
+        var position=entity.components.position;
+
+        var size=0.2;
+
+        var fixturePosition={
+            x: position.x+body.x,
+            y: position.y+body.y
+        };
+
+        /*
+        // Rotate with body angle
+        fixturePosition=zerk.helper.rotatePosition(
+            fixturePosition.x,
+            fixturePosition.y,
+            body.angle
+        );
+        */
+
+        fixturePosition.x+=fixture.x;
+        fixturePosition.y+=fixture.y;
+
+        this._viewport.drawLines(
+            'display',
+            [
+                [
+                    me._viewport._getCanvasX(fixturePosition.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(fixturePosition.y),
+                    me._viewport._getCanvasX(fixturePosition.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(fixturePosition.y)
+                ],
+                [
+                    me._viewport._getCanvasX(fixturePosition.x),
+                    me._viewport._getCanvasY(fixturePosition.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(fixturePosition.x),
+                    me._viewport._getCanvasY(fixturePosition.y)+me._viewport.toPixel(size)
+                ]
+            ],
+            'rgb(0,255,0)'
+        );
+
+    }
 	
 });

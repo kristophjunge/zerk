@@ -107,13 +107,15 @@ zerk.define({
 
     },
 
-    editorAddFixture: function() {
+    editorAddFixture: function(shape) {
 
         var me=this;
 
         var editor=me._engine.getSystem('entityeditor');
 
-        editor.addFixture();
+        console.log('CALL');
+
+        editor.placeFixture(shape);
 
     },
 

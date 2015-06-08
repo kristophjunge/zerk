@@ -4,6 +4,7 @@
 		<title>Zerk Entity Editor</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="./style.css" media="screen" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="../../src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
 		<script type="text/javascript" src="../../src/json5/json5.js"></script>
 		<script type="text/javascript" src="../../src/zerk/zerk.js"></script>
@@ -24,20 +25,24 @@
                 }
             });
 		</script>
-        <div style="width: 250px; background-color: #666666; position: fixed; left: 0; top: 0">
+        <div class="zerk-editor">
 
-            <div>
+            <fieldset>
+                <legend>Background</legend>
                 Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>
                 Sprite: <input id="editor-sprite" value="full"/>
-                <button onclick="zerk.game.editorSetBackground(
+                <div class="zerk-button" onclick="zerk.game.editorSetBackground(
                     document.getElementById('editor-spritesheet').value,
                     document.getElementById('editor-sprite').value
-                )">Set Background</button>
-            </div>
+                )">Set Background</div>
+            </fieldset>
 
-            <div>
-                <button onclick="zerk.game.editorAddFixture()">Add Fixture</button>
-            </div>
+            <fieldset>
+                <legend>Add Fixture</legend>
+                <div class="zerk-button" onclick="zerk.game.editorAddFixture('polygon')">Polygon</div>
+                <div class="zerk-button" onclick="zerk.game.editorAddFixture('box')">Box</div>
+                <div class="zerk-button" onclick="zerk.game.editorAddFixture('circle')">Circle</div>
+            </fieldset>
 
             <!-- <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button> -->
         </div>
