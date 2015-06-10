@@ -415,7 +415,6 @@ zerk.define({
 
         console.log('APPLY FIXTURE');
 
-
         var entity=me.getEntity();
         var body=entity.components.physics._bodyList[0];
 
@@ -423,10 +422,12 @@ zerk.define({
 
         if (me._editorFixtureShape=='polygon') {
 
+            /*
             if (!me._editorVerticesValid) {
                 alert('Polygon is not valid');
                 return;
             }
+            */
 
 
 
@@ -442,7 +443,6 @@ zerk.define({
             me._editorFixtureX=center.x;
             me._editorFixtureY=center.y;
 
-
             // Calculate positions relative to fixture origin
             for (var i=0;i<me._editorVertices.length;i++) {
                 vertices.push([
@@ -456,6 +456,27 @@ zerk.define({
 
 
 
+            if (!me._editorVerticesValid) {
+                console.log('Polygon is not valid');
+
+                var concave = new decomp.Polygon();
+                var convex = new decomp.Polygon();
+                concave.vertices = vertices;
+                //convex.vertices = concave.decomp();
+                convex.vertices = concave.quickDecomp()
+
+
+
+
+                for (var i = 0; i < convex.vertices.length; i++) {
+                    me.applyFixtureVertices(convex.vertices[i].vertices, i);
+                };
+            } else {
+                me.applyFixtureVertices(vertices);
+            }
+
+
+            /*
             var fixture={
                 key: newKey,
                 x: me._editorFixtureX,
@@ -471,6 +492,7 @@ zerk.define({
                 newKey,
                 fixture
             );
+            */
 
         } else if (me._editorFixtureShape=='box') {
 
@@ -522,6 +544,30 @@ zerk.define({
 
         console.log('AFTER ADD');
 
+    },
+
+    applyFixtureVertices: function(vertices, key) {
+        var me=this;
+        var entity=me.getEntity();
+        var body=entity.components.physics._bodyList[0];
+
+        key = (!zerk.isDefined(key)) ? 'new' : 'new_' + key;
+
+        var fixture={
+            key: key,
+            x: me._editorFixtureX,
+            y: me._editorFixtureY,
+            angle: 0,
+            shape: 'polygon',
+            vertices: vertices
+        };
+
+        me._physics.addFixture(
+            entity,
+            body,
+            key,
+            fixture
+        );
     },
 
     cancelAddFixture: function() {
