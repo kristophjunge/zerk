@@ -1,3 +1,4 @@
+console.log("gamejs")
 /**
  * Game
  * 
@@ -48,42 +49,42 @@ zerk.define({
 		var self=this;
 		
 		this._config={};
-		
+
 		// Setup JSON loader
 		this._jsonLoader=zerk.create(
 			'zerk.jsonLoader',
 			[
 				{
 					namespace: config.bootstrap.game+'.component',
-					path: config.bootstrap.gameDir+'/data/component'
+					path: '/data/component'
 				},
 				{
 					namespace: config.bootstrap.game+'.entity',
-					path: config.bootstrap.gameDir+'/data/entity'
+					path: '/data/entity'
 				},
 				{
 					namespace: config.bootstrap.game+'.world',
-					path: config.bootstrap.gameDir+'/data/world'
+					path: '/data/world'
 				},
 				{
 					namespace: config.bootstrap.game+'.config',
-					path: config.bootstrap.gameDir+'/data/config'
+					path: '/data/config'
 				},
 				{
 					namespace: config.bootstrap.game+'.spritesheet',
-					path: config.bootstrap.gameDir+'/media/spritesheet'
+					path: '/media/spritesheet'
 				},
 				{
 					namespace: 'zerk.entity',
-					path: config.bootstrap.zerkDir+'/data/entity'
+					path: '/data/entity'
 				},
 				{
 					namespace: 'zerk.component',
-					path: config.bootstrap.zerkDir+'/data/component'
+					path: '/data/component'
 				},
 				{
 					namespace: 'zerk.config',
-					path: config.bootstrap.zerkDir+'/data/config'
+					path: '/data/config'
 				}
 			]
 		);
@@ -94,11 +95,11 @@ zerk.define({
             [
                 {
                     namespace: config.bootstrap.game+'.texture',
-                    path: config.bootstrap.gameDir+'/media/texture'
+                    path: '/media/texture'
                 },
                 {
                     namespace: config.bootstrap.game+'.spritesheet',
-                    path: config.bootstrap.gameDir+'/media/spritesheet'
+                    path: '/media/spritesheet'
                 }
             ]
         );

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zerk Entity Editor</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
+        {{#files}}
+            <script type="text/javascript" src="{{.}}"></script>
+        {{/files}}
+        
+        {{#config.dependencies}}
+            <script type="text/javascript" src="{{.}}"></script>
+        {{/config.dependencies}}
+    </head>
+    <body>
+        <script>
+            zerk.init({
+                bootstrap: {
+                    game: '{{config.game}}',
+                    gameDir: '{{config.gameDir}}',
+                    zerkDir: '{{zerkDir}}',
+                    log: {
+                        'enabled': '{{config.log.enabled}}',
+                        'severity': '{{config.log.severity}}'
+                    }
+                }
+            });
+        </script>
+        <div style="width: 250px; background-color: #666666; position: fixed; left: 0; top: 0">
+
+            <div>
+                Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>
+                Sprite: <input id="editor-sprite" value="full"/>
+                <button onclick="zerk.game.editorSetBackground(
+                    document.getElementById('editor-spritesheet').value,
+                    document.getElementById('editor-sprite').value
+                )">Set Background</button>
+            </div>
+
+            <div>
+                <button onclick="zerk.game.editorAddFixture()">Add Fixture</button>
+            </div>
+
+            <!-- <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button> -->
+        </div>
+        <div id="zerk-canvas"></div>
+        <div id="zerk-images" style="display: none;"></div>
+    </body>
+</html>

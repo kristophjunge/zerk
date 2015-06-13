@@ -1,0 +1,26 @@
+{
+    "name": "zerk",
+    "version": "0.2.0",
+    "description": "JavaScript Game Engine Prototype",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kristophjunge/zerk.git"
+    },
+    "author": "Kristoph Junge",
+    "license": "MIT",
+    "preferGlobal": true,
+    "bin": {
+        "zerk": "run.js"
+    },
+    "dependencies" : {
+        "express" : "4.x",
+        "hogan.js": "*"
+    },
+    "bugs": {
+        "url": "https://github.com/kristophjunge/zerk/issues"
+    },
+    "homepage": "https://kristophjunge.com"
+}

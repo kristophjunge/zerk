@@ -1,0 +1,19 @@
+{
+    "engine": {
+        "systems": {
+            "physics": {
+                "physicsScale": 1
+            }
+        },
+        "defaultSystems": [
+            "physics"
+        ],
+        "componentMap": {
+            "position": "zerk.game.engine.component.position",
+            "physics": "zerk.game.engine.component.physics"
+        },
+        "systemMap": {
+            "physics": "zerk.game.engine.system.physics.box2d"
+        }
+    }
+}
