@@ -1,0 +1,14 @@
+{
+    "game": "jumpandrun",
+    "gameDir": "./",
+    "dependencies": [
+        "/src/poly-decomp.js/build/decomp.min.js"
+    ],
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 1337
+    }
+}
