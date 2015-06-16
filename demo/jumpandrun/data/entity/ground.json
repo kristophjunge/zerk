@@ -1,0 +1,37 @@
+{
+	"name": "ground",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 1,
+                            "friction": 0.5
+						}
+					}
+				}
+			},
+            "joints": {}
+		},
+        "render": {
+            "bodies": {
+                "main": {
+                    "fixtures": {
+                        "main": {
+                            "texture1": {
+                                "render": "texture",
+                                "texture": "jumpandrun.texture.zerk-debug-blue"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	}
+}

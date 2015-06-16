@@ -1,0 +1,393 @@
+{
+	"name": "stones",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 20
+			}
+		}
+	},
+    "entities": [
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": -5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": -5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": -8.5
+                }
+            }
+        },
+        /* Content */
+        {
+            "name": "sandbox.entity.stones.stone1",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone2",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone3",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone4",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone5",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone6",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone7",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone8",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone9",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone10",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        /* Duplicates */
+        {
+            "name": "sandbox.entity.stones.stone1",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone2",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone3",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone4",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone5",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone6",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone7",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone8",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone9",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.stones.stone10",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+	]
+}

@@ -1,196 +1,291 @@
 {
-	name: 'shapes',
-	config: {
-		systems: {
-			physics: {
-				gravityX: 0,
-				gravityY: 0
-			}
-		}
-	},
-	entities: [
+    "name": "shapes",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 20
+            }
+        }
+    },
+    "entities": [
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundMiddle",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.groundLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": -5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wallRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": -5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyLeft",
+            "components": {
+                "position": {
+                    "x": -18.5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyMiddle",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": -8.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.skyRight",
+            "components": {
+                "position": {
+                    "x": 18.5,
+                    "y": -8.5
+                }
+            }
+        },
+        /* Content */
 		{
-			name: 'sandbox.entity.box',
+			name: 'sandbox.entity.shapes.circle',
 			components: {
 				position: {
-					x: -10,
-					y: 0
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 16
-						}
-					}
+					x: 0,
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.box',
+			name: 'sandbox.entity.shapes.triangle',
 			components: {
 				position: {
-					x: 10,
-					y: 0
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 16
-						}
-					}
+					x: 0,
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.box',
+			name: 'sandbox.entity.shapes.rectangle',
 			components: {
 				position: {
 					x: 0,
-					y: -7.5
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 19,
-							height: 1
-						}
-					}
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.box',
+			name: 'sandbox.entity.shapes.pentagon',
 			components: {
 				position: {
 					x: 0,
-					y: 7.5
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 19,
-							height: 1
-						}
-					}
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.circle',
+			name: 'sandbox.entity.shapes.hexagon',
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.triangle',
+			name: 'sandbox.entity.shapes.heptagon',
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.rectangle',
+			name: 'sandbox.entity.shapes.octagon',
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.pentagon',
+			name: 'sandbox.entity.shapes.nonagon',
 			components: {
 				position: {
 					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		},
 		{
-			name: 'sandbox.entity.shapes.regular.hexagon',
+			name: 'sandbox.entity.shapes.decagon',
 			components: {
 				position: {
 					x: 0,
-					y: 0
-				}
-			}
-		},/*
-		{
-			name: 'sandbox.entity.shapes.regular.heptagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.regular.octagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.regular.nonagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.regular.decagon',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},*/
-		{
-			name: 'sandbox.entity.shapes.irregular.criton',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.irregular.brimborium',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.irregular.klumpatsch',
-			components: {
-				position: {
-					x: 0,
-					y: 0
-				}
-			}
-		},
-		{
-			name: 'sandbox.entity.shapes.irregular.fliwatuut',
-			components: {
-				position: {
-					x: 0,
-					y: 0
+					y: -2
 				}
 			}
 		}

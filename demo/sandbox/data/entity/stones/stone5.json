@@ -1,0 +1,31 @@
+{
+	name: 'stone5',
+	components: {
+		position: {},
+		physics: {
+			bodies: {
+				main: {
+					moveable: true,
+					origin: true,
+					fixtures: {
+						main: {
+							shape: 'polygon',
+							vertices: [[-0.145,0.0698175965665236],[-0.14666666666666664,-0.05434907010014307],[-0.07833333333333334,-0.13934907010014308],[0.04666666666666667,-0.15018240343347639],[0.14583333333333334,-0.06684907010014306],[0.15916666666666668,0.03148426323319028],[0.10583333333333332,0.1173175965665236],[-0.03166666666666666,0.1548175965665236]]
+						}
+					}
+				}
+			}
+		},
+        render: {
+            layers: {
+                texture1: {
+                    "body": "main",
+                    "fixture": "main",
+                    render: 'sprite',
+                    spritesheet: 'sandbox.spritesheet.stones',
+                    sprite: 'stone-5'
+                }
+            }
+        }
+	}
+}

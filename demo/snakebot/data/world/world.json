@@ -1,0 +1,193 @@
+{
+	"name": "balls",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 0
+			}
+		}
+	},
+    "entities": [
+        /* Ground middle */
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Ground right */
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Ground left */
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.ground",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": 3.5
+                }
+            }
+        },
+        /* Wall left */
+		{
+            "name": "snakebot.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": 0
+				}
+			}
+		},
+        {
+            "name": "snakebot.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": -5
+                }
+            }
+        },
+        /* Wall right */
+        {
+            "name": "snakebot.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": -5
+                }
+            }
+        },
+        /* Sky middle */
+		{
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -8
+				}
+			}
+		},
+        /* Sky left */
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": -5,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": -10,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": -15,
+                    "y": -8
+                }
+            }
+        },
+        /* Sky right */
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": 5,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": 10,
+                    "y": -8
+                }
+            }
+        },
+        {
+            "name": "snakebot.entity.sky",
+            "components": {
+                "position": {
+                    "x": 15,
+                    "y": -8
+                }
+            }
+        },
+        /* Content */
+        {
+            "name": "snakebot.entity.snakebot",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+	]
+}

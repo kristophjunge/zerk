@@ -82,7 +82,8 @@ zerk.define({
 			showViewCenterIndicator: false,
 			showFPS: false,
 			showZoom: false,
-			showPosition: false
+			showPosition: false,
+            showViewportSize: false
 		};
 		
 	},
@@ -155,36 +156,44 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderDebugInfo: function() {
-		
-		if (this._config.showFPS) {
-			
-			this._renderDebugInfoLine(this._viewport.getFPS()+' FPS',1);
+
+        var me=this;
+
+		if (me._config.showFPS) {
+
+            me._renderDebugInfoLine(me._viewport.getFPS()+' FPS',1);
 			
 		}
 		
-		if (this._config.showZoom) {
-			
-			this._renderDebugInfoLine(
-				zerk.helper.formatPercent(this._viewport.getZoom(),2),
+		if (me._config.showZoom) {
+
+            me._renderDebugInfoLine(
+				zerk.helper.formatPercent(me._viewport.getZoom(),2),
 				2
 			);
 			
 		}
 		
 		var offsetX=zerk.helper.round(
-			zerk.helper.toMeter(this._viewport.getX()),
+            me._viewport.fromPixel(me._viewport.getX()),
 			1
 		);
 		var offsetY=zerk.helper.round(
-			zerk.helper.toMeter(this._viewport.getY()),
+            me._viewport.fromPixel(me._viewport.getY()),
 			1
 		);
 		
-		if (this._config.showPosition) {
-			
-			this._renderDebugInfoLine(offsetX+':'+offsetY,3);
+		if (me._config.showPosition) {
+
+            me._renderDebugInfoLine(offsetX+':'+offsetY,3);
 			
 		}
+
+        if (me._config.showViewportSize) {
+
+            me._renderDebugInfoLine(me._viewport.getWidth()+':'+me._viewport.getHeight(),4);
+
+        }
 		
 	},
 	

@@ -1,0 +1,40 @@
+{
+	name: 'nonagon',
+	components: {
+		position: {},
+		physics: {
+			bodies: {
+				main: {
+					moveable: true,
+					origin: true,
+					fixtures: {
+						main: {
+							shape: 'polygon',
+							vertices: [
+								[0.64,-0.77],
+								[0.98,-0.17],
+								[0.87,0.5],
+								[0.34,0.94],
+								[-0.34,0.94],
+								[-0.87,0.5],
+								[-0.98,-0.17],
+								[-0.64,-0.77],
+								[0,-1]
+							]
+						}
+					}
+				}
+			}
+		},
+        render: {
+            layers: {
+                texture1: {
+                    "body": "main",
+                    "fixture": "main",
+                    render: 'texture',
+                    texture: 'sandbox.texture.zerk-debug-red'
+                }
+            }
+        }
+	}
+}

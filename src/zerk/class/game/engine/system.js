@@ -108,7 +108,7 @@ zerk.define({
 		);
 		
 		zerk.apply(this._config,config);
-		
+
 		this._log('Init');
 		
 	},

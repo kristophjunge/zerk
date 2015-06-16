@@ -188,7 +188,17 @@ zerk.define({
 	 * @protected
 	 */
 	_b2DistanceJointDef: Box2D.Dynamics.Joints.b2DistanceJointDef,
-	
+
+
+    /**
+     * Shortcut for Box2D.Dynamics.Joints.b2PrismaticJointDef
+     *
+     * @property _b2PrismaticJointDef
+     * @type Object
+     * @protected
+     */
+    _b2PrismaticJointDef: Box2D.Dynamics.Joints.b2PrismaticJointDef,
+
 	/**
 	 * Shortcut for Box2D.Dynamics.b2ContactListener
 	 * 
@@ -197,7 +207,36 @@ zerk.define({
 	 * @protected
 	 */
 	_b2ContactListener: Box2D.Dynamics.b2ContactListener,
-	
+
+    /**
+     * Minimum fixture size in physics meters
+     *
+     * @property _minFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _minFixtureSize: 0.1,
+
+    /**
+     * Maximum fixture size in physics meters
+     *
+     * @property _maxFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _maxFixtureSize: 10,
+
+    /**
+     * Box2D fixture skin size
+     *
+     * @see http://box2d.org/forum/viewtopic.php?f=4&t=5903
+     *
+     * @property _maxFixtureSize
+     * @type Integer
+     * @protected
+     */
+    _fixtureSkinSize: 0.01,
+
 	/**
 	 * Class constructor
 	 * 
@@ -212,7 +251,6 @@ zerk.define({
 		);
 		
 		this._destroyBodyList=[];
-			
 		this._destroyJointList=[];
 		
 		this._world=new this._b2World(
@@ -220,39 +258,52 @@ zerk.define({
 				this._config.gravityX,
 				this._config.gravityY
 			), // Setup gravity
-			true // allow sleep
+			true // Allow sleep
 		);
-		
-		// Box2D debug draw
-		
-		if (this._config.debugDraw) {
-			
-			this.canvas=this._getSystem('viewport').getCanvasPhysicsDebug();
-			
-			/*
-			 * TODO Sync the view position with the game viewport
-			 * 
-			 * this.canvas.getContext("2d").translate(200,200);
-			 */
-			
-			var debugDraw = new this._b2DebugDraw();
-			debugDraw.SetSprite(this.canvas.getContext("2d"));
-			debugDraw.SetDrawScale(30.0);
-			debugDraw.SetFillAlpha(0.5);
-			debugDraw.SetLineThickness(1.0);
-			debugDraw.SetFlags(
-				this._b2DebugDraw.e_shapeBit | this._b2DebugDraw.e_jointBit
-			);
-			
-			this._world.SetDebugDraw(debugDraw);
-			
-		}
-		
+
 		this._addContactListener();
 		
 		this._log('Ready');
 		
 	},
+
+    /**
+     * Starts the system
+     *
+     * @method start
+     **/
+    start: function() {
+
+        if (this._config.debugDraw) {
+
+            this.canvas=this._getSystem('viewport').getCanvasPhysicsDebug();
+
+            /*
+             * TODO Sync the view position with the game viewport
+             *
+             */
+            //this.canvas.getContext("2d").translate(200,200);
+
+
+            var debugDraw = new this._b2DebugDraw();
+            debugDraw.SetSprite(this.canvas.getContext("2d"));
+            debugDraw.SetDrawScale(30.0);
+            debugDraw.SetFillAlpha(0.5);
+            debugDraw.SetLineThickness(1.0);
+            debugDraw.SetFlags(
+                this._b2DebugDraw.e_shapeBit | this._b2DebugDraw.e_jointBit
+            );
+
+            this._world.SetDebugDraw(debugDraw);
+
+        }
+
+        zerk.parent('zerk.game.engine.system.physics.box2d').start.apply(
+            this,
+            arguments
+        );
+
+    },
 	
 	/**
 	 * Physics engine tick
@@ -312,6 +363,30 @@ zerk.define({
 		);
 		
 	},
+
+    jointSetMotorSpeed: function(entity,jointKey,speed) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMotorSpeed(speed);
+
+    },
+
+    jointSetMotorForce: function(entity,jointKey,force) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMotorForce(force);
+
+    },
+
+    jointSetMaxMotorTorque: function(entity,jointKey,torque) {
+
+        var physicsBody=entity.components.physics.joints[jointKey]._physicsHandle;
+
+        physicsBody.SetMaxMotorTorque(torque);
+
+    },
 	
 	/**
 	 * Sets the linear velocity of given body
@@ -433,12 +508,9 @@ zerk.define({
 		);
 		
 	},
-	
-	
-	
-	
+
 	/**
-	 * Returns position of given body
+	 * Returns position of given body in world meters
 	 * 
 	 * @method _getBodyPosition
 	 * @param {String} bodyKey
@@ -446,9 +518,14 @@ zerk.define({
 	 * @protected
 	 */
 	getBodyPosition: function(entity,bodyKey) {
-		
-		entity.components.physics.bodies[bodyKey]._physicsHandle.GetPosition();
-		
+
+		var position=entity.components.physics.bodies[bodyKey]._physicsHandle.GetPosition();
+
+        return {
+            x: this.toWorldScale(position.x),
+            y: this.toWorldScale(position.y)
+        };
+
 	},
 	
 	/**
@@ -612,20 +689,22 @@ zerk.define({
 		var systemControl=this._getSystem('control');
 		
 		this._mouseJointVec=new this._b2Vec2(
-			systemControl.mouse.mouseX,
-			systemControl.mouse.mouseY
+            this.fromWorldScale(systemControl.mouse.mouseX),
+            this.fromWorldScale(systemControl.mouse.mouseY)
 		);
 		
 		var aabb=new this._b2AABB();
-		
+
+        var dotSize=0.001;
+
 		aabb.lowerBound.Set(
-			systemControl.mouse.mouseX-0.001,
-			systemControl.mouse.mouseY-0.001
+            this.fromWorldScale(systemControl.mouse.mouseX)-dotSize,
+            this.fromWorldScale(systemControl.mouse.mouseY)-dotSize
 		);
 		
 		aabb.upperBound.Set(
-			systemControl.mouse.mouseX+0.001,
-			systemControl.mouse.mouseY+0.001
+            this.fromWorldScale(systemControl.mouse.mouseX)+dotSize,
+            this.fromWorldScale(systemControl.mouse.mouseY)+dotSize
 		);
 		
 		this._selectedBody=null;
@@ -650,8 +729,14 @@ zerk.define({
 		
 		var aabb=new this._b2AABB();
 		
-		aabb.lowerBound.Set(x1,y1);
-		aabb.upperBound.Set(x2,y2);
+		aabb.lowerBound.Set(
+            this.fromWorldScale(x1),
+            this.fromWorldScale(y1)
+        );
+		aabb.upperBound.Set(
+            this.fromWorldScale(x2),
+            this.fromWorldScale(y2)
+        );
 		
 		var entitiesById={};
 		
@@ -726,18 +811,21 @@ zerk.define({
 	 * @param {zerk.game.engine.entity} entity Entity
 	 */
 	_syncEntityPhysics: function(entity) {
-		
+
+
 		var bodies=entity.components.physics.bodies;
 		
 		for (var key in bodies) {
 			
 			if (bodies[key]._physicsHandle && bodies[key].origin) {
 				
-				entity.components.position.x=
-					bodies[key]._physicsHandle.GetPosition().x;
+				entity.components.position.x=this.toWorldScale(
+					bodies[key]._physicsHandle.GetPosition().x
+                );
 					
-				entity.components.position.y=
-					bodies[key]._physicsHandle.GetPosition().y;
+				entity.components.position.y=this.toWorldScale(
+					bodies[key]._physicsHandle.GetPosition().y
+                );
 				
 				entity.components.position.angle=
 					bodies[key]._physicsHandle.GetAngle();
@@ -750,12 +838,10 @@ zerk.define({
 			
 			if (bodies[key]._physicsHandle) {
 				
-				bodies[key].x=
-					bodies[key]._physicsHandle.GetPosition().x
+				bodies[key].x=this.toWorldScale(bodies[key]._physicsHandle.GetPosition().x)
 					-entity.components.position.x;
 					
-				bodies[key].y=
-					bodies[key]._physicsHandle.GetPosition().y
+				bodies[key].y=this.toWorldScale(bodies[key]._physicsHandle.GetPosition().y)
 					-entity.components.position.y;
 					
 				bodies[key].angle=
@@ -764,6 +850,7 @@ zerk.define({
 			}
 			
 		}
+
 		
 	},
 	
@@ -993,13 +1080,12 @@ zerk.define({
 		
 		var bodyState=entity.components.physics.bodies[body.key];
 		var position=entity.components.position;
-		
-		
-		
+
 		// Setup position
-		bodyDef.position.x=position.x+bodyState.x;
-		bodyDef.position.y=position.y+bodyState.y;
-		bodyDef.angle=bodyState.angle*Math.PI*2;
+		bodyDef.position.x=this.fromWorldScale(position.x+bodyState.x);
+		bodyDef.position.y=this.fromWorldScale(position.y+bodyState.y);
+		bodyDef.angle=bodyState.angle; //*Math.PI*2;
+
 		bodyDef.fixedRotation=body.fixedRotation;
 		
 		bodyDef.userData={
@@ -1025,6 +1111,24 @@ zerk.define({
 		
 		return body._physicsHandle;
 	},
+
+    addFixture: function(entity,body,key,fixture) {
+
+        console.log('BODY', body);
+
+        body.fixtures[key]=fixture;
+        body._fixtureList.push(fixture);
+
+        body.fixtures[key]._physicsHandle=body._physicsHandle.CreateFixture(
+            this._createFixture(
+                entity,
+                body,
+                body.fixtures[key]
+            )
+        );
+
+
+    },
 	
 	/**
 	 * Delegate method for fixture creation
@@ -1082,14 +1186,10 @@ zerk.define({
 		var fixDef=new this._b2FixtureDef;
 		
 		if (fixture.categoryBits!=null) {
-			
 			fixDef.filter.categoryBits=fixture.categoryBits;
-			
 		}
 		if (fixture.maskBits!=null) {
-			
 			fixDef.filter.maskBits=fixture.maskBits;
-			
 		}
 		
 		fixDef.density=fixture.density;
@@ -1104,19 +1204,47 @@ zerk.define({
 		
 		fixDef.shape=new this._b2PolygonShape;
 		
-		var center=new this._b2Vec2(fixture.x, fixture.y);
+		var center=new this._b2Vec2(
+            this.fromWorldScale(fixture.x),
+            this.fromWorldScale(fixture.y)
+        );
 		
-		var width=((typeof fixture.width=='string') 
-			? (body.width/100)*parseInt(fixture.width)
-			: fixture.width);
-		
-		var height=((typeof fixture.height=='string') 
-			? (body.height/100)*parseInt(fixture.height)
-			: fixture.height);
-		
+		var width=this.fromWorldScale(fixture.width);
+		var height=this.fromWorldScale(fixture.height);
+
+        if (width>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture width is too high \''+width+'\'.'+
+                    ' Maximum is \''+this.toWorldScale(this._maxFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (height>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture height is too high \''+height+'\'.'+
+                    ' Maximum is \''+this.toWorldScale(this._maxFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (width<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture width is too small \''+width+'\'.'+
+                    ' Minimum is \''+this.toWorldScale(this._minFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (height<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture height is too small \''+height+'\'.'+
+                    ' Minimum is \''+this.toWorldScale(this._minFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        }
+
 		fixDef.shape.SetAsOrientedBox(
-			width/2,
-			height/2,
+            (width/2)-(this._fixtureSkinSize/2),
+            (height/2)-(this._fixtureSkinSize/2),
 			center,
 			fixture.angle
 		);
@@ -1163,13 +1291,35 @@ zerk.define({
 			body: body.key,
 			fixture: fixture.key
 		};
-		
+
+        var radius=this.fromWorldScale(fixture.radius);
+        var diameter=radius*2;
+
+        if (diameter>this._maxFixtureSize) {
+            zerk.error({
+                message: 'Fixture diameter too high \''+diameter+'\'.'+
+                    ' Maximum is \''+this.toWorldScale(this._maxFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        } else if (diameter<this._minFixtureSize) {
+            zerk.error({
+                message: 'Fixture diameter too small \''+diameter+'\'.'+
+                    ' Minimum is \''+this.toWorldScale(this._minFixtureSize)+'\'.',
+                entityName: entity.name,
+                fixtureKey: fixture.key
+            });
+        }
+
 		fixDef.shape=new this._b2CircleShape(
-			fixture.radius
+            radius
 		);
 		
 		fixDef.shape.SetLocalPosition(
-			new this._b2Vec2(fixture.x, fixture.y)
+			new this._b2Vec2(
+                this.fromWorldScale(fixture.x),
+                this.fromWorldScale(fixture.y)
+            )
 		);
 		
 		return fixDef;
@@ -1191,9 +1341,12 @@ zerk.define({
 		body,
 		fixture
 	) {
-		
+
+
+        console.log('CREATE POLY');
+
 		var fixDef=new this._b2FixtureDef;
-		
+
 		if (fixture.categoryBits!=null) {
 			
 			fixDef.filter.categoryBits=fixture.categoryBits;
@@ -1214,6 +1367,8 @@ zerk.define({
 			body: body.key,
 			fixture: fixture.key
 		};
+
+        console.log('UDATA',fixDef.userData);
 		
 		fixDef.shape=new this._b2PolygonShape;
 		
@@ -1233,21 +1388,72 @@ zerk.define({
 		}
 		
 		// Create array of vertice instances
-		
 		var arr=[];
-		
+		var position=null;
 		for (var i=0;i<fixture.vertices.length;i++) {
-			
+
+            var x=fixture.vertices[i][0];
+            var y=fixture.vertices[i][1];
+
+
+            if (x>0) {
+                x-=(this._fixtureSkinSize/2);
+            } else {
+                x+=(this._fixtureSkinSize/2);
+            }
+
+            if (y>0) {
+                y-=(this._fixtureSkinSize/2);
+            } else {
+                y+=(this._fixtureSkinSize/2);
+            }
+
+
+            // @TODO Implement polygon size check
+            /*
+            if (x>this._maxFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position x too high \''+x+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (y>this._maxFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position y too high \''+y+'\'. Maximum is \''+this._maxFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (x<this._minFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position x too small \''+x+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            } else if (y<this._minFixtureSize) {
+                zerk.error({
+                    message: 'Fixture vertice position y too small \''+y+'\'. Minimum is \''+this._minFixtureSize+'\'.',
+                    entityName: entity.name,
+                    fixtureKey: fixture.key
+                });
+            }
+            */
+
+            var position=zerk.helper.rotatePosition(
+                x,
+                y,
+                fixture.angle
+            );
+
 			arr.push(
 				new this._b2Vec2(
-					fixture.vertices[i][0],
-					fixture.vertices[i][1]
+                    this.fromWorldScale(fixture.x+position.x),
+                    this.fromWorldScale(fixture.y+position.y)
 				)
 			);
 		}
 		
 		fixDef.shape.SetAsArray(arr, arr.length);
-		
+
 		return fixDef;
 		
 	},
@@ -1262,15 +1468,24 @@ zerk.define({
 	 * @protected
 	 */
 	_createJoint: function(entity,joint) {
-		
+
+        var physicsHandle=null;
+
 		switch (joint.type) {
 			case 'distance':
-				return this._createJointDistance(entity,joint);
+                physicsHandle=this._createJointDistance(entity,joint);
+                break;
 			case 'revolute':
-				return this._createJointRevolute(entity,joint);
+                physicsHandle=this._createJointRevolute(entity,joint);
+                break;
+            case 'prismatic':
+                physicsHandle=this._createJointPrismatic(entity,joint);
+                break;
 		}
-		
-	},
+
+        entity.components.physics.joints[joint.key]._physicsHandle=physicsHandle;
+
+    },
 	
 	/**
 	 * Creates a distance joint
@@ -1305,12 +1520,12 @@ zerk.define({
 		
 		// Set local anchors
 		jointDef.localAnchorA.Set(
-			joint.anchorSourceX,
-			joint.anchorSourceY
+			this.fromWorldScale(joint.anchorSourceX),
+            this.fromWorldScale(joint.anchorSourceY)
 		);
 		jointDef.localAnchorB.Set(
-			joint.anchorTargetX,
-			joint.anchorTargetY
+            this.fromWorldScale(joint.anchorTargetX),
+            this.fromWorldScale(joint.anchorTargetY)
 		);
 		
 		return this._world.CreateJoint(jointDef);
@@ -1341,8 +1556,8 @@ zerk.define({
 		jointDef.maxMotorTorque=joint.maxMotorTorque;
 		
 		var anchorSource=bodySource.GetWorldCenter();
-		anchorSource.x+=joint.anchorSourceX;
-		anchorSource.y+=joint.anchorSourceY;
+		anchorSource.x+=this.fromWorldScale(joint.anchorSourceX);
+		anchorSource.y+=this.fromWorldScale(joint.anchorSourceY);
 		
 		jointDef.Initialize(
 			bodySource,
@@ -1353,7 +1568,50 @@ zerk.define({
 		return this._world.CreateJoint(jointDef);
 		
 	},
-	
+
+    /**
+     * Creates a prismatic join
+     *
+     * @method _createJointPrismatic
+     * @param {zerk.game.engine.entity} entity Entity
+     * @param {zerk.game.engine.system.physics.box2d.joint} joint Joint
+     * @return {Object} Joint handle
+     * @protected
+     */
+    _createJointPrismatic: function(entity,joint) {
+
+        var bodySource=this.getBody(entity,joint.source)._physicsHandle;
+        var bodyTarget=this.getBody(entity,joint.target)._physicsHandle;
+
+        var jointDef=new this._b2PrismaticJointDef();
+
+        jointDef.enableMotor=joint.enableMotor;
+        jointDef.enableLimit=joint.enableLimit;
+        jointDef.motorSpeed=joint.motorSpeed;
+        jointDef.lowerTranslation=joint.lowerTranslation;
+        jointDef.upperTranslation=joint.upperTranslation;
+        jointDef.maxMotorForce=joint.maxMotorForce;
+
+        var anchorSource=bodySource.GetWorldCenter();
+        anchorSource.x+=this.fromWorldScale(joint.anchorSourceX);
+        anchorSource.y+=this.fromWorldScale(joint.anchorSourceY);
+
+        var worldAxis=new this._b2Vec2(
+            0,
+            1
+        );
+
+        jointDef.Initialize(
+            bodySource,
+            bodyTarget,
+            anchorSource,
+            worldAxis
+        );
+
+        return this._world.CreateJoint(jointDef);
+
+    },
+
 	/**
 	 * Creates a mouse joint
 	 * 
@@ -1410,8 +1668,8 @@ zerk.define({
 				
 				this._mouseJoint=this._createJointMouse(
 					body,
-					systemControl.mouse.mouseX,
-					systemControl.mouse.mouseY
+                    this.fromWorldScale(systemControl.mouse.mouseX),
+                    this.fromWorldScale(systemControl.mouse.mouseY)
 				);
 				
 			}
@@ -1424,8 +1682,8 @@ zerk.define({
 				
 				this._mouseJoint.SetTarget(
 					new this._b2Vec2(
-						systemControl.mouse.mouseX,
-						systemControl.mouse.mouseY
+                        this.fromWorldScale(systemControl.mouse.mouseX),
+                        this.fromWorldScale(systemControl.mouse.mouseY)
 					)
 				);
 				
@@ -1453,10 +1711,10 @@ zerk.define({
 		/*
 		 * TODO Remove global call zerk.game._engine._system.physics
 		 */
-		var me=zerk.game._engine._system.physics;
+		var self=zerk.game._engine._system.physics;
 		
 		if (fixture.GetBody().GetType()
-		!=me._b2Body.b2_staticBody) {
+		!=self._b2Body.b2_staticBody) {
 			
 			if (fixture.GetShape().TestPoint(
 				fixture.GetBody().GetTransform(),

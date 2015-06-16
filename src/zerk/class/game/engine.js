@@ -1,3 +1,4 @@
+console.log("engine")
 /**
  * Game Engine
  * 
@@ -16,7 +17,9 @@ zerk.define({
 		'zerk.game.engine.registry',
 		'zerk.game.engine.entityLoader',
 		'zerk.game.engine.componentLoader',
-		'zerk.game.engine.worldLoader'
+		'zerk.game.engine.worldLoader',
+		'zerk.game.engine.spriteLoader',
+        'zerk.game.engine.textureLoader'
 	]
 	
 },{
@@ -38,6 +41,15 @@ zerk.define({
 	 * @protected
 	 **/
 	_jsonLoader: null,
+
+    /**
+     * Image loader instance
+     *
+     * @property _imageLoader
+     * @type zerk.imageLoader
+     * @protected
+     **/
+    _imageLoader: null,
 	
 	/**
 	 * Component loader instance
@@ -65,6 +77,24 @@ zerk.define({
 	 * @protected
 	 **/
 	_worldLoader: null,
+	
+	/**
+	 * Sprite loader instance
+	 * 
+	 * @property _spriteLoader
+	 * @type zerk.game.engine.spriteLoader
+	 * @protected
+	 **/
+	_spriteLoader: null,
+
+    /**
+     * Texture loader instance
+     *
+     * @property _textureLoader
+     * @type zerk.game.engine.textureLoader
+     * @protected
+     **/
+    _textureLoader: null,
 	
 	/**
 	 * Engine configuration
@@ -190,7 +220,7 @@ zerk.define({
 	 * @param {zerk.jsonLoader} jsonLoader A JSON Loader instance
 	 * @param {Object} config Game configuration
 	 **/
-	init: function(jsonLoader,config) {
+	init: function(jsonLoader,imageLoader,config) {
 		
 		zerk.parent('zerk.game.engine').init.apply(
 			this,
@@ -204,6 +234,8 @@ zerk.define({
 		this._systemMap={};
 		
 		this._jsonLoader=jsonLoader;
+
+        this._imageLoader=imageLoader;
 		
 		this._registry=zerk.create(
 			'zerk.game.engine.registry',
@@ -228,15 +260,28 @@ zerk.define({
 		
 		this._entityLoader=zerk.create(
 			'zerk.game.engine.entityLoader',
-			this._jsonLoader,
-			this._componentLoader
+			this._jsonLoader
 		);
 		
+		this._spriteLoader=zerk.create(
+			'zerk.game.engine.spriteLoader',
+			this._jsonLoader,
+            this._imageLoader
+		);
+
+        this._textureLoader=zerk.create(
+            'zerk.game.engine.textureLoader',
+            this._imageLoader
+        );
+
 		this._worldLoader=zerk.create(
 			'zerk.game.engine.worldLoader',
 			this._jsonLoader,
+            this._imageLoader,
 			this._componentLoader,
-			this._entityLoader
+			this._entityLoader,
+			this._spriteLoader,
+            this._textureLoader
 		);
 		
 		// Setup renderer thread
@@ -337,20 +382,34 @@ zerk.define({
 		this._worldLoader.loadWorld(
 			name,
 			function (data) {
-				
 				self._onLoadWorld(data,successHandler,errorHandler);
-				
 			},
 			function (error) {
-				
 				errorHandler(error);
-				
-				console.log('World Load error:',error);
-				
 			}
 		);
 		
 	},
+
+    loadWorldConfig: function(config,successHandler,errorHandler) {
+
+        var self=this;
+
+        this._log('Loading world by config');
+
+        this._log('Loading world resources',2);
+
+        this._worldLoader.loadWorldConfig(
+            config,
+            function (data) {
+                self._onLoadWorld(data,successHandler,errorHandler);
+            },
+            function (error) {
+                errorHandler(error);
+            }
+        );
+
+    },
 	
 	/**
 	 * Reset the engine
@@ -717,7 +776,7 @@ zerk.define({
 			this,
 			config
 		);
-		
+
 		var thread=system.getThread();
 		
 		// Register the system under its name

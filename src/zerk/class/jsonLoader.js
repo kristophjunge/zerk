@@ -65,85 +65,63 @@ zerk.define({
 	/**
 	 * Loads one resource
 	 * 
-	 * Fires successHandler when the resource is loaded.
+	 * Fires successFn when the resource is loaded.
 	 * 
 	 * @method loadResource
 	 * @param {String} resource Resource id
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
+     * @protected
 	 * @async
 	 **/
-	/*
-	 * TODO Should this method really be public? Isnt it kind of duplicat of 
-	 * 	require?
-	 */
-	loadResource: function(resource,successHandler,errorHandler) {
-		
-		if (this.isLoaded(resource)) {
-			
-			if (zerk.isFunction(successHandler)) {
-				
-				successHandler(zerk.clone(this._data[resource]));
-				
-				
-			}
-			
-			return true;
-			
-		}
-		
-		var path=this._getResourcePath(resource);
-		
-		var target=path+'?r='+Math.random();
-		
+	_loadJSON: function(id,successFn,errorFn) {
+
+		var path=this._getResourcePath(id);
+        if (!path) {
+            zerk.error('Resource not found "'+id+'"');
+        }
+
 		var self=this;
-		
+
 		this._ajax.request(
-			target,
+            path,
 			false,
 			function (request) {
-				
-				/*
-				 * TODO Reactivate syntax error handling
-				 */
-				//try {
+
+				try {
 					
 					var jsondata=JSON5.parse(request.responseText);
-					
-					self._data[resource]=jsondata;
-					
-					if (zerk.isFunction(successHandler)) {
-						
-						successHandler(zerk.clone(self._data[resource]));
-						
-					}
-					
-				//} catch(e) {
-					
-					/*
-					console.log(
-						'Parse error "'+e.message+'" at position '+e.at
-					);
-					console.log(e.text);
-					
-					if (typeof error=='function') {
-						
-						error({
-							at: e.at,
-							message: e.message,
-							text: e.text
-						});
-						
-					}
-					*/
-					
-				//}
-				
+
+                } catch(e) {
+
+                    console.log(
+                        'Parse error "'+e.message+'" at position '+e.at
+                    );
+                    console.log(e.text);
+
+                    if (typeof error=='function') {
+
+                        error({
+                            at: e.at,
+                            message: e.message,
+                            text: e.text
+                        });
+
+                    }
+
+                }
+
+                self._data[id]=jsondata;
+
+                if (zerk.isFunction(successFn)) {
+                    successFn(id,zerk.clone(self._data[id]));
+                }
+
 			},
 			function (request) {
 				
-				errorHandler({
-					resource: resource,
+				errorFn({
+					resource: id,
 					path: path,
 					message: 'Couldnt load',
 					status: request.status
@@ -157,77 +135,64 @@ zerk.define({
 	/**
 	 * Loads multiple resources
 	 * 
-	 * Fires successHandler when all resources are loaded.
+	 * Fires successFn when all resources are loaded.
 	 * 
 	 * @method require
 	 * @param {Array} resources Array of resource id's
-	 * @param {Function} successHandler Event handler for success
-	 * @param {Function} errorHandler Event handler for error
+	 * @param {Function} successFn Event handler for success
+	 * @param {Function} errorFn Event handler for error
 	 * @async
 	 **/
-	require: function(resources,successHandler,errorHandler) {
-		
+	require: function(idList,successFn,errorFn) {
+
+        var me=this;
+
+        if (!zerk.isDefined(successFn)) {
+            successFn=zerk.emptyFn();
+        }
+        if (!zerk.isDefined(errorFn)) {
+            errorFn=zerk.emptyFn();
+        }
+        
 		var completed=[];
+		var unloaded=[];
+        var result={};
 		
-		unloadedResources=resources;
-		
-		var unloadedResources=[];
-		
-		for (var i=0;i<resources.length;i++) {
-			
-			if (!this.isLoaded(resources[i])) {
-				
-				unloadedResources.push(resources[i]);
-				
+		for (var i=0;i<idList.length;i++) {
+			if (this.isLoaded(idList[i])) {
+                result[idList[i]]=me.getResource(idList[i]);
+            } else {
+				unloaded.push(idList[i]);
 			}
-			
 		}
-		
-		// Instant success if we got no resources
-		if (unloadedResources.length==0) {
-			
-			if (zerk.isFunction(successHandler)) {
-				
-				successHandler();
-				
-			}
-			
+
+		if (unloaded.length==0) {
+			successFn(result);
 		}
-		
-		for (var i=0;i<unloadedResources.length;i++) {
-			
-			this.loadResource(
-				unloadedResources[i],
-				function(data) {
-					
-					completed.push(unloadedResources[i]);
-					
-					if (completed.length==unloadedResources.length 
-					&& typeof successHandler=='function') {
-							
-						successHandler();
-						
-					}
-					
+
+		for (var i=0;i<unloaded.length;i++) {
+			this._loadJSON(
+				unloaded[i],
+				function(id,data) {
+					completed.push(unloaded[i]);
+                    result[id]=data;
+					if (completed.length==unloaded.length) {
+                        successFn(result);
+                    }
 				},
-				function(error) {
-					
-					if (typeof errorHandler=='function') {
-						
-						errorHandler(error);
-						
-					}
-					
-					return;
-					
-				}
-				
+				errorFn
 			);
-			
 		}
 		
 	},
-	
+
+    clear: function() {
+
+        var me=this;
+        me._data={};
+
+    },
+
 	/**
 	 * Returns a preloaded resource
 	 * 
@@ -283,7 +248,7 @@ zerk.define({
 	 * @protected
 	 **/
 	_getResourcePath: function(id) {
-		
+
 		for (var ns in this._namespace) {
 			
 			if (ns.length>id.length) continue;
@@ -294,7 +259,9 @@ zerk.define({
 				
 				localPart=localPart.replace(/\./g,'/');
 				
-				return this._namespace[ns]+'/'+localPart+'.json';
+console.log("-:", this._namespace[ns])
+
+				return this._namespace[ns]+'/'+localPart+'.json?r='+Math.random();
 				
 			}
 			
@@ -302,6 +269,12 @@ zerk.define({
 		
 		return false;
 		
-	}
-	
+	},
+
+    addNamespace: function(ns,path) {
+
+        this._namespace[ns]=path;
+
+    }
+
 });

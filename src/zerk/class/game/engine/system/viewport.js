@@ -99,7 +99,16 @@ zerk.define({
 	 * @protected
 	 **/
 	_zoom: 100,
-	
+
+    /**
+     * World scale factor
+     *
+     * @property _worldScale
+     * @type Float
+     * @protected
+     **/
+    _worldScale: 120,
+
 	/*
 	 * TODO Validate x,y,offsetX,offsetY to be named convenient
 	 */
@@ -159,6 +168,11 @@ zerk.define({
 	 * @protected
 	 **/
 	_height: 0,
+
+
+    _autoSize: 0,
+    _maxWidth: 0,
+    _maxHeight: 0,
 	
 	/**
 	 * Class constructor
@@ -168,47 +182,93 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.viewport').init.apply(
-			this,
+            me,
 			arguments
 		);
-		
-		this.createBuffers({
+
+        me._worldScale=me._config.worldScale;
+        me._zoom=me._config.zoomDefault;
+
+        me._maxWidth=me._config.maxWidth;
+        me._maxHeight=me._config.maxHeight;
+        me._autoSize=me._config.autoSize;
+
+        me.createBuffers({
 			display: {
-				width: 640,
-				height: 480,
+                width: me._config.width,
+                height: me._config.height,
 				visible: true
 			},
+            entity: {
+                width: 1,
+                height: 1,
+                visible: me._config.showEntityBuffer
+            },
 			body: {
 				width: 1,
 				height: 1,
-				visible: this._config.showBodyBuffer
+				visible: me._config.showBodyBuffer
 			},
 			fixture: {
 				width: 1,
 				height: 1,
-				visible: this._config.showFixtureBuffer
+				visible: me._config.showFixtureBuffer
 			}
 		});
-		
-		var viewportSize=this.getBufferSize('display');
-		
-		// Sync viwport with canvas size
-		this._width=viewportSize.width;
-		this._height=viewportSize.height;
-		
-		this._log(
-			'Scale '
-			+this._x+':'+this._y
-			+' at '
-			+this._width+'x'+this._height
-		);
-		
-		this._log('Ready');
+
+        if (me._autoSize) {
+            me.autoSizeViewport();
+            zerk.browser.registerEvent(window,'resize',function(e) {
+                me.autoSizeViewport(e);
+            });
+        } else {
+            me.setViewportSize(me._config.width,me._config.height);
+        }
+
+        me._log('Ready');
 		
 	},
-	
+
+    autoSizeViewport: function(e) {
+
+        var me=this;
+        var windowSize=zerk.browser.getViewportSize();
+
+        me.setViewportSize(windowSize.width,windowSize.height);
+
+    },
+
+    setViewportSize: function(width,height) {
+
+        //var viewportSize=me.getBufferSize('display');
+        var me=this;
+
+        if (me._maxWidth>0 && width>me._maxWidth) {
+            width=me._maxWidth;
+        }
+
+        if (me._maxHeight>0 && height>me._maxHeight) {
+            height=me._maxHeight;
+        }
+
+        me._width=width;
+        me._height=height;
+
+        me.setBufferSize('display',width,height);
+
+        me._log(
+            'Scale '
+            +me._x+':'+me._y
+            +' at '
+            +me._width+'x'+me._height
+        );
+
+    },
+
 	/**
 	 * Returns the configuration defaults of the system
 	 * 
@@ -219,6 +279,15 @@ zerk.define({
 	_getConfigDefaults: function() {
 		
 		return {
+            autoSize: false,
+            width: 1280,
+            height: 720,
+            maxWidth: 0,
+            maxHeight: 0,
+            zoomDefault: 50,
+            zoomMin: 1,
+            zoomMax: 100,
+            showEntityBuffer: false,
 			showBodyBuffer: false,
 			showFixtureBuffer: false,
 			showGrid: false,
@@ -226,7 +295,11 @@ zerk.define({
 			trackPlayer: false,
 			// How many 1m boxes will be drawn on the grid
 			gridOuterWidth: 50,
-			gridOuterHeight: 50
+			gridOuterHeight: 50,
+			canvasContainerId: 'zerk-canvas',
+            backgroundColor: 'rgb(0,0,0)',
+            // How much pixels should be used to draw 1 meter at 100% zoom
+            worldScale: 120
 		};
 		
 	},
@@ -292,7 +365,30 @@ zerk.define({
 		);
 		
 		this.bufferClear('display');
-		
+
+
+        /*
+        var bg=document.getElementById('bg');
+
+
+        this.drawImage(
+            'display',
+            bg,
+            300,
+            300,
+            1920,
+            1080,
+            0,
+            0,
+            1920,
+            1080,
+            0
+        );
+        */
+
+
+
+
 		// Sync view with player entity
 		if (this._config.trackPlayer) {
 			
@@ -444,68 +540,83 @@ zerk.define({
 		return this._height;
 		
 	},
-	
-	/**
-	 * Scales given value by current zoom factor
-	 * 
-	 * @method toScaleX
-	 * @param {Float} value Value
-	 * @return {Float} Scaled value
-	 **/
-	toScaleX: function(value) {
-		
-		return (value/100)*this._zoom;
-		
-	},
-	
-	/**
-	 * Scales given value by current zoom factor
-	 * 
-	 * @method toScaleY
-	 * @param {Float} value Value
-	 * @return {Float} Scaled value
-	 **/
-	toScaleY: function(value) {
-		
-		return (value/100)*this._zoom;
-		
-	},
 
-	/**
-	 * Un-scales given value by current zoom factor
-	 * 
-	 * @method fromScaleX
-	 * @param {Float} value Value
-	 * @return {Float} Scaled value
-	 **/
-	fromScaleX: function(value) {
-		
-		return (value/this._zoom)*100;
-		
-	},
+    /**
+     * Scales given value by current zoom factor
+     *
+     * @method toZoom
+     * @param {Float} value Value
+     * @return {Float} Scaled value
+     **/
+    toZoom: function(value) {
 
-	/**
-	 * Un-scales given value by current zoom factor
-	 * 
-	 * @method fromScaleY
-	 * @param {Float} value Value
-	 * @return {Float} Scaled value
-	 **/
-	fromScaleY: function(value) {
-		
-		return (value/this._zoom)*100;
-		
-	},
-	
+        return (value/100)*this._zoom;
+
+    },
+
+    /**
+     * Un-scales given value by current zoom factor
+     *
+     * @method fromZoom
+     * @param {Float} value Value
+     * @return {Float} Scaled value
+     **/
+    fromZoom: function(value) {
+
+        return (value/this._zoom)*100;
+
+    },
+
+    /**
+     * Converts pixels into world meters
+     *
+     * @method fromPixel
+     * @param {Float} value Value in pixels
+     * @return {Float} Value in meters
+     **/
+    fromPixel: function(value) {
+
+        var me=this;
+
+        if (typeof value==='undefined' || value==0) return 0;
+        return value/me._worldScale;
+
+    },
+
+    /**
+     * Converts world meters into pixels
+     *
+     * @method toPixel
+     * @param {Float} value Value in meters
+     * @return {Float} Value in pixels
+     **/
+    toPixel: function(value) {
+
+        var me=this;
+
+        if (typeof value==='undefined' || value==0) return 0;
+        return value*me._worldScale;
+
+    },
+
 	/**
 	 * Increases current zoom factor by factor 10
 	 * 
 	 * @method zoomIn
 	 **/
 	zoomIn: function() {
-		
-		this._zoom+=(10*(this._zoom/100));
-		
+
+        //var value=this._zoom+10;
+		var value=this._zoom+(10*(this._zoom/100));
+
+        value=Math.ceil(value);
+
+        if (value>=this._config.zoomMax) {
+            this._zoom=this._config.zoomMax;
+        } else {
+            this._zoom=value;
+        }
+
 	},
 
 	/**
@@ -514,8 +625,17 @@ zerk.define({
 	 * @method zoomOut
 	 **/
 	zoomOut: function() {
-		
-		this._zoom-=(10*(this._zoom/100));
+
+        //var value=this._zoom-10;
+        var value=this._zoom-(10*(this._zoom/100));
+
+        value=Math.ceil(value);
+
+        if (value<=this._config.zoomMin) {
+            this._zoom=this._config.zoomMin;
+        } else {
+            this._zoom=value;
+        }
 		
 	},
 	
@@ -551,21 +671,23 @@ zerk.define({
 	 * @protected
 	 **/
 	getEntitiesInViewport: function() {
-		
-		var x1=zerk.helper.toMeter(
-			this._x+this.fromScaleX(0-(this._width/2))
+
+        var me=this;
+
+		var x1=me.fromPixel(
+			this._x+this.fromZoom(0-(this._width/2))
 		);
 		
-		var y1=zerk.helper.toMeter(
-			this._y+this.fromScaleY(0-(this._height/2))
+		var y1=me.fromPixel(
+			this._y+this.fromZoom(0-(this._height/2))
 		);
 		
-		var x2=zerk.helper.toMeter(
-			this._x+this.fromScaleX(this._width-(this._width/2))
+		var x2=me.fromPixel(
+			this._x+this.fromZoom(this._width-(this._width/2))
 		);
 		
-		var y2=zerk.helper.toMeter(
-			this._y+this.fromScaleY(this._height-(this._height/2))
+		var y2=me.fromPixel(
+			this._y+this.fromZoom(this._height-(this._height/2))
 		);
 		
 		return this._getSystem('physics').getEntitiesInArea(x1,y1,x2,y2);
@@ -583,7 +705,9 @@ zerk.define({
 	 * TODO Document mehtod '_getCanvasX'
 	 */
 	_getCanvasX: function(meter,pixel) {
-		
+
+        var me=this;
+
 		if (typeof meter==='undefined') {
 			
 			meter=0;
@@ -596,11 +720,14 @@ zerk.define({
 			
 		}
 		
-		var value=this.toScaleX(
-			zerk.helper.fromMeter(meter)+pixel-this._x
+		var value=this.toZoom(
+            me.toPixel(meter)+pixel-this._x
 		);
-		
-		return ~~(0.5+value+(this._width/2));
+
+        //return Math.ceil(value+(this._width/2));
+
+        return value+(this._width/2);
+		//return ~~(0.5+value+(this._width/2));
 		
 	},
 	
@@ -615,7 +742,9 @@ zerk.define({
 	 * TODO Document mehtod '_getCanvasY'
 	 */
 	_getCanvasY: function(meter,pixel) {
-		
+
+        var me=this;
+
 		if (typeof meter==='undefined') {
 			
 			meter=0;
@@ -628,11 +757,13 @@ zerk.define({
 			
 		}
 		
-		var value=this.toScaleX(
-			zerk.helper.fromMeter(meter)+pixel-this._y
+		var value=this.toZoom(
+            me.toPixel(meter)+pixel-this._y
 		);
-		
-		return ~~(0.5+value+(this._height/2));
+
+        //return Math.ceil(value+(this._height/2));
+        return value+(this._height/2);
+		//return ~~(0.5+value+(this._height/2));
 		
 	},
 	
@@ -645,9 +776,11 @@ zerk.define({
 	 * @protected
 	 **/
 	_setViewPosition: function(x,y) {
-		
-		this._x=zerk.helper.fromMeter(x);
-		this._y=zerk.helper.fromMeter(y);
+
+        var me=this;
+
+		this._x=me.toPixel(x);
+		this._y=me.toPixel(y);
 		
 	},
 	
@@ -679,8 +812,8 @@ zerk.define({
 		);
 		
 	},
-	
-	/**
+
+    /**
 	 * Renders the grid
 	 * 
 	 * @method _debugDrawGrid

@@ -92,8 +92,7 @@ zerk.define({
 		);
 		
 	},
-	
-	
+
 	/**
 	 * Stops the system
 	 * 
@@ -108,7 +107,8 @@ zerk.define({
 		
 		this._physics.un(
 			'contactbegin',
-			this._onContactBegin
+			this._onContactBegin,
+            this
 		);
 		
 	},
@@ -131,9 +131,7 @@ zerk.define({
 		
 		window.setTimeout(
 			function() {
-				
 				self._physics.setBodyMoveable(target.entity,'main',true);
-				
 			},
 			target.entity.components.fall.releaseDelay
 		);

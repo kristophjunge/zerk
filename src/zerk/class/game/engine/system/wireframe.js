@@ -68,12 +68,16 @@ zerk.define({
 	 * @param {Object} config System configuration
 	 **/
 	init: function(engine,config) {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.wireframe').init.apply(
-			this,
+			me,
 			arguments
 		);
-		
+
+        me._showEntityOriginIndicator=me._config.showEntityOriginIndicator;
+
 		this._viewport=this._getSystem('viewport');
 		
 		this._physics=this._getSystem('physics');
@@ -194,7 +198,9 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderEntity: function(entity) {
-		
+
+        var me=this;
+
 		// Render all bodies of the entity
 		
 		var bodies=entity.components.physics._bodyList;
@@ -204,9 +210,9 @@ zerk.define({
 			this._renderBody(entity,bodies[i]);
 			
 		}
-		
-		if (this._config.showEntityOriginIndicator) {
-			
+
+		if (me._showEntityOriginIndicator) {
+
 			this._renderEntityOriginIndicator(entity);
 			
 		}
@@ -355,33 +361,36 @@ zerk.define({
 		
 		if (!bodyState) return;
 		if (!fixtureState) return;
-		
-		var fixtureWidth=((typeof fixture.width=='string') 
-			? (body.width/100)*parseInt(fixture.width)
-			: fixture.width);
-		
-		var fixtureHeight=((typeof fixture.height=='string') 
-			? (body.height/100)*parseInt(fixture.height)
-			: fixture.height);
+
+		var fixtureWidth=fixture.width;
+		var fixtureHeight=fixture.height;
 		
 		// Tranform rectangle into polygon
-		var rectangleVertices=[
-			[fixtureState.x-(fixtureWidth/2),fixtureState.y-(fixtureHeight/2)],
-			[fixtureState.x+(fixtureWidth/2),fixtureState.y-(fixtureHeight/2)],
-			[fixtureState.x+(fixtureWidth/2),fixtureState.y+(fixtureHeight/2)],
-			[fixtureState.x-(fixtureWidth/2),fixtureState.y+(fixtureHeight/2)]
-		];
-		
+
+        var rectangleVertices=zerk.helper.getPolygonOfRectangle(fixtureWidth,fixtureHeight);
+
 		var vertices=[];
 		
 		for (var i=0;i<rectangleVertices.length;i++) {
-			
-			var rotatedVertice=zerk.helper.rotatePosition(
-				rectangleVertices[i][0],
-				rectangleVertices[i][1],
+
+            // Rotate with fixture angle
+            var rotatedVertice=zerk.helper.rotatePosition(
+                rectangleVertices[i][0],
+                rectangleVertices[i][1],
+                fixtureState.angle
+            );
+
+            // Add fixture offset
+            rotatedVertice.x+=+fixtureState.x;
+            rotatedVertice.y+=fixtureState.y;
+
+            // Rotate with body angle
+			rotatedVertice=zerk.helper.rotatePosition(
+                rotatedVertice.x,
+                rotatedVertice.y,
 				bodyState.angle
 			);
-			
+
 			var x=this._viewport._getCanvasX(
 				position.x
 				+bodyState.x
@@ -432,8 +441,10 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderFixtureBoundingCircle: function(entity,body,fixture) {
-		
-		var style=this._getFixtureBoundingStyle(entity,body,fixture);
+
+        var me=this;
+
+		var style=me._getFixtureBoundingStyle(entity,body,fixture);
 		
 		var position=entity.components.position;
 		var bodyState=entity.components.physics.bodies[body.key];
@@ -441,23 +452,35 @@ zerk.define({
 		
 		if (!bodyState) return;
 		if (!fixtureState) return;
-		
-		var x=this._viewport._getCanvasX(
+
+        var fixturePosition={
+            x: fixtureState.x,
+            y: fixtureState.y
+        };
+
+        // Rotate with body angle
+        fixturePosition=zerk.helper.rotatePosition(
+            fixturePosition.x,
+            fixturePosition.y,
+            bodyState.angle
+        );
+
+		var x=me._viewport._getCanvasX(
 			position.x
 			+bodyState.x
-			+fixtureState.x
+			+fixturePosition.x
 		);
-		var y=this._viewport._getCanvasY(
+		var y=me._viewport._getCanvasY(
 			position.y
 			+bodyState.y
-			+fixtureState.y
+			+fixturePosition.y
 		);
-		
-		this._viewport.drawArc(
+
+        me._viewport.drawArc(
 			'display',
 			x,
 			y,
-			this._viewport.toScaleX(zerk.helper.fromMeter(fixture.radius)),
+            me._viewport.toZoom(me._viewport.toPixel(fixture.radius)),
 			0,
 			Math.PI*2,
 			true,
@@ -465,25 +488,25 @@ zerk.define({
 			style.strokeColor,
 			style.lineWidth
 		);
-		
+
 		var rotatedAngleIndicator=zerk.helper.rotatePosition(
 			fixtureState.x,
 			fixtureState.y-fixtureState.radius,
 			bodyState.angle
 		);
 		
-		var angleIndicatorX=this._viewport._getCanvasX(
+		var angleIndicatorX=me._viewport._getCanvasX(
 			position.x
 			+bodyState.x
 			+rotatedAngleIndicator.x
 		);
-		var angleIndicatorY=this._viewport._getCanvasY(
+		var angleIndicatorY=me._viewport._getCanvasY(
 			position.y
 			+bodyState.y
 			+rotatedAngleIndicator.y
 		);
-		
-		this._viewport.drawLines(
+
+        me._viewport.drawLines(
 			'display',
 			[[angleIndicatorX,angleIndicatorY,x,y]],
 			style.strokeColor,
@@ -515,13 +538,19 @@ zerk.define({
 		var vertices=[];
 		
 		for (var i=0;i<fixture.vertices.length;i++) {
-			
+
 			var rotatedVertice=zerk.helper.rotatePosition(
-				fixture.vertices[i][0],
-				fixture.vertices[i][1],
-				bodyState.angle
+                fixture.vertices[i][0],
+                fixture.vertices[i][1],
+                fixture.angle
 			);
-			
+
+            rotatedVertice=zerk.helper.rotatePosition(
+                fixture.x+rotatedVertice.x,
+                fixture.y+rotatedVertice.y,
+                bodyState.angle
+            );
+
 			var x=this._viewport._getCanvasX(
 				position.x
 				+bodyState.x
@@ -642,9 +671,23 @@ zerk.define({
 	 * @protected
 	 **/
 	_renderEntityOriginIndicator: function(entity) {
-		
+
 		var position=entity.components.position;
-		
+
+
+
+        /*
+        var value=this.toZoom(
+            me.toPixel(meter)+pixel-this._x
+        );
+
+        //return Math.ceil(value+(this._width/2));
+
+        return value+(this._width/2);
+        */
+
+
+
 		this._viewport.drawLines(
 			'display',
 			[

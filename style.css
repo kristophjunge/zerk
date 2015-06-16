@@ -1,8 +1,5 @@
 @CHARSET "UTF-8";
 
-@import url('http://fonts.googleapis.com/css?family=Abel');
-
-
 /* --- RESET CSS --- */
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td
@@ -48,8 +45,9 @@ abbr,acronym
 body
 {
 	background-color: #202020;
-	text-align: center;
 	font-family: Helvetica,Arial,sans-serif;
+    color: white;
+    overflow: hidden;
 }
 #zerk_canvas_display
 {
@@ -97,8 +95,15 @@ body
 h1 {
 	font-size: 40px;
 	margin-top: 25px;
-	font-family: Abel,sans-serif;
 	color: #CCCCCC;
+}
+a,
+a:link,
+a:visited {
+    color: #268bd2;
+}
+a:hover {
+    color: #74b6e5;
 }
 h2 {
 	font-size: 1.25em;
@@ -107,10 +112,8 @@ h2 {
 ul {
 	margin: 0.5em 0 1em 1em;
 }
-.demo #zerk_canvas_display {
-	
-	margin-top: 25px;
-	margin-bottom: 50px;
+#zerk_canvas_display {
+	margin: auto auto;
 }
 canvas {
 	-webkit-touch-callout: none;
@@ -119,4 +122,7 @@ canvas {
 	-moz-user-select: -moz-none;
 	-ms-user-select: none;
 	user-select: none;
+}
+#zerk-canvas {
+    text-align: center;
 }

@@ -1,715 +1,882 @@
 {
-	name: 'level',
-	config: {
-		systems: {
-			physics: {
-				gravityX: 0,
-				gravityY: 40
+    "name": "level",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 40
 			}
 		}
 	},
-	entities: [
+    "entities": [
 		{
-			name: 'jumpandrun.entity.player',
-			tags: [
-				'player'
+            "name": "jumpandrun.entity.player",
+            "tags": [
+				"player"
 			],
-			components: {
-				position: {
-					x: 0,
-					y: 0
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: -7,
-					y: -1.5
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+					"x": -3.5,
+					"y": -0.75
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 6
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 0.5,
+                                    "height": 3
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 0,
-					y: 2
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": -1.25,
+                    "y": 1
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
+						}
+					}
+				}
+			}
+		},
+        {
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": 1
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 2.5,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+		{
+            "name": "jumpandrun.entity.fallingPlatform",
+            "components": {
+                "position": {
+                    "x": 5.75,
+                    "y": 0.75
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 11.25,
+                    "y": 0.5
+				},
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 13,
-					y: 6
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 14,
+                    "y": 0.25
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 0.5,
+                                    "height": 1
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.fallingPlatform',
-			components: {
-				position: {
-					x: 11.5,
-					y: 1.5
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 22.5,
-					y: 1
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 16.25,
+                    "y": -0.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 28,
-					y: 0.5
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 2
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 32.5,
-					y: -1
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.madStone',
-			tags: [
-				'madStone1'
+            "name": "jumpandrun.entity.madStone",
+            "tags": [
+				"madStone1"
 			],
-			components: {
-				position: {
-					x: 32.5,
-					y: -7
+            "components": {
+                "position": {
+                    "x": 16.25,
+                    "y": -3.5
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.trigger',
-			components: {
-				position: {
-					x: 32.5,
-					y: -4
+            "name": "jumpandrun.entity.trigger",
+            "components": {
+                "position": {
+                    "x": 16.25,
+                    "y": -2
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 5,
-							height: 5
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 2.5,
+                                    "height": 2.5
+                                }
+                            }
 						}
 					}
 				},
-				trigger: {
-					targetEntityTag: 'madStone1',
-					targetSystem: 'madStone',
-					targetMethod: 'release'
+                "trigger": {
+                    "targetEntityTag": "madStone1",
+                    "targetSystem": "madStone",
+                    "targetMethod": "release"
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.groundDown',
-			components: {
-				position: {
-					x: 42.5,
-					y: -1
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 49,
-					y: 4
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 21.25,
+                    "y": -0.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 3,
-							height: 1
-						}
-					}
-				}
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "polygon",
+                                    "width": 5,
+                                    "height": 2.5,
+                                    "angle": 0,
+                                    "vertices": [
+                                        [-2.5, 0.25],
+                                        [-2.5, -0.25],
+                                        [2.5, 2.25],
+                                        [2.5, 2.75]
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
 			}
 		},
 		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 55,
-					y: 9
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 24.5,
+                    "y": 2
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 70,
-					y: 9
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 1.5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 85,
-					y: 9
+            "name": "jumpandrun.entity.fallingPlatform",
+            "components": {
+                "position": {
+                    "x": 27,
+                    "y": 1.75
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.fallingPlatform",
+            "components": {
+                "position": {
+                    "x": 31.5,
+                    "y": 2.5
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.fallingPlatform",
+            "components": {
+                "position": {
+                    "x": 34.5,
+                    "y": 1.5
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.fallingPlatform",
+            "components": {
+                "position": {
+                    "x": 38,
+                    "y": 0.75
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 42,
+                    "y": 0.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 3.5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.fallingPlatform',
-			components: {
-				position: {
-					x: 54,
-					y: 3.5
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.fallingPlatform',
-			components: {
-				position: {
-					x: 63,
-					y: 5
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.fallingPlatform',
-			components: {
-				position: {
-					x: 69,
-					y: 3
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.fallingPlatform',
-			components: {
-				position: {
-					x: 76,
-					y: 1.5
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 84,
-					y: 1
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 44,
+                    "y": 0.25
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 7,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 0.5,
+                                    "height": 1
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 88,
-					y: 0.5
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 46.25,
+                    "y": -0.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 2
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 92.5,
-					y: -1
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 100,
-					y: 4
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 115,
-					y: 4
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 130,
-					y: 4
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 145,
-					y: 9
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 160,
-					y: 9
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 175,
-					y: 9
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.damager',
-			components: {
-				position: {
-					x: 190,
-					y: 9
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 15,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.madStone',
-			tags: [
-				'madStone2'
+            "name": "jumpandrun.entity.madStone",
+            "tags": [
+				"madStone2"
 			],
-			components: {
-				position: {
-					x: 92.5,
-					y: -7
+            "components": {
+                "position": {
+                    "x": 46.25,
+                    "y": -3.5
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.trigger',
-			components: {
-				position: {
-					x: 92.5,
-					y: -4
+            "name": "jumpandrun.entity.trigger",
+            "components": {
+                "position": {
+                    "x": 46.25,
+                    "y": -2
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 5,
-							height: 5
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 2.5,
+                                    "height": 2.5
+                                }
+                            }
 						}
 					}
 				},
-				trigger: {
-					targetEntityTag: 'madStone2',
-					targetSystem: 'madStone',
-					targetMethod: 'release'
+                "trigger": {
+                    "targetEntityTag": "madStone2",
+                    "targetSystem": "madStone",
+                    "targetMethod": "release"
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.elevatorPlatform',
-			components: {
-				position: {
-					x: 100.5,
-					y: -1,
+            "name": "jumpandrun.entity.elevatorPlatform",
+            "components": {
+                "position": {
+                    "x": 50.25,
+                    "y": -0.5
 				},
-				elevator: {
-					axis: 'horizontal',
-					position: 0,
-					turn: 'forward',
-					enabled: true
+                "elevator": {
+                    "axis": "horizontal",
+                    "position": 0,
+                    "turn": "forward",
+                    "enabled": true
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.elevatorPlatform',
-			components: {
-				position: {
-					x: 111.5,
-					y: -7,
+            "name": "jumpandrun.entity.elevatorPlatform",
+            "components": {
+                "position": {
+                    "x": 55.75,
+                    "y": -3.5
 				},
-				elevator: {
-					axis: 'vertical',
-					position: 0,
-					turn: 'forward',
-					enabled: true
+                "elevator": {
+                    "axis": "vertical",
+                    "position": 0,
+                    "turn": "forward",
+                    "enabled": true
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.elevatorPlatform',
-			components: {
-				position: {
-					x: 118.5,
-					y: -5,
+            "name": "jumpandrun.entity.elevatorPlatform",
+            "components": {
+                "position": {
+                    "x": 59.25,
+                    "y": -2.5
 				},
-				elevator: {
-					axis: 'horizontal',
-					position: 0,
-					turn: 'forward',
-					enabled: true
+                "elevator": {
+                    "axis": "horizontal",
+                    "position": 0,
+                    "turn": "forward",
+                    "enabled": true
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 132.5,
-					y: -5
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 66.25,
+                    "y": -2.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 137,
-					y: -2.5
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 4
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
+
 		{
-			name: 'jumpandrun.entity.madStone',
-			tags: [
-				'madStone3'
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 69,
+                    "y": -1.75
+				},
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 0.5,
+                                    "height": 2
+                                }
+                            }
+						}
+					}
+				}
+			}
+		},
+
+		{
+            "name": "jumpandrun.entity.madStone",
+            "tags": [
+				"madStone3"
 			],
-			components: {
-				position: {
-					x: 132.5,
-					y: -11
+            "components": {
+                "position": {
+                    "x": 66.25,
+                    "y": -5.5
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.trigger',
-			components: {
-				position: {
-					x: 132.5,
-					y: -8,
+            "name": "jumpandrun.entity.trigger",
+            "components": {
+                "position": {
+                    "x": 66.25,
+                    "y": -4
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 5,
-							height: 5
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 2.5,
+                                    "height": 2.5
+                                }
+                            }
 						}
 					}
 				},
-				trigger: {
-					targetEntityTag: 'madStone3',
-					targetSystem: 'madStone',
-					targetMethod: 'release'
+                "trigger": {
+                    "targetEntityTag": "madStone3",
+                    "targetSystem": "madStone",
+                    "targetMethod": "release"
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 142.5,
-					y: -1
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 71.25,
+                    "y": -0.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
-						}
-					}
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.balancePlatform',
-			components: {
-				position: {
-					x: 152.5,
-					y: -1
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.balancePlatform',
-			components: {
-				position: {
-					x: 159.5,
-					y: -1
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.balancePlatform',
-			components: {
-				position: {
-					x: 167.5,
-					y: 2
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.elevatorPlatform',
-			components: {
-				position: {
-					x: 172.5,
-					y: -7,
-				},
-				elevator: {
-					distance: 8,
-					axis: 'vertical',
-					position: 0,
-					enabled: true
-				}
-			}
-		},
-		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 182.5,
-					y: -7
-				},
-				physics: {
-					bodies: {
-						main: {
-							width: 10,
-							height: 1
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.box',
-			components: {
-				position: {
-					x: 187,
-					y: -10.5
+            "name": "jumpandrun.entity.balancePlatform",
+            "components": {
+                "position": {
+                    "x": 76.25,
+                    "y": -0.5
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.balancePlatform",
+            "components": {
+                "position": {
+                    "x": 79.75,
+                    "y": -0.5
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.balancePlatform",
+            "components": {
+                "position": {
+                    "x": 83.75,
+                    "y": 1
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.elevatorPlatform",
+            "components": {
+                "position": {
+                    "x": 86.25,
+                    "y": -3.5
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 1,
-							height: 6
+                "elevator": {
+                    "distance": 4,
+                    "axis": "vertical",
+                    "position": 0,
+                    "enabled": true
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 91.25,
+                    "y": -3.5
+				},
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 5,
+                                    "height": 0.5
+                                }
+                            }
 						}
 					}
 				}
 			}
 		},
 		{
-			name: 'jumpandrun.entity.trigger',
-			components: {
-				position: {
-					x: 182.5,
-					y: -9
+            "name": "jumpandrun.entity.ground",
+            "components": {
+                "position": {
+                    "x": 93.5,
+                    "y": -5.25
 				},
-				physics: {
-					bodies: {
-						main: {
-							width: 3,
-							height: 3
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 0.5,
+                                    "height": 3
+                                }
+                            }
+						}
+					}
+				}
+			}
+		},
+		{
+            "name": "jumpandrun.entity.trigger",
+            "components": {
+                "position": {
+                    "x": 91.25,
+                    "y": -5.25
+				},
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 3,
+                                    "height": 3
+                                }
+                            }
 						}
 					}
 				},
-				trigger: {
-					targetEntityTag: 'player',
-					targetSystem: 'player',
-					targetMethod: 'win'
+                "trigger": {
+                    "targetEntityTag": "player",
+                    "targetSystem": "player",
+                    "targetMethod": "win"
 				}
 			}
-		}
+		},
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 1.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 11.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 21.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 31.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 41.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 51.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 61.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 71.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 81.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "name": "jumpandrun.entity.damager",
+            "components": {
+                "position": {
+                    "x": 91.25,
+                    "y": 5
+                },
+                "physics": {
+                    "bodies": {
+                        "main": {
+                            "fixtures": {
+                                "main": {
+                                    "shape": "box",
+                                    "width": 10,
+                                    "height": 0.5
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	]
 }

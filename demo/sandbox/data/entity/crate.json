@@ -1,0 +1,33 @@
+{
+    "name": "crate",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1,
+                            "height": 1,
+                            "friction": 0.75
+						}
+					}
+				}
+			}
+		},
+        "render": {
+            "layers": {
+                "sprite1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "sprite",
+                    "spritesheet": "sandbox.spritesheet.crates",
+                    "sprite": "wooden-1"
+                }
+            }
+        }
+	}
+}

@@ -41,7 +41,15 @@ zerk.define({
 	 * @type Boolean
 	 */
 	mouseLeftDown: false,
-	
+
+    /**
+     * State of the middle mouse button
+     *
+     * @property mouseMiddleDown
+     * @type Boolean
+     */
+    mouseMiddleDown: false,
+
 	/**
 	 * State of the right mouse button
 	 * 
@@ -122,7 +130,7 @@ zerk.define({
 		canvas.addEventListener(
 			'mousemove',
 			function(event) {
-				
+
 				return self._onMouseMove(event);
 				
 			}
@@ -196,7 +204,7 @@ zerk.define({
 	_onMouseDown: function(event) {
 		
 		event.preventDefault();
-		
+
 		if (event.button==0) {
 			
 			this.mouseLeftDown=true;
@@ -206,7 +214,11 @@ zerk.define({
 			 * directly on click position
 			 */
 			this._onMouseMove(event);
-			
+
+        } else if (event.button==1) {
+
+            this.mouseMiddleDown=true;
+
 		} else if (event.button==2) {
 			
 			this.mouseRightDown=true;
@@ -239,7 +251,11 @@ zerk.define({
 			
 			this.mouseLeftDown=false;
 			
-		} else if (event.button==2) {
+		} else if (event.button==1) {
+
+            this.mouseMiddleDown=false;
+
+        } else if (event.button==2) {
 			
 			this.mouseRightDown=false;
 			
@@ -268,14 +284,14 @@ zerk.define({
 		
 		var position=this._getCursorPosition(event);
 		
-		if (this.mouseRightDown) {
+		if (this.mouseMiddleDown) {
 			
 			/*
 			 * TODO Remove the mouse view from the controls system
 			 */
 			this._viewport.setX(
 				this._viewport.getX()
-				-this._viewport.fromScaleX(
+				-this._viewport.fromZoom(
 					(position.x-this._lastMousePosition.x)
 					*this._config.zoomSpeed
 				)
@@ -283,7 +299,7 @@ zerk.define({
 			
 			this._viewport.setY(
 				this._viewport.getY()
-				-this._viewport.fromScaleX(
+				-this._viewport.fromZoom(
 					(position.y-this._lastMousePosition.y)
 					*this._config.zoomSpeed
 				)
@@ -291,17 +307,25 @@ zerk.define({
 			
 		}
 		
-		this.mouseX=zerk.helper.toMeter(this._viewport.getX()
-			+this._viewport.fromScaleX(
+		this.mouseX=this._viewport.fromPixel(this._viewport.getX()
+			+this._viewport.fromZoom(
 				position.x-(this._viewport.getWidth()/2))
 			);
 			
-		this.mouseY=zerk.helper.toMeter(this._viewport.getY()
-			+this._viewport.fromScaleY(
+		this.mouseY=this._viewport.fromPixel(this._viewport.getY()
+			+this._viewport.fromZoom(
 				position.y-(this._viewport.getHeight()/2))
 			);
 		
 		this._lastMousePosition=this._getCursorPosition(event);
+
+        /**
+         * Fires when the cursor is moved
+         *
+         * @param {DOMEvent} event
+         * @event mousemove
+         */
+        this.fireEvent('mousemove',event);
 		
 	},
 	

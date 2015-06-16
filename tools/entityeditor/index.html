@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zerk Entity Editor</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../../src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
+		<script type="text/javascript" src="../../src/json5/json5.js"></script>
+		<script type="text/javascript" src="../../src/zerk/zerk.js"></script>
+		<script type="text/javascript" src="../../src/zerk/helper.js"></script>
+		<script type="text/javascript" src="../../src/zerk/browser.js"></script>
+        <script type="text/javascript" src="../../src/poly-decomp.js/build/decomp.min.js"></script>
+	</head>
+	<body>
+		<script>
+            zerk.init({
+                bootstrap: {
+                    game: 'entityeditor',
+                    gameDir: './',
+                    zerkDir: './../../src/zerk',
+                    log: {
+                        enabled: true,
+                        severity: 3
+                    }
+                }
+            });
+		</script>
+        <div style="width: 250px; background-color: #666666; position: fixed; left: 0; top: 0">
+
+            <div>
+                Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>
+                Sprite: <input id="editor-sprite" value="full"/>
+                <button onclick="zerk.game.editorSetBackground(
+                    document.getElementById('editor-spritesheet').value,
+                    document.getElementById('editor-sprite').value
+                )">Set Background</button>
+            </div>
+
+            <div>
+                <button onclick="zerk.game.editorAddFixture()">Add Fixture</button>
+            </div>
+
+            <!-- <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button> -->
+        </div>
+        <div id="zerk-canvas"></div>
+        <div id="zerk-images" style="display: none;"></div>
+	</body>
+</html>

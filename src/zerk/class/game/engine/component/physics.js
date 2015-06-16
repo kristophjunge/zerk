@@ -142,7 +142,7 @@ zerk.define({
 				 * @property moveable
 				 * @type Boolean
 				 */
-				moveable: true,
+				moveable: false,
 				
 				/**
 				 * Sets the body to be kinematic
@@ -314,7 +314,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'box',
+                            shape: 'box',
 							
 							/**
 							 * Width of the rectangle
@@ -461,7 +461,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'circle',
+                            shape: 'circle',
 							
 							/**
 							 * Radius of the circle
@@ -600,7 +600,7 @@ zerk.define({
 							 * @property type
 							 * @type String
 							 */
-							type: 'polygon',
+							shape: 'polygon',
 							
 							/**
 							 * List of vertices
@@ -833,6 +833,111 @@ zerk.define({
 					};
 					
 					break;
+                case 'prismatic':
+
+                    /**
+                     * *** THIS IS NOT A CLASS! ITS A CONFIGURATION OBJECT. ***
+                     *
+                     * Physics prismatic joint configuration.
+                     *
+                     * Used by {{#crossLink "zerk.game.engine.component.physics"}}{{/crossLink}}
+                     *
+                     * @class prismatic
+                     * @namespace config.component.physics.joint
+                     **/
+                    extendedJoint={
+                        /**
+                         * Type name of the joint
+                         *
+                         * @property type
+                         * @type String
+                         */
+                        type: 'prismatic',
+
+                        /**
+                         * Horizontal anchor position of the joint on the source body
+                         *
+                         * @property anchorSourceX
+                         * @type Float
+                         */
+                        anchorSourceX: 0,
+
+                        /**
+                         * Vertical anchor position of the joint on the source body
+                         *
+                         * @property anchorSourceY
+                         * @type Float
+                         */
+                        anchorSourceY: 0,
+
+                        /**
+                         * Horizontal anchor position of the joint on the target body
+                         *
+                         * @property anchorTargetX
+                         * @type Float
+                         */
+                        anchorTargetX: 0,
+
+                        /**
+                         * Vertical anchor position of the joint on the target body
+                         *
+                         * @property anchorTargetY
+                         * @type Float
+                         */
+                        anchorTargetY: 0,
+
+                        /**
+                         * Whether the joint limits will be active
+                         *
+                         * @property enableLimit
+                         * @type Boolean
+                         */
+                        enableLimit: false,
+
+                        /**
+                         *
+                         *
+                         * @property lowerTranslation
+                         * @type Float
+                         */
+                        lowerTranslation: 0,
+
+                        /**
+                         *
+                         *
+                         * @property upperTranslation
+                         * @type Float
+                         */
+                        upperTranslation: 0,
+
+                        /**
+                         * Whether the joint motor will be active
+                         *
+                         * @property enableMotor
+                         * @type Boolean
+                         */
+                        enableMotor: false,
+
+                        /**
+                         * The target speed of the joint motor
+                         *
+                         * Positive for counter clockwise, negative for clockwise
+                         *
+                         * @property motorSpeed
+                         * @type Float
+                         */
+                        motorSpeed: 0,
+
+                        /**
+                         * Max motor force
+                         *
+                         * @property maxMotorForce
+                         * @type Float
+                         */
+                        maxMotorForce: 1.0
+                    };
+
+                    break;
 			}
 			
 			zerk.apply(extendedJoint,entityConfig.joints[index]);

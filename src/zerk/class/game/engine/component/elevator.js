@@ -21,7 +21,7 @@ zerk.define({
 		
 		var defaultConfig={
 			enabled: true,
-			distance: 5,
+			distance: 2.5,
 			position: 0,
 			turn: 'forward',
 			speed: 1,

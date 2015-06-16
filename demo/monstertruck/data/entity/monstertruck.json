@@ -1,0 +1,31 @@
+{
+    "name": "monstertruck",
+    "components": {
+        "position": {},
+        /*
+        "monstertruck": {
+            "enableControl": true
+        },
+        */
+        "physics": {
+            "bodies": {
+                "main": {
+                    "origin": true,
+                    "moveable": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "x": 0,
+                            "y": 0,
+                            "angle": 0,
+                            "width": 0.5,
+                            "height": 0.5
+                            //"categoryBits": 1,
+                            //"maskBits": 2
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

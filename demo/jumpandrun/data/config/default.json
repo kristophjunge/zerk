@@ -2,24 +2,30 @@
 	engine: {
 		systems: {
 			viewport: {
-				showWorldCenterIndicator: true,
+                "autoSize": true,
+                "width": 1280,
+                "height": 720,
+                "maxWidth": 1280,
+                "maxHeight": 720,
+                zoomDefault: 100,
+				showWorldCenterIndicator: false,
 				trackPlayer: true
 			},
 			wireframe: {
-				showFixtureBoundingBox: true
+				showFixtureBoundingBox: false
 			},
 			debuginfo: {
-				showViewCenterIndicator: true,
+				showViewCenterIndicator: false,
 				showFPS: true,
 				showZoom: true,
 				showPosition: true
 			},
 			physics: {
-				enableMouseJoint: true
+				enableMouseJoint: false
 			},
 			control: {
 				mouse: {
-					enableJoint: true,
+					enableJoint: false,
 					enableWheelZoom: true
 				}
 			}
@@ -27,7 +33,7 @@
 		defaultSystems: [
 			'physics',
 			'viewport',
-			//'sprite',
+			'render',
 			'wireframe',
 			'message',
 			'debuginfo',
@@ -46,14 +52,14 @@
 			elevator: 'zerk.game.engine.component.elevator',
 			madStone: 'jumpandrun.game.engine.component.madStone',
 			player: 'zerk.game.engine.component.player',
-			sprite: 'zerk.game.engine.component.sprite',
+			render: 'zerk.game.engine.component.render',
 			trigger: 'zerk.game.engine.component.trigger',
 			damager: 'zerk.game.engine.component.damager'
 		},
 		systemMap: {
 			physics: 'zerk.game.engine.system.physics.box2d',
 			viewport: 'zerk.game.engine.system.viewport.canvas',
-			sprite: 'zerk.game.engine.system.sprite',
+			render: 'zerk.game.engine.system.render',
 			wireframe: 'zerk.game.engine.system.wireframe',
 			message: 'zerk.game.engine.system.message',
 			debuginfo: 'zerk.game.engine.system.debuginfo',

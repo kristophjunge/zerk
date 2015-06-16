@@ -1,0 +1,102 @@
+{"frames": [
+
+{
+	"filename": "stone-1.png",
+	"frame": {"x":99,"y":2,"w":58,"h":42},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":58,"h":42},
+	"sourceSize": {"w":58,"h":42},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-10.png",
+	"frame": {"x":333,"y":79,"w":139,"h":129},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":139,"h":129},
+	"sourceSize": {"w":139,"h":129},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-2.png",
+	"frame": {"x":159,"y":2,"w":75,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":75,"h":55},
+	"sourceSize": {"w":75,"h":55},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-3.png",
+	"frame": {"x":313,"y":2,"w":91,"h":65},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":91,"h":65},
+	"sourceSize": {"w":91,"h":65},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-4.png",
+	"frame": {"x":99,"y":79,"w":114,"h":81},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":114,"h":81},
+	"sourceSize": {"w":114,"h":81},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-5.png",
+	"frame": {"x":2,"y":2,"w":39,"h":37},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":39,"h":37},
+	"sourceSize": {"w":39,"h":37},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-6.png",
+	"frame": {"x":43,"y":2,"w":54,"h":51},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":54,"h":51},
+	"sourceSize": {"w":54,"h":51},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-7.png",
+	"frame": {"x":236,"y":2,"w":75,"h":75},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":75,"h":75},
+	"sourceSize": {"w":75,"h":75},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-8.png",
+	"frame": {"x":2,"y":79,"w":95,"h":96},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":95,"h":96},
+	"sourceSize": {"w":95,"h":96},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "stone-9.png",
+	"frame": {"x":215,"y":79,"w":116,"h":114},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":116,"h":114},
+	"sourceSize": {"w":116,"h":114},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "stones.png",
+	"format": "RGBA8888",
+	"size": {"w":474,"h":210},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ecec853d5e78dbf427940af71a396381:9ac5c4646a23fc9369a87b655a5c46af:59c4bcbb85e1d41ef3bf4e12e20e6139$"
+}
+}

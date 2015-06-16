@@ -118,6 +118,13 @@ zerk.define({
 		
 		return config;
 		
-	}
+	},
+
+    clear: function() {
+
+        var me=this;
+        me._component={};
+
+    }
 	
 });

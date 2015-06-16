@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zerk Demo: SandBox</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../../src/box2dweb/Box2dWeb-2.1.a.3.js"></script>
+		<script type="text/javascript" src="../../src/json5/json5.js"></script>
+		<script type="text/javascript" src="../../src/zerk/zerk.js"></script>
+		<script type="text/javascript" src="../../src/zerk/helper.js"></script>
+		<script type="text/javascript" src="../../src/zerk/browser.js"></script>
+	</head>
+	<body>
+		<script>
+			zerk.init({
+				bootstrap: {
+					game: 'monstertruck',
+					gameDir: './',
+					zerkDir: './../../src/zerk',
+					log: {
+						enabled: true,
+						severity: 3
+					}
+				}
+			});
+		</script>
+        <!--
+        <button onclick="zerk.screenshot();">Screenshot</button>
+        -->
+        <!-- <img id="bg" src="./media/texture/forest.jpg" style="display: none;"/> -->
+        <div id="zerk-canvas"></div>
+        <div id="zerk-images" style="display: none;"></div>
+    </body>
+</html>
