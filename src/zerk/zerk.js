@@ -1494,6 +1494,19 @@ var zerk={
 		
 	},
 
+    removeFromArray: function(needle,haystack) {
+
+        for (var i=0;i<haystack.length;i++) {
+            if (haystack[i]===needle) {
+                haystack.splice(i,1);
+                return true;
+            }
+        }
+
+        return false;
+
+    },
+
     screenshot: function() {
 
         var canvas=document.getElementById('zerk_canvas_display');

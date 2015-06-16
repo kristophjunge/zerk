@@ -66,7 +66,13 @@ zerk.define({
 	 * @protected
 	 */
 	_lastMousePosition: null,
-	
+
+    _lastMouseButton: -1,
+
+    _doubleClickDelay: 200,
+
+    _lastClickTime: 0,
+
 	/**
 	 * State of the mouse joint
 	 * 
@@ -108,7 +114,16 @@ zerk.define({
 		var self=this;
 		
 		var canvas=this._viewport.getCanvasElement('display');
-		
+
+        canvas.addEventListener(
+            'click',
+            function(event) {
+
+                return self._onClick(event);
+
+            }
+        );
+
 		canvas.addEventListener(
 			'mousedown',
 			function(event) {
@@ -117,7 +132,7 @@ zerk.define({
 				
 			}
 		);
-		
+
 		canvas.addEventListener(
 			'mouseup',
 			function(event) {
@@ -202,7 +217,9 @@ zerk.define({
 	 * @protected
 	 */
 	_onMouseDown: function(event) {
-		
+
+        var me=this;
+
 		event.preventDefault();
 
 		if (event.button==0) {
@@ -224,15 +241,15 @@ zerk.define({
 			this.mouseRightDown=true;
 			
 		}
-		
-		/**
-		 * Fires when a mouse button is pressed
-		 * 
-		 * @param {DOMEvent} event
-		 * @event mousedown 
-		 */
-		this.fireEvent('mousedown',event);
-		
+
+        /**
+         * Fires when a mouse button is pressed
+         *
+         * @param {DOMEvent} event
+         * @event mousedown
+         */
+        this.fireEvent('mousedown',event);
+
 		return false;
 		
 	},
@@ -358,6 +375,39 @@ zerk.define({
 			
 		}
 		
-	}
+	},
+
+    _onClick: function() {
+
+        var me=this;
+
+        var now=new Date();
+
+        /**
+         * Fires when a mouse button is pressed
+         *
+         * @param {DOMEvent} event
+         * @event click
+         */
+        this.fireEvent('click',event);
+
+        if (me._lastMouseButton==event.button
+        && me._lastClickTime>=now.getTime()-me._doubleClickDelay) {
+
+            /**
+             * Fires when a mouse button is pressed
+             *
+             * @param {DOMEvent} event
+             * @event doubleclick
+             */
+            me.fireEvent('doubleclick',event);
+
+        }
+
+        me._lastMouseButton=event.button;
+        me._lastClickTime=now.getTime();
+
+    }
+
 	
 });

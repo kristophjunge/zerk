@@ -958,7 +958,7 @@ zerk.define({
 	 * @return {zerk.game.engine.system} System instance
 	 **/
 	getSystem: function(name) {
-		
+
 		if (!zerk.isDefined(this._system[name])) {
 			
 			return false;

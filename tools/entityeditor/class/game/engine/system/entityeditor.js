@@ -41,6 +41,8 @@ zerk.define({
 	 **/
 	_viewport: null,
 
+    _wireframe: null,
+
     _control: null,
 
     _physics: null,
@@ -62,7 +64,9 @@ zerk.define({
 
     _editorFixtureShape: '',
 
-    _editorFocusFixture: null,
+    _editorFocusEntity: 0,
+
+    _editorSelectionFixtures: {},
 
 	/**
 	 * Class constructor
@@ -83,6 +87,8 @@ zerk.define({
         this._physics=this._getSystem('physics');
 
         this._control=this._getSystem('control');
+
+        this._wireframe=this._getSystem('wireframe');
 
 	},
 
@@ -116,6 +122,18 @@ zerk.define({
         me._control.keyboard.on(
             'keypress',
             me._onKeyPress,
+            me
+        );
+
+        me._control.mouse.on(
+            'click',
+            me._onClick,
+            me
+        );
+
+        me._control.mouse.on(
+            'doubleclick',
+            me._onDoubleClick,
             me
         );
 
@@ -310,11 +328,7 @@ zerk.define({
 
         me.drawBackground(entity);
 
-        if (me._editorState=='add_fixture') {
-            me._renderFixtureOriginIndicator();
-        }
-
-        if (me._editorState=='draw_polygon') {
+        if (me._isEditorState('draw_polygon')) {
             me.drawVertices();
 
         }
@@ -335,7 +349,7 @@ zerk.define({
 
         var me=this;
 
-        if (me._editorState=='draw_polygon') {
+        if (me._isEditorState('draw_polygon')) {
 
             if (me._editorVerticeIndex < me._editorVertices.length) {
                 me._editorVertices.splice(me._editorVerticeIndex, 0, [x, y]);
@@ -381,15 +395,13 @@ zerk.define({
 
         if (me._editorFixtureShape=='polygon') {
 
-            me._editorState='draw_polygon';
+            me._setEditorState('draw_polygon');
 
         } else {
 
-            me._editorState='place_fixture';
+            me._setEditorState('place_fixture');
 
         }
-
-        console.log('EDITOR STATE',me._editorState);
 
     },
 
@@ -399,7 +411,7 @@ zerk.define({
 
         console.log('ADD FIXTURE');
 
-        me._editorState='add_fixture';
+        me._setEditorState('add_fixture');
 
         if (me._editorFixtureShape=='box' || me._editorFixtureShape=='circle') {
 
@@ -420,6 +432,10 @@ zerk.define({
 
         var newKey='fixture'+body._fixtureList.length;
 
+
+        me.clearSelectionFixtures();
+
+
         if (me._editorFixtureShape=='polygon') {
 
             /*
@@ -428,12 +444,6 @@ zerk.define({
                 return;
             }
             */
-
-
-
-
-
-
 
             var vertices=[];
 
@@ -453,9 +463,6 @@ zerk.define({
 
             console.log('VERT',vertices);
 
-
-
-
             if (!me._editorVerticesValid) {
                 console.log('Polygon is not valid');
 
@@ -465,16 +472,12 @@ zerk.define({
                 //convex.vertices = concave.decomp();
                 convex.vertices = concave.quickDecomp()
 
-
-
-
                 for (var i = 0; i < convex.vertices.length; i++) {
                     me.applyFixtureVertices(convex.vertices[i].vertices, i);
                 };
             } else {
                 me.applyFixtureVertices(vertices);
             }
-
 
             /*
             var fixture={
@@ -513,6 +516,8 @@ zerk.define({
                 fixture
             );
 
+            me.addSelectionFixture(entity.id,body.key,newKey);
+
         } else if (me._editorFixtureShape=='circle') {
 
             var fixture={
@@ -531,18 +536,20 @@ zerk.define({
                 fixture
             );
 
+            me.addSelectionFixture(entity.id,body.key,newKey);
+
         }
-
-
-
 
         me._editorVerticesValid=true;
         me._editorMovingPoint=false;
         me._editorVerticeIndex=null;
         me._editorVertices=[];
-        me._editorState='';
+        me._setEditorState('');
 
         console.log('AFTER ADD');
+
+
+        me._updateInspector();
 
     },
 
@@ -551,10 +558,10 @@ zerk.define({
         var entity=me.getEntity();
         var body=entity.components.physics._bodyList[0];
 
-        key = (!zerk.isDefined(key)) ? 'new' : 'new_' + key;
+        var newKey='fixture'+body._fixtureList.length;
 
         var fixture={
-            key: key,
+            key: newKey,
             x: me._editorFixtureX,
             y: me._editorFixtureY,
             angle: 0,
@@ -565,9 +572,12 @@ zerk.define({
         me._physics.addFixture(
             entity,
             body,
-            key,
+            newKey,
             fixture
         );
+
+        me.addSelectionFixture(entity.id,body.key,newKey);
+
     },
 
     cancelAddFixture: function() {
@@ -580,21 +590,26 @@ zerk.define({
         me._editorMovingPoint=false;
         me._editorVerticeIndex=null;
         me._editorVertices=[];
-        me._editorState='';
+        me._setEditorState('');
 
     },
+
+    /*
+    getFocusFixture: function() {
+
+        var me=this;
+
+
+    },
+    */
 
     _onMouseDown: function(event) {
 
         var me=this;
 
-        var control=me._control;
+        if (me._control.mouse.mouseRightDown) {
 
-        var viewport=me._viewport;
-
-        if (control.mouse.mouseRightDown) {
-
-            if (me._editorState=='draw_polygon') {
+            if (me._isEditorState('draw_polygon')) {
 
                 var pointSizePixel = 10;
 
@@ -603,10 +618,10 @@ zerk.define({
 
                 for (var i = 0; i < me._editorVertices.length; i++) {
 
-                    if (control.mouse.mouseX >= me._editorVertices[i][0] - (pointWidth / 2)
-                        && control.mouse.mouseX <= me._editorVertices[i][0] + (pointWidth / 2)
-                        && control.mouse.mouseY >= me._editorVertices[i][1] - (pointHeight / 2)
-                        && control.mouse.mouseY <= me._editorVertices[i][1] + (pointHeight / 2)
+                    if (me._control.mouse.mouseX >= me._editorVertices[i][0] - (pointWidth / 2)
+                        && me._control.mouse.mouseX <= me._editorVertices[i][0] + (pointWidth / 2)
+                        && me._control.mouse.mouseY >= me._editorVertices[i][1] - (pointHeight / 2)
+                        && me._control.mouse.mouseY <= me._editorVertices[i][1] + (pointHeight / 2)
                     ) {
 
                         me._editorMovingPoint = true;
@@ -620,48 +635,6 @@ zerk.define({
 
             }
 
-
-
-        } else if (control.mouse.mouseLeftDown) {
-
-            if (me._editorState=='place_fixture') {
-
-                me._editorFixtureX=control.mouse.mouseX;
-                me._editorFixtureY=control.mouse.mouseY;
-
-                me.addFixture();
-
-            } else if (me._editorState=='draw_polygon') {
-
-                console.log('PLACE POINT');
-
-                me.addVertice(
-                    control.mouse.mouseX,
-                    control.mouse.mouseY
-                );
-
-            } else {
-
-
-                var body=this._physics.getBodyAtMouse();
-
-                console.log('B',body);
-
-                /*
-                if (body) {
-
-                    this._mouseJoint=this._createJointMouse(
-                        body,
-                        this.fromWorldScale(systemControl.mouse.mouseX),
-                        this.fromWorldScale(systemControl.mouse.mouseY)
-                    );
-
-                }
-                */
-
-
-            }
-
         }
 
     },
@@ -670,7 +643,7 @@ zerk.define({
 
         var me=this;
 
-        if (me._editorState=='draw_polygon') {
+        if (me._isEditorState('draw_polygon')) {
 
             if (me._editorMovingPoint) {
 
@@ -696,12 +669,11 @@ zerk.define({
 
         var me=this;
 
-        if (me._editorState=='draw_polygon') {
+        console.log('KEY', event.keyCode);
 
-            console.log('KEY', event.keyCode);
+        if (event.keyCode == 114) { // r
 
-            if (event.keyCode == 114) { // r
-
+            if (me._isEditorState('draw_polygon')) {
                 if (me._editorVerticeIndex != null) {
                     me._editorVertices.splice(me._editorVerticeIndex - 1, 1);
 
@@ -713,12 +685,21 @@ zerk.define({
                         me._editorVerticeIndex--;
                     }
                 }
+            }
 
-            } else if (event.keyCode == 13) { // Return
+        } else if (event.keyCode == 32) { // Space
 
+            if (me._isEditorState('draw_polygon')) {
                 me.applyFixture();
+            }
 
-            } else if (event.keyCode == 99) { // c
+        } else if (event.keyCode == 99) { // c
+
+            if (me._isEditorState('edit_fixture')) {
+
+                me._setEditorState('');
+
+            } else if (me._isEditorState('draw_polygon')) {
 
                 me.cancelAddFixture();
 
@@ -738,32 +719,237 @@ zerk.define({
 
     },
 
-    _renderFixtureOriginIndicator: function() {
+    _onClick: function(event) {
 
         var me=this;
 
-        /*
-        var size=0.2;
+        if (event.button==0) {
 
-        this._viewport.drawLines(
-            'display',
-            [
-                [
-                    me._viewport._getCanvasX(me._editorFixtureX)-me._viewport.toPixel(size),
-                    me._viewport._getCanvasY(me._editorFixtureY),
-                    me._viewport._getCanvasX(me._editorFixtureX)+me._viewport.toPixel(size),
-                    me._viewport._getCanvasY(me._editorFixtureY)
-                ],
-                [
-                    me._viewport._getCanvasX(me._editorFixtureX),
-                    me._viewport._getCanvasY(me._editorFixtureY)-me._viewport.toPixel(size),
-                    me._viewport._getCanvasX(me._editorFixtureX),
-                    me._viewport._getCanvasY(me._editorFixtureY)+me._viewport.toPixel(size)
-                ]
-            ],
-            'rgb(0,255,0)'
-        );
-        */
+            if (me._isEditorState('place_fixture')) {
+
+                me._editorFixtureX=me._control.mouse.mouseX;
+                me._editorFixtureY=me._control.mouse.mouseY;
+
+                me.addFixture();
+
+            } else if (me._isEditorState('draw_polygon')) {
+
+                console.log('PLACE POINT');
+
+                me.addVertice(
+                    me._control.mouse.mouseX,
+                    me._control.mouse.mouseY
+                );
+
+            } else if (me._isEditorState('')) {
+
+                console.log('TRY SELECT FIXTURE');
+
+                var focus = this._physics.getFixtureAtMouse();
+
+                if (focus) {
+
+                    if (!me._control.keyboard.pressedCtrl && !me._control.keyboard.pressedShift) {
+                        me.clearSelectionFixtures();
+                    }
+
+                    me.addSelectionFixture(focus.entity.id,focus.body,focus.fixture);
+
+                    me._updateInspector();
+
+                    console.log('SELECT FIXTURE',focus.fixture);
+
+                }
+
+            }
+
+        }
+
+    },
+
+    _onDoubleClick: function(event) {
+
+        var me=this;
+
+        if (event.button==0) { // Left mouse
+
+            if (me._isEditorState('')) { // Idle state
+
+                // Check if the double click takes place on current focus fixture
+                var focus = this._physics.getFixtureAtMouse();
+
+                if (focus && me.isFocusFixture(focus.entity.id,focus.body,focus.fixture)) {
+
+                    me._editFixture();
+
+                }
+
+            }
+
+        }
+
+    },
+
+    _updateInspector: function() {
+
+        var me=this;
+
+        var container=document.getElementById('zerk-editor-inspector');
+
+        container.innerHTML='';
+
+        var entity=this._engine.getEntityById(me._editorFocusEntity);
+
+        var i=0;
+        var x=0;
+
+        for (i=0;i<entity.components.physics._bodyList.length;i++) {
+
+            var body=entity.components.physics._bodyList[i];
+
+            var bodyWrapper=document.createElement('div');
+            bodyWrapper.setAttribute('class','zerk-body-wrapper');
+
+            var bodyContainer=document.createElement('div');
+            bodyContainer.setAttribute('class','zerk-body-container');
+            bodyWrapper.appendChild(bodyContainer);
+
+            var bodyLabel=document.createElement('span');
+            bodyLabel.setAttribute('class','zerk-label');
+            bodyLabel.innerText=body.key;
+            bodyContainer.appendChild(bodyLabel);
+
+            for (x=0;x<body._fixtureList.length;x++) {
+
+                var fixtureContainerClass='zerk-fixture-container';
+
+                if (me.isFocusFixture(entity.id,body.key,body._fixtureList[x].key)) {
+                    fixtureContainerClass+=' zerk-selected';
+                }
+
+                var fixtureContainer=document.createElement('div');
+                fixtureContainer.setAttribute('class',fixtureContainerClass);
+                bodyWrapper.appendChild(fixtureContainer);
+
+                var fixtureLabel=document.createElement('span');
+                fixtureLabel.setAttribute('class','zerk-label');
+                fixtureLabel.innerText=body._fixtureList[x].key;
+                fixtureContainer.appendChild(fixtureLabel);
+
+            }
+
+            container.appendChild(bodyWrapper);
+
+        }
+
+    },
+
+    _editFixture: function() {
+
+        var me=this;
+
+        console.log('START EDIT FIXTURE',me._editorSelectionFixtures);
+
+        me._setEditorState('edit_fixture');
+
+    },
+
+    _setEditorState: function(state) {
+
+        var me=this;
+
+        me._editorState=state;
+
+        document.getElementById('zerk-editor-state').innerHTML=((me._editorState) ? me._editorState : 'idle');
+
+    },
+
+    _isEditorState: function(state) {
+
+        var me=this;
+
+        return (me._editorState==state);
+
+    },
+
+    setEditEntity: function(entityId) {
+
+        var me=this;
+
+        me._editorFocusEntity=entityId;
+
+        me._updateInspector();
+
+    },
+
+    isFocusFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        return (zerk.isDefined(me._editorSelectionFixtures[entityId])
+            && zerk.isDefined(me._editorSelectionFixtures[entityId][bodyKey])
+            && zerk.inArray(fixtureKey,me._editorSelectionFixtures[entityId][bodyKey]));
+
+    },
+
+    addSelectionFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        if (!zerk.isDefined(me._editorSelectionFixtures[entityId])) {
+            me._editorSelectionFixtures[entityId]={};
+        }
+
+        if (!zerk.isDefined(me._editorSelectionFixtures[entityId][bodyKey])) {
+            me._editorSelectionFixtures[entityId][bodyKey]=[];
+        }
+
+        if (!zerk.inArray(fixtureKey,me._editorSelectionFixtures[entityId][bodyKey])) {
+            me._editorSelectionFixtures[entityId][bodyKey].push(fixtureKey);
+        }
+
+        me._wireframe.addHighlightFixture(entityId,bodyKey,fixtureKey);
+
+    },
+
+    removeSelectionFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        if (zerk.isDefined(me._editorSelectionFixtures[entityId])
+            && zerk.isDefined(me._editorSelectionFixtures[entityId][bodyKey])) {
+
+            zerk.removeFromArray(fixtureKey,me._editorSelectionFixtures[entityId][bodyKey]);
+
+            if (me._editorSelectionFixtures[entityId][bodyKey].length==0) {
+                delete me._editorSelectionFixtures[entityId][bodyKey];
+            }
+
+            if (me._editorSelectionFixtures[entityId][bodyKey].length==0) {
+                delete me._editorSelectionFixtures[entityId][bodyKey];
+            }
+
+            if (zerk.objectCount(me._editorSelectionFixtures[entityId])==0) {
+                delete me._editorSelectionFixtures[entityId];
+            }
+
+            me._wireframe.removeHighlightFixture(entityId,bodyKey,fixtureKey);
+
+            return true;
+
+        }
+
+        return false;
+
+    },
+
+    clearSelectionFixtures: function() {
+
+        var me=this;
+
+        me._editorSelectionFixtures={};
+
+        me._wireframe.removeAllHighlightFixtures();
 
     }
 

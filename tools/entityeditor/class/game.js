@@ -85,7 +85,12 @@ zerk.define({
 
                 me._engine.getSystem('physics').setEnabled(false);
 
-                var control=me._engine.getSystem('control');
+                var entities=me._engine.getEntitiesByTags('editor');
+                var entity=entities[0];
+
+                me._engine.getSystem('entityeditor').setEditEntity(entity.id);
+
+                //var control=me._engine.getSystem('control');
 
 			},
 			function(error) {

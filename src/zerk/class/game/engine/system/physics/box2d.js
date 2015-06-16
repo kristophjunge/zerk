@@ -714,6 +714,63 @@ zerk.define({
 		return this._selectedBody;
 		
 	},
+
+    getFixtureAtMouse: function() {
+
+        /*
+         * TODO Try to remove dependency to control here
+         */
+        var systemControl=this._getSystem('control');
+
+        var mouseJointVec=new this._b2Vec2(
+            this.fromWorldScale(systemControl.mouse.mouseX),
+            this.fromWorldScale(systemControl.mouse.mouseY)
+        );
+
+        var aabb=new this._b2AABB();
+
+        var dotSize=0.001;
+
+        aabb.lowerBound.Set(
+            this.fromWorldScale(systemControl.mouse.mouseX)-dotSize,
+            this.fromWorldScale(systemControl.mouse.mouseY)-dotSize
+        );
+
+        aabb.upperBound.Set(
+            this.fromWorldScale(systemControl.mouse.mouseX)+dotSize,
+            this.fromWorldScale(systemControl.mouse.mouseY)+dotSize
+        );
+
+        var selectedFixture=null;
+
+        this._world.QueryAABB(function(fixture) {
+
+            /*
+             * TODO Remove global call zerk.game._engine._system.physics
+             */
+            var self=zerk.game._engine._system.physics;
+
+            if (fixture.GetBody().GetType()
+            !=self._b2Body.b2_staticBody) {
+
+                if (fixture.GetShape().TestPoint(
+                    fixture.GetBody().GetTransform(),
+                    mouseJointVec
+                )) {
+
+                    selectedFixture=fixture.m_userData;
+                    return false;
+
+                }
+
+            }
+            return true;
+
+        },aabb);
+
+        return selectedFixture;
+
+    },
 	
 	/**
 	 * Returns an array of entities inside given area

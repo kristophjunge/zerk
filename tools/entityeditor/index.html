@@ -28,22 +28,34 @@
 		</script>
         <div class="zerk-editor">
 
-            <fieldset>
-                <legend>Background</legend>
+            <div class="zerk-panel">
+                <div class="zerk-panel-header">Editor State</div>
+                <div id="zerk-editor-state">idle</div>
+            </div>
+
+            <div class="zerk-panel">
+                <div class="zerk-panel-header">Background</div>
                 Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>
                 Sprite: <input id="editor-sprite" value="full"/>
-                <div class="zerk-button" onclick="zerk.game.editorSetBackground(
-                    document.getElementById('editor-spritesheet').value,
-                    document.getElementById('editor-sprite').value
-                )">Set Background</div>
-            </fieldset>
+                <div>
+                    <a class="zerk-button" href="#" onclick="zerk.game.editorSetBackground(
+                        document.getElementById('editor-spritesheet').value,
+                        document.getElementById('editor-sprite').value
+                    )"><span class="zerk-button-label">Set Background</span></a>
+                </div>
+            </div>
 
-            <fieldset>
-                <legend>Add Fixture</legend>
-                <div class="zerk-button" onclick="zerk.game.editorAddFixture('polygon')">Polygon</div>
-                <div class="zerk-button" onclick="zerk.game.editorAddFixture('box')">Box</div>
-                <div class="zerk-button" onclick="zerk.game.editorAddFixture('circle')">Circle</div>
-            </fieldset>
+            <div class="zerk-panel">
+                <div class="zerk-panel-header">Add Fixture</div>
+                <a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture('polygon')"><span class="zerk-button-label">Polygon</span></a>
+                <a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture('box')"><span class="zerk-button-label">Box</span></a>
+                <a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture('circle')"><span class="zerk-button-label">Circle</span></a>
+            </div>
+
+            <div class="zerk-panel">
+                <div class="zerk-panel-header">Inspector</div>
+                <div class="zerk-editor-inspector" id="zerk-editor-inspector"></div>
+            </div>
 
             <!-- <button onclick="zerk.game.editorDumpFixture()">Dump Fixture</button> -->
         </div>

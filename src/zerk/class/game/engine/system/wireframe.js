@@ -59,7 +59,9 @@ zerk.define({
 	 * @protected
 	 **/
 	_physics: null,
-	
+
+    _highlightFixtures: {},
+
 	/**
 	 * Class constructor
 	 * 
@@ -82,9 +84,9 @@ zerk.define({
         me._showBodyOriginIndicator=me._config.showBodyOriginIndicator;
         me._showFixtureOriginIndicator=me._config.showFixtureOriginIndicator;
 
-		this._viewport=this._getSystem('viewport');
-		
-		this._physics=this._getSystem('physics');
+		me._viewport=this._getSystem('viewport');
+
+		me._physics=this._getSystem('physics');
 		
 	},
 	
@@ -127,7 +129,11 @@ zerk.define({
 				fixtureSensor: {
 					strokeColor: 'rgba(255,0,0,0.5)',
 					fillColor: 'rgba(255,0,0,0.1)'
-				}
+				},
+                fixtureHighlight: {
+                    strokeColor: 'rgba(0,255,0,0.5)',
+                    fillColor: 'rgba(0,255,0,0.1)'
+                }
 			}
 		};
 		
@@ -180,18 +186,19 @@ zerk.define({
 	 * @method update
 	 **/
 	update: function() {
-		
+
+        var me=this;
+
 		zerk.parent('zerk.game.engine.system.wireframe').update.apply(
-			this,
+			me,
 			arguments
 		);
-		
+
 		// Render all entities in the view area
-		var entityStates=this._viewport.getEntitiesInViewport();
+		var entityStates=me._viewport.getEntitiesInViewport();
 		
 		for (var i=0;i<entityStates.length;i++) {
-			
-			this._renderEntity(entityStates[i]);
+			me._renderEntity(entityStates[i]);
 		}
 		
 	},
@@ -212,15 +219,11 @@ zerk.define({
 		var bodies=entity.components.physics._bodyList;
 		
 		for (var i=0;i<bodies.length;i++) {
-			
 			this._renderBody(entity,bodies[i]);
-			
 		}
 
 		if (me._showEntityOriginIndicator) {
-
 			this._renderEntityOriginIndicator(entity);
-			
 		}
 		
 	},
@@ -239,9 +242,7 @@ zerk.define({
 
 		// Render all the fixtures of the body
 		for (var i=0;i<body._fixtureList.length;i++) {
-
             me._renderFixture(entity,body,body._fixtureList[i]);
-
 		}
 
 		if (me._showBodyAngleIndicator && body.moveable) {
@@ -318,16 +319,22 @@ zerk.define({
 	 * @protected
 	 **/
 	_getFixtureBoundingStyle: function(entity,body,fixture) {
-		
+
+        var me=this;
+
 		var result={};
 		
 		var style='';
-		
+
 		if (fixture.isSensor) {
 			
 			style=this._config.style.fixtureSensor;
 			
-		} else if (!this._physics.isBodyActive(body)) {
+		} else if (me.isHighlightFixture(entity.id,body.key,fixture.key)) {
+
+            style=this._config.style.fixtureHighlight;
+
+        } else if (!this._physics.isBodyActive(body)) {
 			
 			style=this._config.style.bodyActive;
 			
@@ -631,7 +638,7 @@ zerk.define({
 			}
 		];
 		
-		for (i=0;i<positions.length;i++) {
+		for (var i=0;i<positions.length;i++) {
 			
 			positions[i]=zerk.helper.rotatePosition(
 				positions[i].x,
@@ -792,6 +799,71 @@ zerk.define({
             'rgb(0,255,0)'
         );
 
+    },
+
+    isHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        return (zerk.isDefined(me._highlightFixtures[entityId])
+            && zerk.isDefined(me._highlightFixtures[entityId][bodyKey])
+            && zerk.inArray(fixtureKey,me._highlightFixtures[entityId][bodyKey]));
+
+    },
+
+    addHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        if (!zerk.isDefined(me._highlightFixtures[entityId])) {
+            me._highlightFixtures[entityId]={};
+        }
+
+        if (!zerk.isDefined(me._highlightFixtures[entityId][bodyKey])) {
+            me._highlightFixtures[entityId][bodyKey]=[];
+        }
+
+        if (!zerk.inArray(fixtureKey,me._highlightFixtures[entityId][bodyKey])) {
+            me._highlightFixtures[entityId][bodyKey].push(fixtureKey);
+        }
+
+    },
+
+    removeHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+
+        var me=this;
+
+        if (zerk.isDefined(me._highlightFixtures[entityId])
+        && zerk.isDefined(me._highlightFixtures[entityId][bodyKey])) {
+
+            zerk.removeFromArray(fixtureKey,me._highlightFixtures[entityId][bodyKey]);
+
+            if (me._highlightFixtures[entityId][bodyKey].length==0) {
+                delete me._highlightFixtures[entityId][bodyKey];
+            }
+
+            if (me._highlightFixtures[entityId][bodyKey].length==0) {
+                delete me._highlightFixtures[entityId][bodyKey];
+            }
+
+            if (zerk.objectCount(me._highlightFixtures[entityId])==0) {
+                delete me._highlightFixtures[entityId];
+            }
+
+            return true;
+
+        }
+
+        return false;
+
+    },
+
+    removeAllHighlightFixtures: function() {
+
+        var me=this;
+
+        me._highlightFixtures={};
+
     }
-	
+
 });
