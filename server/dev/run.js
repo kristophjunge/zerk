@@ -70,8 +70,7 @@ app.use("/", express.static(zerkDir));
 app.use("/", express.static(gameDir));
 
 var server = app.listen(zerkConfig.dev.port, function () {
-    // console.log(zerkConfig.dev.port);
-    
+
     app.get('/', function (req, res) {
         var indexHtml = generateIndexHtml(zerkConfig);
         res.send(indexHtml);
