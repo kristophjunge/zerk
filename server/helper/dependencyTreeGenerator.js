@@ -1,6 +1,9 @@
 var fs = require('fs');
-var companion = require('companion');
-var JSON5 = companion.require('../../src/json5/json5.js').JSON5;
+var path = require('path');
+var zerkDir = path.resolve(__dirname, '../../');
+var moduleDir = path.resolve(zerkDir, 'node_modules');
+var companion = require(moduleDir + '/companion/src/companion.js');
+var JSON5 = companion.require('../../vendor/json5/json5.js').JSON5;
 
 module.exports = function (namespaces, zerkDir, gameDir) {
     var module = {};
