@@ -16,8 +16,6 @@ var port = 8000;
 
 var deps = require(zerkDir + '/server/helper/dependencyTreeGenerator')(zerkConfig.namespaces, zerkDir, gameDir);
 
-deps.generateTree('/class/game.js');
-
 var requiredFiles = [
     '/vendor/box2dweb/Box2dWeb-2.1.a.3.js',
     '/vendor/json5/json5.js',
@@ -27,60 +25,57 @@ var requiredFiles = [
     '/src/zerk/browser.js'
 ];
 
-requiredFiles = requiredFiles.concat(deps.getDependencyList());
-
-console.log("requiredFiles:", requiredFiles)
-
 app.use("/", express.static(zerkDir));
 app.use("/", express.static(gameDir));
 
 var server = app.listen(zerkConfig.dev.port, function () {
 
     app.get('/', function (req, res) {
-        var indexHtml = generateIndexHtml(zerkConfig);
+        deps.generateTree('/class/game.js');
+        requiredFiles = requiredFiles.concat(deps.getDependencyList());
+        console.log(requiredFiles)
+        var indexHtml = generateTemplate('index', zerkConfig);
         res.send(indexHtml);
     });
 
     app.get('/game/current', function (req, res) {
-        var gameHtml = generateGameHtml(zerkConfig);
+        deps.generateTree('/class/game.js');
+        requiredFiles = requiredFiles.concat(deps.getDependencyList());
+        console.log(requiredFiles)
+        var gameHtml = generateTemplate('game', zerkConfig);
         res.send(gameHtml);
     });
 
     app.get('/demo/:demo', function (req, res) {
+        deps.generateTree('/class/game.js');
+        requiredFiles = requiredFiles.concat(deps.getDependencyList());
+        console.log(requiredFiles)
         var demoConfig = getGameConfig('demo', req.params.demo);
-        var gameHtml = generateGameHtml(demoConfig);
+        var gameHtml = generateTemplate('game', demoConfig);
         res.send(gameHtml);
     });
 
-    app.get('/tools/:tool', function (req, res) {
-        var toolConfig = getGameConfig('tools', req.params.tool);
-        var gameHtml = generateGameHtml(toolConfig);
+    app.get('/game/tools/entityeditor', function (req, res) {
+        deps.generateTree('/class/game.js');
+        requiredFiles = requiredFiles.concat(deps.getDependencyList());
+        console.log(requiredFiles)
+        var toolConfig = getGameConfig('tools', 'entityeditor');
+        var gameHtml = generateTemplate('entityeditor', toolConfig);
         res.send(gameHtml);
     });
 
     console.log('Dev-Server is running at http://localhost:' + zerkConfig.dev.port);
 });
 
-function generateIndexHtml(zerkConfig) {
-    var indexTemplate = fs.readFileSync(__dirname + '/indexTemplate.html', {encoding: 'UTF-8'})
-    var template = hogan.compile(indexTemplate);
+function generateTemplate(template, zerkConfig) {
+    var template = fs.readFileSync(__dirname + '/'+template+'Template.html', {encoding: 'UTF-8'})
+    var compiled = hogan.compile(template);
     var data = {
         config: zerkConfig,
         zerkDir: zerkDir,
         files: requiredFiles
     }
-    return template.render(data);
-}
-
-function generateGameHtml(zerkConfig) {
-    var gameTemplate = fs.readFileSync(__dirname + '/gameTemplate.html', {encoding: 'UTF-8'})
-    var template = hogan.compile(gameTemplate);
-    var data = {
-        config: zerkConfig,
-        zerkDir: zerkDir,
-        files: requiredFiles
-    }
-    return template.render(data);
+    return compiled.render(data);
 }
 
 function getGameConfig(type, game) {
