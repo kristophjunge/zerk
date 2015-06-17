@@ -1,6 +1,9 @@
 {
     "game": "entityeditor",
     "gameDir": "./",
+    "namespaces": {
+        "entityeditor": "/class"
+    },
     "log": {
         "enabled": true,
         "severity": 3

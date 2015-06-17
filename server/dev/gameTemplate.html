@@ -3,12 +3,10 @@
     <head>
         <title>GAME_TITLE</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-        <link href="../../style.css" media="screen" rel="stylesheet" type="text/css">
-        <link href="./style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="/resources/style.css" media="screen" rel="stylesheet" type="text/css">
         {{#files}}
             <script type="text/javascript" src="{{.}}"></script>
         {{/files}}
-        
         {{#config.dependencies}}
             <script type="text/javascript" src="{{.}}"></script>
         {{/config.dependencies}}
