@@ -2,7 +2,7 @@
     "game": "jumpandrun",
     "gameDir": "./",
     "dependencies": [
-        "/src/poly-decomp.js/build/decomp.min.js"
+        "/src/poly-decomp/poly-decomp.min.js"
     ],
     "log": {
         "enabled": true,

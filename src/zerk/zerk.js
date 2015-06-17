@@ -293,7 +293,7 @@ var zerk={
 		 */
 		if (typeof parentClass==='undefined') {
 
-			console.log('Error: Class to create is undefined '+parent);
+            zerk.error('Class is undefined "'+parent+'"');
 			return null;
 
 		}
