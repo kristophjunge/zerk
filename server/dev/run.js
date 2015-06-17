@@ -59,7 +59,7 @@ var server = app.listen(zerkConfig.dev.port, function () {
         deps.generateTree('/class/game.js');
         requiredFiles = requiredFiles.concat(deps.getDependencyList());
         console.log(requiredFiles)
-        var toolConfig = getGameConfig('tools', 'entityeditor');
+        var toolConfig = getGameConfig('game/tools', 'entityeditor');
         var gameHtml = generateTemplate('entityeditor', toolConfig);
         res.send(gameHtml);
     });
