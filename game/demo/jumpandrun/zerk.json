@@ -1,6 +1,9 @@
 {
     "game": "jumpandrun",
     "gameDir": "./",
+    "namespaces": {
+        "jumpandrun": "/class"
+    },
     "log": {
         "enabled": true,
         "severity": 3

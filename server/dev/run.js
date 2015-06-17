@@ -14,58 +14,22 @@ var zerkConfig = JSON.parse(arguments[0]);
 var gameDir = arguments[1];
 var port = 8000;
 
+var deps = require(zerkDir + '/server/helper/dependencyTreeGenerator')(zerkConfig.namespaces, zerkDir, gameDir);
+
+deps.generateTree('/class/game.js');
+
 var requiredFiles = [
     '/vendor/box2dweb/Box2dWeb-2.1.a.3.js',
     '/vendor/json5/json5.js',
     '/vendor/poly-decomp/poly-decomp.js',
     '/src/zerk/zerk.js',
     '/src/zerk/helper.js',
-    '/src/zerk/browser.js',
-
-    // TODO: Remove static file inclusion
-    '/src/zerk/class/network/ajax.js',
-    '/src/zerk/class/observable.js',
-    '/src/zerk/class/jsonLoader.js',
-    '/src/zerk/class/imageLoader.js',
-    '/src/zerk/class/game/engine/system.js',
-    '/src/zerk/class/game/engine/registry.js',
-    '/src/zerk/class/game/engine/worldLoader.js',
-    '/src/zerk/class/game/engine/textureLoader.js',
-    '/src/zerk/class/game/engine/spriteLoader.js',
-    '/src/zerk/class/game/engine/entityLoader.js',
-    '/src/zerk/class/game/engine/componentLoader.js',
-    '/src/zerk/class/game/engine.js',
-    '/src/zerk/class/game.js',
-    '/src/zerk/class/game/engine/component.js',
-    '/src/zerk/class/game/engine/component/physics.js',
-    '/src/zerk/class/game/engine/component/position.js',
-    '/src/zerk/class/game/engine/component/render.js',
-    '/src/zerk/class/game/engine/component/player.js',
-    '/src/zerk/class/game/engine/component/damager.js',
-    '/src/zerk/class/game/engine/component/fall.js',
-    '/src/zerk/class/game/engine/component/trigger.js',
-    '/src/zerk/class/game/engine/component/elevator.js',
-    '/src/zerk/class/game/engine/system/physics.js',
-    '/src/zerk/class/game/engine/system/physics/box2d.js',
-    '/src/zerk/class/game/engine/system/viewport.js',
-    '/src/zerk/class/game/engine/system/viewport/canvas.js',
-    '/src/zerk/class/game/engine/system/render.js',
-    '/src/zerk/class/game/engine/system/wireframe.js',
-    '/src/zerk/class/game/engine/system/message/message.js',
-    '/src/zerk/class/game/engine/system/message.js',
-    '/src/zerk/class/game/engine/system/debuginfo.js',
-    '/src/zerk/class/game/engine/system/control/keyboard.js',
-    '/src/zerk/class/game/engine/system/control/mouse.js',
-    '/src/zerk/class/game/engine/system/control.js',
-    '/src/zerk/class/game/engine/system/player.js',
-    '/src/zerk/class/game/engine/system/damager.js',
-    '/src/zerk/class/game/engine/system/fall.js',
-    '/src/zerk/class/game/engine/system/elevator.js',
-    '/src/zerk/class/game.js',
-    '/class/game/engine/system/entityeditor.js',
-    '/class/game.js',
+    '/src/zerk/browser.js'
 ];
 
+requiredFiles = requiredFiles.concat(deps.getDependencyList());
+
+console.log("requiredFiles:", requiredFiles)
 
 app.use("/", express.static(zerkDir));
 app.use("/", express.static(gameDir));
@@ -94,7 +58,7 @@ var server = app.listen(zerkConfig.dev.port, function () {
         res.send(gameHtml);
     });
 
-    console.log('Dev-Server running at http://localhost:' + zerkConfig.dev.port);
+    console.log('Dev-Server is running at http://localhost:' + zerkConfig.dev.port);
 });
 
 function generateIndexHtml(zerkConfig) {
