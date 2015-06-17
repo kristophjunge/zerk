@@ -1,9 +1,9 @@
 {
     "game": "jumpandrun",
     "gameDir": "./",
-    "dependencies": [
-        "/src/poly-decomp.js/build/decomp.min.js"
-    ],
+    "namespaces": {
+        "jumpandrun": "/class"
+    },
     "log": {
         "enabled": true,
         "severity": 3

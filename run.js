@@ -13,20 +13,25 @@ switch (mode) {
 }
 
 function startDevServer(userArgs) {
+    console.log('');
     var zerkConfig = checkZerkFile(userArgs);
 
     var devServer = spawn(__dirname + '/server/dev/run.js', [zerkConfig.content, path.dirname(zerkConfig.dir)]);
 
     devServer.stdout.on('data', function (data) {
-        console.log('zerk [log]: ' + data);
+        process.stdout.write('zerk [log]: ' + data);
     });
 
-    devServer.stderr.on('data', function (data) {
-        console.log('zerk [error]: ' + data);
+    devServer.stderr.on('data', function (err) {
+        process.stdout.write('zerk [error]: ' + err);
+    });
+
+    process.on('uncaughtException', function (exception) {
+        process.stdout.write(exception);
     });
 
     devServer.on('close', function (code) {
-        console.log('zerk [shutdown]: ' + code);
+        process.stdout.write('zerk [shutdown]: Code ' + code + '\n');
     });
 }
 
