@@ -41,7 +41,7 @@ var server = app.listen(zerkConfig.dev.port, function () {
         res.send(indexHtml);
     });
 
-    app.get('/game/:game', function (req, res) {
+    app.get('/game/current', function (req, res) {
         var gameHtml = generateGameHtml(zerkConfig);
         res.send(gameHtml);
     });
