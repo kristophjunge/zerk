@@ -15,8 +15,9 @@ var gameDir = arguments[1];
 var port = 8000;
 
 var requiredFiles = [
-    '/src/box2dweb/Box2dWeb-2.1.a.3.js',
-    '/src/json5/json5.js',
+    '/vendor/box2dweb/Box2dWeb-2.1.a.3.js',
+    '/vendor/json5/json5.js',
+    '/vendor/poly-decomp/poly-decomp.js',
     '/src/zerk/zerk.js',
     '/src/zerk/helper.js',
     '/src/zerk/browser.js',

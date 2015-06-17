@@ -1,9 +1,6 @@
 {
-    "game": "jumpandrun",
+    "game": "monstertruck",
     "gameDir": "./",
-    "dependencies": [
-        "/src/poly-decomp/poly-decomp.min.js"
-    ],
     "log": {
         "enabled": true,
         "severity": 3

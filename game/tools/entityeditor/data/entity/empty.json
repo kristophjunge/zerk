@@ -1,0 +1,14 @@
+{
+	"name": "empty",
+    "components": {
+        "position": {},
+        "render": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "origin": true
+                }
+            }
+        }
+	}
+}

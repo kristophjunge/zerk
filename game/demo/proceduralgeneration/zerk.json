@@ -1,0 +1,11 @@
+{
+    "game": "proceduralgeneration",
+    "gameDir": "./",
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 1337
+    }
+}

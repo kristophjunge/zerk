@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+
+.zerk-editor {
+    width: 250px;
+    background-color: #666666;
+    color: #DDDDDD;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.zerk-editor .zerk-button {
+    margin: 3px 0 3px 3px;
+    /*padding: 3px;*/
+    border: 1px solid black;
+    cursor: pointer;
+    background-color: #888888;
+    color: #DDDDDD;
+    text-decoration: none;
+}
+
+.zerk-editor .zerk-button .zerk-button-label {
+    padding: 5px;
+    line-height: 1.75em;
+}
+
+.zerk-editor .zerk-button:hover {
+    color: #DDDDDD;
+    background-color: #AAAAAA;
+}
+
+.zerk-editor .zerk-panel {
+
+}
+
+.zerk-editor .zerk-panel-header {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    background-color: #555555;
+}
+
+.zerk-editor-inspector {
+
+}
+
+.zerk-editor-inspector .zerk-selected {
+    background-color: #CCCCCC;
+    color: #333333;
+}
+
+.zerk-body-container,
+.zerk-fixture-container {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.zerk-fixture-container {
+    padding-left: 20px;
+}
