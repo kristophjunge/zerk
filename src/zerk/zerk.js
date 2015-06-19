@@ -100,62 +100,16 @@ var zerk={
 	 **/
 	init: function(config) {
 
-		zerk.apply(this._config,config);
+        var me=this;
 
-		this._initErrorHandler();
+		zerk.apply(me._config,config);
 
-		this._ready();
-		// this._loadScript('/class/game.js');
+		me._initErrorHandler();
 
-	},
-
-	/**
-	 * Fires when all classes ever required are loaded and defined
-	 *
-	 * @method _onLoad
-	 * @private
-	 **/
-	_onLoad: function() {
-		/*
-		 * TODO Implement a clean crossbrowser onready handler
-		 */
-
-		if (document.readyState==="complete") {
-
-			this._ready();
-
-		} else {
-
-			var self=this;
-			window.addEventListener(
-				'load',
-				function() {
-
-					self._ready();
-
-				},
-				false
-			);
-
-		}
-
-	},
-
-	/**
-	 * Fires when all classes ever required are loaded and defined
-	 * and the document is ready
-	 *
-	 * @method _ready
-	 * @private
-	 **/
-	_ready: function() {
-		var config=this._config;
-		var self=this;
-
-		self.game=zerk.create(
-			config.bootstrap.game+'.game',
-			config
-		);
+        me.game=zerk.create(
+            me._config.bootstrap.game+'.game',
+            me._config
+        );
 
 	},
 
