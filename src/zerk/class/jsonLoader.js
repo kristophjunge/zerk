@@ -258,8 +258,6 @@ zerk.define({
 				var localPart = id.substr(ns.length+1);
 				
 				localPart=localPart.replace(/\./g,'/');
-				
-console.log("-:", this._namespace[ns])
 
 				return this._namespace[ns]+'/'+localPart+'.json?r='+Math.random();
 				

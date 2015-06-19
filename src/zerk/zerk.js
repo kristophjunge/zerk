@@ -377,7 +377,7 @@ var zerk={
 
 		this._classState[meta.name]='loaded';
 
-		this._processLoadedClass(meta.name);
+		//this._processLoadedClass(meta.name);
 
 		if (typeof callback!=='undefined') {
 			callback();
@@ -603,6 +603,7 @@ var zerk={
 
 		}
 
+        /*
 		console.log('process', Object.keys(this._delayedDefine));
 
 		// If this was the last delayed define
@@ -611,6 +612,7 @@ var zerk={
 			this._onLoad();
 
 		}
+		*/
 
 	},
 

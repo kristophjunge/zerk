@@ -1,4 +1,3 @@
-console.log("engine")
 /**
  * Game Engine
  * 
