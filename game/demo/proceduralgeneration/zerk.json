@@ -1,6 +1,9 @@
 {
     "game": "proceduralgeneration",
-    "gameDir": "./",
+    "bootstrapClass": "proceduralgeneration.game",
+    "namespaces": {
+        "proceduralgeneration": "./"
+    },
     "log": {
         "enabled": true,
         "severity": 3

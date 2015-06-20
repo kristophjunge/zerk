@@ -1,8 +1,8 @@
 {
     "game": "jumpandrun",
-    "gameDir": "./",
+    "bootstrapClass": "jumpandrun.game",
     "namespaces": {
-        "jumpandrun": "/class"
+        "jumpandrun": "./"
     },
     "log": {
         "enabled": true,

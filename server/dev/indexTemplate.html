@@ -3,32 +3,32 @@
     <head>
         <title>Zerk Dev</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-        <link href="/resources/style.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="/zerk/resources/style.css" media="screen" rel="stylesheet" type="text/css">
         {{#files}}
             <script type="text/javascript" src="{{.}}"></script>
         {{/files}}
     </head>
     <body class="demo">
         <h1>Zerk Game Engine</h1>
-        <img src="./resources/image/zerk-logo-256.png"/>
+        <img src="/zerk/resources/image/zerk-logo-256.png"/>
         <ul>
             <li>Current Game
                 <ul>
-                    <li><a href="/game/current">Current Game</a> ({{config.game}})</li>
+                    <li><a href="/game">Current Game</a> ({{currentGameConfig.game}})</li>
                 </ul>
             </li>
             <li>Demos
                 <ul>
-                    <li><a href="/game/demo/monstertruck">Monstertruck</a></li>
-                    <li><a href="/game/demo/sandbox">Sandbox</a></li>
-                    <li><a href="/game/demo/jumpandrun">Jump and Run</a></li>
-                    <li><a href="/game/demo/proceduralgeneration">World generation</a></li>
-                    <li><a href="/game/demo/snakebot">Snakebot</a></li>
+                    <li><a href="/zerk/demo/monstertruck">Monstertruck</a></li>
+                    <li><a href="/zerk/demo/sandbox">Sandbox</a></li>
+                    <li><a href="/zerk/demo/jumpandrun">Jump and Run</a></li>
+                    <li><a href="/zerk/demo/proceduralgeneration">World generation</a></li>
+                    <li><a href="/zerk/demo/snakebot">Snakebot</a></li>
                 </ul>
             </li>
             <li>Tools
                 <ul>
-                    <li><a href="/game/tools/entityeditor">Entity Editor</a></li>
+                    <li><a href="/zerk/tools/entityeditor">Entity Editor</a></li>
                 </ul>
             </li>
         </ul>

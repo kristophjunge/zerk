@@ -18,13 +18,17 @@ function startDevServer(userArgs) {
 
     var devServer = spawn(__dirname + '/server/dev/run.js', [zerkConfig.content, path.dirname(zerkConfig.dir)]);
 
+
     devServer.stdout.on('data', function (data) {
-        process.stdout.write('zerk [log]: ' + data);
+        //process.stdout.write('zerk [log]: ' + data);
+        process.stdout.write(data);
     });
 
     devServer.stderr.on('data', function (err) {
-        process.stdout.write('zerk [error]: ' + err);
+        //process.stdout.write('zerk [error]: ' + err);
+        process.stdout.write(err);
     });
+
 
     process.on('uncaughtException', function (exception) {
         process.stdout.write(exception);

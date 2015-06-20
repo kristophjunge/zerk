@@ -1,6 +1,9 @@
 {
     "game": "monstertruck",
-    "gameDir": "./",
+    "bootstrapClass": "monstertruck.game",
+    "namespaces": {
+        "monstertruck": "./"
+    },
     "log": {
         "enabled": true,
         "severity": 3

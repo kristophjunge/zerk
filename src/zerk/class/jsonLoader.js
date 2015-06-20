@@ -153,7 +153,10 @@ zerk.define({
         if (!zerk.isDefined(errorFn)) {
             errorFn=zerk.emptyFn();
         }
-        
+
+        console.log('NAMESPACES',me._namespace);
+        console.log('LOAD JSON',idList);
+
 		var completed=[];
 		var unloaded=[];
         var result={};
@@ -215,7 +218,9 @@ zerk.define({
 	 * @param {Object} config Configuration object
 	 **/
 	setConfig: function(config) {
-		
+
+        console.log('ST CFG',config);
+
 		for (var i=0;i<config.length;i++) {
 			
 			this._namespace[config[i].namespace]=config[i].path;

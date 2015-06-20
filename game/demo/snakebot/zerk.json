@@ -1,6 +1,9 @@
 {
     "game": "snakebot",
-    "gameDir": "./",
+    "bootstrapClass": "snakebot.game",
+    "namespaces": {
+        "snakebot": "./"
+    },
     "log": {
         "enabled": true,
         "severity": 3

@@ -49,58 +49,55 @@ zerk.define({
 		
 		this._config={};
 
+        var subNamespacesJson={
+            //component: 'data/component',
+            entity: 'data/entity',
+            world: 'data/world',
+            config: 'data/config',
+            spritesheet: 'media/spritesheet'
+        };
+
+        var subNamespacesImage={
+            texture: 'media/texture',
+            spritesheet: 'media/spritesheet'
+        };
+
+        var namespacesJson=[];
+        var namespacesImage=[];
+
+
+        console.log('NS',config.bootstrap.namespaces);
+        for (ns in config.bootstrap.namespaces) {
+
+            for (subNs in subNamespacesJson) {
+                namespacesJson.push({
+                    namespace: ns + '.' + subNs,
+                    path: config.bootstrap.namespaces[ns] + '/' + subNamespacesJson[subNs]
+                });
+            }
+
+            for (subNs in subNamespacesImage) {
+                namespacesImage.push({
+                    namespace: ns + '.' + subNs,
+                    path: config.bootstrap.namespaces[ns] + '/' + subNamespacesImage[subNs]
+                });
+            }
+
+        }
+        console.log('NSJOSN',namespacesJson);
+        console.log('NSIMAGE',namespacesImage);
+
+
 		// Setup JSON loader
 		this._jsonLoader=zerk.create(
 			'zerk.jsonLoader',
-			[
-				{
-					namespace: config.bootstrap.game+'.component',
-					path: '/data/component'
-				},
-				{
-					namespace: config.bootstrap.game+'.entity',
-					path: '/data/entity'
-				},
-				{
-					namespace: config.bootstrap.game+'.world',
-					path: '/data/world'
-				},
-				{
-					namespace: config.bootstrap.game+'.config',
-					path: '/data/config'
-				},
-				{
-					namespace: config.bootstrap.game+'.spritesheet',
-					path: '/media/spritesheet'
-				},
-				{
-					namespace: 'zerk.entity',
-					path: '/data/entity'
-				},
-				{
-					namespace: 'zerk.component',
-					path: '/data/component'
-				},
-				{
-					namespace: 'zerk.config',
-					path: '/data/config'
-				}
-			]
+            namespacesJson
 		);
 
         // Setup image loader
         this._imageLoader=zerk.create(
             'zerk.imageLoader',
-            [
-                {
-                    namespace: config.bootstrap.game+'.texture',
-                    path: '/media/texture'
-                },
-                {
-                    namespace: config.bootstrap.game+'.spritesheet',
-                    path: '/media/spritesheet'
-                }
-            ]
+            namespacesImage
         );
 		
 		var configResource=config.bootstrap.game+'.config.default';

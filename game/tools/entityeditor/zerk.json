@@ -1,8 +1,9 @@
 {
     "game": "entityeditor",
-    "gameDir": "./",
+    "bootstrapClass": "entityeditor.game",
     "namespaces": {
-        "entityeditor": "/class"
+        "entityeditor": "./",
+        "monstertruck": "./../../demo/monstertruck"
     },
     "log": {
         "enabled": true,

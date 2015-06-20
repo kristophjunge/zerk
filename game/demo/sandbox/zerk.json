@@ -1,6 +1,9 @@
 {
     "game": "sandbox",
-    "gameDir": "./",
+    "bootstrapClass": "sandbox.game",
+    "namespaces": {
+        "sandbox": "./"
+    },
     "log": {
         "enabled": true,
         "severity": 3
