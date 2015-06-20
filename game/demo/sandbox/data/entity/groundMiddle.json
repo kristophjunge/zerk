@@ -23,9 +23,8 @@
                 "sprite1": {
                     "body": "main",
                     "fixture": "main",
-                    "render": "sprite",
-                    "spritesheet": "sandbox.spritesheet.world",
-                    "sprite": "ground-middle"
+                    "render": "texture",
+                    "texture": "sandbox.texture.rock"
                 }
             }
         }

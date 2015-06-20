@@ -17,7 +17,7 @@
             "wireframe": {
                 "showBodyAngleIndicator": false,
                 "showEntityOriginIndicator": false,
-                "showFixtureBoundingBox": true
+                "showFixtureBoundingBox": false
             },
             "viewport": {
                 "autoSize": true,
