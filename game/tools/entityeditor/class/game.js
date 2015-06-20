@@ -45,6 +45,48 @@ zerk.define({
 			return;
 		}
 
+        var editorContainer = document.createElement('div');
+
+        editorContainer.setAttribute('class', 'zerk-editor');
+
+        editorContainer.innerHTML=
+            '<div class="zerk-panel">'+
+                '<div class="zerk-panel-header">Editor State</div>'+
+                '<div id="zerk-editor-state">idle</div>'+
+            '</div>'+
+            '<div class="zerk-panel">'+
+                '<div class="zerk-panel-header">Background</div>'+
+                'Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>'+
+                'Sprite: <input id="editor-sprite" value="full"/>'+
+                '<div>'+
+                    '<a class="zerk-button" href="#" onclick="zerk.game.editorSetBackground('+
+                        'document.getElementById(\'editor-spritesheet\').value,'+
+                        'document.getElementById(\'editor-sprite\').value'+
+                    ')"><span class="zerk-button-label">Set Background</span></a>'+
+                '</div>'+
+            '</div>'+
+            '<div class="zerk-panel">'+
+                '<div class="zerk-panel-header">Add Fixture</div>'+
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'polygon\')"><span class="zerk-button-label">Polygon</span></a>'+
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'box\')"><span class="zerk-button-label">Box</span></a>'+
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'circle\')"><span class="zerk-button-label">Circle</span></a>'+
+            '</div>'+
+            '<div class="zerk-panel">'+
+                '<div class="zerk-panel-header">Inspector</div>'+
+                '<div class="zerk-editor-inspector" id="zerk-editor-inspector"></div>'+
+            '</div>';
+
+        document.body.appendChild(editorContainer);
+
+
+        var editorCss = document.createElement('link');
+        editorCss.setAttribute('href', '/zerk/game/tools/entityeditor/media/stylesheet/style.css');
+        editorCss.setAttribute('media', 'screen');
+        editorCss.setAttribute('rel', 'stylesheet');
+        editorCss.setAttribute('type', 'text/css');
+
+        document.head.appendChild(editorCss);
+
         /*
         me._engine._jsonLoader.addNamespace('monstertruck.component','./../../../game/demo/monstertruck/data/component');
         me._engine._jsonLoader.addNamespace('monstertruck.entity','./../../../game/demo/monstertruck/data/entity');

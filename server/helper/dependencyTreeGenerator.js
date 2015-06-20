@@ -8,22 +8,7 @@ var JSON5 = companion.require('../../vendor/json5/json5.js').JSON5;
 module.exports = function (zerkDir) {
     var module = {};
     var zerkPath = 'src/zerk/';
-    var dependencyList = [];
     var namespaces = {};
-
-    /*
-    module.generateTree = function(rootDir, gameClass) {
-
-        console.log('GENERATE TREE OF', gameClass + ' inside root ' + rootDir);
-
-        dependencyList = [];
-
-        traverseTree(rootDir + '/' + gameClass);
-
-        dependencyList.push('/' + gameClass);
-
-    };
-    */
 
     module.setNamespaces = function(ns) {
 
@@ -65,8 +50,6 @@ module.exports = function (zerkDir) {
 
     function traverseTree(dependencyList, depPath) {
 
-        //console.log('TRAVEERSE', depPath);
-
         var classInfo = resolvePath(depPath);
 
         var filesystemPath = classInfo.parentDir + '/' + classInfo.path;
@@ -79,54 +62,9 @@ module.exports = function (zerkDir) {
         }
 
         var deps = parseContent(depFileContent);
-
-        var result;
-        var processedAlready = false;
         for (var i=0; i<deps.length; i++) {
 
             traverseTree(dependencyList, deps[i]);
-
-            /*
-            result = resolvePath(deps[i]);
-
-
-
-            //console.log('DEP', deps[i]);
-
-            console.log('FOUND (' + result.namespace + ')', result.path);
-
-
-
-            //var ns=getNamespace(result.namespace);
-            //console.log('NS',ns);
-
-
-            if (result.namespace === 'zerk') {
-                //traverseTree(rootDir, result.path); // zerkDir + '/' +
-
-                traverseTree(dependencyList, result.path);
-
-            } else {
-                //traverseTree(rootDir, result.path);
-
-                traverseTree(dependencyList, result.path);
-
-            }
-            */
-
-
-
-
-            /*
-            processedAlready = false;
-            for (var x=0; x<dependencyList.length; x++) {
-                if (dependencyList[x].path == result.path
-                && dependencyList[x].path == result.namespace) {
-
-                }
-
-            }
-            */
 
             if (dependencyList.indexOf(deps[i]) === -1) {
                 dependencyList.push(deps[i]);
@@ -157,8 +95,6 @@ module.exports = function (zerkDir) {
 
         var namespaceInfo = getNamespace(nameSpace);
 
-        //console.log('NSI', namespaceInfo);
-
         if (!namespaceInfo) {
             console.log('Namespace is not registered "' + nameSpace + '"');
             return false;
@@ -167,7 +103,7 @@ module.exports = function (zerkDir) {
         return {
             namespace: namespaceInfo.namespace,
             webRoot: namespaceInfo.webRoot + '/class',
-            parentDir: namespaceInfo.path + '/class',
+            parentDir: namespaceInfo.absolutePath + '/class',
             //path: path.path + '/' + pathArray.join('/') + '.js'
             path: pathArray.join('/') + '.js'
         };

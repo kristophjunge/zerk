@@ -743,8 +743,6 @@ zerk.define({
 
             } else if (me._isEditorState('')) {
 
-                console.log('TRY SELECT FIXTURE');
-
                 var focus = this._physics.getFixtureAtMouse();
 
                 if (focus) {
@@ -756,8 +754,6 @@ zerk.define({
                     me.addSelectionFixture(focus.entity.id,focus.body,focus.fixture);
 
                     me._updateInspector();
-
-                    console.log('SELECT FIXTURE',focus.fixture);
 
                 }
 

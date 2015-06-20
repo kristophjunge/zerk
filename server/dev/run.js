@@ -62,9 +62,10 @@ var baseFiles = [
     '/zerk/src/zerk/browser.js'
 ];
 
+console.log('Server dir:', currentGameDir);
+console.log('Current game:', currentGameConfig.game);
+
 setupFileServers();
-
-
 
 var server = app.listen(currentGameConfig.dev.port, function () {
 
@@ -93,10 +94,8 @@ var server = app.listen(currentGameConfig.dev.port, function () {
 
     });
 
-    console.log('Dev-Server is running at http://localhost:' + currentGameConfig.dev.port);
-    console.log('Server dir:', currentGameDir);
-    console.log('Zerk dir:', zerkDir);
-    console.log('Current game:', currentGameConfig.game);
+    console.log('Listening at http://localhost:' + currentGameConfig.dev.port);
+    console.log('');
 
 });
 
@@ -108,18 +107,11 @@ function setupFileServers() {
     // Create fileservers for all namespaces of current game
     var namespaces=getNamespaces(currentGameDir, currentGameConfig);
     for (var ns in namespaces) {
-
-        if (ns === 'zerk') {
-            console.log('Error: Do not manually define zerk namespace');
-            // exit
-        }
-
         console.log(
             'Registered namespace:',
-            namespaces[ns].namespace + ' -> ' + namespaces[ns].path + ' (' + namespaces[ns].webRoot + ')'
+            namespaces[ns].namespace + ' -> ' + namespaces[ns].relativePath // + ' (' + namespaces[ns].webRoot + ')'
         );
-
-        app.use(namespaces[ns].webRoot, express.static(namespaces[ns].path));
+        app.use(namespaces[ns].webRoot, express.static(namespaces[ns].absolutePath));
     }
 
 }
@@ -131,7 +123,8 @@ function getNamespaces(serverDir, gameConfig) {
         zerk: {
             namespace: 'zerk',
             webRoot: '/zerk/src/zerk',
-            path: zerkDir + '/src/zerk'
+            absolutePath: zerkDir + '/src/zerk',
+            relativePath: zerkDir + '/src/zerk'
         }
     };
 
@@ -151,7 +144,8 @@ function getNamespaces(serverDir, gameConfig) {
         result[ns]={
             namespace: ns,
             webRoot: webRootDir,
-            path: namespaceDir
+            absolutePath: namespaceDir,
+            relativePath: gameConfig.namespaces[ns]
         };
 
     }
@@ -197,22 +191,15 @@ function getSubDirectoryPath(parentDir, dir) {
 
 }
 
-function serveGame(serverDir) {
-
-    console.log('');
-    console.log('=== SERVE GAME ===');
+function serveGame(gameDir) {
 
     // Load zerk.json
-    var configPath = serverDir + '/' + 'zerk.json';
-
-    console.log('Server dir:', serverDir);
-    console.log('Config file:', configPath);
-
+    var configPath = gameDir + '/' + 'zerk.json';
     var gameConfig = loadJsonFile(configPath);
     var gameName = gameConfig.game;
     var bootstrapClass = gameConfig.bootstrapClass;
 
-    console.log('Game name:', gameName);
+    console.log('Serve game (' + gameName + ') ' + gameDir);
 
     // Build list of required js files
     var requiredFiles=[];
@@ -227,7 +214,7 @@ function serveGame(serverDir) {
         // exit
     }
 
-    var namespaces=getNamespaces(serverDir, gameConfig);
+    var namespaces=getNamespaces(gameDir, gameConfig);
 
     deps.setNamespaces(namespaces);
     var requiredClasses = deps.parseDependencies(bootstrapClass);
@@ -254,6 +241,7 @@ function serveGame(serverDir) {
     };
 
     return generateTemplate('game', {
+        gameTitle: gameConfig.game,
         bootstrapConfig: JSON.stringify(bootstrapConfig),
         zerkDir: zerkDir,
         files: requiredFiles

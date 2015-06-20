@@ -65,8 +65,6 @@ zerk.define({
         var namespacesJson=[];
         var namespacesImage=[];
 
-
-        console.log('NS',config.bootstrap.namespaces);
         for (ns in config.bootstrap.namespaces) {
 
             for (subNs in subNamespacesJson) {
@@ -84,9 +82,6 @@ zerk.define({
             }
 
         }
-        console.log('NSJOSN',namespacesJson);
-        console.log('NSIMAGE',namespacesImage);
-
 
 		// Setup JSON loader
 		this._jsonLoader=zerk.create(

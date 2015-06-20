@@ -1399,9 +1399,6 @@ zerk.define({
 		fixture
 	) {
 
-
-        console.log('CREATE POLY');
-
 		var fixDef=new this._b2FixtureDef;
 
 		if (fixture.categoryBits!=null) {
@@ -1425,8 +1422,6 @@ zerk.define({
 			fixture: fixture.key
 		};
 
-        console.log('UDATA',fixDef.userData);
-		
 		fixDef.shape=new this._b2PolygonShape;
 		
 		// Check if the polygon is specified in clockwise order since Box2D requires that

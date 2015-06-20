@@ -81,15 +81,6 @@ var zerk={
 	 **/
 	_parentClassMap: {},
 
-	/**
-	 * Defines that got delayed by requires
-	 *
-	 * @property _delayedDefine
-	 * @type Object
-	 * @private
-	 **/
-	_delayedDefine: {},
-
     emptyFn: function() {},
 
 	/**
@@ -144,55 +135,12 @@ var zerk={
 	 * @async
 	 **/
 	define: function(name,body,callback) {
+
 		// Parse meta data
 		var meta=this._parseMeta(name);
 
-		// Requires that the class definition has to wait for
-		var waitForRequires=[];
-
-		// Requires that have to be loaded now
-		var triggerRequires=[];
-
-		for (var i=0;i<meta.require.length;i++) {
-
-			// The class is currently loading by another require
-			if (this._classLoading(meta.require[i])) {
-
-				// Remember that we have to wait for it
-				waitForRequires.push(meta.require[i]);
-
-			// The class is untouched and need to be loaded
-			} else if (!this._classLoaded(meta.require[i])) {
-
-				// Remember that we have to wait for it
-				waitForRequires.push(meta.require[i]);
-
-				// Remember that we have to trigger the load of it
-				triggerRequires.push(meta.require[i]);
-
-			}
-
-		}
-
 		this._defineClass(meta,body,callback);
-		/*
-		// If there are requires that we have to wait for
-		if (waitForRequires.length>0) {
 
-			// Delay our class definition till all requires are resolved
-			this._delayDefine(name,body,callback,waitForRequires);
-
-			for (var i=0;i<triggerRequires.length;i++) {
-
-				// this._requireClass(triggerRequires[i]);
-
-			}
-
-		// If there is nothing we have to wait for just create the class
-		} else {
-			this._defineClass(meta,body,callback);
-		}
-*/
 	},
 
 	/**
@@ -343,37 +291,6 @@ var zerk={
 	},
 
 	/**
-	 * Creates a delayed define entry and returns its handle
-	 *
-	 * @method _delayDefine
-	 * @param {Object} meta Class meta object
-	 * @param {Object} body Class body
-	 * @param {Function} callback Callback function
-	 * @param {Array} waitFor
-	 * @return {Object} The handle for the delayed define
-	 * @private
-	 * @async
-	 **/
-	_delayDefine: function(meta,body,callback,waitFor) {
-
-		// Format waitFor array as object
-		var waitForObj={};
-
-		for (var i=0;i<waitFor.length;i++) {
-			waitForObj[waitFor[i]]='require';
-
-		}
-
-		return this._delayedDefine[meta.name]={
-			meta: meta,
-			code: body,
-			callback: callback,
-			waitFor: waitForObj
-		};
-
-	},
-
-	/**
 	 * Creates an object from parent object definition
 	 *
 	 * This is an implementation of Douglas Crockfords prototypal
@@ -431,24 +348,6 @@ var zerk={
 	},
 
 	/**
-	 * Checks if a class is loading already
-	 *
-	 * @method _classLoading
-	 * @param {String} className The name of the class
-	 * @return {Boolean} Returns true if the class is currently loading
-	 * @private
-	 **/
-	_classLoading: function(className) {
-
-		if (typeof this._classState[className]!=='undefined') {
-
-			return (this._classState[className]=='loading');
-
-		}
-
-	},
-
-	/**
 	 * Returns the url for given class name
 	 *
 	 * @method _getClassURL
@@ -472,101 +371,6 @@ var zerk={
 			? this._config.bootstrap.zerkDir
 			: this._config.bootstrap.gameDir)
 			+'/class/'+path;
-
-	},
-
-	/**
-	 * Loads the related script file of the given class name
-	 *
-	 * @method _requireClass
-	 * @param {String} className
-	 * @private
-	 **/
-	_requireClass: function(className) {
-
-		// Get the target url of the class
-		var url=this._getClassURL(className);
-
-		// Trigger the script load
-		this._loadScript(url,className);
-
-		// Remember the class as loading already
-		this._classState[className]='loading';
-
-	},
-
-	/**
-	 * Loads a JavaScript file
-	 *
-	 * @method _loadScript
-	 * @param {String} url The target url of the script to be loaded
-	 * @private
-	 **/
-	_loadScript: function(url) {
-
-		// var globalVars = companion.require(url, {
-		// 	zerk: zerk,
-		// 	Box2D: Box2D,
-		// 	console: console
-		// });
-
-		// zerk = globalVars.zerk;
-		
-		// return;
-		var head=document.getElementsByTagName('head')[0];
-		var script=document.createElement('script');
-
-		script.type='text/javascript';
-		script.src=url+'?r='+Math.random();
-		script.async=true;
-
-		head.appendChild(script);
-
-	},
-
-	/**
-	 * Process delayed defines after dependencies are resolved
-	 *
-	 * @method _processLoadedClass
-	 * @param {String} className The name of the class
-	 * @private
-	 **/
-	_processLoadedClass: function(className) {
-
-		var entry=null;
-
-		var count = 0;
-
-
-		for (var name in this._delayedDefine) {
-
-			entry=this._delayedDefine[name];
-
-
-			if (typeof entry.waitFor[className]!=='undefined') {
-				delete entry.waitFor[className];
-
-				if (Object.keys(entry.waitFor).length==0) {
-					count++;
-					this._defineClass(entry.meta,entry.code,entry.callback);
-					delete this._delayedDefine[name];
-
-				}
-
-			}
-
-		}
-
-        /*
-		console.log('process', Object.keys(this._delayedDefine));
-
-		// If this was the last delayed define
-		if (Object.keys(this._delayedDefine).length==0) {
-
-			this._onLoad();
-
-		}
-		*/
 
 	},
 
