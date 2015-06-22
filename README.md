@@ -1,9 +1,4 @@
-# Zerk - JavaScript Game Engine
-
-Zerk is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
-
-
-##About
+# Zerk Game Engine
 
 Zerk is a JavaScript game engine developed by Kristoph Junge and others.
 
@@ -11,10 +6,9 @@ Zerk is based on an [Entity-Component-System](http://en.wikipedia.org/wiki/Entit
 
 Zerk aims to be able to run various types of 2D games on desktop and mobile devices.
 
-More information can be found on my [blog](http://www.kristophjunge.com).
+More information can be found here [kristophjunge.com](https://kristophjunge.com).
 
-
-###Other Software that Zerk is using
+**Other Software that Zerk is using:**
 
 [Box2DWeb](http://code.google.com/p/box2dweb/) a JavaScript port of the [Box2D](http://box2d.org/) physics library written by Erin Catto and others.
 
@@ -22,12 +16,55 @@ More information can be found on my [blog](http://www.kristophjunge.com).
 
 [Poly-Decomp](https://github.com/schteppe/poly-decomp.js) a library for decomposition of polygons into convex regions.
 
+##Installation
+
+Zerk is installed via npm.
+
+```bash
+$ npm install -g zerk
+```
 
 ##Using Zerk
 
-See a demo running at [http://dev.kristophjunge.com/zerk/demo/latest](http://dev.kristophjunge.com/zerk/demo/latest)
-
 Zerk is currently at an early development stage, use it at your own risk.
+
+Create a `zerk.json` file in your game directory.
+```javascript
+{
+    "game": "mygame",
+    "bootstrapClass": "mygame.game",
+    "namespaces": {
+        "mygame": "./"
+    },
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 8337
+    }
+}
+```
+
+Create a `game.js` file inside a subdirectory named `class` under your game directory.
+
+```javascript
+zerk.define({
+	name: 'mygame.game',
+	extend: 'zerk.game'
+},{
+    // ...
+});
+```
+Navigate into your game directory and run the `zerk  dev` command.
+
+```bash
+$ zerk dev
+```
+
+##License
+
+Zerk is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
 
 ##Documentation
