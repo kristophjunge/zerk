@@ -14,12 +14,12 @@
                             "height": 5,
                             "friction": 0.75,
                             "sprites": {}
-						}
-					}
-				}
-			},
+                        }
+                    }
+                }
+            },
             "joints": {}
-		},
+        },
         "render": {
             "bodies": {
                 "main": {
@@ -35,5 +35,5 @@
                 }
             }
         }
-	}
+    }
 }

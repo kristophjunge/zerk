@@ -1,33 +1,33 @@
 zerk.define({
 
-	name: 'monstertruck.game',
-	extend: 'zerk.game',
-	require: [
-		'zerk.game.engine.component.physics',
-		'zerk.game.engine.component.position',
-		'zerk.game.engine.component.render',
-		'zerk.game.engine.component.player',
-		'zerk.game.engine.component.damager',
-		'zerk.game.engine.component.fall',
-		'zerk.game.engine.component.trigger',
-		'zerk.game.engine.component.elevator',
+    name: 'monstertruck.game',
+    extend: 'zerk.game',
+    require: [
+        'zerk.game.engine.component.physics',
+        'zerk.game.engine.component.position',
+        'zerk.game.engine.component.render',
+        'zerk.game.engine.component.player',
+        'zerk.game.engine.component.damager',
+        'zerk.game.engine.component.fall',
+        'zerk.game.engine.component.trigger',
+        'zerk.game.engine.component.elevator',
         'monstertruck.game.engine.component.monstertruck',
 
-		'zerk.game.engine.system.physics.box2d',
-		'zerk.game.engine.system.viewport.canvas',
-		'zerk.game.engine.system.render',
-		'zerk.game.engine.system.wireframe',
-		'zerk.game.engine.system.message',
-		'zerk.game.engine.system.debuginfo',
-		'zerk.game.engine.system.control',
-		'zerk.game.engine.system.player',
-		'zerk.game.engine.system.damager',
-		'zerk.game.engine.system.fall',
-		'zerk.game.engine.system.trigger',
-		'zerk.game.engine.system.elevator',
+        'zerk.game.engine.system.physics.box2d',
+        'zerk.game.engine.system.viewport.canvas',
+        'zerk.game.engine.system.render',
+        'zerk.game.engine.system.wireframe',
+        'zerk.game.engine.system.message',
+        'zerk.game.engine.system.debuginfo',
+        'zerk.game.engine.system.control',
+        'zerk.game.engine.system.player',
+        'zerk.game.engine.system.damager',
+        'zerk.game.engine.system.fall',
+        'zerk.game.engine.system.trigger',
+        'zerk.game.engine.system.elevator',
 
         'monstertruck.game.engine.system.monstertruck'
-	]
+    ]
 
 },{
 
@@ -35,36 +35,36 @@ zerk.define({
 
     _systemMessage: null,
 
-	run: function(config) {
+    run: function(config) {
 
         var me=this;
 
-		if (!zerk.parent('monstertruck.game').run.apply(
+        if (!zerk.parent('monstertruck.game').run.apply(
                 me,
-			arguments
-		)) {
-			return;
-		}
+            arguments
+        )) {
+            return;
+        }
 
-		if (!me._engine.start()) {
-			return;
-		}
+        if (!me._engine.start()) {
+            return;
+        }
 
         me._engine.loadWorld(
-			'monstertruck.world.level1',
-			function() {
+            'monstertruck.world.level1',
+            function() {
 
                 me._onLoadWorld();
 
             },
-			function(error) {
+            function(error) {
 
-				console.log(error);
+                console.log(error);
 
-			}
-		);
+            }
+        );
 
-	},
+    },
 
     _onLoadWorld: function() {
 
@@ -116,22 +116,22 @@ zerk.define({
 
     },
 
-	loadDemo: function(world) {
+    loadDemo: function(world) {
 
-		this._engine.reset();
+        this._engine.reset();
 
-		this._engine.loadWorld(
-			world,
-			function() {
+        this._engine.loadWorld(
+            world,
+            function() {
 
-			},
-			function(error) {
+            },
+            function(error) {
 
-				console.log(error);
+                console.log(error);
 
-			}
-		);
+            }
+        );
 
-	}
+    }
 
 });

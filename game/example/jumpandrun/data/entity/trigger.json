@@ -1,5 +1,5 @@
 {
-	"name": "trigger",
+    "name": "trigger",
     "components": {
         "position": {},
         "trigger": {},
@@ -14,10 +14,10 @@
                             "width": 3,
                             "height": 3,
                             "isSensor": true
-						}
-					}
-				}
-			}
-		}
-	}
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,21 +1,21 @@
 {
-	name: 'circle',
-	components: {
-		position: {},
-		physics: {
-			bodies: {
-				main: {
-					moveable: true,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'circle',
-							radius: 1
-						}
-					}
-				}
-			}
-		},
+    name: 'circle',
+    components: {
+        position: {},
+        physics: {
+            bodies: {
+                main: {
+                    moveable: true,
+                    origin: true,
+                    fixtures: {
+                        main: {
+                            shape: 'circle',
+                            radius: 1
+                        }
+                    }
+                }
+            }
+        },
         render: {
             layers: {
                 texture1: {
@@ -29,5 +29,5 @@
                 }
             }
         }
-	}
+    }
 }

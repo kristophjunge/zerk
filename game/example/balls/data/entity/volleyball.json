@@ -14,11 +14,11 @@
                             "friction": 0.2,
                             "restitution": 0.75,
                             "radius": 0.111
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "sprite1": {
@@ -30,5 +30,5 @@
                 }
             }
         }
-	}
+    }
 }

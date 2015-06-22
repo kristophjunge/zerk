@@ -1,10 +1,10 @@
 {
-	"name": "player",
+    "name": "player",
     "components": {
         "position": {},
         "player": {
             "enableControl": false
-		},
+        },
         "physics": {
             "bodies": {
                 "main": {
@@ -17,7 +17,7 @@
                             "width": 0.5,
                             "height": 1,
                             "friction": 0.2
-						},
+                        },
                         "foot": {
                             "shape": "box",
                             "x": 0,
@@ -25,11 +25,11 @@
                             "width": 0.4,
                             "height": 0.15,
                             "isSensor": true
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -40,5 +40,5 @@
                 }
             }
         }
-	}
+    }
 }

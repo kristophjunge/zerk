@@ -1,26 +1,26 @@
 /**
  * World Loader
- * 
+ *
  * Loads world definitions from JSON files.
- * 
+ *
  * @class worldLoader
  * @namespace zerk.game.engine
  * @module zerk
  **/
 zerk.define({
-	
-	name: 'zerk.game.engine.worldLoader'
-	
+
+    name: 'zerk.game.engine.worldLoader'
+
 },{
 
-	/**
-	 * JSON loader instance
-	 * 
-	 * @property _jsonLoader
-	 * @type zerk.jsonLoader
-	 * @protected
-	 **/
-	_jsonLoader: null,
+    /**
+     * JSON loader instance
+     *
+     * @property _jsonLoader
+     * @type zerk.jsonLoader
+     * @protected
+     **/
+    _jsonLoader: null,
 
     /**
      * Image loader instance
@@ -30,33 +30,33 @@ zerk.define({
      * @protected
      **/
     _imageLoader: null,
-	
-	/**
-	 * Component loader instance
-	 * 
-	 * @property _componentLoader
-	 * @type zerk.game.engine.componentLoader
-	 * @protected
-	 **/
-	_componentLoader: null,
-	
-	/**
-	 * Entity loader instance
-	 * 
-	 * @property _entityLoader
-	 * @type zerk.game.engine.entityLoader
-	 * @protected
-	 **/
-	_entityLoader: null,
-	
-	/**
-	 * Sprite loader instance
-	 * 
-	 * @property _spriteLoader
-	 * @type zerk.game.engine.spriteLoader
-	 * @protected
-	 **/
-	_spriteLoader: null,
+
+    /**
+     * Component loader instance
+     *
+     * @property _componentLoader
+     * @type zerk.game.engine.componentLoader
+     * @protected
+     **/
+    _componentLoader: null,
+
+    /**
+     * Entity loader instance
+     *
+     * @property _entityLoader
+     * @type zerk.game.engine.entityLoader
+     * @protected
+     **/
+    _entityLoader: null,
+
+    /**
+     * Sprite loader instance
+     *
+     * @property _spriteLoader
+     * @type zerk.game.engine.spriteLoader
+     * @protected
+     **/
+    _spriteLoader: null,
 
     /**
      * Texture loader instance
@@ -67,13 +67,13 @@ zerk.define({
      **/
     _textureLoader: null,
 
-	/**
-	 * Class constructor
-	 * 
-	 * @method init
-	 * @param {zerk.game.engine} engine Game engine
-	 */
-	init: function(
+    /**
+     * Class constructor
+     *
+     * @method init
+     * @param {zerk.game.engine} engine Game engine
+     */
+    init: function(
         jsonLoader,
         imageLoader,
         componentLoader,
@@ -87,27 +87,27 @@ zerk.define({
         this._textures=[];
         this._spritesheets=[];
 
-		this._jsonLoader=jsonLoader;
+        this._jsonLoader=jsonLoader;
         this._imageLoader=imageLoader;
-		this._componentLoader=componentLoader;
-		this._entityLoader=entityLoader;
-		this._spriteLoader=spriteLoader;
+        this._componentLoader=componentLoader;
+        this._entityLoader=entityLoader;
+        this._spriteLoader=spriteLoader;
         this._textureLoader=textureLoader;
-		
-	},
-	
-	/**
-	 * Loads a world by given resource id
-	 * 
-	 * @method loadWorld
-	 * @param {String} name World resource id
-	 * @param {Function} successFn Event handler for success
-	 * @param {Function} errorFn Event handler for error
-	 * @async
-	 **/
-	loadWorld: function(name,successFn,errorFn) {
-		
-		var me=this;
+
+    },
+
+    /**
+     * Loads a world by given resource id
+     *
+     * @method loadWorld
+     * @param {String} name World resource id
+     * @param {Function} successFn Event handler for success
+     * @param {Function} errorFn Event handler for error
+     * @async
+     **/
+    loadWorld: function(name,successFn,errorFn) {
+
+        var me=this;
 
         me._componentLoader.clear();
         me._entityLoader.clear();
@@ -119,34 +119,34 @@ zerk.define({
             me._jsonLoader.clear();
             me._imageLoader.clear();
         }
-		
-		this._jsonLoader.require(
-			[name],
-			function(data) {
+
+        this._jsonLoader.require(
+            [name],
+            function(data) {
                 me._onLoadWorld(data[name],successFn,errorFn);
-			},
-			errorFn
-		);
-		
-	},
-	
-	/**
-	 * Fires when the world is loaded
-	 * 
-	 * @method _onLoadWorld
-	 * @param {Object} world World definition
-	 * @param {Function} successFn Event handler for success
-	 * @param {Function} errorFn Event handler for error
-	 * @protected
-	 * @async
-	 **/
-	_onLoadWorld: function(world,successFn,errorFn) {
+            },
+            errorFn
+        );
+
+    },
+
+    /**
+     * Fires when the world is loaded
+     *
+     * @method _onLoadWorld
+     * @param {Object} world World definition
+     * @param {Function} successFn Event handler for success
+     * @param {Function} errorFn Event handler for error
+     * @protected
+     * @async
+     **/
+    _onLoadWorld: function(world,successFn,errorFn) {
 
         var me=this;
 
         me.loadWorldConfig(world,successFn,errorFn);
 
-	},
+    },
 
     loadWorldConfig: function(world,successFn,errorFn) {
 
@@ -168,18 +168,18 @@ zerk.define({
         );
 
     },
-	
-	/**
-	 * Fires when the entities are loaded
-	 * 
-	 * @method _onLoadEntities
-	 * @param {Object} world World definition
-	 * @param {Array} entities Array of entities
-	 * @param {Function} successFn Event handler for success
-	 * @param {Function} errorFn Event handler for error
-	 * @protected
-	 **/
-	_onLoadEntities: function(world,entities,successFn,errorFn) {
+
+    /**
+     * Fires when the entities are loaded
+     *
+     * @method _onLoadEntities
+     * @param {Object} world World definition
+     * @param {Array} entities Array of entities
+     * @param {Function} successFn Event handler for success
+     * @param {Function} errorFn Event handler for error
+     * @protected
+     **/
+    _onLoadEntities: function(world,entities,successFn,errorFn) {
 
         var me=this;
 
@@ -260,6 +260,6 @@ zerk.define({
             errorFn
         );
 
-	}
+    }
 
 });

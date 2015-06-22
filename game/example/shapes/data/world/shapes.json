@@ -226,86 +226,86 @@
             }
         },
         /* Content */
-		{
-			name: 'shapes.entity.shapes.circle',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.triangle',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.rectangle',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.pentagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.hexagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.heptagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.octagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.nonagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		},
-		{
-			name: 'shapes.entity.shapes.decagon',
-			components: {
-				position: {
-					x: 0,
-					y: -2
-				}
-			}
-		}
-	]
+        {
+            name: 'shapes.entity.shapes.circle',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.triangle',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.rectangle',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.pentagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.hexagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.heptagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.octagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.nonagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        },
+        {
+            name: 'shapes.entity.shapes.decagon',
+            components: {
+                position: {
+                    x: 0,
+                    y: -2
+                }
+            }
+        }
+    ]
 }

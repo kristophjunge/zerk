@@ -1,5 +1,5 @@
 {
-	"name": "madStone",
+    "name": "madStone",
     "components": {
         "position": {},
         "madStone": {},
@@ -14,9 +14,9 @@
                             "shape": "box",
                             "width": 1.5,
                             "height": 1.5
-						}
-					}
-				},
+                        }
+                    }
+                },
                 "frame1": {
                     "x": 0,
                     "y": -1,
@@ -26,9 +26,9 @@
                             "shape": "box",
                             "width": 2.5,
                             "height": 0.5
-						}
-					}
-				},
+                        }
+                    }
+                },
                 "frame2": {
                     "x": -1,
                     "y": -0.25,
@@ -38,9 +38,9 @@
                             "shape": "box",
                             "width": 0.5,
                             "height": 1
-						}
-					}
-				},
+                        }
+                    }
+                },
                 "frame3": {
                     "x": 1,
                     "y": -0.25,
@@ -50,11 +50,11 @@
                             "shape": "box",
                             "width": 0.5,
                             "height": 1
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -83,5 +83,5 @@
                 }
             }
         }
-	}
+    }
 }

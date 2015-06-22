@@ -1,25 +1,25 @@
 {
-	name: 'triangle',
-	components: {
-		position: {},
-		physics: {
-			bodies: {
-				main: {
-					moveable: true,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'polygon',
-							vertices: [
-								[0.87,0.5],
-								[-0.87,0.5],
-								[0,-1]
-							]
-						}
-					}
-				}
-			}
-		},
+    name: 'triangle',
+    components: {
+        position: {},
+        physics: {
+            bodies: {
+                main: {
+                    moveable: true,
+                    origin: true,
+                    fixtures: {
+                        main: {
+                            shape: 'polygon',
+                            vertices: [
+                                [0.87,0.5],
+                                [-0.87,0.5],
+                                [0,-1]
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         render: {
             layers: {
                 texture1: {
@@ -33,5 +33,5 @@
                 }
             }
         }
-	}
+    }
 }

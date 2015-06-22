@@ -1,13 +1,13 @@
 {
-	"name": "crates",
+    "name": "crates",
     "config": {
         "systems": {
             "physics": {
                 "gravityX": 0,
                 "gravityY": 20
-			}
-		}
-	},
+            }
+        }
+    },
     "entities": [
         {
             "name": "sandbox.entity.ground",
@@ -90,15 +90,15 @@
                 }
             }
         },
-		{
+        {
             "name": "sandbox.entity.wall",
             "components": {
                 "position": {
                     "x": -17,
                     "y": 0.5
-				}
-			}
-		},
+                }
+            }
+        },
         {
             "name": "sandbox.entity.wall",
             "components": {
@@ -144,15 +144,15 @@
                 }
             }
         },
-		{
+        {
             "name": "sandbox.entity.sky",
             "components": {
                 "position": {
                     "x": 0,
                     "y": -10.5
-				}
-			}
-		},
+                }
+            }
+        },
         {
             "name": "sandbox.entity.sky",
             "components": {
@@ -454,5 +454,5 @@
                 }
             }
         }
-	]
+    ]
 }

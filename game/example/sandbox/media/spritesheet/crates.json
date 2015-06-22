@@ -1,21 +1,21 @@
 {"frames": [
 
 {
-	"filename": "wooden-1.png",
-	"frame": {"x":2,"y":2,"w":120,"h":120},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":120,"h":120},
-	"sourceSize": {"w":120,"h":120},
-	"pivot": {"x":0.5,"y":0.5}
+    "filename": "wooden-1.png",
+    "frame": {"x":2,"y":2,"w":120,"h":120},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":120,"h":120},
+    "sourceSize": {"w":120,"h":120},
+    "pivot": {"x":0.5,"y":0.5}
 }],
 "meta": {
-	"app": "http://www.codeandweb.com/texturepacker",
-	"version": "1.0",
-	"image": "crates.png",
-	"format": "RGBA8888",
-	"size": {"w":124,"h":124},
-	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:b7158b13a5bc5557d2b30b30e29994a0:e2fd5e5a80228c11d41f6d6e34abaec4:903d5a8c338301bcf02826ab4713e267$"
+    "app": "http://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "crates.png",
+    "format": "RGBA8888",
+    "size": {"w":124,"h":124},
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:b7158b13a5bc5557d2b30b30e29994a0:e2fd5e5a80228c11d41f6d6e34abaec4:903d5a8c338301bcf02826ab4713e267$"
 }
 }

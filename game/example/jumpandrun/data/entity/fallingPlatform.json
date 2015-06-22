@@ -1,5 +1,5 @@
 {
-	"name": "fallingPlatform",
+    "name": "fallingPlatform",
     "components": {
         "position": {},
         "fall": {},
@@ -13,11 +13,11 @@
                             "shape": "box",
                             "width": 2,
                             "height": 0.25
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -28,5 +28,5 @@
                 }
             }
         }
-	}
+    }
 }

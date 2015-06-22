@@ -14,9 +14,9 @@
                             "width": 1,
                             "height": 1,
                             //"angle": 45
-						}
-					}
-				},
+                        }
+                    }
+                },
                 "circle": {
                     "moveable": true,
                     //"fixedRotation": true,
@@ -55,8 +55,8 @@
                         }
                     }
                 }
-			}
-		},
+            }
+        },
         "render": {
             "layers": {
                 "bgTexture1": {
@@ -134,5 +134,5 @@
                 }
             }
         }
-	}
+    }
 }

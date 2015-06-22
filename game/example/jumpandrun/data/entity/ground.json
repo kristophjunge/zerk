@@ -1,5 +1,5 @@
 {
-	"name": "ground",
+    "name": "ground",
     "components": {
         "position": {},
         "physics": {
@@ -13,12 +13,12 @@
                             "width": 1,
                             "height": 1,
                             "friction": 0.5
-						}
-					}
-				}
-			},
+                        }
+                    }
+                }
+            },
             "joints": {}
-		},
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -29,5 +29,5 @@
                 }
             }
         }
-	}
+    }
 }

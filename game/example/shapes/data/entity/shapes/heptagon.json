@@ -1,29 +1,29 @@
 {
-	name: 'heptagon',
-	components: {
-		position: {},
-		physics: {
-			bodies: {
-				main: {
-					moveable: true,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'polygon',
-							vertices: [
-								[0.78,-0.62],
-								[0.97,0.22],
-								[0.43,0.9],
-								[-0.43,0.9],
-								[-0.97,0.22],
-								[-0.78,-0.62],
-								[0,-1]
-							]
-						}
-					}
-				}
-			}
-		},
+    name: 'heptagon',
+    components: {
+        position: {},
+        physics: {
+            bodies: {
+                main: {
+                    moveable: true,
+                    origin: true,
+                    fixtures: {
+                        main: {
+                            shape: 'polygon',
+                            vertices: [
+                                [0.78,-0.62],
+                                [0.97,0.22],
+                                [0.43,0.9],
+                                [-0.43,0.9],
+                                [-0.97,0.22],
+                                [-0.78,-0.62],
+                                [0,-1]
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         render: {
             layers: {
                 texture1: {
@@ -34,5 +34,5 @@
                 }
             }
         }
-	}
+    }
 }

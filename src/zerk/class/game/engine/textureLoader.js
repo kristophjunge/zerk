@@ -30,7 +30,7 @@ zerk.define({
      * @method init
      * @param {zerk.imageLoader} imageLoader Image loader instance
      * @param {zerk.game.engine.componentLoader} componentLoader Component
-     * 	loader instance
+     *     loader instance
      */
     init: function(imageLoader) {
 
@@ -74,7 +74,7 @@ zerk.define({
         this._imageLoader.require(
             idList,
             function(textures) {
-                
+
                 for (var texturesId in textures) {
                     me._textures[texturesId]=textures[texturesId];
                 }

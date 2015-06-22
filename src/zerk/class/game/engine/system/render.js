@@ -1,171 +1,171 @@
 /**
  * Render System
- * 
+ *
  * Renders sprites, textures and animations
- * 
+ *
  * @class render
  * @namespace zerk.game.engine.system
  * @extends zerk.game.engine.system
  * @module zerk
  **/
 zerk.define({
-	
-	name: 'zerk.game.engine.system.render',
-	extend: 'zerk.game.engine.system'
-	
+
+    name: 'zerk.game.engine.system.render',
+    extend: 'zerk.game.engine.system'
+
 },{
-	
-	/**
-	 * Name of the system
-	 * 
-	 * @property _name
-	 * @type String
-	 * @protected
-	 */
-	_name: 'render',
-	
-	/**
-	 * Thread that runs this system
-	 * 
-	 * @property _thread
-	 * @type String
-	 * @protected
-	 **/
-	_thread: 'render',
-	
-	/**
-	 * Priority of this system
-	 * 
-	 * @property _priority
-	 * @type Integer
-	 * @protected
-	 **/
-	_priority: 101,
-	
-	/**
-	 * Viewport system instance
-	 * 
-	 * @property _viewport
-	 * @type zerk.game.engine.system.viewport
-	 * @protected
-	 **/
-	_viewport: null,
+
+    /**
+     * Name of the system
+     *
+     * @property _name
+     * @type String
+     * @protected
+     */
+    _name: 'render',
+
+    /**
+     * Thread that runs this system
+     *
+     * @property _thread
+     * @type String
+     * @protected
+     **/
+    _thread: 'render',
+
+    /**
+     * Priority of this system
+     *
+     * @property _priority
+     * @type Integer
+     * @protected
+     **/
+    _priority: 101,
+
+    /**
+     * Viewport system instance
+     *
+     * @property _viewport
+     * @type zerk.game.engine.system.viewport
+     * @protected
+     **/
+    _viewport: null,
 
     _bufferGap: 1,
-	
-	/**
-	 * Class constructor
-	 * 
-	 * @method init
-	 * @param {zerk.game.engine} engine Game engine
-	 * @param {Object} config System configuration
-	 **/
-	init: function(engine,config) {
-		
-		zerk.parent('zerk.game.engine.system.render').init.apply(
-			this,
-			arguments
-		);
-		
-		this._viewport=this._getSystem('viewport');
-		
-	},
-	
-	/**
-	 * Returns true when the system is interested in given component
-	 * 
-	 * @method useComponent
-	 * @param {String} name Component name
-	 * @return {Boolean} True when the system is intereseted in given component
-	 **/
-	useComponent: function(name) {
-		
-		return (name=='render');
-		
-	},
-	
-	/**
-	 * Starts the system
-	 * 
-	 * @method start
-	 **/
-	start: function() {
-		
-		zerk.parent('zerk.game.engine.system.render').start.apply(
-			this,
-			arguments
-		);
-		
-	},
-	
-	/**
-	 * Stops the system
-	 * 
-	 * @method stop
-	 **/
-	stop: function() {
-		
-		zerk.parent('zerk.game.engine.system.render').stop.apply(
-			this,
-			arguments
-		);
-		
-	},
-	
-	/**
-	 * Adds an entity to the system
-	 * 
-	 * @method addEntity
-	 * @param {config.entity} entity Entity state
-	 **/
-	addEntity: function(entity) {
-		
-		zerk.parent('zerk.game.engine.system.render').addEntity.apply(
-			this,
-			arguments
-		);
-		
-	},
-	
-	/**
-	 * Updates the system
-	 * 
-	 * @method update
-	 **/
-	update: function() {
-		
-		zerk.parent('zerk.game.engine.system.render').update.apply(
-			this,
-			arguments
-		);
-		
-		// Render all entities in the view area
-		var entityStates=this._viewport.getEntitiesInViewport();
-		
-		for (var i=0;i<entityStates.length;i++) {
-			
-			// Check if this entity has the sprite component
-			if (typeof entityStates[i].components.render=='undefined') {
-				
-				continue;
-				
-			}
-			
-			if (!entityStates[i].components.render.visible) continue;
-			
-			this._renderEntity(entityStates[i]);
-		}
-		
-	},
-	
-	/**
-	 * Renders an entity onto the game canvas
-	 * 
-	 * @method _renderEntity 
-	 * @param {config.entity} entity Entity state
-	 * @protected
-	 **/
-	_renderEntity: function(entity) {
+
+    /**
+     * Class constructor
+     *
+     * @method init
+     * @param {zerk.game.engine} engine Game engine
+     * @param {Object} config System configuration
+     **/
+    init: function(engine,config) {
+
+        zerk.parent('zerk.game.engine.system.render').init.apply(
+            this,
+            arguments
+        );
+
+        this._viewport=this._getSystem('viewport');
+
+    },
+
+    /**
+     * Returns true when the system is interested in given component
+     *
+     * @method useComponent
+     * @param {String} name Component name
+     * @return {Boolean} True when the system is intereseted in given component
+     **/
+    useComponent: function(name) {
+
+        return (name=='render');
+
+    },
+
+    /**
+     * Starts the system
+     *
+     * @method start
+     **/
+    start: function() {
+
+        zerk.parent('zerk.game.engine.system.render').start.apply(
+            this,
+            arguments
+        );
+
+    },
+
+    /**
+     * Stops the system
+     *
+     * @method stop
+     **/
+    stop: function() {
+
+        zerk.parent('zerk.game.engine.system.render').stop.apply(
+            this,
+            arguments
+        );
+
+    },
+
+    /**
+     * Adds an entity to the system
+     *
+     * @method addEntity
+     * @param {config.entity} entity Entity state
+     **/
+    addEntity: function(entity) {
+
+        zerk.parent('zerk.game.engine.system.render').addEntity.apply(
+            this,
+            arguments
+        );
+
+    },
+
+    /**
+     * Updates the system
+     *
+     * @method update
+     **/
+    update: function() {
+
+        zerk.parent('zerk.game.engine.system.render').update.apply(
+            this,
+            arguments
+        );
+
+        // Render all entities in the view area
+        var entityStates=this._viewport.getEntitiesInViewport();
+
+        for (var i=0;i<entityStates.length;i++) {
+
+            // Check if this entity has the sprite component
+            if (typeof entityStates[i].components.render=='undefined') {
+
+                continue;
+
+            }
+
+            if (!entityStates[i].components.render.visible) continue;
+
+            this._renderEntity(entityStates[i]);
+        }
+
+    },
+
+    /**
+     * Renders an entity onto the game canvas
+     *
+     * @method _renderEntity
+     * @param {config.entity} entity Entity state
+     * @protected
+     **/
+    _renderEntity: function(entity) {
 
         var position=entity.components.position;
         var render=entity.components.render;
@@ -279,7 +279,7 @@ zerk.define({
 
         this._debugDrawEntityBuffers(entity,layerSizes);
 
-	},
+    },
 
     _getBufferSizeLayers: function(entity) {
 
@@ -853,27 +853,27 @@ zerk.define({
 
     },
 
-	/**
-	 * Renders a body onto the game canvas
-	 *
-	 * @protected
-	 **/
+    /**
+     * Renders a body onto the game canvas
+     *
+     * @protected
+     **/
     /*
-	_renderBody: function(entity,physicsBody,renderBody) {
-		
-		var bodyState=entity.components.physics.bodies[physicsBody.key];
-		var position=entity.components.position;
-		
-		var bufferSize=this._getBufferSizeBody(entity,bodyState,renderBody);
+    _renderBody: function(entity,physicsBody,renderBody) {
 
-		this._viewport.bufferInit(
-			'body',
-			bufferSize.width,
-			bufferSize.height,
-			bufferSize.width/2,
-			bufferSize.height/2,
-			bodyState.angle
-		);
+        var bodyState=entity.components.physics.bodies[physicsBody.key];
+        var position=entity.components.position;
+
+        var bufferSize=this._getBufferSizeBody(entity,bodyState,renderBody);
+
+        this._viewport.bufferInit(
+            'body',
+            bufferSize.width,
+            bufferSize.height,
+            bufferSize.width/2,
+            bufferSize.height/2,
+            bodyState.angle
+        );
 
         // Render fixtures
         for (var i=0;i<renderBody._fixtureList.length;i++) {
@@ -887,21 +887,21 @@ zerk.define({
             );
         }
 
-		// Draw the buffer onto the display
-		this._viewport.bufferFlush(
-			'body',
-			'display',
-			this._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
-			this._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
-			this._viewport.toZoom(bufferSize.width),
-			this._viewport.toZoom(bufferSize.height),
+        // Draw the buffer onto the display
+        this._viewport.bufferFlush(
+            'body',
+            'display',
+            this._viewport._getCanvasX(position.x+bodyState.x), // -(bufferSize.width/2)
+            this._viewport._getCanvasY(position.y+bodyState.y), // -(bufferSize.height/2)
+            this._viewport.toZoom(bufferSize.width),
+            this._viewport.toZoom(bufferSize.height),
             bodyState.angle,
             this._viewport.toZoom(-bufferSize.width/2),
             this._viewport.toZoom(-bufferSize.height/2)
-		);
-		
-	},
-	*/
+        );
+
+    },
+    */
 
     /**
      * Renders a fixture onto the game canvas

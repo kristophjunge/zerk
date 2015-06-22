@@ -1,5 +1,5 @@
 {
-	"name": "elevatorPlatform",
+    "name": "elevatorPlatform",
     "components": {
         "position": {},
         "elevator": {},
@@ -15,11 +15,11 @@
                             "shape": "box",
                             "width": 2,
                             "height": 0.25
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -30,5 +30,5 @@
                 }
             }
         }
-	}
+    }
 }

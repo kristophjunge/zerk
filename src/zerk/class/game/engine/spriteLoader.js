@@ -1,26 +1,26 @@
 /**
  * Sprite Loader
- * 
+ *
  * Loads sprite sheets
- * 
+ *
  * @class spriteLoader
  * @namespace zerk.game.engine
  * @module zerk
  **/
 zerk.define({
-	
-	name: 'zerk.game.engine.spriteLoader'
-	
+
+    name: 'zerk.game.engine.spriteLoader'
+
 },{
-	
-	/**
-	 * JSON loader instance
-	 * 
-	 * @property _jsonLoader
-	 * @type zerk.jsonLoader
-	 * @protected
-	 **/
-	_jsonLoader: null,
+
+    /**
+     * JSON loader instance
+     *
+     * @property _jsonLoader
+     * @type zerk.jsonLoader
+     * @protected
+     **/
+    _jsonLoader: null,
 
     /**
      * Image loader instance
@@ -30,38 +30,38 @@ zerk.define({
      * @protected
      **/
     _imageLoader: null,
-	
-	_images: null,
+
+    _images: null,
 
     _maps: null,
-	
-	/**
-	 * Class constructor
-	 * 
-	 * @method init
-	 * @param {zerk.jsonLoader} jsonLoader JSON loader instance
-	 * @param {zerk.game.engine.componentLoader} componentLoader Component 
-	 * 	loader instance
-	 */
-	init: function(jsonLoader,imageLoader) {
-		
-		this._jsonLoader=jsonLoader;
+
+    /**
+     * Class constructor
+     *
+     * @method init
+     * @param {zerk.jsonLoader} jsonLoader JSON loader instance
+     * @param {zerk.game.engine.componentLoader} componentLoader Component
+     *     loader instance
+     */
+    init: function(jsonLoader,imageLoader) {
+
+        this._jsonLoader=jsonLoader;
         this._imageLoader=imageLoader;
 
         this._images={};
-		this._maps={};
-		
-	},
-	
-	/**
-	 * Returns preloaded sprite information
-	 * 
-	 * @method getSprite
-	 * @param {String} sheet Sprite sheet key
-	 * @param {String} key Sprite key
-	 * @return {config.sprite} Sprite information
-	 **/
-	getSprite: function(spritesheet,sprite) {
+        this._maps={};
+
+    },
+
+    /**
+     * Returns preloaded sprite information
+     *
+     * @method getSprite
+     * @param {String} sheet Sprite sheet key
+     * @param {String} key Sprite key
+     * @return {config.sprite} Sprite information
+     **/
+    getSprite: function(spritesheet,sprite) {
 
         var me=this;
 
@@ -82,27 +82,27 @@ zerk.define({
             image: me._images[spritesheet]
         };
 
-	},
-	
-	/**
-	 * Preloads given entities
-	 * 
-	 * @method loadEntities
-	 * @param {Array} entities Array of entities
-	 * @param {Function} successFn Event handler for success
-	 * @param {Function} errorFn Event handler for error
-	 * @async
-	 **/
-	loadSprites: function(sprites,successFn,errorFn) {
-		
-		var me=this;
+    },
+
+    /**
+     * Preloads given entities
+     *
+     * @method loadEntities
+     * @param {Array} entities Array of entities
+     * @param {Function} successFn Event handler for success
+     * @param {Function} errorFn Event handler for error
+     * @async
+     **/
+    loadSprites: function(sprites,successFn,errorFn) {
+
+        var me=this;
 
         var loadedImages=false;
         var loadedMaps=false;
 
         me._jsonLoader.require(
-			sprites,
-			function(maps) {
+            sprites,
+            function(maps) {
 
                 for (var mapId in maps) {
                     me._maps[mapId]=me._parseSpriteData(maps[mapId]);
@@ -113,9 +113,9 @@ zerk.define({
                     successFn();
                 }
 
-			},
-			errorFn
-		);
+            },
+            errorFn
+        );
 
         me._imageLoader.require(
             sprites,
@@ -124,7 +124,7 @@ zerk.define({
                 for (var imagesId in images) {
                     me._images[imagesId]=images[imagesId];
                 }
-                
+
                 loadedImages=true;
                 if (loadedMaps) {
                     successFn();
@@ -134,7 +134,7 @@ zerk.define({
             errorFn
         );
 
-	},
+    },
 
     clear: function() {
 
@@ -166,5 +166,5 @@ zerk.define({
         return result;
 
     }
-	
+
 });

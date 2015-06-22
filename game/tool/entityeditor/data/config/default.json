@@ -1,39 +1,39 @@
 {
-	"engine": {
-		"systems": {
-			"viewport": {
-				"showWorldCenterIndicator": false,
-				"trackPlayer": false,
+    "engine": {
+        "systems": {
+            "viewport": {
+                "showWorldCenterIndicator": false,
+                "trackPlayer": false,
                 "worldScale": 60,
                 "autoSize": true,
                 "zoomMax": 1000,
                 "zoomMin": 10,
                 "zoomDefault": 200
-			},
+            },
             "wireframe": {
                 "showFixtureBoundingBox": true,
                 "showBodyAngleIndicator": false,
                 "showEntityOriginIndicator": false,
                 "showBodyOriginIndicator": false,
                 "showFixtureOriginIndicator": true
-			},
+            },
             "debuginfo": {
                 "showViewCenterIndicator": false,
                 "showFPS": true,
                 "showZoom": true,
                 "showPosition": true
-			},
+            },
             "physics": {
                 "enableMouseJoint": true,
                 "physicsScale": 1
-			},
+            },
             "control": {
                 "mouse": {
                     "enableJoint": true,
                     "enableWheelZoom": true
-				}
-			}
-		},
+                }
+            }
+        },
         "defaultSystems": [
             "physics",
             "viewport",
@@ -43,12 +43,12 @@
             "debuginfo",
             "control",
             "entityeditor"
-		],
+        ],
         "componentMap": {
             "position": "zerk.game.engine.component.position",
             "physics": "zerk.game.engine.component.physics",
             "render": "zerk.game.engine.component.render"
-		},
+        },
         "systemMap": {
             "physics": "zerk.game.engine.system.physics.box2d",
             "viewport": "zerk.game.engine.system.viewport.canvas",
@@ -58,6 +58,6 @@
             "debuginfo": "zerk.game.engine.system.debuginfo",
             "control": "zerk.game.engine.system.control",
             "entityeditor": "entityeditor.game.engine.system.entityeditor"
-		}
-	}
+        }
+    }
 }

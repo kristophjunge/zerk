@@ -1,5 +1,5 @@
 {
-	"name": "damager",
+    "name": "damager",
     "components": {
         "position": {},
         "damager": {},
@@ -14,10 +14,10 @@
                             "width": 10,
                             "height": 1,
                             "isSensor": true
-						}
-					}
-				}
-			}
-		}
-	}
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

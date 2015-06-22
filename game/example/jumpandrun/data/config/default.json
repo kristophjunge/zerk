@@ -1,75 +1,75 @@
 {
-	engine: {
-		systems: {
-			viewport: {
+    engine: {
+        systems: {
+            viewport: {
                 "autoSize": true,
                 "width": 1280,
                 "height": 720,
                 "maxWidth": 1280,
                 "maxHeight": 720,
                 zoomDefault: 100,
-				showWorldCenterIndicator: false,
-				trackPlayer: true
-			},
-			wireframe: {
-				showFixtureBoundingBox: false
-			},
-			debuginfo: {
-				showViewCenterIndicator: false,
-				showFPS: true,
-				showZoom: true,
-				showPosition: true
-			},
-			physics: {
-				enableMouseJoint: false
-			},
-			control: {
-				mouse: {
-					enableJoint: false,
-					enableWheelZoom: true
-				}
-			}
-		},
-		defaultSystems: [
-			'physics',
-			'viewport',
-			'render',
-			'wireframe',
-			'message',
-			'debuginfo',
-			'control',
-			'player',
-			'damager',
-			'fall',
-			'madStone',
-			'trigger',
-			'elevator'
-		],
-		componentMap: {
-			position: 'zerk.game.engine.component.position',
-			physics: 'zerk.game.engine.component.physics',
-			fall: 'zerk.game.engine.component.fall',
-			elevator: 'zerk.game.engine.component.elevator',
-			madStone: 'jumpandrun.game.engine.component.madStone',
-			player: 'zerk.game.engine.component.player',
-			render: 'zerk.game.engine.component.render',
-			trigger: 'zerk.game.engine.component.trigger',
-			damager: 'zerk.game.engine.component.damager'
-		},
-		systemMap: {
-			physics: 'zerk.game.engine.system.physics.box2d',
-			viewport: 'zerk.game.engine.system.viewport.canvas',
-			render: 'zerk.game.engine.system.render',
-			wireframe: 'zerk.game.engine.system.wireframe',
-			message: 'zerk.game.engine.system.message',
-			debuginfo: 'zerk.game.engine.system.debuginfo',
-			control: 'zerk.game.engine.system.control',
-			player: 'zerk.game.engine.system.player',
-			damager: 'zerk.game.engine.system.damager',
-			fall: 'zerk.game.engine.system.fall',
-			madStone: 'jumpandrun.game.engine.system.madStone',
-			trigger: 'zerk.game.engine.system.trigger',
-			elevator: 'zerk.game.engine.system.elevator'
-		}
-	}
+                showWorldCenterIndicator: false,
+                trackPlayer: true
+            },
+            wireframe: {
+                showFixtureBoundingBox: false
+            },
+            debuginfo: {
+                showViewCenterIndicator: false,
+                showFPS: true,
+                showZoom: true,
+                showPosition: true
+            },
+            physics: {
+                enableMouseJoint: false
+            },
+            control: {
+                mouse: {
+                    enableJoint: false,
+                    enableWheelZoom: true
+                }
+            }
+        },
+        defaultSystems: [
+            'physics',
+            'viewport',
+            'render',
+            'wireframe',
+            'message',
+            'debuginfo',
+            'control',
+            'player',
+            'damager',
+            'fall',
+            'madStone',
+            'trigger',
+            'elevator'
+        ],
+        componentMap: {
+            position: 'zerk.game.engine.component.position',
+            physics: 'zerk.game.engine.component.physics',
+            fall: 'zerk.game.engine.component.fall',
+            elevator: 'zerk.game.engine.component.elevator',
+            madStone: 'jumpandrun.game.engine.component.madStone',
+            player: 'zerk.game.engine.component.player',
+            render: 'zerk.game.engine.component.render',
+            trigger: 'zerk.game.engine.component.trigger',
+            damager: 'zerk.game.engine.component.damager'
+        },
+        systemMap: {
+            physics: 'zerk.game.engine.system.physics.box2d',
+            viewport: 'zerk.game.engine.system.viewport.canvas',
+            render: 'zerk.game.engine.system.render',
+            wireframe: 'zerk.game.engine.system.wireframe',
+            message: 'zerk.game.engine.system.message',
+            debuginfo: 'zerk.game.engine.system.debuginfo',
+            control: 'zerk.game.engine.system.control',
+            player: 'zerk.game.engine.system.player',
+            damager: 'zerk.game.engine.system.damager',
+            fall: 'zerk.game.engine.system.fall',
+            madStone: 'jumpandrun.game.engine.system.madStone',
+            trigger: 'zerk.game.engine.system.trigger',
+            elevator: 'zerk.game.engine.system.elevator'
+        }
+    }
 }

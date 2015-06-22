@@ -1,27 +1,27 @@
 {
-	name: 'pentagon',
-	components: {
-		position: {},
-		physics: {
-			bodies: {
-				main: {
-					moveable: true,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'polygon',
-							vertices: [
-								[0.95,-0.31],
-								[0.59,0.81],
-								[-0.59,0.81],
-								[-0.95,-0.31],
-								[0,-1]
-							]
-						}
-					}
-				}
-			}
-		},
+    name: 'pentagon',
+    components: {
+        position: {},
+        physics: {
+            bodies: {
+                main: {
+                    moveable: true,
+                    origin: true,
+                    fixtures: {
+                        main: {
+                            shape: 'polygon',
+                            vertices: [
+                                [0.95,-0.31],
+                                [0.59,0.81],
+                                [-0.59,0.81],
+                                [-0.95,-0.31],
+                                [0,-1]
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         render: {
             layers: {
                 texture1: {
@@ -32,5 +32,5 @@
                 }
             }
         }
-	}
+    }
 }

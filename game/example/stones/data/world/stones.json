@@ -1,13 +1,13 @@
 {
-	"name": "stones",
+    "name": "stones",
     "config": {
         "systems": {
             "physics": {
                 "gravityX": 0,
                 "gravityY": 20
-			}
-		}
-	},
+            }
+        }
+    },
     "entities": [
         {
             "name": "sandbox.entity.ground",
@@ -407,5 +407,5 @@
                 }
             }
         }
-	]
+    ]
 }

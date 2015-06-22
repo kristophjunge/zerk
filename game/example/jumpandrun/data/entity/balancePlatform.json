@@ -1,5 +1,5 @@
 {
-	"name": "balancePlatform",
+    "name": "balancePlatform",
     "components": {
         "position": {},
         "physics": {
@@ -14,9 +14,9 @@
                             "width": 2,
                             "height": 0.25,
                             "friction": 0.2
-						}
-					}
-				},
+                        }
+                    }
+                },
                 "axis": {
                     "x": 0,
                     "y": 0.35,
@@ -27,11 +27,11 @@
                             "shape": "circle",
                             "radius": 0.25,
                             "density": 3
-						}
-					}
-				}
-			}
-		},
+                        }
+                    }
+                }
+            }
+        },
         "render": {
             "layers": {
                 "texture1": {
@@ -48,5 +48,5 @@
                 }
             }
         }
-	}
+    }
 }

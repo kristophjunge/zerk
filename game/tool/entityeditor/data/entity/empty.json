@@ -1,5 +1,5 @@
 {
-	"name": "empty",
+    "name": "empty",
     "components": {
         "position": {},
         "render": {},
@@ -10,5 +10,5 @@
                 }
             }
         }
-	}
+    }
 }

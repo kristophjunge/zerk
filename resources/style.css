@@ -4,98 +4,98 @@
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td
 {
-	margin:0;
-	padding:0;
+    margin:0;
+    padding:0;
 }
 table
 {
-	border-collapse:collapse;
-	border-spacing:0;
+    border-collapse:collapse;
+    border-spacing:0;
 }
 fieldset,img
 { 
-	border:0;
+    border:0;
 }
 address,caption,cite,code,dfn,em,strong,th,var
 {
-	font-style:normal;
-	font-weight:normal;
+    font-style:normal;
+    font-weight:normal;
 }
 ol,ul
 {
-	list-style:none;
+    list-style:none;
 }
 caption,th
 {
-	text-align:left;
+    text-align:left;
 }
 h1,h2,h3,h4,h5,h6
 {
-	font-size:100%;
-	font-weight:normal;
+    font-size:100%;
+    font-weight:normal;
 }
 q:before,q:after
 {
-	content:'';
+    content:'';
 }
 abbr,acronym
 {
-	border:0;
+    border:0;
 }
 body
 {
-	background-color: #202020;
-	font-family: Helvetica,Arial,sans-serif;
+    background-color: #202020;
+    font-family: Helvetica,Arial,sans-serif;
     color: white;
     overflow: hidden;
 }
 #zerk_canvas_display
 {
-	background-color: black;
+    background-color: black;
 }
 #zerk_canvas_body
 {
-	background-color: black;
-	margin-left: 50px;	
+    background-color: black;
+    margin-left: 50px;
 }
 #zerk_canvas_fixture
 {
-	background-color: black;
-	margin-left: 50px;	
+    background-color: black;
+    margin-left: 50px;
 }
 #zerk_canvas_physics_debug
 {
-	background-color: black;
-	margin-left: 50px;
+    background-color: black;
+    margin-left: 50px;
 }
 #zerk_demo_description
 {
-	font-size: 13.5px;
-	background: #333333;
-	width: 610px;
-	margin: auto auto;
-	margin-top: 25px;
-	text-align: left;
-	padding: 15px;
-	color: #AAAAAA;
+    font-size: 13.5px;
+    background: #333333;
+    width: 610px;
+    margin: auto auto;
+    margin-top: 25px;
+    text-align: left;
+    padding: 15px;
+    color: #AAAAAA;
 }
 #zerk_demo_description table {
-	margin: 0.5em 0 1em 1em;
+    margin: 0.5em 0 1em 1em;
 }
 #zerk_demo_description table td {
-	padding-right: 20px;
+    padding-right: 20px;
 }
 #zerk_demo_description table th {
-	text-decoration: underline;
-	padding-bottom: 5px;
+    text-decoration: underline;
+    padding-bottom: 5px;
 }
 .notice {
-	font-style: italic;
+    font-style: italic;
 }
 h1 {
-	font-size: 40px;
-	margin-top: 25px;
-	color: #CCCCCC;
+    font-size: 40px;
+    margin-top: 25px;
+    color: #CCCCCC;
 }
 a,
 a:link,
@@ -106,22 +106,22 @@ a:hover {
     color: #74b6e5;
 }
 h2 {
-	font-size: 1.25em;
-	margin-bottom: 0.75em;
+    font-size: 1.25em;
+    margin-bottom: 0.75em;
 }
 ul {
-	margin: 0.5em 0 1em 1em;
+    margin: 0.5em 0 1em 1em;
 }
 #zerk_canvas_display {
-	margin: auto auto;
+    margin: auto auto;
 }
 canvas {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: -moz-none;
-	-ms-user-select: none;
-	user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }
 #zerk-canvas {
     text-align: center;

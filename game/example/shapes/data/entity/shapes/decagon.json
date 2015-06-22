@@ -1,32 +1,32 @@
 {
-	name: 'decagon',
-	components: {
-		position: {},
-		physics: {
-			bodies: {
-				main: {
-					moveable: true,
-					origin: true,
-					fixtures: {
-						main: {
-							shape: 'polygon',
-							vertices: [
-								[0.81,-0.59],
-								[1,0],
-								[0.81,0.59],
-								[0.31,0.95],
-								[-0.31,0.95],
-								[-0.81,0.59],
-								[-1,0],
-								[-0.81,-0.59],
-								[-0.31,-0.95],
-								[0.31,-0.95]
-							]
-						}
-					}
-				}
-			}
-		},
+    name: 'decagon',
+    components: {
+        position: {},
+        physics: {
+            bodies: {
+                main: {
+                    moveable: true,
+                    origin: true,
+                    fixtures: {
+                        main: {
+                            shape: 'polygon',
+                            vertices: [
+                                [0.81,-0.59],
+                                [1,0],
+                                [0.81,0.59],
+                                [0.31,0.95],
+                                [-0.31,0.95],
+                                [-0.81,0.59],
+                                [-1,0],
+                                [-0.81,-0.59],
+                                [-0.31,-0.95],
+                                [0.31,-0.95]
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         render: {
             layers: {
                 texture1: {
@@ -37,5 +37,5 @@
                 }
             }
         }
-	}
+    }
 }

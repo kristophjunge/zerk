@@ -9,14 +9,14 @@
         }
     },
     "entities": [
-		{
-			"name": "rendertest.entity.rendertest",
-			"components": {
-				"position": {
-					"x": 0,
-					"y": 0
-				}
-			}
-		}
-	]
+        {
+            "name": "rendertest.entity.rendertest",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+    ]
 }
