@@ -1,5 +1,6 @@
-.*
-!.gitignore
 /doc
 /tools
 /node_modules
+
+.idea
+!.gitignore
