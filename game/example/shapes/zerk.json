@@ -1,0 +1,15 @@
+{
+    "game": "shapes",
+    "bootstrapClass": "shapes.game",
+    "namespaces": {
+        "shapes": "./",
+        "sandbox": "./../sandbox"
+    },
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 8337
+    }
+}

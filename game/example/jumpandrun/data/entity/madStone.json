@@ -1,0 +1,87 @@
+{
+	"name": "madStone",
+    "components": {
+        "position": {},
+        "madStone": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixedRotation": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 1.5,
+                            "height": 1.5
+						}
+					}
+				},
+                "frame1": {
+                    "x": 0,
+                    "y": -1,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 2.5,
+                            "height": 0.5
+						}
+					}
+				},
+                "frame2": {
+                    "x": -1,
+                    "y": -0.25,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 0.5,
+                            "height": 1
+						}
+					}
+				},
+                "frame3": {
+                    "x": 1,
+                    "y": -0.25,
+                    "moveable": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 0.5,
+                            "height": 1
+						}
+					}
+				}
+			}
+		},
+        "render": {
+            "layers": {
+                "texture1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "jumpandrun.texture.zerk-debug-red"
+                },
+                "texture2": {
+                    "body": "frame1",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.rock"
+                },
+                "texture3": {
+                    "body": "frame2",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.rock"
+                },
+                "texture4": {
+                    "body": "frame3",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "sandbox.texture.rock"
+                }
+            }
+        }
+	}
+}

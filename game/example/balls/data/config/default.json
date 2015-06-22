@@ -1,0 +1,67 @@
+{
+    "engine": {
+        "systems": {
+            "debuginfo": {
+                "showViewCenterIndicator": false,
+                "showFPS": true,
+                "showZoom": true,
+                "showPosition": true,
+                "showViewportSize": true
+            },
+            "control": {
+                "mouse": {
+                    "enableWheelZoom": true,
+                    "enableJoint": true
+                }
+            },
+            "wireframe": {
+                "showBodyAngleIndicator": false,
+                "showEntityOriginIndicator": false,
+                "showFixtureBoundingBox": false
+            },
+            "viewport": {
+                "autoSize": true,
+                "maxWidth": 1280,
+                "maxHeight": 720,
+                "zoomMax": 2000,
+                "zoomMin": 10,
+                "zoomDefault": 100,
+                "showWorldCenterIndicator": false,
+                "trackPlayer": false,
+                "backgroundColor": "rgb(0,0,0)",
+                "showEntityBuffer": false,
+                "showBodyBuffer": false,
+                "showFixtureBuffer": false
+            },
+            "physics": {
+                "enableMouseJoint": true,
+                "debugDraw": false,
+                "physicsScale": 1
+            }
+        },
+        "defaultSystems": [
+            "physics",
+            "viewport",
+            "render",
+            "wireframe",
+            "message",
+            "debuginfo",
+            "control"
+        ],
+        "componentMap": {
+            "position": "zerk.game.engine.component.position",
+            "physics": "zerk.game.engine.component.physics",
+            "render": "zerk.game.engine.component.render",
+            "trigger": "zerk.game.engine.component.trigger"
+        },
+        "systemMap": {
+            "physics": "zerk.game.engine.system.physics.box2d",
+            "viewport": "zerk.game.engine.system.viewport.canvas",
+            "render": "zerk.game.engine.system.render",
+            "wireframe": "zerk.game.engine.system.wireframe",
+            "message": "zerk.game.engine.system.message",
+            "debuginfo": "zerk.game.engine.system.debuginfo",
+            "control": "zerk.game.engine.system.control"
+        }
+    }
+}

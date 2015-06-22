@@ -25,3 +25,22 @@
 * Refactored helper and cross browser functions
 * JSON resource loader
 * Sandbox and procedural generation demo
+
+0.3.0
+* Sprite and texture rendering
+* TexturePacker Spritesheet support (JSON)
+* Dynamic asset loading
+* Available as npm package
+* Node Development Server
+* Server side dependency tree generation
+* Project level configuration file zerk.json
+* Integration of poly-decomp.js for polygon decomposition
+* Various debug and example graphics
+* Crates example
+* Balls example
+* Stones example
+* Shape example
+* Render test example
+* Incomplete snakebot example
+* Incomplete monstertruck example
+* Incomplete entity editor

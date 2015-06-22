@@ -85,10 +85,10 @@ var server = app.listen(currentGameConfig.dev.port, function () {
 
     });
 
-    app.get('/zerk/:group/:demo', function (req, res) {
+    app.get('/zerk/:group/:game', function (req, res) {
 
         var gameGroup = req.params.group;
-        var gameName = req.params.demo;
+        var gameName = req.params.game;
 
         res.send(serveGame(zerkDir + '/game/' + gameGroup + '/' + gameName));
 

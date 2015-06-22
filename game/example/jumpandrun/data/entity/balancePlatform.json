@@ -1,0 +1,52 @@
+{
+	"name": "balancePlatform",
+    "components": {
+        "position": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": true,
+                    "origin": true,
+                    "fixedRotation": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 2,
+                            "height": 0.25,
+                            "friction": 0.2
+						}
+					}
+				},
+                "axis": {
+                    "x": 0,
+                    "y": 0.35,
+                    "moveable": false,
+                    "origin": false,
+                    "fixtures": {
+                        "main": {
+                            "shape": "circle",
+                            "radius": 0.25,
+                            "density": 3
+						}
+					}
+				}
+			}
+		},
+        "render": {
+            "layers": {
+                "texture1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "jumpandrun.texture.zerk-debug-purple"
+                },
+                "texture2": {
+                    "body": "axis",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "jumpandrun.texture.zerk-debug-blue"
+                }
+            }
+        }
+	}
+}

@@ -1,0 +1,15 @@
+{
+    "game": "jumpandrun",
+    "bootstrapClass": "jumpandrun.game",
+    "namespaces": {
+        "jumpandrun": "./",
+        "sandbox": "./../sandbox"
+    },
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 8337
+    }
+}

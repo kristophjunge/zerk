@@ -1,0 +1,357 @@
+{
+	"name": "balls",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 20
+			}
+		}
+	},
+    "entities": [
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 4,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 8,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 12,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": 16,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": -4,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": -8,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": -12,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.ground",
+            "components": {
+                "position": {
+                    "x": -16,
+                    "y": 3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": 0.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": -3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": -17,
+                    "y": -7.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": 0.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": -3.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.wall",
+            "components": {
+                "position": {
+                    "x": 17,
+                    "y": -7.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": -4,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": -8,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": -12,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": -16,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": 4,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": 8,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": 12,
+                    "y": -10.5
+                }
+            }
+        },
+        {
+            "name": "sandbox.entity.sky",
+            "components": {
+                "position": {
+                    "x": 16,
+                    "y": -10.5
+                }
+            }
+        },
+        /* volleyball */
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": 1
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": -1
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": -2
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": -3
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": -4
+                }
+            }
+        },
+        {
+            "name": "balls.entity.volleyball",
+            "components": {
+                "position": {
+                    "x": -2.5,
+                    "y": -5
+                }
+            }
+        },
+        /* Medicine ball */
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": 1
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": 0
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": -1
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": -2
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": -3
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": -4
+                }
+            }
+        },
+        {
+            "name": "balls.entity.medicineball",
+            "components": {
+                "position": {
+                    "x": 2.5,
+                    "y": -5
+                }
+            }
+        }
+	]
+}

@@ -1,0 +1,15 @@
+{
+    "game": "snakebot",
+    "bootstrapClass": "snakebot.game",
+    "namespaces": {
+        "snakebot": "./",
+        "sandbox": "./../sandbox"
+    },
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 8337
+    }
+}

@@ -381,10 +381,12 @@ zerk.define({
 		this._worldLoader.loadWorld(
 			name,
 			function (data) {
-				self._onLoadWorld(data,successHandler,errorHandler);
+				self._onLoadWorld(data,successHandler || zerk.emptyFn,errorHandler || zerk.emptyFn);
 			},
 			function (error) {
-				errorHandler(error);
+                if (zerk.isFunction(errorHandler)) {
+				    errorHandler(error);
+                }
 			}
 		);
 		

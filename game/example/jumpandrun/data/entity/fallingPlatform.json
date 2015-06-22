@@ -1,0 +1,32 @@
+{
+	"name": "fallingPlatform",
+    "components": {
+        "position": {},
+        "fall": {},
+        "physics": {
+            "bodies": {
+                "main": {
+                    "moveable": false,
+                    "origin": true,
+                    "fixtures": {
+                        "main": {
+                            "shape": "box",
+                            "width": 2,
+                            "height": 0.25
+						}
+					}
+				}
+			}
+		},
+        "render": {
+            "layers": {
+                "texture1": {
+                    "body": "main",
+                    "fixture": "main",
+                    "render": "texture",
+                    "texture": "jumpandrun.texture.zerk-debug-orange"
+                }
+            }
+        }
+	}
+}

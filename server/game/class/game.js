@@ -38,14 +38,6 @@ zerk.define({
 			return;
 		}
 
-        me._engine._jsonLoader.addNamespace('monstertruck.component','./../../demo/monstertruck/data/component');
-        me._engine._jsonLoader.addNamespace('monstertruck.entity','./../../demo/monstertruck/data/entity');
-        me._engine._jsonLoader.addNamespace('monstertruck.world','./../../demo/monstertruck/data/world');
-        me._engine._jsonLoader.addNamespace('monstertruck.config','./../../demo/monstertruck/data/config');
-        me._engine._jsonLoader.addNamespace('monstertruck.spritesheet','./../../demo/monstertruck/media/spritesheet');
-        me._engine._imageLoader.addNamespace('monstertruck.texture','./../../demo/monstertruck/media/texture');
-        me._engine._imageLoader.addNamespace('monstertruck.spritesheet','./../../demo/monstertruck/media/spritesheet');
-
 		me._engine.loadWorldConfig(
             {
                 "name": "empty",

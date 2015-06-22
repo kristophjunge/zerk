@@ -1,7 +1,7 @@
 {
     "name": "zerk",
-    "version": "0.2.0",
-    "description": "JavaScript Game Engine Prototype",
+    "version": "0.3.0",
+    "description": "JavaScript Game Engine",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },

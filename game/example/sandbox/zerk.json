@@ -1,0 +1,14 @@
+{
+    "game": "sandbox",
+    "bootstrapClass": "sandbox.game",
+    "namespaces": {
+        "sandbox": "./"
+    },
+    "log": {
+        "enabled": true,
+        "severity": 3
+    },
+    "dev": {
+        "port": 8337
+    }
+}

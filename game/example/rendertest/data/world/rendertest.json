@@ -1,0 +1,22 @@
+{
+    "name": "rendertest",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 0
+            }
+        }
+    },
+    "entities": [
+		{
+			"name": "rendertest.entity.rendertest",
+			"components": {
+				"position": {
+					"x": 0,
+					"y": 0
+				}
+			}
+		}
+	]
+}
