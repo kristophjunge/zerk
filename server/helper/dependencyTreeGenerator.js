@@ -5,7 +5,7 @@ var moduleDir = path.resolve(zerkDir, 'node_modules');
 var companion = require(moduleDir + '/companion/src/companion.js');
 var JSON5 = companion.require('../../vendor/json5/json5.js').JSON5;
 
-module.exports = function (zerkDir) {
+module.exports = function(zerkDir) {
     var module = {};
     var zerkPath = 'src/zerk/';
     var namespaces = {};
@@ -34,17 +34,16 @@ module.exports = function (zerkDir) {
 
         var result = [];
 
-        for (var i=0; i<classes.length; i++) {
+        for (var i = 0; i < classes.length; i++) {
             var classInfo = resolvePath(classes[i]);
             result.push(classInfo.webRoot + '/' + classInfo.path);
         }
 
         return result;
 
-
     };
 
-    module.getDependencyList = function () {
+    module.getDependencyList = function() {
         return dependencyList;
     };
 
@@ -62,7 +61,7 @@ module.exports = function (zerkDir) {
         }
 
         var deps = parseContent(depFileContent);
-        for (var i=0; i<deps.length; i++) {
+        for (var i = 0; i < deps.length; i++) {
 
             traverseTree(dependencyList, deps[i]);
 

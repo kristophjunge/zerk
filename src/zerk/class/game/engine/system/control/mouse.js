@@ -16,7 +16,7 @@ zerk.define({
     name: 'zerk.game.engine.system.control.mouse',
     extend: 'zerk.observable'
 
-},{
+}, {
 
     /**
      * Horizontal cursor position
@@ -100,20 +100,20 @@ zerk.define({
      * @method init
      * @param {zerk.game.engine} engine
      */
-    init: function(control,viewport,config) {
+    init: function(control, viewport, config) {
 
         zerk.parent('zerk.game.engine.system.control.mouse').init.apply(
             this,
             arguments
         );
 
-        this._control=control;
-        this._viewport=viewport;
-        this._config=config;
+        this._control = control;
+        this._viewport = viewport;
+        this._config = config;
 
-        var self=this;
+        var self = this;
 
-        var canvas=this._viewport.getCanvasElement('display');
+        var canvas = this._viewport.getCanvasElement('display');
 
         canvas.addEventListener(
             'click',
@@ -183,11 +183,11 @@ zerk.define({
      */
     _getCursorPosition: function(event) {
 
-        var position=this._viewport.getCanvasPosition('display');
+        var position = this._viewport.getCanvasPosition('display');
 
         return {
-            x: event.clientX-position.left,
-            y: event.clientY-position.top
+            x: event.clientX - position.left,
+            y: event.clientY - position.top
         };
 
     },
@@ -218,13 +218,13 @@ zerk.define({
      */
     _onMouseDown: function(event) {
 
-        var me=this;
+        var me = this;
 
         event.preventDefault();
 
-        if (event.button==0) {
+        if (event.button == 0) {
 
-            this.mouseLeftDown=true;
+            this.mouseLeftDown = true;
 
             /*
              * Trigger the mouse move event to interact
@@ -232,13 +232,13 @@ zerk.define({
              */
             this._onMouseMove(event);
 
-        } else if (event.button==1) {
+        } else if (event.button == 1) {
 
-            this.mouseMiddleDown=true;
+            this.mouseMiddleDown = true;
 
-        } else if (event.button==2) {
+        } else if (event.button == 2) {
 
-            this.mouseRightDown=true;
+            this.mouseRightDown = true;
 
         }
 
@@ -248,7 +248,7 @@ zerk.define({
          * @param {DOMEvent} event
          * @event mousedown
          */
-        this.fireEvent('mousedown',event);
+        this.fireEvent('mousedown', event);
 
         return false;
 
@@ -264,17 +264,17 @@ zerk.define({
      */
     _onMouseUp: function(event) {
 
-        if (event.button==0) {
+        if (event.button == 0) {
 
-            this.mouseLeftDown=false;
+            this.mouseLeftDown = false;
 
-        } else if (event.button==1) {
+        } else if (event.button == 1) {
 
-            this.mouseMiddleDown=false;
+            this.mouseMiddleDown = false;
 
-        } else if (event.button==2) {
+        } else if (event.button == 2) {
 
-            this.mouseRightDown=false;
+            this.mouseRightDown = false;
 
         }
 
@@ -284,7 +284,7 @@ zerk.define({
          * @param {DOMEvent} event
          * @event mouseup
          */
-        this.fireEvent('mouseup',event);
+        this.fireEvent('mouseup', event);
 
         return false;
 
@@ -299,7 +299,7 @@ zerk.define({
      */
     _onMouseMove: function(event) {
 
-        var position=this._getCursorPosition(event);
+        var position = this._getCursorPosition(event);
 
         if (this.mouseMiddleDown) {
 
@@ -307,34 +307,28 @@ zerk.define({
              * TODO Remove the mouse view from the controls system
              */
             this._viewport.setX(
-                this._viewport.getX()
-                -this._viewport.fromZoom(
-                    (position.x-this._lastMousePosition.x)
-                    *this._config.zoomSpeed
+                this._viewport.getX() - this._viewport.fromZoom(
+                    (position.x - this._lastMousePosition.x) * this._config.zoomSpeed
                 )
             );
 
             this._viewport.setY(
-                this._viewport.getY()
-                -this._viewport.fromZoom(
-                    (position.y-this._lastMousePosition.y)
-                    *this._config.zoomSpeed
+                this._viewport.getY() - this._viewport.fromZoom(
+                    (position.y - this._lastMousePosition.y) * this._config.zoomSpeed
                 )
             );
 
         }
 
-        this.mouseX=this._viewport.fromPixel(this._viewport.getX()
-            +this._viewport.fromZoom(
-                position.x-(this._viewport.getWidth()/2))
+        this.mouseX = this._viewport.fromPixel(this._viewport.getX() + this._viewport.fromZoom(
+                position.x - (this._viewport.getWidth() / 2))
             );
 
-        this.mouseY=this._viewport.fromPixel(this._viewport.getY()
-            +this._viewport.fromZoom(
-                position.y-(this._viewport.getHeight()/2))
+        this.mouseY = this._viewport.fromPixel(this._viewport.getY() + this._viewport.fromZoom(
+                position.y - (this._viewport.getHeight() / 2))
             );
 
-        this._lastMousePosition=this._getCursorPosition(event);
+        this._lastMousePosition = this._getCursorPosition(event);
 
         /**
          * Fires when the cursor is moved
@@ -342,7 +336,7 @@ zerk.define({
          * @param {DOMEvent} event
          * @event mousemove
          */
-        this.fireEvent('mousemove',event);
+        this.fireEvent('mousemove', event);
 
     },
 
@@ -355,15 +349,15 @@ zerk.define({
      */
     _onMouseScroll: function(event) {
 
-        event=((event) ? event : window.event);
-        var delta=((event.detail) ? event.detail : event.wheelDelta*-1);
+        event = ((event) ? event : window.event);
+        var delta = ((event.detail) ? event.detail : event.wheelDelta * -1);
 
         /*
          * TODO Remove the mouse zoom from the controls system
          */
         if (this._config.enableWheelZoom) {
 
-            if (delta<0) {
+            if (delta < 0) {
 
                 this._viewport.zoomIn();
 
@@ -379,9 +373,9 @@ zerk.define({
 
     _onClick: function() {
 
-        var me=this;
+        var me = this;
 
-        var now=new Date();
+        var now = new Date();
 
         /**
          * Fires when a mouse button is pressed
@@ -389,10 +383,10 @@ zerk.define({
          * @param {DOMEvent} event
          * @event click
          */
-        this.fireEvent('click',event);
+        this.fireEvent('click', event);
 
-        if (me._lastMouseButton==event.button
-        && me._lastClickTime>=now.getTime()-me._doubleClickDelay) {
+        if (me._lastMouseButton == event.button &&
+        me._lastClickTime >= now.getTime() - me._doubleClickDelay) {
 
             /**
              * Fires when a mouse button is pressed
@@ -400,14 +394,13 @@ zerk.define({
              * @param {DOMEvent} event
              * @event doubleclick
              */
-            me.fireEvent('doubleclick',event);
+            me.fireEvent('doubleclick', event);
 
         }
 
-        me._lastMouseButton=event.button;
-        me._lastClickTime=now.getTime();
+        me._lastMouseButton = event.button;
+        me._lastClickTime = now.getTime();
 
     }
-
 
 });

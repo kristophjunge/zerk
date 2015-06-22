@@ -13,18 +13,18 @@ zerk.define({
     name: 'zerk.game.engine.component.physics',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'physics',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             bodies: [],
             joints: []
         };
 
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(
@@ -39,8 +39,8 @@ zerk.define({
             entityConfig
         );
 
-        state._bodyList=[];
-        state._jointList=[];
+        state._bodyList = [];
+        state._jointList = [];
 
         // Extend bodies
         for (var index in entityConfig.bodies) {
@@ -56,7 +56,7 @@ zerk.define({
              *
              * @class config.component.physics.body
              **/
-            var extendedBody={
+            var extendedBody = {
 
                 /**
                  * Physics handle
@@ -174,15 +174,15 @@ zerk.define({
 
             };
 
-            zerk.apply(extendedBody,entityConfig.bodies[index]);
+            zerk.apply(extendedBody, entityConfig.bodies[index]);
 
-            extendedBody.key=index;
+            extendedBody.key = index;
 
-            state.bodies[index]=extendedBody;
+            state.bodies[index] = extendedBody;
 
             state._bodyList.push(state.bodies[index]);
 
-            var extendedFixture=null;
+            var extendedFixture = null;
 
             for (var indexTwo in entityConfig.bodies[index].fixtures) {
 
@@ -199,7 +199,7 @@ zerk.define({
                          * @class rectangle
                          * @namespace config.component.physics.body.fixture
                          **/
-                        extendedFixture={
+                        extendedFixture = {
                             /**
                              * Identification key
                              *
@@ -346,7 +346,7 @@ zerk.define({
                          * @class circle
                          * @namespace config.component.physics.body.fixture
                          **/
-                        extendedFixture={
+                        extendedFixture = {
                             /**
                              * Identification key
                              *
@@ -485,7 +485,7 @@ zerk.define({
                          * @class polygon
                          * @namespace config.component.physics.body.fixture
                          **/
-                        extendedFixture={
+                        extendedFixture = {
                             /**
                              * Identification key
                              *
@@ -619,9 +619,9 @@ zerk.define({
                     entityConfig.bodies[index].fixtures[indexTwo]
                 );
 
-                extendedFixture.key=indexTwo;
+                extendedFixture.key = indexTwo;
 
-                state.bodies[index].fixtures[indexTwo]=extendedFixture;
+                state.bodies[index].fixtures[indexTwo] = extendedFixture;
 
                 state.bodies[index]._fixtureList.push(
                     state.bodies[index].fixtures[indexTwo]
@@ -632,7 +632,7 @@ zerk.define({
         }
 
         // Extend joints
-        var extendedJoint=null;
+        var extendedJoint = null;
 
         for (var index in entityConfig.joints) {
 
@@ -649,7 +649,7 @@ zerk.define({
                      * @class distance
                      * @namespace config.component.physics.joint
                      **/
-                    extendedJoint={
+                    extendedJoint = {
                         /**
                          * Type name of the joint
                          *
@@ -737,7 +737,7 @@ zerk.define({
                      * @class revolute
                      * @namespace config.component.physics.joint
                      **/
-                    extendedJoint={
+                    extendedJoint = {
                         /**
                          * Type name of the joint
                          *
@@ -845,7 +845,7 @@ zerk.define({
                      * @class prismatic
                      * @namespace config.component.physics.joint
                      **/
-                    extendedJoint={
+                    extendedJoint = {
                         /**
                          * Type name of the joint
                          *
@@ -940,13 +940,13 @@ zerk.define({
                     break;
             }
 
-            zerk.apply(extendedJoint,entityConfig.joints[index]);
+            zerk.apply(extendedJoint, entityConfig.joints[index]);
 
-            extendedJoint.key=index;
+            extendedJoint.key = index;
 
-            state.joints[index]=extendedJoint;
+            state.joints[index] = extendedJoint;
 
-            state._jointList[index]=state.joints[index];
+            state._jointList[index] = state.joints[index];
 
         }
 

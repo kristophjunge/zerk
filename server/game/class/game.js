@@ -25,14 +25,14 @@ zerk.define({
         'zerk.game.engine.system.elevator',
     ]
 
-},{
+}, {
 
     init: function() {
-        console.log("start game")
+        console.log('start game')
     },
 
     run: function(config) {
-        var me=this;
+        var me = this;
 
         if (!me._engine.start()) {
             return;
@@ -40,27 +40,26 @@ zerk.define({
 
         me._engine.loadWorldConfig(
             {
-                "name": "empty",
-                "config": {
-                    "systems": {
-                        "physics": {
-                            "gravityX": 0,
-                            "gravityY": 0
+                name: 'empty',
+                config: {
+                    systems: {
+                        physics: {
+                            gravityX: 0,
+                            gravityY: 0
                         }
                     }
                 },
-                "entities": [
+                entities: [
                     {
-                        //"name": "entityeditor.entity.empty",
-                        "name": "monstertruck.entity.monstertruck",
-                        //"name": "sandbox.entity.crate",
+                        name: 'monstertruck.entity.monstertruck',
+                        //name: sandbox.entity.crate,
                         tags: [
                             'editor'
                         ],
-                        "components": {
-                            "position": {
-                                "x": 0,
-                                "y": 0
+                        components: {
+                            position: {
+                                x: 0,
+                                y: 0
                             }
                         }
                     }
@@ -70,7 +69,7 @@ zerk.define({
 
                 me._engine.getSystem('physics').setEnabled(false);
 
-                var control=me._engine.getSystem('control');
+                var control = me._engine.getSystem('control');
 
             },
             function(error) {
@@ -80,6 +79,6 @@ zerk.define({
             }
         );
 
-    },
+    }
 
 });

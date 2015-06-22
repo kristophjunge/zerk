@@ -13,18 +13,18 @@ zerk.define({
     name: 'zerk.game.engine.component.fall',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'fall',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             releaseDelay: 500
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(

@@ -21,7 +21,7 @@ zerk.define({
         'zerk.game.engine.textureLoader'
     ]
 
-},{
+}, {
 
     /**
      * Game engine registry
@@ -123,7 +123,7 @@ zerk.define({
     /*
      * TODO Make the world interval configurable
      */
-    _worldInterval: 1000/60,
+    _worldInterval: 1000 / 60,
 
     /**
      * World timer
@@ -209,7 +209,6 @@ zerk.define({
      **/
     _lastEntityId: 0,
 
-
     /* --- ENGINE --- */
 
     /**
@@ -219,61 +218,61 @@ zerk.define({
      * @param {zerk.jsonLoader} jsonLoader A JSON Loader instance
      * @param {Object} config Game configuration
      **/
-    init: function(jsonLoader,imageLoader,config) {
+    init: function(jsonLoader, imageLoader, config) {
 
         zerk.parent('zerk.game.engine').init.apply(
             this,
             arguments
         );
 
-        this._entityIdMap={};
-        this._entities=[];
-        this._system={};
-        this._threadMap={};
-        this._systemMap={};
+        this._entityIdMap = {};
+        this._entities = [];
+        this._system = {};
+        this._threadMap = {};
+        this._systemMap = {};
 
-        this._jsonLoader=jsonLoader;
+        this._jsonLoader = jsonLoader;
 
-        this._imageLoader=imageLoader;
+        this._imageLoader = imageLoader;
 
-        this._registry=zerk.create(
+        this._registry = zerk.create(
             'zerk.game.engine.registry',
             config // Feed up the registry with the initial user config object
         );
 
-        this._config={
+        this._config = {
             componentMap: {},
             systemMap: {},
             defaultSystems: [],
             version: '0.1.0'
         };
 
-        this._config=this._registry.register('engine',this._config);
+        this._config = this._registry.register('engine', this._config);
 
         // Setup loaders
-        this._componentLoader=zerk.create(
+        this._componentLoader = zerk.create(
             'zerk.game.engine.componentLoader',
             this._jsonLoader,
             this._config.componentMap
         );
 
-        this._entityLoader=zerk.create(
+        this._entityLoader = zerk.create(
             'zerk.game.engine.entityLoader',
             this._jsonLoader
         );
 
-        this._spriteLoader=zerk.create(
+        this._spriteLoader = zerk.create(
             'zerk.game.engine.spriteLoader',
             this._jsonLoader,
             this._imageLoader
         );
 
-        this._textureLoader=zerk.create(
+        this._textureLoader = zerk.create(
             'zerk.game.engine.textureLoader',
             this._imageLoader
         );
 
-        this._worldLoader=zerk.create(
+        this._worldLoader = zerk.create(
             'zerk.game.engine.worldLoader',
             this._jsonLoader,
             this._imageLoader,
@@ -288,7 +287,7 @@ zerk.define({
         // Setup crossbrowser requestAnimationFrame
         zerk.browser.setupRequestAnimationFrame();
 
-        var self=this;
+        var self = this;
 
         (function animloop() {
 
@@ -311,7 +310,7 @@ zerk.define({
 
         this._log('Started');
 
-        this._running=true;
+        this._running = true;
 
         this._tick(); // Run the first tick
 
@@ -328,17 +327,19 @@ zerk.define({
      **/
     stop: function() {
 
-        if (!this._running) return;
+        if (!this._running) {
+            return;
+        }
 
         this._log('Stopping');
 
         this._stopTimer();
 
-        this._running=false;
+        this._running = false;
 
         this.reset();
 
-        this._log('Stopped (Time '+this._time+')');
+        this._log('Stopped (Time ' + this._time + ')');
 
         return true;
 
@@ -353,9 +354,9 @@ zerk.define({
 
         this._stopTimer();
 
-        this._running=false;
+        this._running = false;
 
-        this._log('Game paused (Time '+this._time+')');
+        this._log('Game paused (Time ' + this._time + ')');
 
         return true;
 
@@ -370,20 +371,20 @@ zerk.define({
      * @param {Function} errorHandler Event handler for error
      * @async
      **/
-    loadWorld: function(name,successHandler,errorHandler) {
+    loadWorld: function(name, successHandler, errorHandler) {
 
-        var self=this;
+        var self = this;
 
-        this._log('Loading world "'+name+'"');
+        this._log('Loading world "' + name + '"');
 
-        this._log('Loading world resources',2);
+        this._log('Loading world resources', 2);
 
         this._worldLoader.loadWorld(
             name,
-            function (data) {
-                self._onLoadWorld(data,successHandler || zerk.emptyFn,errorHandler || zerk.emptyFn);
+            function(data) {
+                self._onLoadWorld(data, successHandler || zerk.emptyFn, errorHandler || zerk.emptyFn);
             },
-            function (error) {
+            function(error) {
                 if (zerk.isFunction(errorHandler)) {
                     errorHandler(error);
                 }
@@ -392,20 +393,20 @@ zerk.define({
 
     },
 
-    loadWorldConfig: function(config,successHandler,errorHandler) {
+    loadWorldConfig: function(config, successHandler, errorHandler) {
 
-        var self=this;
+        var self = this;
 
         this._log('Loading world by config');
 
-        this._log('Loading world resources',2);
+        this._log('Loading world resources', 2);
 
         this._worldLoader.loadWorldConfig(
             config,
-            function (data) {
-                self._onLoadWorld(data,successHandler,errorHandler);
+            function(data) {
+                self._onLoadWorld(data, successHandler, errorHandler);
             },
-            function (error) {
+            function(error) {
                 errorHandler(error);
             }
         );
@@ -421,19 +422,19 @@ zerk.define({
 
         this._log('Unloading world');
 
-        this._log('Clear entities',2);
+        this._log('Clear entities', 2);
 
         this.clearEntities();
 
-        this._log('Stop systems',2);
+        this._log('Stop systems', 2);
 
         this.stopSystems();
 
-        this._log('Clear systems',2);
+        this._log('Clear systems', 2);
 
         this.clearSystems();
 
-        this._unloadingWorld=false;
+        this._unloadingWorld = false;
 
         this.fireEvent('worldunloaded');
 
@@ -518,7 +519,7 @@ zerk.define({
      * @param {Function} errorHandler Event handler for error
      * @async
      **/
-    loadEntities: function(entities,successHandler,errorHandler) {
+    loadEntities: function(entities, successHandler, errorHandler) {
 
         return this._entityLoader.loadEntities(
             entities,
@@ -527,8 +528,6 @@ zerk.define({
         );
 
     },
-
-
 
     /* --- ENTITY MANAGER --- */
 
@@ -549,7 +548,7 @@ zerk.define({
          *
          * @class config.entity
          **/
-        var extendedConfig={
+        var extendedConfig = {
 
             /**
              * Unqiue entity id
@@ -584,31 +583,31 @@ zerk.define({
             components: {}
         };
 
-        zerk.apply(extendedConfig,config);
+        zerk.apply(extendedConfig, config);
 
         // Entity definition
-        var definition=this._entityLoader.getEntity(extendedConfig.name);
+        var definition = this._entityLoader.getEntity(extendedConfig.name);
 
         if (!definition) {
 
             zerk.error({
-                message: 'Entity is not loaded "'+extendedConfig.name+'"'
+                message: 'Entity is not loaded "' + extendedConfig.name + '"'
             });
 
         }
 
         // Local config
-        var entity=this._componentLoader.buildComponents(definition,extendedConfig);
+        var entity = this._componentLoader.buildComponents(definition, extendedConfig);
 
         // Generate ID
         this._lastEntityId++;
-        entity.id=this._lastEntityId;
+        entity.id = this._lastEntityId;
 
         // Get list of systems intereste in this entity
-        var systemList=this.getEntitySystemList(entity);
+        var systemList = this.getEntitySystemList(entity);
 
         // Add the entity to related systems
-        for (var i=0;i<systemList.length;i++) {
+        for (var i = 0; i < systemList.length; i++) {
 
             this._system[systemList[i]].addEntity(entity);
 
@@ -618,9 +617,9 @@ zerk.define({
         this._entities.push(entity);
 
         // Create ID map entry
-        this._entityIdMap['id'+entity.id]=entity;
+        this._entityIdMap['id' + entity.id] = entity;
 
-        this._log('Spawned "'+entity.name+'"'+' id "'+entity.id+'"',4);
+        this._log('Spawned "' + entity.name + '"' + ' id "' + entity.id + '"', 4);
 
     },
 
@@ -635,24 +634,23 @@ zerk.define({
     removeEntity: function(entity) {
 
         // Get list of systems intereste in this entity
-        var systemList=this.getEntitySystemList(entity);
+        var systemList = this.getEntitySystemList(entity);
 
-        for (var i=0;i<systemList.length;i++) {
+        for (var i = 0; i < systemList.length; i++) {
 
             this._system[systemList[i]].removeEntity(entity);
 
         }
 
+        delete this._entityIdMap['id' + entity.id];
 
-        delete this._entityIdMap['id'+entity.id];
+        for (var i = 0; i < this._entities.length; i++) {
 
-        for (var i=0;i<this._entities.length;i++) {
+            if (this._entities[i].id == entity.id) {
 
-            if (this._entities[i].id==entity.id) {
+                this._entities.splice(i, 1);
 
-                this._entities.splice(i,1);
-
-                this._log('Destroyed "'+entity.id+'"',4);
+                this._log('Destroyed "' + entity.id + '"', 4);
 
                 return true;
             }
@@ -672,9 +670,11 @@ zerk.define({
      **/
     getEntityById: function(id) {
 
-        if (!zerk.isDefined(this._entityIdMap['id'+id])) return null;
+        if (!zerk.isDefined(this._entityIdMap['id' + id])) {
+            return null;
+        }
 
-        return this._entityIdMap['id'+id];
+        return this._entityIdMap['id' + id];
 
     },
 
@@ -693,25 +693,25 @@ zerk.define({
         // Force into array
         if (!zerk.isArray(tags)) {
 
-            tags=[tags];
+            tags = [tags];
 
         }
 
-        var result=[];
+        var result = [];
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            if (zerk.isDefined(this._entities[i].tags)
-            && zerk.isArray(this._entities[i].tags)
-            && !zerk.isEmpty(this._entities[i].tags)) {
+            if (zerk.isDefined(this._entities[i].tags) &&
+            zerk.isArray(this._entities[i].tags) &&
+            !zerk.isEmpty(this._entities[i].tags)) {
 
-                var match=true;
+                var match = true;
 
-                for (var c=0;c<tags.length;c++) {
+                for (var c = 0; c < tags.length; c++) {
 
-                    if (!zerk.inArray(tags[c],this._entities[i].tags)) {
+                    if (!zerk.inArray(tags[c], this._entities[i].tags)) {
 
-                        match=false;
+                        match = false;
                         break;
 
                     }
@@ -741,18 +741,16 @@ zerk.define({
 
         this._log('Clear');
 
-        while (this._entities.length>0) {
+        while (this._entities.length > 0) {
 
-            this.removeEntity(this._entities[0],true);
+            this.removeEntity(this._entities[0], true);
 
         }
 
         // Reset ID counter
-        this._lastEntityId=0;
+        this._lastEntityId = 0;
 
     },
-
-
 
     /* --- SYSTEM MANAGER --- */
 
@@ -764,38 +762,40 @@ zerk.define({
      * @param {Object} config Initial config for the system
      * @return {Boolean} True on success
      **/
-    addSystem: function(name,config) {
+    addSystem: function(name, config) {
 
-        this._log('Add system "'+name+'"');
+        this._log('Add system "' + name + '"');
 
-        if (this.isSystemRegistered(name)) return;
+        if (this.isSystemRegistered(name)) {
+            return;
+        }
 
-        var systemClass=this._getSystemClass(name);
+        var systemClass = this._getSystemClass(name);
 
-        var system=zerk.create(
+        var system = zerk.create(
             systemClass,
             this,
             config
         );
 
-        var thread=system.getThread();
+        var thread = system.getThread();
 
         // Register the system under its name
-        this._system[system.getName()]=system;
+        this._system[system.getName()] = system;
 
         // Create a thread map entry
-        if (typeof this._threadMap[thread]=='undefined') {
-            this._threadMap[thread]=[];
+        if (typeof this._threadMap[thread] == 'undefined') {
+            this._threadMap[thread] = [];
         }
 
-        var inserted=false;
+        var inserted = false;
 
-        for (var i=0;i<this._threadMap[thread];i++) {
+        for (var i = 0; i < this._threadMap[thread]; i++) {
 
-            if (this._threadMap[thread][i].getPriority()<system.getPriority()) {
+            if (this._threadMap[thread][i].getPriority() < system.getPriority()) {
 
-                this._threadMap[thread].splice(i-1,0,system);
-                inserted=true;
+                this._threadMap[thread].splice(i - 1, 0, system);
+                inserted = true;
 
             }
 
@@ -820,18 +820,20 @@ zerk.define({
      **/
     removeSystem: function(name) {
 
-        this._log('Remove system "'+name+'"');
+        this._log('Remove system "' + name + '"');
 
-        if (!this.isSystemRegistered(name)) return;
+        if (!this.isSystemRegistered(name)) {
+            return;
+        }
 
-        var system=this.getSystem(name);
+        var system = this.getSystem(name);
 
-        var thread=system.getThread();
+        var thread = system.getThread();
 
         // Remove register entry
         for (var key in this._system) {
 
-            if (key==name) {
+            if (key == name) {
 
                 delete this._system[key];
                 break;
@@ -841,11 +843,11 @@ zerk.define({
         }
 
         // Remove thread map entry
-        for (var i=0;i<this._threadMap[thread].length;i++) {
+        for (var i = 0; i < this._threadMap[thread].length; i++) {
 
-            if (this._threadMap[thread][i].getName()==name) {
+            if (this._threadMap[thread][i].getName() == name) {
 
-                this._threadMap[thread].splice(i,1);
+                this._threadMap[thread].splice(i, 1);
                 break;
 
             }
@@ -882,11 +884,11 @@ zerk.define({
      **/
     startSystems: function() {
 
-        var i=0;
+        var i = 0;
 
         for (var thread in this._threadMap) {
 
-            for (i=0;i<this._threadMap[thread].length;i++) {
+            for (i = 0; i < this._threadMap[thread].length; i++) {
 
                 this._threadMap[thread][i].start();
 
@@ -903,11 +905,11 @@ zerk.define({
      **/
     stopSystems: function() {
 
-        var i=0;
+        var i = 0;
 
         for (var thread in this._threadMap) {
 
-            for (i=this._threadMap[thread].length-1;i>=0;i--) {
+            for (i = this._threadMap[thread].length - 1; i >= 0; i--) {
 
                 this._threadMap[thread][i].stop();
 
@@ -926,21 +928,21 @@ zerk.define({
      **/
     getEntitySystemList: function(entity) {
 
-        var keys={};
+        var keys = {};
 
         for (var component in entity.components) {
 
             for (var system in this._system) {
 
                 if (this._system[system].useComponent(component)) {
-                    keys[system]=true;
+                    keys[system] = true;
                 }
 
             }
 
         }
 
-        var result=[];
+        var result = [];
 
         for (var system in keys) {
 
@@ -980,7 +982,7 @@ zerk.define({
      **/
     isSystemRegistered: function(name) {
 
-        return (typeof this._system[name]!='undefined');
+        return (typeof this._system[name] != 'undefined');
 
     },
 
@@ -993,12 +995,14 @@ zerk.define({
      **/
     _updateSystems: function(thread) {
 
-        if (typeof this._threadMap[thread]=='undefined') return;
+        if (typeof this._threadMap[thread] == 'undefined') {
+            return;
+        }
 
         //console.log('UPDATE '+thread);
 
         // Process all systems in given thread register
-        for (var i=0;i<this._threadMap[thread].length;i++) {
+        for (var i = 0; i < this._threadMap[thread].length; i++) {
 
             this._threadMap[thread][i].update();
 
@@ -1016,7 +1020,9 @@ zerk.define({
      **/
     _getSystemClass: function(name) {
 
-        if (typeof this._config.systemMap[name]=='undefined') return false;
+        if (typeof this._config.systemMap[name] == 'undefined') {
+            return false;
+        }
 
         return this._config.systemMap[name];
 
@@ -1031,15 +1037,15 @@ zerk.define({
      * @param {Function} errorHandler Event handler for error
      * @protected
      **/
-    _onLoadWorld: function(world,successHandler,errorHandler) {
+    _onLoadWorld: function(world, successHandler, errorHandler) {
 
         // Merge list of default systems with world systems
 
-        var systems=[];
+        var systems = [];
 
-        var defaultSystems=this._config.defaultSystems;
+        var defaultSystems = this._config.defaultSystems;
 
-        for (var i=0;i<defaultSystems.length;i++) {
+        for (var i = 0; i < defaultSystems.length; i++) {
 
             systems.push(defaultSystems[i]);
 
@@ -1051,42 +1057,39 @@ zerk.define({
 
         }
 
-        systems=zerk.arrayUnique(systems);
-
+        systems = zerk.arrayUnique(systems);
 
         // Add systems
 
-        this._log('Loading systems ('+systems.length+')',2);
+        this._log('Loading systems (' + systems.length + ')', 2);
 
-        var systemConfig=null;
+        var systemConfig = null;
 
-        for (var i=0;i<systems.length;i++) {
+        for (var i = 0; i < systems.length; i++) {
 
-            systemConfig={};
+            systemConfig = {};
 
-            if (typeof world.config.systems[systems[i]]!='undefined') {
+            if (typeof world.config.systems[systems[i]] != 'undefined') {
 
-                systemConfig=world.config.systems[systems[i]];
+                systemConfig = world.config.systems[systems[i]];
 
             }
 
-            this.addSystem(systems[i],systemConfig);
+            this.addSystem(systems[i], systemConfig);
 
         }
 
-
         // Start systems
 
-        this._log('Starting systems',2);
+        this._log('Starting systems', 2);
 
         this.startSystems();
 
-
         // Add entities
 
-        this._log('Loading entities ('+world.entities.length+')',2);
+        this._log('Loading entities (' + world.entities.length + ')', 2);
 
-        for (var i=0;i<world.entities.length;i++) {
+        for (var i = 0; i < world.entities.length; i++) {
 
             /*
              * TODO Check why world is modified in here
@@ -1094,8 +1097,6 @@ zerk.define({
             this.addEntity(world.entities[i]);
 
         }
-
-
 
         // Execute callback
 
@@ -1113,9 +1114,9 @@ zerk.define({
      **/
     _startTimer: function() {
 
-        var self=this;
+        var self = this;
 
-        this._timer=window.setInterval(
+        this._timer = window.setInterval(
             function() {
 
                 self._tick();
@@ -1160,7 +1161,9 @@ zerk.define({
      **/
     _render: function() {
 
-        if (!this._running) return;
+        if (!this._running) {
+            return;
+        }
 
         this._updateSystems('render');
 
@@ -1174,7 +1177,7 @@ zerk.define({
      * @param {Integer} severity Log severity
      * @protected
      **/
-    _log: function(message,severity) {
+    _log: function(message, severity) {
 
         zerk.log({
             message: message,

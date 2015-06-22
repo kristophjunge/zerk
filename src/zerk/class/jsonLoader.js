@@ -17,7 +17,7 @@ zerk.define({
         'zerk.network.ajax'
     ]
 
-},{
+}, {
 
     /**
      * Register of loaded resources
@@ -58,7 +58,7 @@ zerk.define({
             this.setConfig(config);
         }
 
-        this._ajax=zerk.create('zerk.network.ajax');
+        this._ajax = zerk.create('zerk.network.ajax');
 
     },
 
@@ -74,32 +74,32 @@ zerk.define({
      * @protected
      * @async
      **/
-    _loadJSON: function(id,successFn,errorFn) {
+    _loadJSON: function(id, successFn, errorFn) {
 
-        var path=this._getResourcePath(id);
+        var path = this._getResourcePath(id);
         if (!path) {
-            zerk.error('Resource not found "'+id+'"');
+            zerk.error('Resource not found "' + id + '"');
         }
 
-        var self=this;
+        var self = this;
 
         this._ajax.request(
             path,
             false,
-            function (request) {
+            function(request) {
 
                 try {
 
-                    var jsondata=JSON5.parse(request.responseText);
+                    var jsondata = JSON5.parse(request.responseText);
 
-                } catch(e) {
+                } catch (e) {
 
                     console.log(
-                        'Parse error "'+e.message+'" at position '+e.at
+                        'Parse error "' + e.message + '" at position ' + e.at
                     );
                     console.log(e.text);
 
-                    if (typeof error=='function') {
+                    if (typeof error == 'function') {
 
                         error({
                             at: e.at,
@@ -111,14 +111,14 @@ zerk.define({
 
                 }
 
-                self._data[id]=jsondata;
+                self._data[id] = jsondata;
 
                 if (zerk.isFunction(successFn)) {
-                    successFn(id,zerk.clone(self._data[id]));
+                    successFn(id, zerk.clone(self._data[id]));
                 }
 
             },
-            function (request) {
+            function(request) {
 
                 errorFn({
                     resource: id,
@@ -143,40 +143,40 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    require: function(idList,successFn,errorFn) {
+    require: function(idList, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
         if (!zerk.isDefined(successFn)) {
-            successFn=zerk.emptyFn();
+            successFn = zerk.emptyFn();
         }
         if (!zerk.isDefined(errorFn)) {
-            errorFn=zerk.emptyFn();
+            errorFn = zerk.emptyFn();
         }
 
-        var completed=[];
-        var unloaded=[];
-        var result={};
+        var completed = [];
+        var unloaded = [];
+        var result = {};
 
-        for (var i=0;i<idList.length;i++) {
+        for (var i = 0; i < idList.length; i++) {
             if (this.isLoaded(idList[i])) {
-                result[idList[i]]=me.getResource(idList[i]);
+                result[idList[i]] = me.getResource(idList[i]);
             } else {
                 unloaded.push(idList[i]);
             }
         }
 
-        if (unloaded.length==0) {
+        if (unloaded.length == 0) {
             successFn(result);
         }
 
-        for (var i=0;i<unloaded.length;i++) {
+        for (var i = 0; i < unloaded.length; i++) {
             this._loadJSON(
                 unloaded[i],
-                function(id,data) {
+                function(id, data) {
                     completed.push(unloaded[i]);
-                    result[id]=data;
-                    if (completed.length==unloaded.length) {
+                    result[id] = data;
+                    if (completed.length == unloaded.length) {
                         successFn(result);
                     }
                 },
@@ -188,8 +188,8 @@ zerk.define({
 
     clear: function() {
 
-        var me=this;
-        me._data={};
+        var me = this;
+        me._data = {};
 
     },
 
@@ -202,7 +202,9 @@ zerk.define({
      **/
     getResource: function(id) {
 
-        if (typeof this._data[id]=='undefined') return;
+        if (typeof this._data[id] == 'undefined') {
+            return;
+        }
 
         return zerk.clone(this._data[id]);
 
@@ -216,9 +218,9 @@ zerk.define({
      **/
     setConfig: function(config) {
 
-        for (var i=0;i<config.length;i++) {
+        for (var i = 0; i < config.length; i++) {
 
-            this._namespace[config[i].namespace]=config[i].path;
+            this._namespace[config[i].namespace] = config[i].path;
 
         }
 
@@ -251,15 +253,17 @@ zerk.define({
 
         for (var ns in this._namespace) {
 
-            if (ns.length>id.length) continue;
+            if (ns.length > id.length) {
+                continue;
+            }
 
-            if (ns==id.substr(0,ns.length)) {
+            if (ns == id.substr(0, ns.length)) {
 
-                var localPart = id.substr(ns.length+1);
+                var localPart = id.substr(ns.length + 1);
 
-                localPart=localPart.replace(/\./g,'/');
+                localPart = localPart.replace(/\./g, '/');
 
-                return this._namespace[ns]+'/'+localPart+'.json?r='+Math.random();
+                return this._namespace[ns] + '/' + localPart + '.json?r=' + Math.random();
 
             }
 
@@ -269,9 +273,9 @@ zerk.define({
 
     },
 
-    addNamespace: function(ns,path) {
+    addNamespace: function(ns, path) {
 
-        this._namespace[ns]=path;
+        this._namespace[ns] = path;
 
     }
 

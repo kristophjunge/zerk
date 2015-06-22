@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.fall',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -49,14 +49,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.fall').init.apply(
             this,
             arguments
         );
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
     },
 
@@ -69,7 +69,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='fall');
+        return (name == 'fall');
 
     },
 
@@ -121,17 +121,17 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactBegin: function(source,target) {
+    _onContactBegin: function(source, target) {
 
         if (!zerk.isDefined(target.entity.components.fall)) {
             return true;
         }
 
-        var self=this;
+        var self = this;
 
         window.setTimeout(
             function() {
-                self._physics.setBodyMoveable(target.entity,'main',true);
+                self._physics.setBodyMoveable(target.entity, 'main', true);
             },
             target.entity.components.fall.releaseDelay
         );

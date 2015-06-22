@@ -13,13 +13,13 @@ zerk.define({
     name: 'zerk.game.engine.component.elevator',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'elevator',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             enabled: true,
             distance: 2.5,
             position: 0,
@@ -30,7 +30,7 @@ zerk.define({
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(

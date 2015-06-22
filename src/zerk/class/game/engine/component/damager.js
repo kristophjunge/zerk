@@ -13,16 +13,16 @@ zerk.define({
     name: 'zerk.game.engine.component.damager',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'damager',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={};
+        var defaultConfig = {};
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(

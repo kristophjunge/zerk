@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.entityLoader'
 
-},{
+}, {
 
     /**
      * JSON loader instance
@@ -41,9 +41,9 @@ zerk.define({
      */
     init: function(jsonLoader) {
 
-        this._jsonLoader=jsonLoader;
+        this._jsonLoader = jsonLoader;
 
-        this._entities={};
+        this._entities = {};
 
     },
 
@@ -56,7 +56,9 @@ zerk.define({
      **/
     getEntity: function(name) {
 
-        if (typeof this._entities[name]=='undefined') return null;
+        if (typeof this._entities[name] == 'undefined') {
+            return null;
+        }
 
         return this._entities[name];
 
@@ -71,15 +73,15 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    loadEntities: function(idList,successFn,errorFn) {
+    loadEntities: function(idList, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
         this._jsonLoader.require(
             idList,
             function(entities) {
                 for (var entityId in entities) {
-                    me._entities[entityId]=entities[entityId];
+                    me._entities[entityId] = entities[entityId];
                 }
                 successFn(me._entities);
             },
@@ -90,8 +92,8 @@ zerk.define({
 
     clear: function() {
 
-        var me=this;
-        me._entities={};
+        var me = this;
+        me._entities = {};
 
     }
 

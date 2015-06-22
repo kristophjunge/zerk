@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.render',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -60,14 +60,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.render').init.apply(
             this,
             arguments
         );
 
-        this._viewport=this._getSystem('viewport');
+        this._viewport = this._getSystem('viewport');
 
     },
 
@@ -80,7 +80,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='render');
+        return (name == 'render');
 
     },
 
@@ -140,18 +140,20 @@ zerk.define({
         );
 
         // Render all entities in the view area
-        var entityStates=this._viewport.getEntitiesInViewport();
+        var entityStates = this._viewport.getEntitiesInViewport();
 
-        for (var i=0;i<entityStates.length;i++) {
+        for (var i = 0; i < entityStates.length; i++) {
 
             // Check if this entity has the sprite component
-            if (typeof entityStates[i].components.render=='undefined') {
+            if (typeof entityStates[i].components.render == 'undefined') {
 
                 continue;
 
             }
 
-            if (!entityStates[i].components.render.visible) continue;
+            if (!entityStates[i].components.render.visible) {
+                continue;
+            }
 
             this._renderEntity(entityStates[i]);
         }
@@ -167,19 +169,14 @@ zerk.define({
      **/
     _renderEntity: function(entity) {
 
-        var position=entity.components.position;
-        var render=entity.components.render;
-
+        var position = entity.components.position;
+        var render = entity.components.render;
 
         // Calcuate size of each layer
-        var layerSizes=this._getBufferSizeLayers(entity);
+        var layerSizes = this._getBufferSizeLayers(entity);
 
         // Calucate buffer
-        var bufferSize=this._getBufferSizeEntity(entity,layerSizes);
-
-
-
-
+        var bufferSize = this._getBufferSizeEntity(entity, layerSizes);
 
         /*
         bufferSize={
@@ -190,18 +187,6 @@ zerk.define({
         };
         */
 
-
-
-
-
-
-
-
-
-
-
-
-
         this._viewport.bufferInit(
             'entity',
             bufferSize.width,
@@ -211,12 +196,9 @@ zerk.define({
             0 // No rotation. Rotation happens during placement
         );
 
-
-
-
         // Render all layers
-        for (var i=0;i<render._layerList.length;i++) {
-            this._renderLayer(entity,render._layerList[i]);
+        for (var i = 0; i < render._layerList.length; i++) {
+            this._renderLayer(entity, render._layerList[i]);
         }
 
         // Entity buffer origin
@@ -234,9 +216,6 @@ zerk.define({
             0
         );
         */
-
-
-
 
         // Debug
         /*
@@ -263,8 +242,6 @@ zerk.define({
         );
         */
 
-
-
         this._viewport.bufferFlush(
             'entity',
             'display',
@@ -277,20 +254,20 @@ zerk.define({
             this._viewport.toZoom(-bufferSize.y)
         );
 
-        this._debugDrawEntityBuffers(entity,layerSizes);
+        this._debugDrawEntityBuffers(entity, layerSizes);
 
     },
 
     _getBufferSizeLayers: function(entity) {
 
-        var render=entity.components.render;
+        var render = entity.components.render;
 
-        var result=[];
-        var bufferSize=null;
+        var result = [];
+        var bufferSize = null;
 
-        for (var i=0;i<render._layerList.length;i++) {
+        for (var i = 0; i < render._layerList.length; i++) {
 
-            bufferSize=this._getBufferSizeLayer(entity,render._layerList[i]);
+            bufferSize = this._getBufferSizeLayer(entity, render._layerList[i]);
 
             if (bufferSize) {
 
@@ -304,54 +281,49 @@ zerk.define({
 
     },
 
-    _getBufferSizeEntity: function(entity,layerSizes) {
+    _getBufferSizeEntity: function(entity, layerSizes) {
 
-        var mostLeft=0;
-        var mostRight=0;
-        var mostBottom=0;
-        var mostTop=0;
+        var mostLeft = 0;
+        var mostRight = 0;
+        var mostBottom = 0;
+        var mostTop = 0;
 
-        var boxLeft=0;
-        var boxRight=0;
-        var boxTop=0;
-        var boxBottom=0;
+        var boxLeft = 0;
+        var boxRight = 0;
+        var boxTop = 0;
+        var boxBottom = 0;
 
-        for (var i=0;i<layerSizes.length;i++) {
+        for (var i = 0; i < layerSizes.length; i++) {
 
-            boxLeft=layerSizes[i].x;
-            boxRight=layerSizes[i].x+layerSizes[i].width;
-            boxTop=layerSizes[i].y;
-            boxBottom=layerSizes[i].y+layerSizes[i].height;
+            boxLeft = layerSizes[i].x;
+            boxRight = layerSizes[i].x + layerSizes[i].width;
+            boxTop = layerSizes[i].y;
+            boxBottom = layerSizes[i].y + layerSizes[i].height;
 
-            if (boxLeft<mostLeft) {
-                mostLeft=boxLeft;
+            if (boxLeft < mostLeft) {
+                mostLeft = boxLeft;
             }
 
-            if (boxRight>mostRight) {
-                mostRight=boxRight;
+            if (boxRight > mostRight) {
+                mostRight = boxRight;
             }
 
-            if (boxTop<mostTop) {
-                mostTop=boxTop;
+            if (boxTop < mostTop) {
+                mostTop = boxTop;
             }
 
-            if (boxBottom>mostBottom) {
-                mostBottom=boxBottom;
+            if (boxBottom > mostBottom) {
+                mostBottom = boxBottom;
             }
 
         }
 
-
-
-
-
         // Odd
-        var width=mostRight-mostLeft;
-        var height=mostBottom-mostTop;
+        var width = mostRight - mostLeft;
+        var height = mostBottom - mostTop;
 
-        var left=(mostLeft*-1);
-        var top=(mostTop*-1);
-
+        var left = (mostLeft * -1);
+        var top = (mostTop * -1);
 
         // Even
         /*
@@ -371,17 +343,12 @@ zerk.define({
         }
         */
 
-
         /*
         left+=this._bufferGap;
         top+=this._bufferGap;
         width+=(this._bufferGap*2);
         height+=(this._bufferGap*2);
         */
-
-
-
-
 
         if (width % 2) { // Even
 
@@ -397,14 +364,10 @@ zerk.define({
             //top+=1;
         }
 
-
-
         //var max=((width>height) ? width : height);
 
-
-        width=Math.ceil(width);
-        height=Math.ceil(height);
-
+        width = Math.ceil(width);
+        height = Math.ceil(height);
 
         return {
             x: left,
@@ -421,22 +384,21 @@ zerk.define({
 
     },
 
-    _debugDrawEntityBuffers: function(entity,layerSizes) {
+    _debugDrawEntityBuffers: function(entity, layerSizes) {
 
-        var render=entity.components.render;
+        var render = entity.components.render;
 
-        var mostLeft=0;
-        var mostRight=0;
-        var mostBottom=0;
-        var mostTop=0;
+        var mostLeft = 0;
+        var mostRight = 0;
+        var mostBottom = 0;
+        var mostTop = 0;
 
-        var boxLeft=0;
-        var boxRight=0;
-        var boxTop=0;
-        var boxBottom=0;
+        var boxLeft = 0;
+        var boxRight = 0;
+        var boxTop = 0;
+        var boxBottom = 0;
 
-        for (var i=0;i<layerSizes.length;i++) {
-
+        for (var i = 0; i < layerSizes.length; i++) {
 
             this._viewport.drawRect(
                 'entity',
@@ -449,55 +411,48 @@ zerk.define({
                 1
             );
 
+            boxLeft = layerSizes[i].x;
+            boxRight = layerSizes[i].x + layerSizes[i].width;
+            boxTop = layerSizes[i].y;
+            boxBottom = layerSizes[i].y + layerSizes[i].height;
 
-            boxLeft=layerSizes[i].x;
-            boxRight=layerSizes[i].x+layerSizes[i].width;
-            boxTop=layerSizes[i].y;
-            boxBottom=layerSizes[i].y+layerSizes[i].height;
-
-            if (boxLeft<mostLeft) {
-                mostLeft=boxLeft;
+            if (boxLeft < mostLeft) {
+                mostLeft = boxLeft;
             }
 
-            if (boxRight>mostRight) {
-                mostRight=boxRight;
+            if (boxRight > mostRight) {
+                mostRight = boxRight;
             }
 
-            if (boxTop<mostTop) {
-                mostTop=boxTop;
+            if (boxTop < mostTop) {
+                mostTop = boxTop;
             }
 
-            if (boxBottom>mostBottom) {
-                mostBottom=boxBottom;
+            if (boxBottom > mostBottom) {
+                mostBottom = boxBottom;
             }
 
         }
 
+        var width = 0;
+        var height = 0;
 
-        var width=0;
-        var height=0;
-
-        if (mostLeft*-1>mostRight) {
-            width=mostLeft*-1*2;
+        if (mostLeft * -1 > mostRight) {
+            width = mostLeft * -1 * 2;
         } else {
-            width=mostRight*2;
+            width = mostRight * 2;
         }
 
-        if (mostTop*-1>mostBottom) {
-            height=mostTop*-1*2;
+        if (mostTop * -1 > mostBottom) {
+            height = mostTop * -1 * 2;
         } else {
-            height=mostBottom*2;
+            height = mostBottom * 2;
         }
-
-
-
-
 
         /*
         var width=mostRight-mostLeft;
         var height=mostBottom-mostTop;
         */
-
 
         /*
         this._viewport.drawRect(
@@ -512,7 +467,6 @@ zerk.define({
         );
         */
 
-
     },
 
     /**
@@ -522,14 +476,14 @@ zerk.define({
      * @param layer
      * @private
      */
-    _renderLayer: function(entity,layer) {
+    _renderLayer: function(entity, layer) {
 
         switch (layer.render) {
             case 'texture':
-                this._renderLayerTexture(entity,layer);
+                this._renderLayerTexture(entity, layer);
                 break;
             case 'sprite':
-                this._renderLayerSprite(entity,layer);
+                this._renderLayerSprite(entity, layer);
                 break;
         }
 
@@ -542,58 +496,58 @@ zerk.define({
      * @param layer
      * @private
      */
-    _renderLayerTexture: function(entity,layer) {
+    _renderLayerTexture: function(entity, layer) {
 
         if (layer.body && layer.fixture) {
-            this._renderLayerTexturePhysics(entity,layer);
+            this._renderLayerTexturePhysics(entity, layer);
         } else {
-            this._renderLayerTextureStandalone(entity,layer);
+            this._renderLayerTextureStandalone(entity, layer);
         }
 
     },
 
-    _renderLayerTexturePhysics: function(entity,layer) {
+    _renderLayerTexturePhysics: function(entity, layer) {
 
-        var image=this._engine._textureLoader.getTexture(
+        var image = this._engine._textureLoader.getTexture(
             layer.texture
         );
 
-        var physics=entity.components.physics;
-        var body=physics.bodies[layer.body];
-        var fixture=physics.bodies[layer.body].fixtures[layer.fixture];
+        var physics = entity.components.physics;
+        var body = physics.bodies[layer.body];
+        var fixture = physics.bodies[layer.body].fixtures[layer.fixture];
 
         // Calculate texture pattern offset
-        var textureOffset=zerk.helper.rotatePosition(
+        var textureOffset = zerk.helper.rotatePosition(
             body.x,
             body.y,
-            -body.angle-fixture.angle-layer.angle-layer.textureAngle
+            -body.angle - fixture.angle - layer.angle - layer.textureAngle
         );
-        textureOffset.x+=layer.textureOffsetX;
-        textureOffset.y+=layer.textureOffsetY;
+        textureOffset.x += layer.textureOffsetX;
+        textureOffset.y += layer.textureOffsetY;
 
         // Rotate layer position
-        var position=zerk.helper.rotatePosition(
+        var position = zerk.helper.rotatePosition(
             layer.x,
             layer.y,
             fixture.angle
         );
 
         // Rotate fixture position
-        position=zerk.helper.rotatePosition(
-            position.x+fixture.x,
-            position.y+fixture.y,
+        position = zerk.helper.rotatePosition(
+            position.x + fixture.x,
+            position.y + fixture.y,
             body.angle
         );
 
         // Add body position
-        position={
-            x: position.x+body.x,
-            y: position.y+body.y
+        position = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
-        var textureAngle=body.angle+fixture.angle+layer.angle+layer.textureAngle;
+        var textureAngle = body.angle + fixture.angle + layer.angle + layer.textureAngle;
 
-        var angle=body.angle+fixture.angle+layer.angle;
+        var angle = body.angle + fixture.angle + layer.angle;
 
         switch (fixture.shape) {
 
@@ -620,7 +574,7 @@ zerk.define({
                     this._viewport.toPixel(position.y),
                     this._viewport.toPixel(fixture.radius),
                     0,
-                    2*Math.PI,
+                    2 * Math.PI,
                     false,
                     image,
                     this._viewport.toPixel(textureOffset.x),
@@ -632,8 +586,8 @@ zerk.define({
 
             case 'polygon':
 
-                var polygon=[];
-                for (var i=0;i<fixture.vertices.length;i++) {
+                var polygon = [];
+                for (var i = 0; i < fixture.vertices.length; i++) {
                     polygon.push([
                         this._viewport.toPixel(fixture.vertices[i][0]),
                         this._viewport.toPixel(fixture.vertices[i][1])
@@ -655,7 +609,7 @@ zerk.define({
 
                 break;
             default:
-                zerk.error('Unknown shape "'+fixture.shape+'"');
+                zerk.error('Unknown shape "' + fixture.shape + '"');
                 break;
 
         }
@@ -677,25 +631,25 @@ zerk.define({
 
     },
 
-    _renderLayerTextureStandalone: function(entity,layer) {
+    _renderLayerTextureStandalone: function(entity, layer) {
 
-        var image=this._engine._textureLoader.getTexture(
+        var image = this._engine._textureLoader.getTexture(
             layer.texture
         );
 
-        var textureOffset={
+        var textureOffset = {
             x: layer.textureOffsetX,
             y: layer.textureOffsetY
         };
 
-        var position={
+        var position = {
             x: layer.x,
             y: layer.y
         };
 
-        var textureAngle=layer.textureAngle;
+        var textureAngle = layer.textureAngle;
 
-        var angle=layer.angle;
+        var angle = layer.angle;
 
         this._viewport.fillRect(
             'entity',
@@ -734,45 +688,45 @@ zerk.define({
      * @param layer
      * @private
      */
-    _renderLayerSprite: function(entity,layer) {
+    _renderLayerSprite: function(entity, layer) {
 
         if (layer.body && layer.fixture) {
-            this._renderLayerSpritePhysics(entity,layer);
+            this._renderLayerSpritePhysics(entity, layer);
         } else {
-            this._renderLayerSpriteStandalone(entity,layer);
+            this._renderLayerSpriteStandalone(entity, layer);
         }
 
     },
 
-    _renderLayerSpritePhysics: function(entity,layer) {
+    _renderLayerSpritePhysics: function(entity, layer) {
 
-        var physics=entity.components.physics;
-        var body=physics.bodies[layer.body];
-        var fixture=physics.bodies[layer.body].fixtures[layer.fixture];
+        var physics = entity.components.physics;
+        var body = physics.bodies[layer.body];
+        var fixture = physics.bodies[layer.body].fixtures[layer.fixture];
 
         // Rotate layer position
-        var position=zerk.helper.rotatePosition(
+        var position = zerk.helper.rotatePosition(
             layer.x,
             layer.y,
             fixture.angle
         );
 
         // Rotate fixture position
-        position=zerk.helper.rotatePosition(
-            position.x+fixture.x,
-            position.y+fixture.y,
+        position = zerk.helper.rotatePosition(
+            position.x + fixture.x,
+            position.y + fixture.y,
             body.angle
         );
 
         // Add body position
-        position={
-            x: position.x+body.x,
-            y: position.y+body.y
+        position = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
-        var angle=body.angle+fixture.angle+layer.angle;
+        var angle = body.angle + fixture.angle + layer.angle;
 
-        var image=this._engine._spriteLoader.getSprite(
+        var image = this._engine._spriteLoader.getSprite(
             layer.spritesheet,
             layer.sprite
         );
@@ -808,16 +762,16 @@ zerk.define({
 
     },
 
-    _renderLayerSpriteStandalone: function(entity,layer) {
+    _renderLayerSpriteStandalone: function(entity, layer) {
 
-        var position={
+        var position = {
             x: layer.x,
             y: layer.y
         };
 
-        var angle=layer.angle;
+        var angle = layer.angle;
 
-        var image=this._engine._spriteLoader.getSprite(
+        var image = this._engine._spriteLoader.getSprite(
             layer.spritesheet,
             layer.sprite
         );
@@ -955,71 +909,70 @@ zerk.define({
     },
     */
 
-    _getBufferSizeLayer: function(entity,layer) {
+    _getBufferSizeLayer: function(entity, layer) {
 
         switch (layer.render) {
             case 'texture':
-                return this._getBufferSizeLayerTexture(entity,layer);
+                return this._getBufferSizeLayerTexture(entity, layer);
                 break;
             case 'sprite':
-                return this._getBufferSizeLayerSprite(entity,layer);
+                return this._getBufferSizeLayerSprite(entity, layer);
                 break;
         }
 
     },
 
-    _getBufferSizeLayerTexture: function(entity,layer) {
+    _getBufferSizeLayerTexture: function(entity, layer) {
 
         if (layer.body && layer.fixture) {
-            return this._getBufferSizeLayerTexturePhysics(entity,layer);
+            return this._getBufferSizeLayerTexturePhysics(entity, layer);
         } else {
-            return this._getBufferSizeLayerTextureStandalone(entity,layer);
+            return this._getBufferSizeLayerTextureStandalone(entity, layer);
         }
 
     },
 
-    _getBufferSizeLayerTexturePhysics: function(entity,layer) {
+    _getBufferSizeLayerTexturePhysics: function(entity, layer) {
 
-        var physics=entity.components.physics;
-        var body=physics.bodies[layer.body];
-        var fixture=physics.bodies[layer.body].fixtures[layer.fixture];
+        var physics = entity.components.physics;
+        var body = physics.bodies[layer.body];
+        var fixture = physics.bodies[layer.body].fixtures[layer.fixture];
 
         // Rotate layer position
-        var position=zerk.helper.rotatePosition(
+        var position = zerk.helper.rotatePosition(
             layer.x,
             layer.y,
             fixture.angle
         );
 
         // Rotate fixture position
-        position=zerk.helper.rotatePosition(
-            position.x+fixture.x,
-            position.y+fixture.y,
+        position = zerk.helper.rotatePosition(
+            position.x + fixture.x,
+            position.y + fixture.y,
             body.angle
         );
 
         // Add body position
-        position={
-            x: position.x+body.x,
-            y: position.y+body.y
+        position = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
-        var width=0;
-        var height=0;
-        var boundingBox=null;
-
+        var width = 0;
+        var height = 0;
+        var boundingBox = null;
 
         switch (fixture.shape) {
             case 'box':
 
-                var polygon=zerk.helper.getPolygonOfRectangle(
+                var polygon = zerk.helper.getPolygonOfRectangle(
                     this._viewport.toPixel(fixture.width),
                     this._viewport.toPixel(fixture.height)
                 );
 
-                polygon=zerk.helper.rotatePolygon(polygon,body.angle+fixture.angle+layer.angle);
+                polygon = zerk.helper.rotatePolygon(polygon, body.angle + fixture.angle + layer.angle);
 
-                boundingBox=zerk.helper.getBoundingBoxOfPolygon2(polygon);
+                boundingBox = zerk.helper.getBoundingBoxOfPolygon2(polygon);
 
                 //width=boundingBox.width;
                 //height=boundingBox.height;
@@ -1030,39 +983,39 @@ zerk.define({
 
             case 'circle':
 
-                boundingBox={
+                boundingBox = {
                     x: this._viewport.toPixel(-fixture.radius),
                     y: this._viewport.toPixel(-fixture.radius),
-                    width: this._viewport.toPixel(fixture.radius)*2,
-                    height: this._viewport.toPixel(fixture.radius)*2
+                    width: this._viewport.toPixel(fixture.radius) * 2,
+                    height: this._viewport.toPixel(fixture.radius) * 2
                 };
 
                 break;
             case 'polygon':
 
-                polygon=[];
-                for (var c=0;c<fixture.vertices.length;c++) {
+                polygon = [];
+                for (var c = 0; c < fixture.vertices.length; c++) {
                     polygon.push([
                         this._viewport.toPixel(fixture.vertices[c][0]),
                         this._viewport.toPixel(fixture.vertices[c][1])
                     ])
                 }
 
-                polygon=zerk.helper.rotatePolygon(polygon,body.angle+fixture.angle+layer.angle);
+                polygon = zerk.helper.rotatePolygon(polygon, body.angle + fixture.angle + layer.angle);
 
-                boundingBox=zerk.helper.getBoundingBoxOfPolygon2(polygon);
+                boundingBox = zerk.helper.getBoundingBoxOfPolygon2(polygon);
 
                 //width=boundingBox.width;
                 //height=boundingBox.height;
 
                 break;
             default:
-                zerk.error('Unknown shape "'+fixture.shape+'"');
+                zerk.error('Unknown shape "' + fixture.shape + '"');
                 break;
         }
 
-        var x=this._viewport.toPixel(fixture.x);
-        var y=this._viewport.toPixel(fixture.y);
+        var x = this._viewport.toPixel(fixture.x);
+        var y = this._viewport.toPixel(fixture.y);
         /*
         var minX=(x-(width/2))*-1;
         var maxX=x+(width/2);
@@ -1071,8 +1024,8 @@ zerk.define({
         */
 
         return {
-            x: this._viewport.toPixel(position.x)+boundingBox.x,
-            y: this._viewport.toPixel(position.y)+boundingBox.y,
+            x: this._viewport.toPixel(position.x) + boundingBox.x,
+            y: this._viewport.toPixel(position.y) + boundingBox.y,
             width: boundingBox.width,
             height: boundingBox.height
             //width: ((minX>maxX) ? minX : maxX),
@@ -1081,26 +1034,26 @@ zerk.define({
 
     },
 
-    _getBufferSizeLayerTextureStandalone: function(entity,layer) {
+    _getBufferSizeLayerTextureStandalone: function(entity, layer) {
 
         // Add body position
-        var position={
+        var position = {
             x: layer.x,
             y: layer.y
         };
 
-        var polygon=zerk.helper.getPolygonOfRectangle(
+        var polygon = zerk.helper.getPolygonOfRectangle(
             this._viewport.toPixel(layer.width),
             this._viewport.toPixel(layer.height)
         );
 
-        polygon=zerk.helper.rotatePolygon(polygon,layer.angle);
+        polygon = zerk.helper.rotatePolygon(polygon, layer.angle);
 
-        var boundingBox=zerk.helper.getBoundingBoxOfPolygon2(polygon);
+        var boundingBox = zerk.helper.getBoundingBoxOfPolygon2(polygon);
 
         return {
-            x: this._viewport.toPixel(position.x)+boundingBox.x,
-            y: this._viewport.toPixel(position.y)+boundingBox.y,
+            x: this._viewport.toPixel(position.x) + boundingBox.x,
+            y: this._viewport.toPixel(position.y) + boundingBox.y,
             width: boundingBox.width,
             height: boundingBox.height
             //width: ((minX>maxX) ? minX : maxX),
@@ -1109,86 +1062,86 @@ zerk.define({
 
     },
 
-    _getBufferSizeLayerSprite: function(entity,layer) {
+    _getBufferSizeLayerSprite: function(entity, layer) {
 
         if (layer.body && layer.fixture) {
-            return this._getBufferSizeLayerSpritePhysics(entity,layer);
+            return this._getBufferSizeLayerSpritePhysics(entity, layer);
         } else {
-            return this._getBufferSizeLayerSpriteStandalone(entity,layer);
+            return this._getBufferSizeLayerSpriteStandalone(entity, layer);
         }
 
     },
 
-    _getBufferSizeLayerSpritePhysics: function(entity,layer) {
+    _getBufferSizeLayerSpritePhysics: function(entity, layer) {
 
-        var physics=entity.components.physics;
-        var body=physics.bodies[layer.body];
-        var fixture=physics.bodies[layer.body].fixtures[layer.fixture];
+        var physics = entity.components.physics;
+        var body = physics.bodies[layer.body];
+        var fixture = physics.bodies[layer.body].fixtures[layer.fixture];
 
         // Rotate layer position
-        var position=zerk.helper.rotatePosition(
+        var position = zerk.helper.rotatePosition(
             layer.x,
             layer.y,
             fixture.angle
         );
 
         // Rotate fixture position
-        position=zerk.helper.rotatePosition(
-            position.x+fixture.x,
-            position.y+fixture.y,
+        position = zerk.helper.rotatePosition(
+            position.x + fixture.x,
+            position.y + fixture.y,
             body.angle
         );
 
         // Add body position
-        position={
-            x: position.x+body.x,
-            y: position.y+body.y
+        position = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
-        var spriteInfo=this._engine._spriteLoader.getSprite(
+        var spriteInfo = this._engine._spriteLoader.getSprite(
             layer.spritesheet,
             layer.sprite
         );
 
-        var polygon=zerk.helper.getPolygonOfRectangle(spriteInfo.info.width,spriteInfo.info.height);
+        var polygon = zerk.helper.getPolygonOfRectangle(spriteInfo.info.width, spriteInfo.info.height);
 
-        polygon=zerk.helper.rotatePolygon(polygon,body.angle+fixture.angle+layer.angle);
+        polygon = zerk.helper.rotatePolygon(polygon, body.angle + fixture.angle + layer.angle);
 
-        var boundingBox=zerk.helper.getBoundingBoxOfPolygon2(polygon);
+        var boundingBox = zerk.helper.getBoundingBoxOfPolygon2(polygon);
 
         return {
-            x: this._viewport.toPixel(position.x)+boundingBox.x,
-            y: this._viewport.toPixel(position.y)+boundingBox.y,
+            x: this._viewport.toPixel(position.x) + boundingBox.x,
+            y: this._viewport.toPixel(position.y) + boundingBox.y,
             width: boundingBox.width,
             height: boundingBox.height
         };
 
     },
 
-    _getBufferSizeLayerSpriteStandalone: function(entity,layer) {
+    _getBufferSizeLayerSpriteStandalone: function(entity, layer) {
 
-        var image=this._engine._spriteLoader.getSprite(
+        var image = this._engine._spriteLoader.getSprite(
             layer.spritesheet,
             layer.sprite
         );
 
-        var position={
+        var position = {
             x: layer.x,
             y: layer.y
         };
 
-        var polygon=zerk.helper.getPolygonOfRectangle(
+        var polygon = zerk.helper.getPolygonOfRectangle(
             image.info.width,
             image.info.height
         );
 
-        polygon=zerk.helper.rotatePolygon(polygon,layer.angle);
+        polygon = zerk.helper.rotatePolygon(polygon, layer.angle);
 
-        var boundingBox=zerk.helper.getBoundingBoxOfPolygon2(polygon);
+        var boundingBox = zerk.helper.getBoundingBoxOfPolygon2(polygon);
 
         return {
-            x: this._viewport.toPixel(position.x)+boundingBox.x,
-            y: this._viewport.toPixel(position.y)+boundingBox.y,
+            x: this._viewport.toPixel(position.x) + boundingBox.x,
+            y: this._viewport.toPixel(position.y) + boundingBox.y,
             width: boundingBox.width,
             height: boundingBox.height
             //width: ((minX>maxX) ? minX : maxX),
@@ -1196,7 +1149,6 @@ zerk.define({
         };
 
     },
-
 
     /**
      * Calculate buffer size of a body
@@ -1213,19 +1165,19 @@ zerk.define({
         renderBody
     ) {
 
-        var me=this;
-        var renderFixture=null;
-        var physicsFixture=null;
-        var pos=null;
-        var x=null;
-        var y=null;
+        var me = this;
+        var renderFixture = null;
+        var physicsFixture = null;
+        var pos = null;
+        var x = null;
+        var y = null;
 
-        for (var i=0;i<renderBody._fixtureList.length;i++) {
+        for (var i = 0; i < renderBody._fixtureList.length; i++) {
 
-            renderFixture=renderBody._fixtureList[i];
-            physicsFixture=physicsBody.fixtures[renderFixture.key];
+            renderFixture = renderBody._fixtureList[i];
+            physicsFixture = physicsBody.fixtures[renderFixture.key];
 
-            pos=me._getBufferSizeFixture(
+            pos = me._getBufferSizeFixture(
                 entity,
                 physicsBody,
                 renderBody,
@@ -1233,19 +1185,19 @@ zerk.define({
                 renderFixture
             );
 
-            if (x==null || pos.x>x) {
-                x=pos.x;
+            if (x == null || pos.x > x) {
+                x = pos.x;
             }
 
-            if (y==null || pos.y>y) {
-                y=pos.y;
+            if (y == null || pos.y > y) {
+                y = pos.y;
             }
 
         }
 
         return {
-            width: x*2,
-            height: y*2
+            width: x * 2,
+            height: y * 2
         }
 
     },
@@ -1258,20 +1210,20 @@ zerk.define({
         renderFixture
     ) {
 
-        var me=this;
-        var renderItem=null;
-        var pos=null;
-        var x=null;
-        var y=null;
+        var me = this;
+        var renderItem = null;
+        var pos = null;
+        var x = null;
+        var y = null;
 
-        for (var i=0;i<renderFixture._renderList.length;i++) {
+        for (var i = 0; i < renderFixture._renderList.length; i++) {
 
-            renderItem=renderFixture._renderList[i];
+            renderItem = renderFixture._renderList[i];
 
             switch (renderItem.render) {
                 case 'texture':
 
-                    pos=me._getBufferSizeFixtureTexture(
+                    pos = me._getBufferSizeFixtureTexture(
                         entity,
                         physicsBody,
                         renderBody,
@@ -1284,7 +1236,7 @@ zerk.define({
 
                 case 'sprite':
 
-                    pos=me._getBufferSizeFixtureSprite(
+                    pos = me._getBufferSizeFixtureSprite(
                         entity,
                         physicsBody,
                         renderBody,
@@ -1296,17 +1248,17 @@ zerk.define({
                     break;
 
                 default:
-                    zerk.error('Unknown render type "'+renderItem.render+'"');
+                    zerk.error('Unknown render type "' + renderItem.render + '"');
                     break;
 
             }
 
-            if (x==null || pos.x>x) {
-                x=pos.x;
+            if (x == null || pos.x > x) {
+                x = pos.x;
             }
 
-            if (y==null || pos.y>y) {
-                y=pos.y;
+            if (y == null || pos.y > y) {
+                y = pos.y;
             }
 
         }
@@ -1327,40 +1279,40 @@ zerk.define({
         texture
     ) {
 
-        var me=this;
+        var me = this;
 
-        var width=0;
-        var height=0;
+        var width = 0;
+        var height = 0;
 
         switch (physicsFixture.shape) {
             case 'box':
 
-                var polygon=zerk.helper.getPolygonOfRectangle(
+                var polygon = zerk.helper.getPolygonOfRectangle(
                     me._viewport.toPixel(physicsFixture.width),
                     me._viewport.toPixel(physicsFixture.height)
                 );
 
                 if (physicsFixture.angle) {
-                    polygon=zerk.helper.rotatePolygon(polygon,physicsFixture.angle);
+                    polygon = zerk.helper.rotatePolygon(polygon, physicsFixture.angle);
                 }
 
-                var boundingBox=zerk.helper.getBoundingBoxOfPolygon(polygon);
+                var boundingBox = zerk.helper.getBoundingBoxOfPolygon(polygon);
 
-                width=boundingBox.width;
-                height=boundingBox.height;
+                width = boundingBox.width;
+                height = boundingBox.height;
 
                 break;
 
             case 'circle':
 
-                width=me._viewport.toPixel(physicsFixture.radius)*2;
-                height=me._viewport.toPixel(physicsFixture.radius)*2;
+                width = me._viewport.toPixel(physicsFixture.radius) * 2;
+                height = me._viewport.toPixel(physicsFixture.radius) * 2;
 
                 break;
             case 'polygon':
 
-                polygon=[];
-                for (c=0;c<physicsFixture.vertices.length;c++) {
+                polygon = [];
+                for (c = 0; c < physicsFixture.vertices.length; c++) {
                     polygon.push([
                         me._viewport.toPixel(physicsFixture.vertices[c][0]),
                         me._viewport.toPixel(physicsFixture.vertices[c][1])
@@ -1368,30 +1320,30 @@ zerk.define({
                 }
 
                 if (physicsFixture.angle) {
-                    polygon=zerk.helper.rotatePolygon(polygon,physicsFixture.angle);
+                    polygon = zerk.helper.rotatePolygon(polygon, physicsFixture.angle);
                 }
 
-                var boundingBox=zerk.helper.getBoundingBoxOfPolygon(polygon);
+                var boundingBox = zerk.helper.getBoundingBoxOfPolygon(polygon);
 
-                width=boundingBox.width;
-                height=boundingBox.height;
+                width = boundingBox.width;
+                height = boundingBox.height;
 
                 break;
             default:
-                zerk.error('Unknown shape "'+physicsFixture.shape+'"');
+                zerk.error('Unknown shape "' + physicsFixture.shape + '"');
                 break;
         }
 
-        var x=me._viewport.toPixel(physicsFixture.x);
-        var y=me._viewport.toPixel(physicsFixture.y);
-        var minX=(x-(width/2))*-1;
-        var maxX=x+(width/2);
-        var minY=(y-(height/2))*-1;
-        var maxY=y+(height/2);
+        var x = me._viewport.toPixel(physicsFixture.x);
+        var y = me._viewport.toPixel(physicsFixture.y);
+        var minX = (x - (width / 2)) * -1;
+        var maxX = x + (width / 2);
+        var minY = (y - (height / 2)) * -1;
+        var maxY = y + (height / 2);
 
         return {
-            x: ((minX>maxX) ? minX : maxX),
-            y: ((minY>maxY) ? minY : maxY)
+            x: ((minX > maxX) ? minX : maxX),
+            y: ((minY > maxY) ? minY : maxY)
         };
 
     },
@@ -1405,49 +1357,49 @@ zerk.define({
         sprite
     ) {
 
-        var me=this;
+        var me = this;
 
-        var width=0;
-        var height=0;
+        var width = 0;
+        var height = 0;
 
-        var spriteInfo=this._engine._spriteLoader.getSprite(
+        var spriteInfo = this._engine._spriteLoader.getSprite(
             sprite.spritesheet,
             sprite.sprite
         );
 
         if (physicsFixture.angle || sprite.angle) {
 
-            var polygon=zerk.helper.getPolygonOfRectangle(spriteInfo.info.width,spriteInfo.info.height);
+            var polygon = zerk.helper.getPolygonOfRectangle(spriteInfo.info.width, spriteInfo.info.height);
 
             if (physicsFixture.angle) {
-                polygon=zerk.helper.rotatePolygon(polygon,physicsFixture.angle);
+                polygon = zerk.helper.rotatePolygon(polygon, physicsFixture.angle);
             }
             if (sprite.angle) {
-                polygon=zerk.helper.rotatePolygon(polygon,sprite.angle);
+                polygon = zerk.helper.rotatePolygon(polygon, sprite.angle);
             }
 
-            var boundingBox=zerk.helper.getBoundingBoxOfPolygon(polygon);
+            var boundingBox = zerk.helper.getBoundingBoxOfPolygon(polygon);
 
-            width=boundingBox.width;
-            height=boundingBox.height;
+            width = boundingBox.width;
+            height = boundingBox.height;
 
         } else {
 
-            width=spriteInfo.info.width;
-            height=spriteInfo.info.height;
+            width = spriteInfo.info.width;
+            height = spriteInfo.info.height;
 
         }
 
-        var x=me._viewport.toPixel(physicsFixture.x+sprite.x);
-        var y=me._viewport.toPixel(physicsFixture.y+sprite.y);
-        var minX=(x-(width/2))*-1;
-        var maxX=x+(width/2);
-        var minY=(y-(height/2))*-1;
-        var maxY=y+(height/2);
+        var x = me._viewport.toPixel(physicsFixture.x + sprite.x);
+        var y = me._viewport.toPixel(physicsFixture.y + sprite.y);
+        var minX = (x - (width / 2)) * -1;
+        var maxX = x + (width / 2);
+        var minY = (y - (height / 2)) * -1;
+        var maxY = y + (height / 2);
 
         return {
-            x: ((minX>maxX) ? minX : maxX),
-            y: ((minY>maxY) ? minY : maxY)
+            x: ((minX > maxX) ? minX : maxX),
+            y: ((minY > maxY) ? minY : maxY)
         };
 
     },
@@ -1462,9 +1414,9 @@ zerk.define({
      * @return {Object} An object containing width and height
      * @protected
      **/
-    _getFixtureBufferSize: function(entity,body,fixture) {
+    _getFixtureBufferSize: function(entity, body, fixture) {
 
-        var me=this;
+        var me = this;
 
         /*
          TODO Remove method if unused
@@ -1477,22 +1429,21 @@ zerk.define({
                 /*
                  * TODO Remove the possibility of making relative sized rectangle fixtures
                  */
-                var width=((typeof fixture.width=='string')
-                    ? (body.width/100)*parseInt(fixture.width)
+                var width = ((typeof fixture.width == 'string') ?
+                    (body.width / 100) * parseInt(fixture.width)
                     : fixture.width);
 
-                var height=((typeof fixture.height=='string')
-                    ? (body.height/100)*parseInt(fixture.height)
+                var height = ((typeof fixture.height == 'string') ?
+                    (body.height / 100) * parseInt(fixture.height)
                     : fixture.height);
 
                 /*
                  * TODO Check if ceil is really needed here
                  */
-                var diagonal=//Math.ceil(
+                var diagonal =//Math.ceil(
                     me._viewport.toPixel(
                         Math.sqrt(
-                            Math.pow(width,2)
-                            +Math.pow(height,2)
+                            Math.pow(width, 2) + Math.pow(height, 2)
                         )
                     //)
                 );
@@ -1506,8 +1457,8 @@ zerk.define({
 
             case 'circle':
 
-                var diagonal=//Math.ceil(
-                    me._viewport.toPixel(fixture.radius*2);
+                var diagonal =//Math.ceil(
+                    me._viewport.toPixel(fixture.radius * 2);
                 //);
 
                 return {
@@ -1519,26 +1470,26 @@ zerk.define({
 
             case 'polygon':
 
-                var maxDistance=0;
+                var maxDistance = 0;
 
-                var center=zerk.helper.getCenterOfPolygon(fixture.vertices);
+                var center = zerk.helper.getCenterOfPolygon(fixture.vertices);
 
-                for (var i=0;i<fixture.vertices.length;i++) {
+                for (var i = 0; i < fixture.vertices.length; i++) {
 
-                    var distance=zerk.helper.calculateDistance(
+                    var distance = zerk.helper.calculateDistance(
                         center.x,
                         center.y,
                         fixture.vertices[i][0],
                         fixture.vertices[i][1]
                     );
 
-                    if (distance>maxDistance) {
-                        maxDistance=distance;
+                    if (distance > maxDistance) {
+                        maxDistance = distance;
                     }
 
                 }
 
-                var diagonal=me._viewport.toPixel(maxDistance*2);
+                var diagonal = me._viewport.toPixel(maxDistance * 2);
 
                 return {
                     width: diagonal,

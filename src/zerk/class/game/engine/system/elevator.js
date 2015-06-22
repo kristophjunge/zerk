@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.elevator',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -49,14 +49,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.elevator').init.apply(
             this,
             arguments
         );
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
     },
 
@@ -69,7 +69,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='elevator');
+        return (name == 'elevator');
 
     },
 
@@ -86,27 +86,27 @@ zerk.define({
             arguments
         );
 
-        var componentPosition=entity.components.position;
-        var componentElevator=entity.components.elevator;
+        var componentPosition = entity.components.position;
+        var componentElevator = entity.components.elevator;
 
-        this._physics.setBodySleepingAllowed(entity,'main',false);
+        this._physics.setBodySleepingAllowed(entity, 'main', false);
 
-        componentElevator.worldOffset=((componentElevator.axis=='vertical')
-            ? componentPosition.y
+        componentElevator.worldOffset = ((componentElevator.axis == 'vertical') ?
+            componentPosition.y
             : componentPosition.x);
 
         // Set the initial body position if present
-        if (componentElevator.position>0) {
+        if (componentElevator.position > 0) {
 
-            var bodyPosition=this._physics.getBodyPosition(entity,'main');
+            var bodyPosition = this._physics.getBodyPosition(entity, 'main');
 
-            if (componentElevator.axis=='vertical') {
-                bodyPosition.y+=componentElevator.position;
+            if (componentElevator.axis == 'vertical') {
+                bodyPosition.y += componentElevator.position;
             } else {
-                bodyPosition.x+=componentElevator.position;
+                bodyPosition.x += componentElevator.position;
             }
 
-            this._physics.setBodyPosition(entity,'main',bodyPosition);
+            this._physics.setBodyPosition(entity, 'main', bodyPosition);
 
         }
 
@@ -128,22 +128,21 @@ zerk.define({
             arguments
         );
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var componentElevator=this._entities[i].components.elevator;
-            var componentPosition=this._entities[i].components.position;
+            var componentElevator = this._entities[i].components.elevator;
+            var componentPosition = this._entities[i].components.position;
 
             if (componentElevator.enabled) {
 
-                componentElevator.position=
-                    ((componentElevator.axis=='vertical') ?
-                        componentPosition.y : componentPosition.x)
-                    -componentElevator.worldOffset;
+                componentElevator.position =
+                    ((componentElevator.axis == 'vertical') ?
+                        componentPosition.y : componentPosition.x) - componentElevator.worldOffset;
 
-                if (componentElevator.turn=='forward'
-                && componentElevator.position>=componentElevator.distance) {
+                if (componentElevator.turn == 'forward' &&
+                componentElevator.position >= componentElevator.distance) {
 
-                    if (componentElevator.axis=='vertical') {
+                    if (componentElevator.axis == 'vertical') {
                         this._physics.setLinearVelocity(
                             this._entities[i],
                             'main',
@@ -159,12 +158,12 @@ zerk.define({
                         );
                     }
 
-                    componentElevator.turn='backward';
+                    componentElevator.turn = 'backward';
 
-                } else if (componentElevator.turn=='backward'
-                && componentElevator.position<=0) {
+                } else if (componentElevator.turn == 'backward' &&
+                componentElevator.position <= 0) {
 
-                    if (componentElevator.axis=='vertical') {
+                    if (componentElevator.axis == 'vertical') {
                         this._physics.setLinearVelocity(
                             this._entities[i],
                             'main',
@@ -180,7 +179,7 @@ zerk.define({
                         );
                     }
 
-                    componentElevator.turn='forward';
+                    componentElevator.turn = 'forward';
 
                 }
 
@@ -198,10 +197,10 @@ zerk.define({
      **/
     startElevator: function(entity) {
 
-        var componentElevator=entity.components.elevator;
+        var componentElevator = entity.components.elevator;
 
-        if (componentElevator.axis=='vertical') {
-            if (componentElevator.turn=='forward') {
+        if (componentElevator.axis == 'vertical') {
+            if (componentElevator.turn == 'forward') {
                 this._physics.setLinearVelocity(
                     entity,
                     'main',
@@ -217,7 +216,7 @@ zerk.define({
                 );
             }
         } else {
-            if (componentElevator.turn=='forward') {
+            if (componentElevator.turn == 'forward') {
                 this._physics.setLinearVelocity(
                     entity,
                     'main',
@@ -234,7 +233,7 @@ zerk.define({
             }
         }
 
-        componentElevator.enabled=true;
+        componentElevator.enabled = true;
 
     }
 

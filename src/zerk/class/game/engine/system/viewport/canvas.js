@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.viewport.canvas',
     extend: 'zerk.game.engine.system.viewport'
 
-},{
+}, {
 
     /**
      * Register for canvas references
@@ -40,7 +40,7 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.viewport.canvas').init.apply(
             this,
@@ -60,17 +60,17 @@ zerk.define({
 
         for (var buffer in buffers) {
 
-            var canvas=this._createCanvas(
-                'zerk_canvas_'+buffer,
+            var canvas = this._createCanvas(
+                'zerk_canvas_' + buffer,
                 buffers[buffer].width,
                 buffers[buffer].height,
                 buffers[buffer].visible
             );
 
-            canvas.style.backgroundColor=this._config.backgroundColor;
+            canvas.style.backgroundColor = this._config.backgroundColor;
 
-            this._canvas[buffer]=canvas;
-            this._context[buffer]=canvas.getContext('2d');
+            this._canvas[buffer] = canvas;
+            this._context[buffer] = canvas.getContext('2d');
 
         }
 
@@ -85,7 +85,7 @@ zerk.define({
      **/
     getCanvasPosition: function(buffer) {
 
-        var canvas=this._getCanvas(buffer);
+        var canvas = this._getCanvas(buffer);
 
         return zerk.browser.getElementPosition(canvas);
 
@@ -113,7 +113,7 @@ zerk.define({
      **/
     getBufferSize: function(buffer) {
 
-        var canvas=this._getCanvas(buffer);
+        var canvas = this._getCanvas(buffer);
 
         return {
             width: canvas.width,
@@ -122,12 +122,12 @@ zerk.define({
 
     },
 
-    setBufferSize: function(buffer,width,height) {
+    setBufferSize: function(buffer, width, height) {
 
-        var canvas=this._getCanvas(buffer);
+        var canvas = this._getCanvas(buffer);
 
-        canvas.width=width;
-        canvas.height=height;
+        canvas.width = width;
+        canvas.height = height;
 
     },
 
@@ -142,15 +142,15 @@ zerk.define({
      * @param {Float} y Center y
      * @param {Float} angle Angle
      **/
-    bufferInit: function(buffer,width,height,x,y,angle) {
+    bufferInit: function(buffer, width, height, x, y, angle) {
 
-        var canvas=this._getCanvas(buffer);
-        var context=this._getContext(buffer);
+        var canvas = this._getCanvas(buffer);
+        var context = this._getContext(buffer);
 
-        canvas.width=width;
-        canvas.height=height;
+        canvas.width = width;
+        canvas.height = height;
 
-        context.translate(x,y);
+        context.translate(x, y);
         //context.rotate(angle);
 
     },
@@ -181,45 +181,25 @@ zerk.define({
         originY
     ) {
 
-        var sourceCanvas=this._getCanvas(source);
-        var targetContext=this._getContext(target);
+        var sourceCanvas = this._getCanvas(source);
+        var targetContext = this._getContext(target);
 
-        //if (angle) {
+        targetContext.save();
+        targetContext.translate(x, y);
+        targetContext.rotate(angle);
+        targetContext.drawImage(
+            sourceCanvas,
+            0,
+            0,
+            sourceCanvas.width,
+            sourceCanvas.height,
+            originX,
+            originY,
+            width,
+            height
+        );
 
-            targetContext.save();
-            targetContext.translate(x,y);
-            targetContext.rotate(angle);
-            targetContext.drawImage(
-                sourceCanvas,
-                0,
-                0,
-                sourceCanvas.width,
-                sourceCanvas.height,
-                originX,
-                originY,
-                width,
-                height
-            );
-
-            targetContext.restore();
-
-            /*
-        } else {
-
-            targetContext.drawImage(
-                sourceCanvas,
-                0,
-                0,
-                sourceCanvas.width,
-                sourceCanvas.height,
-                x-width/2,
-                y-height/2,
-                width,
-                height
-            );
-
-        }
-        */
+        targetContext.restore();
 
     },
 
@@ -231,9 +211,9 @@ zerk.define({
      **/
     bufferClear: function(buffer) {
 
-        var canvas=this._getCanvas(buffer);
+        var canvas = this._getCanvas(buffer);
 
-        canvas.width=canvas.width;
+        canvas.width = canvas.width;
 
     },
 
@@ -246,17 +226,17 @@ zerk.define({
      * @param {String} color RGB color
      * @param {Float} lineWidth Width of the lines
      **/
-    drawLines: function(buffer,lines,color,lineWidth) {
+    drawLines: function(buffer, lines, color, lineWidth) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
         context.save();
 
         context.beginPath();
-        context.strokeStyle=color;
-        context.lineWidth=lineWidth;
+        context.strokeStyle = color;
+        context.lineWidth = lineWidth;
 
-        for (var i=0;i<lines.length;i++) {
+        for (var i = 0; i < lines.length; i++) {
 
             context.moveTo(
                 lines[i][0],
@@ -294,13 +274,13 @@ zerk.define({
         lineWidth
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
         context.save();
 
         if (zerk.isDefined(fillColor) && fillColor) { //&& fillColor!=null
 
-            context.fillStyle=fillColor;
+            context.fillStyle = fillColor;
 
             context.fillRect(
                 x,
@@ -313,8 +293,8 @@ zerk.define({
 
         if (zerk.isDefined(strokeColor) && strokeColor) { // && strokeColor!=null
 
-            context.strokeStyle=strokeColor;
-            context.lineWidth=lineWidth;
+            context.strokeStyle = strokeColor;
+            context.lineWidth = lineWidth;
 
             context.strokeRect(
                 x,
@@ -357,7 +337,7 @@ zerk.define({
         textureAngle
     ) {
 
-        var vertices=zerk.helper.getPolygonOfRectangle(width,height);
+        var vertices = zerk.helper.getPolygonOfRectangle(width, height);
 
         this.fillPolygon(
             buffer,
@@ -401,7 +381,7 @@ zerk.define({
         lineWidth
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
         context.save();
 
@@ -419,15 +399,15 @@ zerk.define({
 
         if (zerk.isDefined(strokeColor)) {
 
-            context.strokeStyle=strokeColor;
-            context.lineWidth=lineWidth;
+            context.strokeStyle = strokeColor;
+            context.lineWidth = lineWidth;
             context.stroke();
 
         }
 
         if (zerk.isDefined(fillColor)) {
 
-            context.fillStyle=fillColor;
+            context.fillStyle = fillColor;
             context.fill();
 
         }
@@ -466,14 +446,14 @@ zerk.define({
         textureAngle
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
-        var pattern=context.createPattern(image,'repeat');
+        var pattern = context.createPattern(image, 'repeat');
 
         context.save();
 
         context.beginPath();
-        context.fillStyle=pattern;
+        context.fillStyle = pattern;
         context.arc(
             x,
             y,
@@ -489,7 +469,7 @@ zerk.define({
         }
 
         if (zerk.isDefined(textureX) && zerk.isDefined(textureY)) {
-            context.translate(textureX,textureY);
+            context.translate(textureX, textureY);
         }
 
         context.fill();
@@ -516,15 +496,15 @@ zerk.define({
         lineWidth
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
         context.save();
 
         context.beginPath();
 
-        for (var i=0;i<vertices.length;i++) {
+        for (var i = 0; i < vertices.length; i++) {
 
-            if (i==0) {
+            if (i == 0) {
 
                 context.moveTo(
                     vertices[i][0],
@@ -546,15 +526,15 @@ zerk.define({
 
         if (zerk.isDefined(strokeColor)) {
 
-            context.strokeStyle=strokeColor;
-            context.lineWidth=lineWidth;
+            context.strokeStyle = strokeColor;
+            context.lineWidth = lineWidth;
             context.stroke();
 
         }
 
         if (zerk.isDefined(fillColor)) {
 
-            context.fillStyle=fillColor;
+            context.fillStyle = fillColor;
             context.fill();
 
         }
@@ -589,35 +569,35 @@ zerk.define({
         textureAngle
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
-        var pattern=context.createPattern(image,'repeat');
+        var pattern = context.createPattern(image, 'repeat');
 
         context.save();
         context.beginPath();
-        context.fillStyle=pattern;
+        context.fillStyle = pattern;
 
-        var rotatedVertice=null;
-        for (var i=0;i<vertices.length;i++) {
+        var rotatedVertice = null;
+        for (var i = 0; i < vertices.length; i++) {
 
-            rotatedVertice=zerk.helper.rotatePosition(
+            rotatedVertice = zerk.helper.rotatePosition(
                 vertices[i][0],
                 vertices[i][1],
                 angle
             );
 
-            if (i==0) {
+            if (i == 0) {
 
                 context.moveTo(
-                    x+rotatedVertice.x,
-                    y+rotatedVertice.y
+                    x + rotatedVertice.x,
+                    y + rotatedVertice.y
                 );
 
             } else {
 
                 context.lineTo(
-                    x+rotatedVertice.x,
-                    y+rotatedVertice.y
+                    x + rotatedVertice.x,
+                    y + rotatedVertice.y
                 );
 
             }
@@ -631,7 +611,7 @@ zerk.define({
         }
 
         if (zerk.isDefined(textureX) && zerk.isDefined(textureY)) {
-            context.translate(textureX,textureY);
+            context.translate(textureX, textureY);
         }
 
         context.fill();
@@ -660,62 +640,44 @@ zerk.define({
         verticalAlign
     ) {
 
-        var context=this._getContext(buffer);
-        var canvas=this._getCanvas(buffer);
+        var context = this._getContext(buffer);
+        var canvas = this._getCanvas(buffer);
 
         context.save();
 
-        if (typeof font=='undefined') {
-
-            font='sans-serif';
-
+        if (typeof font == 'undefined') {
+            font = 'sans-serif';
         }
 
-        if (typeof size=='undefined') {
-
-            size=20;
-
+        if (typeof size == 'undefined') {
+            size = 20;
         }
 
-        if (typeof color=='undefined') {
-
-            color='rgb(0,255,0)';
-
+        if (typeof color == 'undefined') {
+            color = 'rgb(0,255,0)';
         }
 
-        context.font=size+'pt '+font;
-        context.fillStyle=color;
+        context.font = size + 'pt ' + font;
+        context.fillStyle = color;
 
-        var measure=context.measureText(text);
+        var measure = context.measureText(text);
+        var posX = 0;
+        var posY = 0;
 
-        var posX=0,posY=0;
-
-        if (horizontalAlign=='left') {
-
-            posX=(canvas.width/2)+x;
-
-        } else if (horizontalAlign=='right') {
-
-            posX=(canvas.width/2)-measure.width+x;
-
+        if (horizontalAlign == 'left') {
+            posX = (canvas.width / 2) + x;
+        } else if (horizontalAlign == 'right') {
+            posX = (canvas.width / 2) - measure.width + x;
         } else {
-
-            posX=(canvas.width/2)-(measure.width/2)+x;
-
+            posX = (canvas.width / 2) - (measure.width / 2) + x;
         }
 
-        if (verticalAlign=='top') {
-
-            posY=(canvas.height/2)+size+y;
-
-        } else if (verticalAlign=='bottom') {
-
-            posY=(canvas.height/2)+y;
-
+        if (verticalAlign == 'top') {
+            posY = (canvas.height / 2) + size + y;
+        } else if (verticalAlign == 'bottom') {
+            posY = (canvas.height / 2) + y;
         } else {
-
-            posY=(canvas.height/2)+(size/2)+y;
-
+            posY = (canvas.height / 2) + (size / 2) + y;
         }
 
         context.fillText(
@@ -743,13 +705,13 @@ zerk.define({
         opacity
     ) {
 
-        var context=this._getContext(buffer);
+        var context = this._getContext(buffer);
 
         if (angle) { // Rotated image
 
             context.save();
 
-            context.translate(targetX,targetY);
+            context.translate(targetX, targetY);
             context.rotate(angle);
 
             if (zerk.isDefined(opacity)) {
@@ -762,8 +724,8 @@ zerk.define({
                 sourceY,
                 sourceWidth,
                 sourceHeight,
-                -targetWidth/2,
-                -targetHeight/2,
+                -targetWidth / 2,
+                -targetHeight / 2,
                 targetWidth,
                 targetHeight
             );
@@ -782,8 +744,8 @@ zerk.define({
                 sourceY,
                 sourceWidth,
                 sourceHeight,
-                targetX-(targetWidth/2),
-                targetY-(targetHeight/2),
+                targetX - (targetWidth / 2),
+                targetY - (targetHeight / 2),
                 targetWidth,
                 targetHeight
             );
@@ -803,9 +765,9 @@ zerk.define({
      * @return {DOMElement} Canvas DOM element
      * @protected
      **/
-    _createCanvas: function(id,width,height,visible) {
+    _createCanvas: function(id, width, height, visible) {
 
-        var canvas=document.getElementById(id);
+        var canvas = document.getElementById(id);
 
         if (canvas) {
 
@@ -813,24 +775,24 @@ zerk.define({
 
         }
 
-        canvas=document.createElement('canvas');
+        canvas = document.createElement('canvas');
 
-        canvas.id=id;
+        canvas.id = id;
 
         if (width) {
 
-            canvas.width=width;
+            canvas.width = width;
 
         }
         if (height) {
 
-            canvas.height=height;
+            canvas.height = height;
 
         }
 
         if (!visible) {
 
-            canvas.style.display='none';
+            canvas.style.display = 'none';
 
         }
 
@@ -838,20 +800,19 @@ zerk.define({
 
         if (this._config.canvasContainerId) {
 
-            container=document.getElementById(this._config.canvasContainerId);
+            container = document.getElementById(this._config.canvasContainerId);
 
             if (!container) {
 
                 zerk.error({
-                    message: 'Could not find element for canvasContainerId "'
-                        +this._config.canvasContainerId+'"'
+                    message: 'Could not find element for canvasContainerId "' + this._config.canvasContainerId + '"'
                 });
 
             }
 
         } else {
 
-            container=document.getElementsByTagName('body')[0];
+            container = document.getElementsByTagName('body')[0];
 
         }
 
@@ -901,17 +862,17 @@ zerk.define({
      **/
     getCanvasPhysicsDebug: function() {
 
-         // Create canvas on first usage
-         if (!this._canvasPhysicsDebug) {
-             this._canvasPhysicsDebug=this._createCanvas(
-                 'zerk_canvas_physics_debug',
-                 650,
-                 450,
-                 true
-             );
-         }
+        // Create canvas on first usage
+        if (!this._canvasPhysicsDebug) {
+            this._canvasPhysicsDebug = this._createCanvas(
+                'zerk_canvas_physics_debug',
+                650,
+                450,
+                true
+            );
+        }
 
-         return this._canvasPhysicsDebug;
+        return this._canvasPhysicsDebug;
 
     }
 

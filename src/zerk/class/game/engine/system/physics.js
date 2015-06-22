@@ -15,7 +15,7 @@ zerk.define({
     name: 'zerk.game.engine.system.physics',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -53,16 +53,16 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
-        var me=this;
+        var me = this;
 
         zerk.parent('zerk.game.engine.system.physics').init.apply(
             this,
             arguments
         );
 
-        me._physicsScale=me._config.physicsScale;
+        me._physicsScale = me._config.physicsScale;
 
     },
 
@@ -95,7 +95,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='position' || name=='physics');
+        return (name == 'position' || name == 'physics');
 
     },
 
@@ -173,12 +173,14 @@ zerk.define({
             arguments
         );
 
-        if (!this._config.enabled) return;
+        if (!this._config.enabled) {
+            return;
+        }
 
         // Run physics tick
         this._tick();
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
             // Sync entity physics data
             this._syncEntityPhysics(
@@ -196,7 +198,7 @@ zerk.define({
      **/
     setEnabled: function(value) {
 
-        this._config.enabled=(value==true);
+        this._config.enabled = (value == true);
 
     },
 
@@ -237,10 +239,12 @@ zerk.define({
      **/
     fromWorldScale: function(value) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof value==='undefined' || value==0) return 0;
-        return value*me._physicsScale;
+        if (typeof value === 'undefined' || value == 0) {
+            return 0;
+        }
+        return value * me._physicsScale;
 
     },
 
@@ -255,10 +259,12 @@ zerk.define({
      **/
     toWorldScale: function(value) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof value==='undefined' || value==0) return 0;
-        return value/me._physicsScale;
+        if (typeof value === 'undefined' || value == 0) {
+            return 0;
+        }
+        return value / me._physicsScale;
 
     }
 

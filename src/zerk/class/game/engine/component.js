@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.component'
 
-},{
+}, {
 
     /**
      * Name of the component
@@ -29,8 +29,6 @@ zerk.define({
      **/
     init: function() {
 
-
-
     },
 
     /**
@@ -41,8 +39,6 @@ zerk.define({
      * @return {Object} Component state
      **/
     build: function(config) {
-
-
 
     }
 

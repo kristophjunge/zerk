@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-var zerk={
+var zerk = {
 
     isArray: ('isArray' in Array) ? Array.isArray : function(value) {
 
-        return Object.prototype.toString.call(value)==='[object Array]';
+        return Object.prototype.toString.call(value) === '[object Array]';
 
     },
 
-    inArray: function(needle,haystack) {
+    inArray: function(needle, haystack) {
 
-        for (var i=0;i<haystack.length;i++) {
-            if (haystack[i]==needle) {
+        for (var i = 0; i < haystack.length; i++) {
+            if (haystack[i] == needle) {
                 return true;
             }
         }
@@ -22,13 +22,13 @@ var zerk={
 
     rtrim: function(value, chars) {
 
-        var chars=((zerk.isArray(chars)) ? chars : [chars]);
-        var value=String(value);
+        var chars = ((zerk.isArray(chars)) ? chars : [chars]);
+        var value = String(value);
 
-        var lastChar=value.substr(-1, 1);
+        var lastChar = value.substr(-1, 1);
         while (zerk.inArray(lastChar, chars)) {
-            value=value.substr(0, -1);
-            lastChar=value.substr(-1, 1);
+            value = value.substr(0, -1);
+            lastChar = value.substr(-1, 1);
         }
 
         return value;
@@ -67,9 +67,9 @@ console.log('Current game:', currentGameConfig.game);
 
 setupFileServers();
 
-var server = app.listen(currentGameConfig.dev.port, function () {
+var server = app.listen(currentGameConfig.dev.port, function() {
 
-    app.get('/', function (req, res) {
+    app.get('/', function(req, res) {
 
         var indexHtml = generateTemplate('index', {
             currentGameConfig: currentGameConfig
@@ -79,13 +79,13 @@ var server = app.listen(currentGameConfig.dev.port, function () {
 
     });
 
-    app.get('/game', function (req, res) {
+    app.get('/game', function(req, res) {
 
         res.send(serveGame(currentGameDir));
 
     });
 
-    app.get('/zerk/:group/:game', function (req, res) {
+    app.get('/zerk/:group/:game', function(req, res) {
 
         var gameGroup = req.params.group;
         var gameName = req.params.game;
@@ -102,10 +102,10 @@ var server = app.listen(currentGameConfig.dev.port, function () {
 function setupFileServers() {
 
     // Create fileserver for zerk root directory
-    app.use("/zerk", express.static(zerkDir));
+    app.use('/zerk', express.static(zerkDir));
 
     // Create fileservers for all namespaces of current game
-    var namespaces=getNamespaces(currentGameDir, currentGameConfig);
+    var namespaces = getNamespaces(currentGameDir, currentGameConfig);
     for (var ns in namespaces) {
         console.log(
             'Registered namespace:',
@@ -138,10 +138,10 @@ function getNamespaces(serverDir, gameConfig) {
         if (isSubdirectory(zerkDir, namespaceDir)) {
             webRootDir = '/zerk/' + getSubDirectoryPath(zerkDir, namespaceDir);
         } else {
-            webRootDir = '/game/'+ns;
+            webRootDir = '/game/' + ns;
         }
 
-        result[ns]={
+        result[ns] = {
             namespace: ns,
             webRoot: webRootDir,
             absolutePath: namespaceDir,
@@ -202,7 +202,7 @@ function serveGame(gameDir) {
     console.log('Serve game (' + gameName + ') ' + gameDir);
 
     // Build list of required js files
-    var requiredFiles=[];
+    var requiredFiles = [];
 
     // Add base files
     requiredFiles = requiredFiles.concat(baseFiles);
@@ -214,7 +214,7 @@ function serveGame(gameDir) {
         // exit
     }
 
-    var namespaces=getNamespaces(gameDir, gameConfig);
+    var namespaces = getNamespaces(gameDir, gameConfig);
 
     deps.setNamespaces(namespaces);
     var requiredClasses = deps.parseDependencies(bootstrapClass);
@@ -223,13 +223,13 @@ function serveGame(gameDir) {
     requiredFiles = requiredFiles.concat(webPaths);
 
     // Create namespace map for web usage
-    var namespaceMap={};
+    var namespaceMap = {};
     for (var ns in namespaces) {
         namespaceMap[ns] = namespaces[ns].webRoot;
     }
 
     // Create bootstrap config
-    var bootstrapConfig={
+    var bootstrapConfig = {
         game: gameName,
         //gameDir: gameDir,
         //zerkDir: zerkDir,
@@ -250,7 +250,7 @@ function serveGame(gameDir) {
 }
 
 function generateTemplate(template, data) {
-    var template = fs.readFileSync(__dirname + '/'+template+'Template.html', {encoding: 'UTF-8'})
+    var template = fs.readFileSync(__dirname + '/' + template + 'Template.html', {encoding: 'UTF-8'})
     var compiled = hogan.compile(template);
     return compiled.render(data);
 }
@@ -261,7 +261,7 @@ function loadJsonFile(path) {
         if (gameConfig.isFile()) {
             return JSON.parse(fs.readFileSync(path, {encoding: 'UTF-8'}));
         }
-    } catch(err) {
+    } catch (err) {
         if (err.code == 'ENOENT') {
             console.log('No zerk file found! (Expected: ' + path + ')');
             process.exit();

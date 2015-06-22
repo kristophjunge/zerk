@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.player',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -67,16 +67,16 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      */
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.player').init.apply(
             this,
             arguments
         );
 
-        this._keyboard=this._getSystem('control').keyboard;
+        this._keyboard = this._getSystem('control').keyboard;
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
         if (!this._physics) {
 
@@ -95,7 +95,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='player');
+        return (name == 'player');
 
     },
 
@@ -195,9 +195,11 @@ zerk.define({
 
         zerk.parent('zerk.game.engine.system.player').update.apply();
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            if (!this._entities[i].components.player.enableControl) return;
+            if (!this._entities[i].components.player.enableControl) {
+                return;
+            }
 
             if (this._keyboard.pressedSpace) {
                 this.actionJump(this._entities[i]);
@@ -223,7 +225,7 @@ zerk.define({
      **/
     win: function(entity) {
 
-        this.fireEvent('win',entity);
+        this.fireEvent('win', entity);
 
     },
 
@@ -235,9 +237,9 @@ zerk.define({
      **/
     dead: function(entity) {
 
-        this._physics.setBodyMoveable(entity,'main',false);
+        this._physics.setBodyMoveable(entity, 'main', false);
 
-        this.fireEvent('dead',entity);
+        this.fireEvent('dead', entity);
 
     },
 
@@ -250,21 +252,23 @@ zerk.define({
      **/
     _onKeyDown: function(event) {
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var componentState=this._entities[i].components.player;
+            var componentState = this._entities[i].components.player;
 
-            if (!componentState.enableControl) continue;
+            if (!componentState.enableControl) {
+                continue;
+            }
 
-            if (event.keyCode==32) {
+            if (event.keyCode == 32) {
 
                 if (componentState.grounded && this._keyReleased) {
 
-                    componentState.jumping=true;
+                    componentState.jumping = true;
 
                 }
 
-                this._keyReleased=false;
+                this._keyReleased = false;
 
             }
 
@@ -281,17 +285,19 @@ zerk.define({
      **/
     _onKeyUp: function(event) {
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var componentState=this._entities[i].components.player;
+            var componentState = this._entities[i].components.player;
 
-            if (!componentState.enableControl) continue;
+            if (!componentState.enableControl) {
+                continue;
+            }
 
-            if (event.keyCode==32) {
+            if (event.keyCode == 32) {
 
-                this._keyReleased=true;
+                this._keyReleased = true;
 
-                componentState.jumping=false;
+                componentState.jumping = false;
 
             }
 
@@ -307,32 +313,32 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactBegin: function(sourceInfo,targetInfo) {
+    _onContactBegin: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.player=='undefined'
-        && typeof targetInfo.entity.components.player=='undefined') {
+        if (typeof sourceInfo.entity.components.player == 'undefined' &&
+        typeof targetInfo.entity.components.player == 'undefined') {
             return true;
         }
 
-        var info=((typeof sourceInfo.entity.components.player!='undefined')
-            ? sourceInfo
+        var info = ((typeof sourceInfo.entity.components.player != 'undefined') ?
+            sourceInfo
             : targetInfo);
 
-        var entity=info.entity;
+        var entity = info.entity;
 
-        var componentState=entity.components.player;
+        var componentState = entity.components.player;
 
-        if (info.fixture=='foot') {
+        if (info.fixture == 'foot') {
 
             componentState.contactCount++;
 
-            if (componentState.contactCount>0) {
+            if (componentState.contactCount > 0) {
 
-                componentState.grounded=true;
+                componentState.grounded = true;
 
-                componentState.jumping=false;
+                componentState.jumping = false;
 
-                componentState.jumpCounter=0;
+                componentState.jumpCounter = 0;
 
             }
 
@@ -348,28 +354,28 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactEnd: function(sourceInfo,targetInfo) {
+    _onContactEnd: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.player=='undefined'
-        && typeof targetInfo.entity.components.player=='undefined') {
+        if (typeof sourceInfo.entity.components.player == 'undefined' &&
+        typeof targetInfo.entity.components.player == 'undefined') {
             return true;
         }
 
-        var info=((typeof sourceInfo.entity.components.player!='undefined')
-            ? sourceInfo
+        var info = ((typeof sourceInfo.entity.components.player != 'undefined') ?
+            sourceInfo
             : targetInfo);
 
-        var entity=info.entity;
+        var entity = info.entity;
 
-        var componentState=entity.components.player;
+        var componentState = entity.components.player;
 
-        if (info.fixture=='foot') {
+        if (info.fixture == 'foot') {
 
             componentState.contactCount--;
 
-            if (componentState.contactCount==0) {
+            if (componentState.contactCount == 0) {
 
-                componentState.grounded=false;
+                componentState.grounded = false;
 
             }
 
@@ -385,18 +391,22 @@ zerk.define({
      **/
     actionJump: function(entity) {
 
-        var componentState=entity.components.player;
+        var componentState = entity.components.player;
 
-        if (!componentState.jumping) return;
+        if (!componentState.jumping) {
+            return;
+        }
 
-        var maxPower=3.3;
-        var steps=3;
+        var maxPower = 3.3;
+        var steps = 3;
 
-        if (componentState.jumpCounter==steps) return;
+        if (componentState.jumpCounter == steps) {
+            return;
+        }
 
-        var power=(100-(componentState.jumpCounter*(100/steps)))*(maxPower/100);
+        var power = (100 - (componentState.jumpCounter * (100 / steps))) * (maxPower / 100);
 
-        this._physics.bodyApplyImpulse(entity,'main',270,power);
+        this._physics.bodyApplyImpulse(entity, 'main', 270, power);
 
         componentState.jumpCounter++;
 
@@ -410,19 +420,21 @@ zerk.define({
      **/
     actionWalkLeft: function(entity) {
 
-        var componentState=entity.components.player;
+        var componentState = entity.components.player;
 
-        var velocity=this._physics.getBodyLinearVelocity(entity,'main');
+        var velocity = this._physics.getBodyLinearVelocity(entity, 'main');
 
-        if (velocity.x<=-6) return;
-
-        var power=0.3;
-
-        if (componentState.jumping) {
-            power=0.75;
+        if (velocity.x <= -6) {
+            return;
         }
 
-        this._physics.bodyApplyImpulse(entity,'main',180,power);
+        var power = 0.3;
+
+        if (componentState.jumping) {
+            power = 0.75;
+        }
+
+        this._physics.bodyApplyImpulse(entity, 'main', 180, power);
 
     },
 
@@ -434,19 +446,21 @@ zerk.define({
      **/
     actionWalkRight: function(entity) {
 
-        var componentState=entity.components.player;
+        var componentState = entity.components.player;
 
-        var velocity=this._physics.getBodyLinearVelocity(entity,'main');
+        var velocity = this._physics.getBodyLinearVelocity(entity, 'main');
 
-        if (velocity.x>=6) return;
-
-        var power=0.3;
-
-        if (componentState.jumping) {
-            power=0.75;
+        if (velocity.x >= 6) {
+            return;
         }
 
-        this._physics.bodyApplyImpulse(entity,'main',0,power);
+        var power = 0.3;
+
+        if (componentState.jumping) {
+            power = 0.75;
+        }
+
+        this._physics.bodyApplyImpulse(entity, 'main', 0, power);
 
     }
 

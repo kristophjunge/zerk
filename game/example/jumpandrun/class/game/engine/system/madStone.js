@@ -10,7 +10,7 @@ zerk.define({
     name: 'jumpandrun.game.engine.system.madStone',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -33,22 +33,22 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config Entity configuration
      */
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('jumpandrun.game.engine.system.madStone').init.apply(
             this,
             arguments
         );
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
-        this._player=this._getSystem('player');
+        this._player = this._getSystem('player');
 
     },
 
     useComponent: function(name) {
 
-        return (name=='madStone');
+        return (name == 'madStone');
 
     },
 
@@ -74,9 +74,9 @@ zerk.define({
             arguments
         );
 
-        this._physics.setBodySleepingAllowed(entity,'main',false);
+        this._physics.setBodySleepingAllowed(entity, 'main', false);
 
-        entity.components.madStone.worldOffset=entity.components.position.y;
+        entity.components.madStone.worldOffset = entity.components.position.y;
 
     },
 
@@ -87,16 +87,16 @@ zerk.define({
             arguments
         );
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var madStone=this._entities[i].components.madStone;
-            var position=this._entities[i].components.position;
+            var madStone = this._entities[i].components.madStone;
+            var position = this._entities[i].components.position;
 
-            if (madStone.status=='moving_back') {
+            if (madStone.status == 'moving_back') {
 
-                madStone.position=position.y-madStone.worldOffset;
+                madStone.position = position.y - madStone.worldOffset;
 
-                if (madStone.position<=0) {
+                if (madStone.position <= 0) {
 
                     this._physics.setBodyMoveable(
                         this._entities[i],
@@ -104,7 +104,7 @@ zerk.define({
                         false
                     );
 
-                    madStone.status='wait_to_fall';
+                    madStone.status = 'wait_to_fall';
 
                 }
 
@@ -114,32 +114,31 @@ zerk.define({
 
     },
 
-    _onContactBegin: function(sourceInfo,targetInfo) {
+    _onContactBegin: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.madStone=='undefined'
-        && typeof targetInfo.entity.components.madStone=='undefined') {
+        if (typeof sourceInfo.entity.components.madStone == 'undefined' &&
+        typeof targetInfo.entity.components.madStone == 'undefined') {
             return true;
         }
 
-        if (targetInfo.entity.name=='jumpandrun.entity.player'
-        && sourceInfo.entity.name=='jumpandrun.entity.madStone'
-        && sourceInfo.body=='main'
+        if (targetInfo.entity.name == 'jumpandrun.entity.player' &&
+        sourceInfo.entity.name == 'jumpandrun.entity.madStone' &&
+        sourceInfo.body == 'main'
         ) {
 
             this._player.dead(targetInfo.entity);
 
-        } else if (sourceInfo.entity.name=='jumpandrun.entity.player'
-        && targetInfo.entity.name=='jumpandrun.entity.madStone'
-        && targetInfo.body=='main') {
+        } else if (sourceInfo.entity.name == 'jumpandrun.entity.player' &&
+        targetInfo.entity.name == 'jumpandrun.entity.madStone' &&
+        targetInfo.body == 'main') {
 
             this._player.dead(targetInfo.entity);
 
-        } else if (sourceInfo.entity.name=='jumpandrun.entity.madStone') {
+        } else if (sourceInfo.entity.name == 'jumpandrun.entity.madStone') {
 
-            sourceInfo.entity.components.madStone.status
-                ='wait_to_move_back';
+            sourceInfo.entity.components.madStone.status = 'wait_to_move_back';
 
-            var self=this;
+            var self = this;
 
             window.setTimeout(
                 function() {
@@ -156,8 +155,7 @@ zerk.define({
                         sourceInfo.entity.components.madStone.speed
                     );
 
-                    sourceInfo.entity.components.madStone.status
-                        ='moving_back';
+                    sourceInfo.entity.components.madStone.status = 'moving_back';
 
                 },
                 1500
@@ -169,23 +167,25 @@ zerk.define({
 
     release: function(entity) {
 
-        var componentFallingStone=entity.components.madStone;
+        var componentFallingStone = entity.components.madStone;
 
-        if (componentFallingStone.status!='wait_to_fall') return;
+        if (componentFallingStone.status != 'wait_to_fall') {
+            return;
+        }
 
-        var self=this;
+        var self = this;
 
         window.setTimeout(
             function() {
 
-                self._physics.setBodyMoveable(entity,'main',true);
+                self._physics.setBodyMoveable(entity, 'main', true);
 
-                componentFallingStone.status='falling';
+                componentFallingStone.status = 'falling';
 
             },
             componentFallingStone.releaseDelay
         );
 
-    },
+    }
 
 });

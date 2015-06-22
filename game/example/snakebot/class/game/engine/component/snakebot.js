@@ -13,13 +13,13 @@ zerk.define({
     name: 'snakebot.game.engine.component.snakebot',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'snakebot',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             jumping: false,
             landed: false,
             jumpCounter: 0,
@@ -29,7 +29,7 @@ zerk.define({
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(

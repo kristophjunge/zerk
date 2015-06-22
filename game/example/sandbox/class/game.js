@@ -15,11 +15,11 @@ zerk.define({
         'zerk.game.engine.system.control'
     ]
 
-},{
+}, {
 
     run: function(config) {
 
-        var me=this;
+        var me = this;
 
         if (!zerk.parent('sandbox.game').run.apply(
             me,

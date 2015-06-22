@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.registry'
 
-},{
+}, {
 
     /**
      * Registry storage
@@ -38,7 +38,7 @@ zerk.define({
      */
     init: function(data) {
 
-        this._data=data;
+        this._data = data;
 
         /*
         // Parse user defined config data
@@ -68,19 +68,19 @@ zerk.define({
      * @param {Object} defaults Default values
      * @return {Object} Handle to the registry storage
      */
-    register: function(register,defaults) {
+    register: function(register, defaults) {
 
-        var entry={};
+        var entry = {};
 
-        zerk.apply(entry,defaults);
+        zerk.apply(entry, defaults);
 
         // Look if user defined config data is present already
 
-        var previousData=this.getValue(register);
+        var previousData = this.getValue(register);
 
         if (previousData) {
 
-            zerk.apply(entry,previousData);
+            zerk.apply(entry, previousData);
 
         }
 
@@ -88,7 +88,7 @@ zerk.define({
 
         //return this._data[register];
 
-        return this.setValue(register,entry);;
+        return this.setValue(register, entry);;
 
     },
 
@@ -99,29 +99,31 @@ zerk.define({
      * @param {String} key Key
      * @param {Any} value Value
      */
-    setValue: function(key,value) {
+    setValue: function(key, value) {
 
-        if (!key) return;
+        if (!key) {
+            return;
+        }
 
-        var obj=this._data;
+        var obj = this._data;
 
-        var pathArr=key.split('.');
+        var pathArr = key.split('.');
 
-        for (var i=0;i<pathArr.length;i++) {
+        for (var i = 0; i < pathArr.length; i++) {
 
-            if (typeof obj[pathArr[i]]=='undefined') {
+            if (typeof obj[pathArr[i]] == 'undefined') {
 
-                obj[pathArr[i]]={};
-
-            }
-
-            if (i==pathArr.length-1) {
-
-                return obj[pathArr[i]]=value;
+                obj[pathArr[i]] = {};
 
             }
 
-            obj=obj[pathArr[i]];
+            if (i == pathArr.length - 1) {
+
+                return obj[pathArr[i]] = value;
+
+            }
+
+            obj = obj[pathArr[i]];
 
         }
 
@@ -136,22 +138,24 @@ zerk.define({
      */
     getValue: function(key) {
 
-        if (!key) return;
+        if (!key) {
+            return;
+        }
 
-        var obj=this._data;
+        var obj = this._data;
 
-        var pathArr=key.split('.');
+        var pathArr = key.split('.');
 
-        for (var i=0;i<pathArr.length;i++) {
+        for (var i = 0; i < pathArr.length; i++) {
 
-            if (typeof obj=='undefined') {
+            if (typeof obj == 'undefined') {
 
-                console.log('Missing config value "'+key+'"');
+                console.log('Missing config value "' + key + '"');
                 return;
 
             }
 
-            obj=obj[pathArr[i]];
+            obj = obj[pathArr[i]];
 
         }
 

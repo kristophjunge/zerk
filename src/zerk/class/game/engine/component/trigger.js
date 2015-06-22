@@ -13,20 +13,20 @@ zerk.define({
     name: 'zerk.game.engine.component.trigger',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'trigger',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             targetEntityTag: '',
             targetSystem: '',
             targetMethod: ''
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(

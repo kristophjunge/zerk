@@ -10,7 +10,6 @@ var zerkWrapper = companion.require('../../src/zerk/zerk.js', {
 
 companion.require('../../src/zerk/helper.js', zerkWrapper);
 
-
 zerkWrapper.zerk.init({
     bootstrap: {
         game: 'gameserver',

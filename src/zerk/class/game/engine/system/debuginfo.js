@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.debuginfo',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -58,14 +58,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.debuginfo').init.apply(
             this,
             arguments
         );
 
-        this._viewport=this._getSystem('viewport');
+        this._viewport = this._getSystem('viewport');
 
     },
 
@@ -157,41 +157,41 @@ zerk.define({
      **/
     _renderDebugInfo: function() {
 
-        var me=this;
+        var me = this;
 
         if (me._config.showFPS) {
 
-            me._renderDebugInfoLine(me._viewport.getFPS()+' FPS',1);
+            me._renderDebugInfoLine(me._viewport.getFPS() + ' FPS', 1);
 
         }
 
         if (me._config.showZoom) {
 
             me._renderDebugInfoLine(
-                zerk.helper.formatPercent(me._viewport.getZoom(),2),
+                zerk.helper.formatPercent(me._viewport.getZoom(), 2),
                 2
             );
 
         }
 
-        var offsetX=zerk.helper.round(
+        var offsetX = zerk.helper.round(
             me._viewport.fromPixel(me._viewport.getX()),
             1
         );
-        var offsetY=zerk.helper.round(
+        var offsetY = zerk.helper.round(
             me._viewport.fromPixel(me._viewport.getY()),
             1
         );
 
         if (me._config.showPosition) {
 
-            me._renderDebugInfoLine(offsetX+':'+offsetY,3);
+            me._renderDebugInfoLine(offsetX + ':' + offsetY, 3);
 
         }
 
         if (me._config.showViewportSize) {
 
-            me._renderDebugInfoLine(me._viewport.getWidth()+':'+me._viewport.getHeight(),4);
+            me._renderDebugInfoLine(me._viewport.getWidth() + ':' + me._viewport.getHeight(), 4);
 
         }
 
@@ -205,13 +205,13 @@ zerk.define({
      * @param {Integer} line Row number
      * @protected
      **/
-    _renderDebugInfoLine: function(text,line) {
+    _renderDebugInfoLine: function(text, line) {
 
         this._viewport.drawText(
             'display',
             text,
-            (this._viewport._width/2)-2,
-            -(this._viewport._height/2)+(10*line)-7,
+            (this._viewport._width / 2) - 2,
+            -(this._viewport._height / 2) + (10 * line) - 7,
             'sans-serif',
             10,
             'rgb(0,255,0)',
@@ -233,16 +233,16 @@ zerk.define({
             'display',
             [
                 [
-                    (this._viewport._width/2)-10,
-                    (this._viewport._height/2),
-                    (this._viewport._width/2)+10,
-                    (this._viewport._height/2)
+                    (this._viewport._width / 2) - 10,
+                    (this._viewport._height / 2),
+                    (this._viewport._width / 2) + 10,
+                    (this._viewport._height / 2)
                 ],
                 [
-                    (this._viewport._width/2),
-                    (this._viewport._height/2)-10,
-                    (this._viewport._width/2),
-                    (this._viewport._height/2)+10
+                    (this._viewport._width / 2),
+                    (this._viewport._height / 2) - 10,
+                    (this._viewport._width / 2),
+                    (this._viewport._height / 2) + 10
                 ]
             ],
             'rgb(0,200,200)'

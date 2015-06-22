@@ -27,7 +27,7 @@ zerk.define({
         'jumpandrun.game.engine.system.madStone' // Custom system
     ]
 
-},{
+}, {
 
     _running: false,
 
@@ -45,7 +45,7 @@ zerk.define({
 
     run: function(config) {
 
-        var self=this;
+        var self = this;
 
         if (!zerk.parent('jumpandrun.game').run.apply(
             this,
@@ -86,11 +86,11 @@ zerk.define({
 
     _startGame: function() {
 
-        this._systemControl=this._engine.getSystem('control');
+        this._systemControl = this._engine.getSystem('control');
 
-        this._systemMessage=this._engine.getSystem('message');
+        this._systemMessage = this._engine.getSystem('message');
 
-        this._systemPlayer=this._engine.getSystem('player');
+        this._systemPlayer = this._engine.getSystem('player');
 
         if (this._firstRun) {
 
@@ -106,11 +106,11 @@ zerk.define({
                 )
             );
 
-            this._firstRun=false;
+            this._firstRun = false;
 
         } else {
 
-            this._running=true;
+            this._running = true;
 
             this._setControlsEnabled(true);
 
@@ -182,7 +182,9 @@ zerk.define({
 
     restartGame: function() {
 
-        if (!this._running) return;
+        if (!this._running) {
+            return;
+        }
 
         this._stopGame();
 
@@ -190,7 +192,7 @@ zerk.define({
 
         this._engine.reset();
 
-        var self=this;
+        var self = this;
 
         this._engine.loadWorld(
             'jumpandrun.world.level',
@@ -206,8 +208,8 @@ zerk.define({
             }
         );
 
-        this._dead=false;
-        this._won=false;
+        this._dead = false;
+        this._won = false;
 
     },
 
@@ -215,7 +217,7 @@ zerk.define({
 
         this._setControlsEnabled(false);
 
-        this._dead=true;
+        this._dead = true;
 
         this._systemMessage.registerMessage(
             zerk.create(
@@ -247,7 +249,7 @@ zerk.define({
 
         this._setControlsEnabled(false);
 
-        this._won=true;
+        this._won = true;
 
         this._systemMessage.registerMessage(
             zerk.create(
@@ -277,25 +279,29 @@ zerk.define({
 
     _setControlsEnabled: function(enabled) {
 
-        if (typeof enabled=='undefined') enabled=false;
+        if (typeof enabled == 'undefined') {
+            enabled = false;
+        }
 
-        var players=this._engine.getEntitiesByTags('player');
+        var players = this._engine.getEntitiesByTags('player');
 
-        if (zerk.isEmpty(players)) return;
+        if (zerk.isEmpty(players)) {
+            return;
+        }
 
-        var entity=players[0];
+        var entity = players[0];
 
-        entity.components.player.enableControl=enabled;
+        entity.components.player.enableControl = enabled;
 
     },
 
     _onKeyPress: function(event) {
 
-        if (event.keyCode==13) {
+        if (event.keyCode == 13) {
 
             this.restartGame();
 
-        } else if (event.keyCode==27) {
+        } else if (event.keyCode == 27) {
 
             this._engine.stop();
 
@@ -305,10 +311,10 @@ zerk.define({
 
     _onMouseDown: function(event) {
 
-        if (!this._running
-        && this._systemControl.mouse.mouseLeftDown) {
+        if (!this._running &&
+        this._systemControl.mouse.mouseLeftDown) {
 
-            this._running=true;
+            this._running = true;
 
             this._setControlsEnabled(true);
 

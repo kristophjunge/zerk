@@ -13,19 +13,19 @@ zerk.define({
     name: 'zerk.game.engine.component.render',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'render',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             visible: true,
             layers: []
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(
@@ -39,13 +39,13 @@ zerk.define({
             entityConfig
         );
 
-        state._layerList=[];
+        state._layerList = [];
 
-        var renderConfig=null;
+        var renderConfig = null;
 
         for (var layerKey in entityConfig.layers) {
 
-            var renderItem=state.layers[layerKey];
+            var renderItem = state.layers[layerKey];
 
             switch (renderItem.render) {
                 case 'texture':
@@ -134,10 +134,10 @@ zerk.define({
                         textureAngle: 0
                     };
 
-                    zerk.apply(textureConfig,entityConfig.layers[layerKey]);
-                    textureConfig.key=layerKey;
+                    zerk.apply(textureConfig, entityConfig.layers[layerKey]);
+                    textureConfig.key = layerKey;
 
-                    state.layers[layerKey]=textureConfig;
+                    state.layers[layerKey] = textureConfig;
 
                     state._layerList.push(state.layers[layerKey]);
 
@@ -213,10 +213,10 @@ zerk.define({
                         fixture: ''
                     };
 
-                    zerk.apply(spriteConfig,entityConfig.layers[layerKey]);
-                    spriteConfig.key=layerKey;
+                    zerk.apply(spriteConfig, entityConfig.layers[layerKey]);
+                    spriteConfig.key = layerKey;
 
-                    state.layers[layerKey]=spriteConfig;
+                    state.layers[layerKey] = spriteConfig;
 
                     state._layerList.push(state.layers[layerKey]);
 

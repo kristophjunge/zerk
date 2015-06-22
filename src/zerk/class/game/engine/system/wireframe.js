@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.wireframe',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -69,24 +69,24 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
-        var me=this;
+        var me = this;
 
         zerk.parent('zerk.game.engine.system.wireframe').init.apply(
             me,
             arguments
         );
 
-        me._showBodyAngleIndicator=me._config.showBodyAngleIndicator;
-        me._showEntityOriginIndicator=me._config.showEntityOriginIndicator;
-        me._showFixtureBoundingBox=me._config.showFixtureBoundingBox;
-        me._showBodyOriginIndicator=me._config.showBodyOriginIndicator;
-        me._showFixtureOriginIndicator=me._config.showFixtureOriginIndicator;
+        me._showBodyAngleIndicator = me._config.showBodyAngleIndicator;
+        me._showEntityOriginIndicator = me._config.showEntityOriginIndicator;
+        me._showFixtureBoundingBox = me._config.showFixtureBoundingBox;
+        me._showBodyOriginIndicator = me._config.showBodyOriginIndicator;
+        me._showFixtureOriginIndicator = me._config.showFixtureOriginIndicator;
 
-        me._viewport=this._getSystem('viewport');
+        me._viewport = this._getSystem('viewport');
 
-        me._physics=this._getSystem('physics');
+        me._physics = this._getSystem('physics');
 
     },
 
@@ -148,7 +148,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='physics');
+        return (name == 'physics');
 
     },
 
@@ -187,7 +187,7 @@ zerk.define({
      **/
     update: function() {
 
-        var me=this;
+        var me = this;
 
         zerk.parent('zerk.game.engine.system.wireframe').update.apply(
             me,
@@ -195,9 +195,9 @@ zerk.define({
         );
 
         // Render all entities in the view area
-        var entityStates=me._viewport.getEntitiesInViewport();
+        var entityStates = me._viewport.getEntitiesInViewport();
 
-        for (var i=0;i<entityStates.length;i++) {
+        for (var i = 0; i < entityStates.length; i++) {
             me._renderEntity(entityStates[i]);
         }
 
@@ -212,14 +212,14 @@ zerk.define({
      **/
     _renderEntity: function(entity) {
 
-        var me=this;
+        var me = this;
 
         // Render all bodies of the entity
 
-        var bodies=entity.components.physics._bodyList;
+        var bodies = entity.components.physics._bodyList;
 
-        for (var i=0;i<bodies.length;i++) {
-            this._renderBody(entity,bodies[i]);
+        for (var i = 0; i < bodies.length; i++) {
+            this._renderBody(entity, bodies[i]);
         }
 
         if (me._showEntityOriginIndicator) {
@@ -236,23 +236,23 @@ zerk.define({
      * @param {config.component.physics.body} body Body state
      * @protected
      **/
-    _renderBody: function(entity,body) {
+    _renderBody: function(entity, body) {
 
-        var me=this;
+        var me = this;
 
         // Render all the fixtures of the body
-        for (var i=0;i<body._fixtureList.length;i++) {
-            me._renderFixture(entity,body,body._fixtureList[i]);
+        for (var i = 0; i < body._fixtureList.length; i++) {
+            me._renderFixture(entity, body, body._fixtureList[i]);
         }
 
         if (me._showBodyAngleIndicator && body.moveable) {
 
-            me._renderBodyAngleIndicator(entity,body);
+            me._renderBodyAngleIndicator(entity, body);
 
         }
 
         if (me._showBodyOriginIndicator) {
-            me._renderBodyOriginIndicator(entity,body);
+            me._renderBodyOriginIndicator(entity, body);
         }
 
     },
@@ -266,16 +266,16 @@ zerk.define({
      * @param {config.component.physics.fixture} fixture Fixture state
      * @protected
      **/
-    _renderFixture: function(entity,body,fixture) {
+    _renderFixture: function(entity, body, fixture) {
 
-        var me=this;
+        var me = this;
 
         if (me._showFixtureBoundingBox) {
-            me._renderFixtureBoundingShape(entity,body,fixture);
+            me._renderFixtureBoundingShape(entity, body, fixture);
         }
 
         if (me._showFixtureOriginIndicator) {
-            me._renderFixtureOriginIndicator(entity,body,fixture);
+            me._renderFixtureOriginIndicator(entity, body, fixture);
         }
 
     },
@@ -291,17 +291,17 @@ zerk.define({
      * @param {config.component.physics.fixture} fixture Fixture state
      * @protected
      **/
-    _renderFixtureBoundingShape: function(entity,body,fixture) {
+    _renderFixtureBoundingShape: function(entity, body, fixture) {
 
         switch (fixture.shape) {
             case 'box':
-                this._renderFixtureBoundingBox(entity,body,fixture);
+                this._renderFixtureBoundingBox(entity, body, fixture);
                 break;
             case 'circle':
-                this._renderFixtureBoundingCircle(entity,body,fixture);
+                this._renderFixtureBoundingCircle(entity, body, fixture);
                 break;
             case 'polygon':
-                this._renderFixtureBoundingPolygon(entity,body,fixture);
+                this._renderFixtureBoundingPolygon(entity, body, fixture);
                 break;
         }
 
@@ -318,47 +318,47 @@ zerk.define({
      *     lineWidth
      * @protected
      **/
-    _getFixtureBoundingStyle: function(entity,body,fixture) {
+    _getFixtureBoundingStyle: function(entity, body, fixture) {
 
-        var me=this;
+        var me = this;
 
-        var result={};
+        var result = {};
 
-        var style='';
+        var style = '';
 
         if (fixture.isSensor) {
 
-            style=this._config.style.fixtureSensor;
+            style = this._config.style.fixtureSensor;
 
-        } else if (me.isHighlightFixture(entity.id,body.key,fixture.key)) {
+        } else if (me.isHighlightFixture(entity.id, body.key, fixture.key)) {
 
-            style=this._config.style.fixtureHighlight;
+            style = this._config.style.fixtureHighlight;
 
         } else if (!this._physics.isBodyActive(body)) {
 
-            style=this._config.style.bodyActive;
+            style = this._config.style.bodyActive;
 
         } else if (this._physics.isBodyStatic(body)) {
 
-            style=this._config.style.bodyStatic;
+            style = this._config.style.bodyStatic;
 
         } else if (this._physics.isBodyKinematic(body)) {
 
-            style=this._config.style.bodyKinematic;
+            style = this._config.style.bodyKinematic;
 
         } else if (!this._physics.isBodyAwake(body)) {
 
-            style=this._config.style.bodyAwake;
+            style = this._config.style.bodyAwake;
 
         } else {
 
-            style=this._config.style.bodyDefault;
+            style = this._config.style.bodyDefault;
 
         }
 
-        result.strokeColor=style.strokeColor;
-        result.fillColor=style.fillColor;
-        result.lineWidth=1;
+        result.strokeColor = style.strokeColor;
+        result.fillColor = style.fillColor;
+        result.lineWidth = 1;
 
         return result;
 
@@ -373,55 +373,55 @@ zerk.define({
      * @param {config.component.physics.fixture} fixture Fixture state
      * @protected
      **/
-    _renderFixtureBoundingBox: function(entity,body,fixture) {
+    _renderFixtureBoundingBox: function(entity, body, fixture) {
 
-        var style=this._getFixtureBoundingStyle(entity,body,fixture);
+        var style = this._getFixtureBoundingStyle(entity, body, fixture);
 
-        var position=entity.components.position;
-        var bodyState=entity.components.physics.bodies[body.key];
-        var fixtureState=bodyState.fixtures[fixture.key];
+        var position = entity.components.position;
+        var bodyState = entity.components.physics.bodies[body.key];
+        var fixtureState = bodyState.fixtures[fixture.key];
 
-        if (!bodyState) return;
-        if (!fixtureState) return;
+        if (!bodyState) {
+            return;
+        }
+        if (!fixtureState) {
+            return;
+        }
 
-        var fixtureWidth=fixture.width;
-        var fixtureHeight=fixture.height;
+        var fixtureWidth = fixture.width;
+        var fixtureHeight = fixture.height;
 
         // Tranform rectangle into polygon
 
-        var rectangleVertices=zerk.helper.getPolygonOfRectangle(fixtureWidth,fixtureHeight);
+        var rectangleVertices = zerk.helper.getPolygonOfRectangle(fixtureWidth, fixtureHeight);
 
-        var vertices=[];
+        var vertices = [];
 
-        for (var i=0;i<rectangleVertices.length;i++) {
+        for (var i = 0; i < rectangleVertices.length; i++) {
 
             // Rotate with fixture angle
-            var rotatedVertice=zerk.helper.rotatePosition(
+            var rotatedVertice = zerk.helper.rotatePosition(
                 rectangleVertices[i][0],
                 rectangleVertices[i][1],
                 fixtureState.angle
             );
 
             // Add fixture offset
-            rotatedVertice.x+=+fixtureState.x;
-            rotatedVertice.y+=fixtureState.y;
+            rotatedVertice.x += +fixtureState.x;
+            rotatedVertice.y += fixtureState.y;
 
             // Rotate with body angle
-            rotatedVertice=zerk.helper.rotatePosition(
+            rotatedVertice = zerk.helper.rotatePosition(
                 rotatedVertice.x,
                 rotatedVertice.y,
                 bodyState.angle
             );
 
-            var x=this._viewport._getCanvasX(
-                position.x
-                +bodyState.x
-                +rotatedVertice.x
+            var x = this._viewport._getCanvasX(
+                position.x + bodyState.x + rotatedVertice.x
             );
-            var y=this._viewport._getCanvasY(
-                position.y
-                +bodyState.y
-                +rotatedVertice.y
+            var y = this._viewport._getCanvasY(
+                position.y + bodyState.y + rotatedVertice.y
             );
 
             vertices.push([
@@ -462,40 +462,40 @@ zerk.define({
      * @param {config.component.physics.fixture} fixture Fixture state
      * @protected
      **/
-    _renderFixtureBoundingCircle: function(entity,body,fixture) {
+    _renderFixtureBoundingCircle: function(entity, body, fixture) {
 
-        var me=this;
+        var me = this;
 
-        var style=me._getFixtureBoundingStyle(entity,body,fixture);
+        var style = me._getFixtureBoundingStyle(entity, body, fixture);
 
-        var position=entity.components.position;
-        var bodyState=entity.components.physics.bodies[body.key];
-        var fixtureState=bodyState.fixtures[fixture.key];
+        var position = entity.components.position;
+        var bodyState = entity.components.physics.bodies[body.key];
+        var fixtureState = bodyState.fixtures[fixture.key];
 
-        if (!bodyState) return;
-        if (!fixtureState) return;
+        if (!bodyState) {
+            return;
+        }
+        if (!fixtureState) {
+            return;
+        }
 
-        var fixturePosition={
+        var fixturePosition = {
             x: fixtureState.x,
             y: fixtureState.y
         };
 
         // Rotate with body angle
-        fixturePosition=zerk.helper.rotatePosition(
+        fixturePosition = zerk.helper.rotatePosition(
             fixturePosition.x,
             fixturePosition.y,
             bodyState.angle
         );
 
-        var x=me._viewport._getCanvasX(
-            position.x
-            +bodyState.x
-            +fixturePosition.x
+        var x = me._viewport._getCanvasX(
+            position.x + bodyState.x + fixturePosition.x
         );
-        var y=me._viewport._getCanvasY(
-            position.y
-            +bodyState.y
-            +fixturePosition.y
+        var y = me._viewport._getCanvasY(
+            position.y + bodyState.y + fixturePosition.y
         );
 
         me._viewport.drawArc(
@@ -504,33 +504,29 @@ zerk.define({
             y,
             me._viewport.toZoom(me._viewport.toPixel(fixture.radius)),
             0,
-            Math.PI*2,
+            Math.PI * 2,
             true,
             style.fillColor,
             style.strokeColor,
             style.lineWidth
         );
 
-        var rotatedAngleIndicator=zerk.helper.rotatePosition(
+        var rotatedAngleIndicator = zerk.helper.rotatePosition(
             fixtureState.x,
-            fixtureState.y-fixtureState.radius,
+            fixtureState.y - fixtureState.radius,
             bodyState.angle
         );
 
-        var angleIndicatorX=me._viewport._getCanvasX(
-            position.x
-            +bodyState.x
-            +rotatedAngleIndicator.x
+        var angleIndicatorX = me._viewport._getCanvasX(
+            position.x + bodyState.x + rotatedAngleIndicator.x
         );
-        var angleIndicatorY=me._viewport._getCanvasY(
-            position.y
-            +bodyState.y
-            +rotatedAngleIndicator.y
+        var angleIndicatorY = me._viewport._getCanvasY(
+            position.y + bodyState.y + rotatedAngleIndicator.y
         );
 
         me._viewport.drawLines(
             'display',
-            [[angleIndicatorX,angleIndicatorY,x,y]],
+            [[angleIndicatorX, angleIndicatorY, x, y]],
             style.strokeColor,
             style.lineWidth
         );
@@ -546,42 +542,42 @@ zerk.define({
      * @param {config.component.physics.fixture} fixture Fixture state
      * @protected
      **/
-    _renderFixtureBoundingPolygon: function(entity,body,fixture) {
+    _renderFixtureBoundingPolygon: function(entity, body, fixture) {
 
-        var style=this._getFixtureBoundingStyle(entity,body,fixture);
+        var style = this._getFixtureBoundingStyle(entity, body, fixture);
 
-        var position=entity.components.position;
-        var bodyState=entity.components.physics.bodies[body.key];
-        var fixtureState=bodyState.fixtures[fixture.key];
+        var position = entity.components.position;
+        var bodyState = entity.components.physics.bodies[body.key];
+        var fixtureState = bodyState.fixtures[fixture.key];
 
-        if (!bodyState) return;
-        if (!fixtureState) return;
+        if (!bodyState) {
+            return;
+        }
+        if (!fixtureState) {
+            return;
+        }
 
-        var vertices=[];
+        var vertices = [];
 
-        for (var i=0;i<fixture.vertices.length;i++) {
+        for (var i = 0; i < fixture.vertices.length; i++) {
 
-            var rotatedVertice=zerk.helper.rotatePosition(
+            var rotatedVertice = zerk.helper.rotatePosition(
                 fixture.vertices[i][0],
                 fixture.vertices[i][1],
                 fixture.angle
             );
 
-            rotatedVertice=zerk.helper.rotatePosition(
-                fixture.x+rotatedVertice.x,
-                fixture.y+rotatedVertice.y,
+            rotatedVertice = zerk.helper.rotatePosition(
+                fixture.x + rotatedVertice.x,
+                fixture.y + rotatedVertice.y,
                 bodyState.angle
             );
 
-            var x=this._viewport._getCanvasX(
-                position.x
-                +bodyState.x
-                +rotatedVertice.x
+            var x = this._viewport._getCanvasX(
+                position.x + bodyState.x + rotatedVertice.x
             );
-            var y=this._viewport._getCanvasY(
-                position.y
-                +bodyState.y
-                +rotatedVertice.y
+            var y = this._viewport._getCanvasY(
+                position.y + bodyState.y + rotatedVertice.y
             );
 
             vertices.push([
@@ -609,17 +605,17 @@ zerk.define({
      * @param {config.component.physics.body} body Body state
      * @protected
      **/
-    _renderBodyAngleIndicator: function(entity,body,fixture) {
+    _renderBodyAngleIndicator: function(entity, body, fixture) {
 
-        var position=entity.components.position;
-        var bodyState=entity.components.physics.bodies[body.key];
+        var position = entity.components.position;
+        var bodyState = entity.components.physics.bodies[body.key];
 
-        var x=position.x+bodyState.x;
-        var y=position.y+bodyState.y;
+        var x = position.x + bodyState.x;
+        var y = position.y + bodyState.y;
 
-        var size=0.35;
+        var size = 0.35;
 
-        var positions=[
+        var positions = [
             {
                 x: -size,
                 y: 0
@@ -638,9 +634,9 @@ zerk.define({
             }
         ];
 
-        for (var i=0;i<positions.length;i++) {
+        for (var i = 0; i < positions.length; i++) {
 
-            positions[i]=zerk.helper.rotatePosition(
+            positions[i] = zerk.helper.rotatePosition(
                 positions[i].x,
                 positions[i].y,
                 bodyState.angle
@@ -652,10 +648,10 @@ zerk.define({
             'display',
             [
                 [
-                    this._viewport._getCanvasX(x+positions[0].x),
-                    this._viewport._getCanvasY(y+positions[0].y),
-                    this._viewport._getCanvasX(x+positions[1].x),
-                    this._viewport._getCanvasY(y+positions[1].y)
+                    this._viewport._getCanvasX(x + positions[0].x),
+                    this._viewport._getCanvasY(y + positions[0].y),
+                    this._viewport._getCanvasX(x + positions[1].x),
+                    this._viewport._getCanvasY(y + positions[1].y)
                 ]
             ],
             'rgb(255,0,0)'
@@ -665,10 +661,10 @@ zerk.define({
             'display',
             [
                 [
-                    this._viewport._getCanvasX(x+positions[2].x),
-                    this._viewport._getCanvasY(y+positions[2].y),
-                    this._viewport._getCanvasX(x+positions[3].x),
-                    this._viewport._getCanvasY(y+positions[3].y)
+                    this._viewport._getCanvasX(x + positions[2].x),
+                    this._viewport._getCanvasY(y + positions[2].y),
+                    this._viewport._getCanvasX(x + positions[3].x),
+                    this._viewport._getCanvasY(y + positions[3].y)
                 ]
             ],
             'rgb(0,255,0)'
@@ -694,26 +690,26 @@ zerk.define({
      **/
     _renderEntityOriginIndicator: function(entity) {
 
-        var me=this;
+        var me = this;
 
-        var position=entity.components.position;
+        var position = entity.components.position;
 
-        var size=0.2;
+        var size = 0.2;
 
         this._viewport.drawLines(
             'display',
             [
                 [
-                    me._viewport._getCanvasX(position.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(position.x) - me._viewport.toPixel(size),
                     me._viewport._getCanvasY(position.y),
-                    me._viewport._getCanvasX(position.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(position.x) + me._viewport.toPixel(size),
                     me._viewport._getCanvasY(position.y)
                 ],
                 [
                     me._viewport._getCanvasX(position.x),
-                    me._viewport._getCanvasY(position.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(position.y) - me._viewport.toPixel(size),
                     me._viewport._getCanvasX(position.x),
-                    me._viewport._getCanvasY(position.y)+me._viewport.toPixel(size)
+                    me._viewport._getCanvasY(position.y) + me._viewport.toPixel(size)
                 ]
             ],
             'rgb(255,0,0)'
@@ -721,33 +717,33 @@ zerk.define({
 
     },
 
-    _renderBodyOriginIndicator: function(entity,body) {
+    _renderBodyOriginIndicator: function(entity, body) {
 
-        var me=this;
+        var me = this;
 
-        var position=entity.components.position;
+        var position = entity.components.position;
 
-        var size=0.2;
+        var size = 0.2;
 
-        var bodyPosition={
-            x: position.x+body.x,
-            y: position.y+body.y
+        var bodyPosition = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
         this._viewport.drawLines(
             'display',
             [
                 [
-                    me._viewport._getCanvasX(bodyPosition.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(bodyPosition.x) - me._viewport.toPixel(size),
                     me._viewport._getCanvasY(bodyPosition.y),
-                    me._viewport._getCanvasX(bodyPosition.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(bodyPosition.x) + me._viewport.toPixel(size),
                     me._viewport._getCanvasY(bodyPosition.y)
                 ],
                 [
                     me._viewport._getCanvasX(bodyPosition.x),
-                    me._viewport._getCanvasY(bodyPosition.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(bodyPosition.y) - me._viewport.toPixel(size),
                     me._viewport._getCanvasX(bodyPosition.x),
-                    me._viewport._getCanvasY(bodyPosition.y)+me._viewport.toPixel(size)
+                    me._viewport._getCanvasY(bodyPosition.y) + me._viewport.toPixel(size)
                 ]
             ],
             'rgb(0,0,255)'
@@ -755,17 +751,17 @@ zerk.define({
 
     },
 
-    _renderFixtureOriginIndicator: function(entity,body,fixture) {
+    _renderFixtureOriginIndicator: function(entity, body, fixture) {
 
-        var me=this;
+        var me = this;
 
-        var position=entity.components.position;
+        var position = entity.components.position;
 
-        var size=0.2;
+        var size = 0.2;
 
-        var fixturePosition={
-            x: position.x+body.x,
-            y: position.y+body.y
+        var fixturePosition = {
+            x: position.x + body.x,
+            y: position.y + body.y
         };
 
         /*
@@ -777,23 +773,23 @@ zerk.define({
         );
         */
 
-        fixturePosition.x+=fixture.x;
-        fixturePosition.y+=fixture.y;
+        fixturePosition.x += fixture.x;
+        fixturePosition.y += fixture.y;
 
         this._viewport.drawLines(
             'display',
             [
                 [
-                    me._viewport._getCanvasX(fixturePosition.x)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(fixturePosition.x) - me._viewport.toPixel(size),
                     me._viewport._getCanvasY(fixturePosition.y),
-                    me._viewport._getCanvasX(fixturePosition.x)+me._viewport.toPixel(size),
+                    me._viewport._getCanvasX(fixturePosition.x) + me._viewport.toPixel(size),
                     me._viewport._getCanvasY(fixturePosition.y)
                 ],
                 [
                     me._viewport._getCanvasX(fixturePosition.x),
-                    me._viewport._getCanvasY(fixturePosition.y)-me._viewport.toPixel(size),
+                    me._viewport._getCanvasY(fixturePosition.y) - me._viewport.toPixel(size),
                     me._viewport._getCanvasX(fixturePosition.x),
-                    me._viewport._getCanvasY(fixturePosition.y)+me._viewport.toPixel(size)
+                    me._viewport._getCanvasY(fixturePosition.y) + me._viewport.toPixel(size)
                 ]
             ],
             'rgb(0,255,0)'
@@ -801,52 +797,52 @@ zerk.define({
 
     },
 
-    isHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+    isHighlightFixture: function(entityId, bodyKey, fixtureKey) {
 
-        var me=this;
+        var me = this;
 
-        return (zerk.isDefined(me._highlightFixtures[entityId])
-            && zerk.isDefined(me._highlightFixtures[entityId][bodyKey])
-            && zerk.inArray(fixtureKey,me._highlightFixtures[entityId][bodyKey]));
+        return (zerk.isDefined(me._highlightFixtures[entityId]) &&
+            zerk.isDefined(me._highlightFixtures[entityId][bodyKey]) &&
+            zerk.inArray(fixtureKey, me._highlightFixtures[entityId][bodyKey]));
 
     },
 
-    addHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+    addHighlightFixture: function(entityId, bodyKey, fixtureKey) {
 
-        var me=this;
+        var me = this;
 
         if (!zerk.isDefined(me._highlightFixtures[entityId])) {
-            me._highlightFixtures[entityId]={};
+            me._highlightFixtures[entityId] = {};
         }
 
         if (!zerk.isDefined(me._highlightFixtures[entityId][bodyKey])) {
-            me._highlightFixtures[entityId][bodyKey]=[];
+            me._highlightFixtures[entityId][bodyKey] = [];
         }
 
-        if (!zerk.inArray(fixtureKey,me._highlightFixtures[entityId][bodyKey])) {
+        if (!zerk.inArray(fixtureKey, me._highlightFixtures[entityId][bodyKey])) {
             me._highlightFixtures[entityId][bodyKey].push(fixtureKey);
         }
 
     },
 
-    removeHighlightFixture: function(entityId,bodyKey,fixtureKey) {
+    removeHighlightFixture: function(entityId, bodyKey, fixtureKey) {
 
-        var me=this;
+        var me = this;
 
-        if (zerk.isDefined(me._highlightFixtures[entityId])
-        && zerk.isDefined(me._highlightFixtures[entityId][bodyKey])) {
+        if (zerk.isDefined(me._highlightFixtures[entityId]) &&
+        zerk.isDefined(me._highlightFixtures[entityId][bodyKey])) {
 
-            zerk.removeFromArray(fixtureKey,me._highlightFixtures[entityId][bodyKey]);
+            zerk.removeFromArray(fixtureKey, me._highlightFixtures[entityId][bodyKey]);
 
-            if (me._highlightFixtures[entityId][bodyKey].length==0) {
+            if (me._highlightFixtures[entityId][bodyKey].length == 0) {
                 delete me._highlightFixtures[entityId][bodyKey];
             }
 
-            if (me._highlightFixtures[entityId][bodyKey].length==0) {
+            if (me._highlightFixtures[entityId][bodyKey].length == 0) {
                 delete me._highlightFixtures[entityId][bodyKey];
             }
 
-            if (zerk.objectCount(me._highlightFixtures[entityId])==0) {
+            if (zerk.objectCount(me._highlightFixtures[entityId]) == 0) {
                 delete me._highlightFixtures[entityId];
             }
 
@@ -860,9 +856,9 @@ zerk.define({
 
     removeAllHighlightFixtures: function() {
 
-        var me=this;
+        var me = this;
 
-        me._highlightFixtures={};
+        me._highlightFixtures = {};
 
     }
 

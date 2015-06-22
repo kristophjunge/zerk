@@ -19,7 +19,7 @@ zerk.define({
     name: 'zerk.game.engine.system.control.keyboard',
     extend: 'zerk.observable'
 
-},{
+}, {
 
     /**
      * State of the backspace key
@@ -195,9 +195,9 @@ zerk.define({
             arguments
         );
 
-        this._control=control;
+        this._control = control;
 
-        this._keyMap={
+        this._keyMap = {
             key8: 'Backspace',
             key9: 'Tab',
             key13: 'Enter',
@@ -218,7 +218,7 @@ zerk.define({
             key40: 'ArrowDown'
         };
 
-        var self=this;
+        var self = this;
 
         document.addEventListener(
             'keypress',
@@ -258,10 +258,10 @@ zerk.define({
      */
     _onKeyDown: function(event) {
 
-        var keyName='key'+event.keyCode;
+        var keyName = 'key' + event.keyCode;
 
-        if (typeof this._keyMap[keyName]!=='undefined') {
-            this['pressed'+this._keyMap[keyName]]=true;
+        if (typeof this._keyMap[keyName] !== 'undefined') {
+            this['pressed' + this._keyMap[keyName]] = true;
         }
 
         /**
@@ -270,7 +270,7 @@ zerk.define({
          * @param {DOMEvent} event
          * @event keypress
          */
-        this.fireEvent('keydown',event);
+        this.fireEvent('keydown', event);
 
     },
 
@@ -283,10 +283,10 @@ zerk.define({
      */
     _onKeyUp: function(event) {
 
-        var keyName='key'+event.keyCode;
+        var keyName = 'key' + event.keyCode;
 
-        if (typeof this._keyMap[keyName]!=='undefined') {
-            this['pressed'+this._keyMap[keyName]]=false;
+        if (typeof this._keyMap[keyName] !== 'undefined') {
+            this['pressed' + this._keyMap[keyName]] = false;
         }
 
         /**
@@ -295,7 +295,7 @@ zerk.define({
          * @param {DOMEvent} event
          * @event keyup
          */
-        this.fireEvent('keyup',event);
+        this.fireEvent('keyup', event);
 
     },
 
@@ -308,7 +308,7 @@ zerk.define({
      */
     _onKeyPress: function(event) {
 
-        this.fireEvent('keypress',event);
+        this.fireEvent('keypress', event);
 
     }
 

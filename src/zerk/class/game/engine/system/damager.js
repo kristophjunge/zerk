@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.damager',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -49,14 +49,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.damager').init.apply(
             this,
             arguments
         );
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
     },
 
@@ -69,7 +69,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='damager');
+        return (name == 'damager');
 
     },
 
@@ -101,25 +101,25 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactBegin: function(sourceInfo,targetInfo) {
+    _onContactBegin: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.damager=='undefined'
-        && typeof targetInfo.entity.components.damager=='undefined') {
+        if (typeof sourceInfo.entity.components.damager == 'undefined' &&
+        typeof targetInfo.entity.components.damager == 'undefined') {
             return true;
         }
 
         /*
          * TODO Move entity specific code into event handlers and/or health system
          */
-        if (sourceInfo.entity.name=='jumpandrun.entity.player') {
+        if (sourceInfo.entity.name == 'jumpandrun.entity.player') {
 
-            var player=this._getSystem('player');
+            var player = this._getSystem('player');
 
             player.dead(sourceInfo.entity);
 
-        } else if (sourceInfo.entity.name=='jumpandrun.entity.balancePlatform') {
+        } else if (sourceInfo.entity.name == 'jumpandrun.entity.balancePlatform') {
 
-            this._physics.destroyBody(sourceInfo.entity,sourceInfo.body);
+            this._physics.destroyBody(sourceInfo.entity, sourceInfo.body);
 
         } else {
 

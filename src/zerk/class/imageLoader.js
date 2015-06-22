@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.imageLoader'
 
-},{
+}, {
 
     /**
      * Register of loaded resources
@@ -56,9 +56,9 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    _loadImage: function(id,successFn,errorFn) {
+    _loadImage: function(id, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
         if (me.isLoaded(id)) {
             if (zerk.isFunction(successFn)) {
@@ -67,26 +67,26 @@ zerk.define({
             return true;
         }
 
-        var path=me._getResourcePath(id);
+        var path = me._getResourcePath(id);
         if (!path) {
-            zerk.error('Resource not found "'+id+'"');
+            zerk.error('Resource not found "' + id + '"');
         }
 
-        var image=new Image();
-        image.id='zerk-image-'+id;
-        image.src=path;
-        image.addEventListener('load',function() {
-            me._images[id]=image;
+        var image = new Image();
+        image.id = 'zerk-image-' + id;
+        image.src = path;
+        image.addEventListener('load', function() {
+            me._images[id] = image;
             if (zerk.isFunction(successFn)) {
-                successFn(id,image);
+                successFn(id, image);
             }
         });
 
-        image.addEventListener('error',function() {
-            zerk.error('Cannot load image "'+path+'" for resource "'+id+'"');
+        image.addEventListener('error', function() {
+            zerk.error('Cannot load image "' + path + '" for resource "' + id + '"');
         });
 
-        var container=document.getElementById('zerk-images');
+        var container = document.getElementById('zerk-images');
 
         if (!container) {
             zerk.error('Image container not found \'zerk-images\'');
@@ -107,39 +107,39 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    require: function(idList,successFn,errorFn) {
+    require: function(idList, successFn, errorFn) {
 
         if (!zerk.isDefined(successFn)) {
-            successFn=zerk.emptyFn();
+            successFn = zerk.emptyFn();
         }
         if (!zerk.isDefined(errorFn)) {
-            errorFn=zerk.emptyFn();
+            errorFn = zerk.emptyFn();
         }
 
-        var me=this;
-        var completed=[];
-        var unloaded=[];
-        var result={};
+        var me = this;
+        var completed = [];
+        var unloaded = [];
+        var result = {};
 
-        for (var i=0;i<idList.length;i++) {
+        for (var i = 0; i < idList.length; i++) {
             if (this.isLoaded(idList[i])) {
-                result[idList[i]]=me.getResource(idList[i]);
+                result[idList[i]] = me.getResource(idList[i]);
             } else {
                 unloaded.push(idList[i]);
             }
         }
 
-        if (unloaded.length==0) {
+        if (unloaded.length == 0) {
             successFn(result);
         }
 
-        for (var i=0;i<unloaded.length;i++) {
+        for (var i = 0; i < unloaded.length; i++) {
             this._loadImage(
                 unloaded[i],
-                function(id,image) {
+                function(id, image) {
                     completed.push(unloaded[i]);
-                    result[id]=image;
-                    if (completed.length==unloaded.length) {
+                    result[id] = image;
+                    if (completed.length == unloaded.length) {
                         successFn(result);
                     }
                 },
@@ -151,17 +151,17 @@ zerk.define({
 
     clear: function() {
 
-        var me=this;
-        var image=null;
-        var container=document.getElementById('zerk-images');
+        var me = this;
+        var image = null;
+        var container = document.getElementById('zerk-images');
 
         for (var imageId in me._images) {
-            me._images[imageId]=null;
-            image=document.getElementById('zerk-image-'+imageId);
+            me._images[imageId] = null;
+            image = document.getElementById('zerk-image-' + imageId);
             container.removeChild(image);
         }
 
-        me._images={};
+        me._images = {};
 
     },
 
@@ -190,8 +190,8 @@ zerk.define({
      **/
     setConfig: function(config) {
 
-        for (var i=0;i<config.length;i++) {
-            this._namespace[config[i].namespace]=config[i].path;
+        for (var i = 0; i < config.length; i++) {
+            this._namespace[config[i].namespace] = config[i].path;
         }
 
     },
@@ -222,11 +222,13 @@ zerk.define({
     _getResourcePath: function(id) {
 
         for (var ns in this._namespace) {
-            if (ns.length>id.length) continue;
-            if (ns==id.substr(0,ns.length)) {
-                var localPart = id.substr(ns.length+1);
-                localPart=localPart.replace(/\./g,'/');
-                return this._namespace[ns]+'/'+localPart+'.png?r='+Math.random();
+            if (ns.length > id.length) {
+                continue;
+            }
+            if (ns == id.substr(0, ns.length)) {
+                var localPart = id.substr(ns.length + 1);
+                localPart = localPart.replace(/\./g, '/');
+                return this._namespace[ns] + '/' + localPart + '.png?r=' + Math.random();
             }
         }
 
@@ -234,9 +236,9 @@ zerk.define({
 
     },
 
-    addNamespace: function(ns,path) {
+    addNamespace: function(ns, path) {
 
-        this._namespace[ns]=path;
+        this._namespace[ns] = path;
 
     }
 

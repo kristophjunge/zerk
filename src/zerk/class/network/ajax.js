@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.network.ajax'
 
-},{
+}, {
 
     /**
      * List of different XMLHttpRequest vendor implemenations
@@ -21,10 +21,10 @@ zerk.define({
      * @protected
      **/
     _factories: [
-        function () {return new XMLHttpRequest();},
-        function () {return new ActiveXObject("Msxml2.XMLHTTP");},
-        function () {return new ActiveXObject("Msxml3.XMLHTTP");},
-        function () {return new ActiveXObject("Microsoft.XMLHTTP");}
+        function() {return new XMLHttpRequest();},
+        function() {return new ActiveXObject('Msxml2.XMLHTTP');},
+        function() {return new ActiveXObject('Msxml3.XMLHTTP');},
+        function() {return new ActiveXObject('Microsoft.XMLHTTP');}
     ],
 
     /**
@@ -34,11 +34,11 @@ zerk.define({
      * @return {XMLHttpRequest} The XMLHttpRequest object
      * @protected
      **/
-    _createXMLHTTPObject: function () {
+    _createXMLHTTPObject: function() {
 
         var xmlHttp = false;
 
-        for (var i=0;i<this._factories.length;i++) {
+        for (var i = 0; i < this._factories.length; i++) {
 
             try {
 
@@ -68,7 +68,7 @@ zerk.define({
      * @param {Function} errorHandler Event handler for error
      * @async
      **/
-    request: function (url,post,successHandler,errorHandler) {
+    request: function(url, post, successHandler, errorHandler) {
 
         var request = this._createXMLHTTPObject();
 
@@ -78,47 +78,40 @@ zerk.define({
 
         }
 
-        var method = ((post) ? "POST" : "GET");
+        var method = ((post) ? 'POST' : 'GET');
 
-        request.open(method,url,true);
-        request.setRequestHeader('User-Agent','XMLHTTP/1.0');
+        request.open(method, url, true);
+        request.setRequestHeader('User-Agent', 'XMLHTTP/1.0');
 
         if (post) {
 
             req.setRequestHeader(
-                'Content-type','application/x-www-form-urlencoded'
+                'Content-type', 'application/x-www-form-urlencoded'
             );
 
         }
 
-        request.onreadystatechange = function () {
+        request.onreadystatechange = function() {
 
-            if (request.readyState != 4) return;
-
-            if (request.status != 200 && request.status != 304) {
-
-                if (typeof errorHandler=='function') {
-
-                    errorHandler(request);
-
-                }
-
+            if (request.readyState != 4) {
                 return;
-
             }
 
-            if (typeof successHandler=='function') {
+            if (request.status != 200 && request.status != 304) {
+                if (typeof errorHandler == 'function') {
+                    errorHandler(request);
+                }
+                return;
+            }
 
+            if (typeof successHandler == 'function') {
                 successHandler(request);
-
             }
 
         };
 
         if (request.readyState == 4) {
-
             return;
-
         }
 
         request.send(post);

@@ -16,7 +16,7 @@ zerk.define({
         'zerk.imageLoader'
     ]
 
-},{
+}, {
 
     /**
      * The game engine
@@ -45,11 +45,11 @@ zerk.define({
      **/
     init: function(config) {
 
-        var self=this;
+        var self = this;
 
-        this._config={};
+        this._config = {};
 
-        var subNamespacesJson={
+        var subNamespacesJson = {
             //component: 'data/component',
             entity: 'data/entity',
             world: 'data/world',
@@ -57,13 +57,13 @@ zerk.define({
             spritesheet: 'media/spritesheet'
         };
 
-        var subNamespacesImage={
+        var subNamespacesImage = {
             texture: 'media/texture',
             spritesheet: 'media/spritesheet'
         };
 
-        var namespacesJson=[];
-        var namespacesImage=[];
+        var namespacesJson = [];
+        var namespacesImage = [];
 
         for (ns in config.bootstrap.namespaces) {
 
@@ -84,31 +84,31 @@ zerk.define({
         }
 
         // Setup JSON loader
-        this._jsonLoader=zerk.create(
+        this._jsonLoader = zerk.create(
             'zerk.jsonLoader',
             namespacesJson
         );
 
         // Setup image loader
-        this._imageLoader=zerk.create(
+        this._imageLoader = zerk.create(
             'zerk.imageLoader',
             namespacesImage
         );
 
-        var configResource=config.bootstrap.game+'.config.default';
+        var configResource = config.bootstrap.game + '.config.default';
 
         // Load game configuration
         this._jsonLoader.require(
             [configResource],
             function(data) {
 
-                self._onLoadGameConfiguration(data[configResource],config);
+                self._onLoadGameConfiguration(data[configResource], config);
 
             },
             function(e) {
 
                 zerk.error({
-                    message: 'Could not load game configuration from "'+e.path+'"',
+                    message: 'Could not load game configuration from "' + e.path + '"',
                     game: config.bootstrap.game,
                     resource: configResource,
                     source: this
@@ -127,12 +127,12 @@ zerk.define({
      * @param {Object} localConfig Bootstrap configuration
      * @protected
      **/
-    _onLoadGameConfiguration: function(gameConfig,localConfig) {
+    _onLoadGameConfiguration: function(gameConfig, localConfig) {
 
-        var config={};
+        var config = {};
 
-        zerk.apply(config,gameConfig);
-        zerk.apply(config,localConfig);
+        zerk.apply(config, gameConfig);
+        zerk.apply(config, localConfig);
 
         this.run(config);
 
@@ -151,14 +151,14 @@ zerk.define({
          * TODO Should this method (run) really be a public?
          */
 
-        this._engine=zerk.create(
+        this._engine = zerk.create(
             'zerk.game.engine',
             this._jsonLoader,
             this._imageLoader,
             config
         );
 
-        this._config=this._engine.getRegistry().register(
+        this._config = this._engine.getRegistry().register(
             'game',
             this._getConfigDefaults()
         );

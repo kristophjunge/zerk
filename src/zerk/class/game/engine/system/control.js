@@ -17,7 +17,7 @@ zerk.define({
         'zerk.game.engine.system.control.mouse'
     ]
 
-},{
+}, {
 
     /**
      * Keyboard interface
@@ -69,30 +69,30 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.control').init.apply(
             this,
             arguments
         );
 
-        this._viewport=this._getSystem('viewport');
+        this._viewport = this._getSystem('viewport');
 
-        this.keyboard=zerk.create(
+        this.keyboard = zerk.create(
             'zerk.game.engine.system.control.keyboard',
             this
         );
 
-        this._log('Keyboard loaded',1);
+        this._log('Keyboard loaded', 1);
 
-        this.mouse=zerk.create(
+        this.mouse = zerk.create(
             'zerk.game.engine.system.control.mouse',
             this,
             this._viewport,
             this._config.mouse
         );
 
-        this._log('Mouse loaded',1);
+        this._log('Mouse loaded', 1);
 
         this._log('Ready');
 

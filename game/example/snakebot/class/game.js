@@ -28,7 +28,7 @@ zerk.define({
         'snakebot.game.engine.system.snakebot'
     ]
 
-},{
+}, {
 
     run: function(config) {
 

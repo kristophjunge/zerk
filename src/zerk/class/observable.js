@@ -13,7 +13,7 @@ zerk.define({
 
     name: 'zerk.observable'
 
-},{
+}, {
 
     /**
      * List of event handlers
@@ -31,7 +31,7 @@ zerk.define({
      */
     init: function() {
 
-        this._eventListeners={};
+        this._eventListeners = {};
 
     },
 
@@ -44,9 +44,9 @@ zerk.define({
      * event bubble.
      * @param {Object} scope Scope to be used in callback function
      */
-    on: function(event,callback,scope) {
+    on: function(event, callback, scope) {
 
-        if (typeof callback==='undefined') {
+        if (typeof callback === 'undefined') {
 
             console.error(
                 'Cannot register event handler, callback is undefined'
@@ -54,7 +54,7 @@ zerk.define({
 
             return;
 
-        } else if (typeof scope==='undefined') {
+        } else if (typeof scope === 'undefined') {
 
             console.error(
                 'Cannot register event handler, scope is undefined'
@@ -64,9 +64,9 @@ zerk.define({
 
         }
 
-        if (typeof this._eventListeners[event]==='undefined') {
+        if (typeof this._eventListeners[event] === 'undefined') {
 
-            this._eventListeners[event]=[];
+            this._eventListeners[event] = [];
 
         }
 
@@ -85,20 +85,20 @@ zerk.define({
      * @param {Function} callback Callback function
      * @return {Boolen} Returns true on success
      */
-    un: function(event,callback) {
+    un: function(event, callback) {
 
-        if (this._eventListeners==null
-        || typeof this._eventListeners[event]==='undefined') {
+        if (this._eventListeners == null ||
+        typeof this._eventListeners[event] === 'undefined') {
 
             return;
 
         }
 
-        for (var i=0;i<this._eventListeners[event].length;i++) {
+        for (var i = 0; i < this._eventListeners[event].length; i++) {
 
-            if (this._eventListeners[event][i].callback===callback) {
+            if (this._eventListeners[event][i].callback === callback) {
 
-                this._eventListeners[event].splice(i,1);
+                this._eventListeners[event].splice(i, 1);
                 return true;
 
             }
@@ -121,22 +121,22 @@ zerk.define({
      */
     fireEvent: function(event) {
 
-        if (this._eventListeners==null
-        || typeof this._eventListeners[event]==='undefined') {
+        if (this._eventListeners == null ||
+        typeof this._eventListeners[event] === 'undefined') {
 
             return;
 
         }
 
-        var args=Array.prototype.slice.call(arguments);
-        args.splice(0,1);
+        var args = Array.prototype.slice.call(arguments);
+        args.splice(0, 1);
 
-        for (var i=0;i<this._eventListeners[event].length;i++) {
+        for (var i = 0; i < this._eventListeners[event].length; i++) {
 
             if (this._eventListeners[event][i].callback.apply(
                 this._eventListeners[event][i].scope,
                 args
-            )===false) {
+            ) === false) {
 
                 return false;
 

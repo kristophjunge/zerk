@@ -16,7 +16,7 @@ zerk.define({
         'zerk.game.engine.system.message.message'
     ]
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -69,16 +69,16 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.message').init.apply(
             this,
             arguments
         );
 
-        this._messages=[];
+        this._messages = [];
 
-        this._viewport=this._getSystem('viewport');
+        this._viewport = this._getSystem('viewport');
 
     },
 
@@ -160,17 +160,19 @@ zerk.define({
      **/
     unregisterMessage: function(id) {
 
-        var found=false;
-        for (var i=0;i<this._messages.length;i++) {
-            if (this._messages[i].id==id) {
-                found=true;
+        var found = false;
+        for (var i = 0; i < this._messages.length; i++) {
+            if (this._messages[i].id == id) {
+                found = true;
                 break;
             }
         }
 
-        if (!found) return false;
+        if (!found) {
+            return false;
+        }
 
-        this._messages.splice(i,1);
+        this._messages.splice(i, 1);
         return true;
 
     },
@@ -182,7 +184,7 @@ zerk.define({
      **/
     clearMessages: function() {
 
-        this._messages=[];
+        this._messages = [];
 
     },
 
@@ -197,21 +199,20 @@ zerk.define({
         /*
          * TODO Remove global call, put time method into suitable system
          */
-        var currentTime=zerk.game._engine.getTime();
+        var currentTime = zerk.game._engine.getTime();
 
         do {
 
-            for (var i=0;i<this._messages.length;i++) {
+            for (var i = 0; i < this._messages.length; i++) {
 
-                if (this._messages[i].starttime==null) {
+                if (this._messages[i].starttime == null) {
 
-                    this._messages[i].starttime=currentTime;
+                    this._messages[i].starttime = currentTime;
 
-                } else if (this._messages[i].lifetime>0
-                && (currentTime>=this._messages[i].starttime
-                +this._messages[i].lifetime)) {
+                } else if (this._messages[i].lifetime > 0 &&
+                (currentTime >= this._messages[i].starttime + this._messages[i].lifetime)) {
 
-                    this._messages.splice(i,1);
+                    this._messages.splice(i, 1);
                     break;
 
                 }
@@ -219,7 +220,7 @@ zerk.define({
             }
 
         }
-        while (i<this._messages.length);
+        while (i < this._messages.length);
 
     },
 
@@ -233,7 +234,7 @@ zerk.define({
 
         this._clearMessages();
 
-        for (var i=0;i<this._messages.length;i++) {
+        for (var i = 0; i < this._messages.length; i++) {
 
             this._viewport.drawText(
                 'display',

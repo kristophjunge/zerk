@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.textureLoader'
 
-},{
+}, {
 
     /**
      * Image loader instance
@@ -34,9 +34,9 @@ zerk.define({
      */
     init: function(imageLoader) {
 
-        this._imageLoader=imageLoader;
+        this._imageLoader = imageLoader;
 
-        this._textures={};
+        this._textures = {};
 
     },
 
@@ -51,7 +51,7 @@ zerk.define({
     getTexture: function(key) {
 
         if (!zerk.isDefined(this._textures[key])) {
-            zerk.error('Texture not found "'+key+'"');
+            zerk.error('Texture not found "' + key + '"');
         }
 
         return this._textures[key];
@@ -67,22 +67,22 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    loadTextures: function(idList,successFn,errorFn) {
+    loadTextures: function(idList, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
         this._imageLoader.require(
             idList,
             function(textures) {
 
                 for (var texturesId in textures) {
-                    me._textures[texturesId]=textures[texturesId];
+                    me._textures[texturesId] = textures[texturesId];
                 }
 
                 successFn();
 
             },
-            function (error) {
+            function(error) {
                 errorFn(error);
             }
         );
@@ -91,8 +91,8 @@ zerk.define({
 
     clear: function() {
 
-        var me=this;
-        me._textures={};
+        var me = this;
+        me._textures = {};
 
     }
 

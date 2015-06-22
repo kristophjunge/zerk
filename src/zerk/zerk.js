@@ -1,28 +1,4 @@
 /*
- * Zerk Game Engine
- *
- * Copyright (C) 2012 - 2013 by Kristoph Junge
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-/*
  * TODO Turn Zerk main object internal members into private scope
  */
 
@@ -35,7 +11,7 @@
  * @module zerk
  * @static
  **/
-var zerk={
+var zerk = {
 
     /**
      * The game engine configuration
@@ -91,14 +67,14 @@ var zerk={
      **/
     init: function(config) {
 
-        var me=this;
+        var me = this;
 
-        zerk.apply(me._config,config);
+        zerk.apply(me._config, config);
 
         me._initErrorHandler();
 
-        me.game=zerk.create(
-            me._config.bootstrap.game+'.game',
+        me.game = zerk.create(
+            me._config.bootstrap.game + '.game',
             me._config
         );
 
@@ -134,12 +110,12 @@ var zerk={
      *     class definition is done
      * @async
      **/
-    define: function(name,body,callback) {
+    define: function(name, body, callback) {
 
         // Parse meta data
-        var meta=this._parseMeta(name);
+        var meta = this._parseMeta(name);
 
-        this._defineClass(meta,body,callback);
+        this._defineClass(meta, body, callback);
 
     },
 
@@ -174,48 +150,43 @@ var zerk={
      **/
     create: function(name) {
 
-        if (arguments.length==0) return;
+        if (arguments.length == 0) {
+            return;
+        }
 
-        var args=Array.prototype.slice.call(arguments);
-        var parent=args[0];
+        var args = Array.prototype.slice.call(arguments);
+        var parent = args[0];
 
-        if (typeof parent==='string') {
+        var parentClass;
 
-            var parentClass=this._classMap[parent];
-
+        if (typeof parent === 'string') {
+            parentClass = this._classMap[parent];
         } else {
-
-            var parentClass=parent;
-            parent='Object';
-
+            parentClass = parent;
+            parent = 'Object';
         }
 
         /*
          * TODO Create a useful error handling here
          */
-        if (typeof parentClass==='undefined') {
-
-            zerk.error('Class is undefined "'+parent+'"');
+        if (typeof parentClass === 'undefined') {
+            zerk.error('Class is undefined "' + parent + '"');
             return null;
-
         }
 
-        var constructorArguments=args.slice(1);
+        var constructorArguments = args.slice(1);
 
         /*
          * TODO Check if the _createObject method could be used here
          */
         function f() {}
-        if (typeof parentClass=='object') {
-
-            f.prototype=parentClass;
-
+        if (typeof parentClass == 'object') {
+            f.prototype = parentClass;
         }
-        var i=new f();
+        var i = new f();
 
-        if (typeof i.init!=='undefined') {
-            i.init.apply(i,constructorArguments);
-
+        if (typeof i.init !== 'undefined') {
+            i.init.apply(i, constructorArguments);
         }
 
         return i;
@@ -234,56 +205,44 @@ var zerk={
      * @private
      * @async
      **/
-    _defineClass: function(meta,body,callback) {
+    _defineClass: function(meta, body, callback) {
 
-        var baseClass=null;
+        var baseClass = null;
 
         // Parse class name
-        var classNameInfo=this._parseClassName(meta.name);
+        var classNameInfo = this._parseClassName(meta.name);
 
         if (meta.extend) {
-
-            baseClass=this._classMap[meta.extend];
-
+            baseClass = this._classMap[meta.extend];
             if (!zerk.isDefined(baseClass)) {
                 zerk.error('Undefined: ' + classNameInfo.parent + ' when loading ' + classNameInfo.path);
             }
         } else {
-
-            baseClass={};
-
+            baseClass = {};
         }
 
-
-        var i=this._createObject(baseClass);
+        var i = this._createObject(baseClass);
 
         for (var name in body) {
-
-            i[name]=body[name];
-
+            i[name] = body[name];
         }
 
-        i.$class=classNameInfo.path;
+        i.$class = classNameInfo.path;
 
         // Add an entry to the class map
-        this._classMap[meta.name]=i;
+        this._classMap[meta.name] = i;
 
         // Add an entry to the parent class map
-        this._parentClassMap[meta.name]=baseClass;
+        this._parentClassMap[meta.name] = baseClass;
 
         if (meta.callback) {
-
             meta.callback.call();
-
         }
 
-        this._classState[meta.name]='loaded';
+        this._classState[meta.name] = 'loaded';
 
-        //this._processLoadedClass(meta.name);
-
-        if (typeof callback!=='undefined') {
+        if (typeof callback !== 'undefined') {
             callback();
-
         }
 
         return this._classMap[meta.name];
@@ -309,19 +268,15 @@ var zerk={
         /*
          * TODO Create a useful error handling here
          */
-        if (typeof parent==='undefined') {
-
+        if (typeof parent === 'undefined') {
             console.log('Error: Object to create is undefined');
             return null;
-
         }
 
         function f() {}
 
-        if (typeof parent=='object') {
-
-            f.prototype=parent;
-
+        if (typeof parent == 'object') {
+            f.prototype = parent;
         }
 
         return new f();
@@ -339,10 +294,8 @@ var zerk={
      **/
     _classLoaded: function(className) {
 
-        if (typeof this._classState[className]!=='undefined') {
-
-            return (this._classState[className]=='loaded');
-
+        if (typeof this._classState[className] !== 'undefined') {
+            return (this._classState[className] == 'loaded');
         }
 
     },
@@ -357,20 +310,21 @@ var zerk={
      **/
     _getClassURL: function(className) {
 
-        var segments=className.split('.');
+        var segments = className.split('.');
 
-        if (segments.length<2) return;
+        if (segments.length < 2) {
+            return;
+        }
 
-        var ns=segments[0];
+        var ns = segments[0];
 
-        segments.splice(0,1);
+        segments.splice(0, 1);
 
-        var path=segments.join('/')+'.js';
+        var path = segments.join('/') + '.js';
 
-        return ((ns=='zerk')
-            ? this._config.bootstrap.zerkDir
-            : this._config.bootstrap.gameDir)
-            +'/class/'+path;
+        return ((ns == 'zerk') ?
+            this._config.bootstrap.zerkDir
+            : this._config.bootstrap.gameDir) + '/class/' + path;
 
     },
 
@@ -384,31 +338,27 @@ var zerk={
      **/
     _parseMeta: function(meta) {
 
-        var result={
+        var result = {
             name: meta.name,
-            extend: ((typeof meta.extend!=='undefined') ? meta.extend : ''),
-            require: ((typeof meta.require!=='undefined') ? meta.require : [])
+            extend: ((typeof meta.extend !== 'undefined') ? meta.extend : ''),
+            require: ((typeof meta.require !== 'undefined') ? meta.require : [])
         };
 
         if (result.extend) {
 
-            var extendRequireExisting=false;
+            var extendRequireExisting = false;
 
-            for (var i=0;i<result.require.length;i++) {
+            for (var i = 0; i < result.require.length; i++) {
 
-                if (result.require[i]==result.extend) {
-
-                    extendRequireExisting=true;
+                if (result.require[i] == result.extend) {
+                    extendRequireExisting = true;
                     break;
-
                 }
 
             }
 
             if (!extendRequireExisting) {
-
                 result.require.push(result.extend);
-
             }
 
         }
@@ -427,9 +377,9 @@ var zerk={
      **/
     _parseClassName: function(className) {
 
-        var path=className.split('.');
-        var parent=path.slice(0,-1);
-        var name=path.slice(path.length-1,path.length);
+        var path = className.split('.');
+        var parent = path.slice(0, -1);
+        var name = path.slice(path.length - 1, path.length);
 
         return {
             name: name[0],
@@ -455,12 +405,11 @@ var zerk={
          * TODO Evaluate that the error handler can be used without suppressing
          *     native errors in some browsers
          */
-        return;
 
-        var self=this;
+        var self = this;
 
         // Set error handler
-        window.onerror=function(message,file,line) {
+        window.onerror = function(message, file, line) {
 
             if (self._config.bootstrap.log.enabled) {
 
@@ -474,43 +423,31 @@ var zerk={
                 );
 
                 // Check for exit exception
-                if (message.substr(0,20)=='Zerk Exit Exception:') {
-
+                if (message.substr(0, 20) == 'Zerk Exit Exception:') {
                     console.log('- EXIT -');
-
                     // Suppress browser handling
                     return true;
-
                 // Check for error exception
-                } else if (message.substr(0,15)=='Zerk Exception:'
-                && self._config.bootstrap.log.wrapErrors) {
-
+                } else if (message.substr(0, 15) == 'Zerk Exception:' &&
+                self._config.bootstrap.log.wrapErrors) {
                     // Suppress browser handling
                     return true;
-
                 } else {
-
                     /*
                      * TODO Validate that the error handler never suppresses native errors
                      */
-                    console.log('E',message);
-
+                    console.log('E', message);
                     return false;
-
                 }
 
             } else {
-
-                console.log('E',message);
-
+                console.log('E', message);
                 return false;
-
                 /*
                  * TODO Implement code to handle errors in production
                  */
                 // Suppress browser handling
                 //return true;
-
             }
 
         };
@@ -533,74 +470,57 @@ var zerk={
      **/
     log: function(message) {
 
-        var config=this._config.bootstrap.log;
+        var config = this._config.bootstrap.log;
 
-        var entry=message || {};
+        var entry = message || {};
 
-        if (typeof entry=='string') {
-
-            entry={message: entry};
-
+        if (typeof entry == 'string') {
+            entry = {message: entry};
         }
 
-        if (typeof entry.severity=='undefined') {
-
-            entry.severity=1;
-
+        if (typeof entry.severity == 'undefined') {
+            entry.severity = 1;
         }
 
-        if (typeof entry.group=='undefined') {
-
-            entry.group='';
-
+        if (typeof entry.group == 'undefined') {
+            entry.group = '';
         }
 
-        var severityCondition=(
-            config.severity==0
-            || entry.severity<=config.severity
+        var severityCondition = (
+            config.severity == 0 ||
+            entry.severity <= config.severity
         );
 
-        var filterCondition=true;
-        if (config.groupFilter!=null) {
-
-            filterCondition=zerk.inArray(
+        var filterCondition = true;
+        if (config.groupFilter != null) {
+            filterCondition = zerk.inArray(
                 entry.group,
                 config.groupFilter
             );
-
         }
 
-        if (!config.enabled
-        || !severityCondition
-        || !filterCondition) {
-
+        if (!config.enabled ||
+        !severityCondition ||
+        !filterCondition) {
             return;
-
         }
 
-        var severenityIndicator='',
-            label='';
+        var severenityIndicator = '';
+        var label = '';
 
-        severenityIndicator='';
+        severenityIndicator = '';
 
-        while (severenityIndicator.length<(entry.severity-1)*2) {
-
-            severenityIndicator+='. ';
-
+        while (severenityIndicator.length < (entry.severity - 1) * 2) {
+            severenityIndicator += '. ';
         }
 
-        label=severenityIndicator
-            //+((entry.severity>1) ? ' ' : '')
-            +((entry.group) ? entry.group+':' : '');
+        label = severenityIndicator +
+            ((entry.group) ? entry.group + ':' : '');
 
         if (label) {
-
-            console.info(label,entry.message);
-
+            console.info(label, entry.message);
         } else {
-
             console.info(entry.message);
-
         }
 
     },
@@ -620,32 +540,26 @@ var zerk={
      **/
     warn: function(message) {
 
-        warning=message || {};
+        warning = message || {};
 
-        if (typeof warning=='string') {
-
-            warning={message: warning};
-
+        if (typeof warning == 'string') {
+            warning = {message: warning};
         }
 
-        if (typeof warning.group=='undefined') {
-
-            warning.group='';
-
+        if (typeof warning.group == 'undefined') {
+            warning.group = '';
         }
 
-        if (!this._config.bootstrap.log.enabled) return;
+        if (!this._config.bootstrap.log.enabled) {
+            return;
+        }
 
-        label=((warning.group) ? warning.group+':' : '');
+        var label = ((warning.group) ? warning.group + ':' : '');
 
         if (label) {
-
-            console.warn(label,warning.message);
-
+            console.warn(label, warning.message);
         } else {
-
             console.warn(warning.message);
-
         }
 
     },
@@ -667,31 +581,25 @@ var zerk={
 
         // Force string into object
 
-        error=message || {};
+        var error = message || {};
 
-        if (typeof message=='string') {
-
-            error={message: error};
-
+        if (typeof message == 'string') {
+            error = {message: error};
         }
 
         // Extract class and method names from source property
         if (error.source) {
 
-            var caller=arguments.callee.caller;
+            var caller = arguments.callee.caller;
 
-            error.sourceClass=error.source.$class;
+            error.sourceClass = error.source.$class;
 
             for (var member in error.source) {
-
-                if (typeof error.source[member]=='function'
-                && error.source[member]==caller) {
-
-                    error.sourceMethod=member;
+                if (typeof error.source[member] == 'function' &&
+                error.source[member] == caller) {
+                    error.sourceMethod = member;
                     break;
-
                 }
-
             }
 
             // Delete source to prevent browser crash!?
@@ -701,38 +609,34 @@ var zerk={
 
         // Extend native error object
 
-        var zerkException=function(exception) {
+        var zerkException = function(exception) {
 
             // Force string into object
 
-            data=exception || {};
+            data = exception || {};
 
-            if (typeof data=='string') {
-
-                data={message: data};
-
+            if (typeof data == 'string') {
+                data = {message: data};
             }
 
             // Apply properties
-            zerk.apply(this,data);
+            zerk.apply(this, data);
 
             // Setup error name
-            this.name='Zerk Exception';
+            this.name = 'Zerk Exception';
 
         };
 
-        zerkException.prototype=Error.prototype;
+        zerkException.prototype = Error.prototype;
 
-        zerkException.prototype.toString=function() {
-
+        zerkException.prototype.toString = function() {
             return this.message || '(Empty message)';
-
         };
 
-        var exception=new zerkException(error);
+        var exception = new zerkException(error);
 
-        if (this._config.bootstrap.log.enabled
-        && this._config.bootstrap.log.wrapErrors) {
+        if (this._config.bootstrap.log.enabled &&
+        this._config.bootstrap.log.wrapErrors) {
 
             // Display wrapped error message
 
@@ -743,8 +647,8 @@ var zerk={
             console.error(exception);
 
             // Extract meta data
-            var meta={};
-            zerk.apply(meta,error);
+            var meta = {};
+            zerk.apply(meta, error);
             delete meta.message;
 
             // console.dir to display meta data
@@ -771,14 +675,12 @@ var zerk={
 
         // Create exit exception
 
-        var zerkExitException=function() {
-
-            this.name='Zerk Exit Exception';
-            this.message='This is not an error';
-
+        var zerkExitException = function() {
+            this.name = 'Zerk Exit Exception';
+            this.message = 'This is not an error';
         };
 
-        zerkExitException.prototype=Error.prototype;
+        zerkExitException.prototype = Error.prototype;
 
         throw new zerkExitException();
 
@@ -811,24 +713,20 @@ var zerk={
      */
     typeOf: function(value) {
 
-        if (value===null) {
-
+        if (value === null) {
             return 'null';
-
         }
 
-        var type=typeof value;
+        var type = typeof value;
 
-        if (type==='undefined'
-        || type==='boolean'
-        || type==='number'
-        || type==='string') {
-
+        if (type === 'undefined' ||
+        type === 'boolean' ||
+        type === 'number' ||
+        type === 'string') {
             return type;
-
         }
 
-        switch(Object.prototype.toString.call(value)) {
+        switch (Object.prototype.toString.call(value)) {
             case '[object Boolean]': return 'boolean';
             case '[object Number]': return 'number';
             case '[object Date]': return 'date';
@@ -836,15 +734,13 @@ var zerk={
             case '[object Array]': return 'array';
         }
 
-        if (type==='function') {
-
+        if (type === 'function') {
             return 'function';
-
         }
 
-        if (type==='object') {
+        if (type === 'object') {
 
-            if (value.nodeType!==undefined) {
+            if (value.nodeType !== undefined) {
                 return 'element';
             }
 
@@ -863,7 +759,7 @@ var zerk={
      */
     isDefined: function(value) {
 
-        return typeof value!=='undefined';
+        return typeof value !== 'undefined';
 
     },
 
@@ -876,7 +772,7 @@ var zerk={
      */
     isBoolean: function(value) {
 
-        return typeof value==='boolean';
+        return typeof value === 'boolean';
 
     },
 
@@ -889,7 +785,7 @@ var zerk={
      */
     isNumber: function(value) {
 
-        return typeof value==='number' && isFinite(value);
+        return typeof value === 'number' && isFinite(value);
 
     },
 
@@ -902,7 +798,7 @@ var zerk={
      */
     isString: function(value) {
 
-        return typeof value==='string';
+        return typeof value === 'string';
 
     },
 
@@ -915,7 +811,7 @@ var zerk={
      */
     isDate: function(value) {
 
-        return Object.prototype.toString.call(value)==='[object Date]';
+        return Object.prototype.toString.call(value) === '[object Date]';
 
     },
 
@@ -930,16 +826,7 @@ var zerk={
      */
     isArray: ('isArray' in Array) ? Array.isArray : function(value) {
 
-        return Object.prototype.toString.call(value)==='[object Array]';
-
-        /*
-        // Alternate code
-        if (o!=null && typeof o=='object') {
-            return (typeof o.push=='undefined') ? false : true;
-        } else {
-            return false;
-        }
-        */
+        return Object.prototype.toString.call(value) === '[object Array]';
 
     },
 
@@ -952,7 +839,7 @@ var zerk={
      */
     isObject: function(value) {
 
-        return Object.prototype.toString.call(value)==='[object Object]';
+        return Object.prototype.toString.call(value) === '[object Object]';
 
     },
 
@@ -965,7 +852,7 @@ var zerk={
      */
     isFunction: function(value) {
 
-        return typeof value==='function';
+        return typeof value === 'function';
 
     },
 
@@ -980,9 +867,9 @@ var zerk={
      */
     isPrimitiveType: function(value) {
 
-        var type=typeof value;
+        var type = typeof value;
 
-        return type==='string' || type==='number' || type==='boolean';
+        return type === 'string' || type === 'number' || type === 'boolean';
 
     },
 
@@ -1006,10 +893,10 @@ var zerk={
      */
     isEmpty: function(value) {
 
-        return (value===null)
-            || (value===undefined)
-            || (value==='')
-            || (this.isArray(value) && value.length===0);
+        return (value === null) ||
+            (value === undefined) ||
+            (value === '') ||
+            (this.isArray(value) && value.length === 0);
 
     },
 
@@ -1043,19 +930,15 @@ var zerk={
     /*
      * TODO Refactor the apply method
      */
-    apply: function(obj,props) {
+    apply: function(obj, props) {
 
         for (var name in props) {
 
-            if (this.isObject(obj[name])
-            && this.isObject(props[name])) {
-
-                this.apply(obj[name],props[name]);
-
+            if (this.isObject(obj[name]) &&
+            this.isObject(props[name])) {
+                this.apply(obj[name], props[name]);
             } else {
-
-                obj[name]=this.clone(props[name]);
-
+                obj[name] = this.clone(props[name]);
             }
 
         }
@@ -1072,51 +955,43 @@ var zerk={
      **/
     clone: function(value) {
 
-        /*
-         * TODO Validate that this clone method works and refactor
-         */
+        var item = value;
 
-        var item=value;
+        var self = this;
 
-        var self=this;
+        if (!value) {
+            return item;
+        }
 
-        if (!item) { return item; } // null, undefined values check
+        var types = [Number, String, Boolean];
+        var result;
 
-        var types = [ Number, String, Boolean ],
-            result;
-
-        // normalizing primitives if someone did new String('aaa'), or new Number('444');
         types.forEach(function(type) {
             if (item instanceof type) {
-                result = type( item );
+                result = type(item);
             }
         });
 
-        if (typeof result == "undefined") {
-            if (Object.prototype.toString.call( item ) === "[object Array]") {
+        if (typeof result == 'undefined') {
+            if (Object.prototype.toString.call(item) === '[object Array]') {
                 result = [];
                 item.forEach(function(child, index, array) {
-                    result[index] = self.clone( child );
+                    result[index] = self.clone(child);
                 });
-            } else if (typeof item == "object") {
-                // testing that this is DOM
-                if (item.nodeType && typeof item.cloneNode == "function") {
-                    var result = item.cloneNode( true );
-                } else if (!item.prototype) { // check that this is a literal
+            } else if (typeof item == 'object') {
+                if (item.nodeType && typeof item.cloneNode == 'function') {
+                    result = item.cloneNode(true);
+                } else if (!item.prototype) {
                     if (item instanceof Date) {
                         result = new Date(item);
                     } else {
-                        // it is an object literal
                         result = {};
                         for (var i in item) {
-                            result[i] = self.clone( item[i] );
+                            result[i] = self.clone(item[i]);
                         }
                     }
                 } else {
-                    // depending what you would like here,
-                    // just keep the reference, or create new object
                     if (false && item.constructor) {
-                        // would not advice to do that, reason? Read below
                         result = new item.constructor();
                     } else {
                         result = item;
@@ -1142,22 +1017,17 @@ var zerk={
      **/
     arrayUnique: function(data) {
 
-        var result=[];
-        var existing={};
+        var result = [];
+        var existing = {};
 
-        for (var i=0;i<data.length;i++) {
-
+        for (var i = 0; i < data.length; i++) {
             /*
              * TODO Check if all 'undefined' should be replaced with undefined without quotes
              */
-            if (typeof existing[data[i]]=='undefined') {
-
+            if (typeof existing[data[i]] == 'undefined') {
                 result.push(data[i]);
-
-                existing[data[i]]=true;
-
+                existing[data[i]] = true;
             }
-
         }
 
         return result;
@@ -1175,12 +1045,10 @@ var zerk={
      **/
     objectValues: function(data) {
 
-        var result=[];
+        var result = [];
 
         for (var key in data) {
-
             result.push(data[key]);
-
         }
 
         return result;
@@ -1198,12 +1066,10 @@ var zerk={
      **/
     objectKeys: function(data) {
 
-        var result=[];
+        var result = [];
 
         for (var key in data) {
-
             result.push(key);
-
         }
 
         return result;
@@ -1219,12 +1085,10 @@ var zerk={
      **/
     objectCount: function(data) {
 
-        var result=0;
+        var result = 0;
 
         for (var member in data) {
-
             result++;
-
         }
 
         return result;
@@ -1241,10 +1105,10 @@ var zerk={
      * @param {Array} haystack The array
      * @return {Boolean} True when needle in contained in haystack
      **/
-    inArray: function(needle,haystack) {
+    inArray: function(needle, haystack) {
 
-        for (var i=0;i<haystack.length;i++) {
-            if (haystack[i]==needle) {
+        for (var i = 0; i < haystack.length; i++) {
+            if (haystack[i] == needle) {
                 return true;
             }
         }
@@ -1253,11 +1117,11 @@ var zerk={
 
     },
 
-    removeFromArray: function(needle,haystack) {
+    removeFromArray: function(needle, haystack) {
 
-        for (var i=0;i<haystack.length;i++) {
-            if (haystack[i]===needle) {
-                haystack.splice(i,1);
+        for (var i = 0; i < haystack.length; i++) {
+            if (haystack[i] === needle) {
+                haystack.splice(i, 1);
                 return true;
             }
         }
@@ -1268,13 +1132,13 @@ var zerk={
 
     rtrim: function(value, chars) {
 
-        var chars=((zerk.isArray(chars)) ? chars : [chars]);
-        var value=String(value);
+        var chars = ((zerk.isArray(chars)) ? chars : [chars]);
+        var value = String(value);
 
-        var lastChar=value.substr(-1, 1);
+        var lastChar = value.substr(-1, 1);
         while (zerk.inArray(lastChar, chars)) {
-            value=value.substr(0, -1);
-            lastChar=value.substr(-1, 1);
+            value = value.substr(0, -1);
+            lastChar = value.substr(-1, 1);
         }
 
         return value;
@@ -1282,11 +1146,10 @@ var zerk={
     },
 
     screenshot: function() {
-        console.log('trying to screenshot');
-        return;
-        var canvas=document.getElementById('zerk_canvas_display');
 
-        var data=canvas.toDataURL('image/png');
+        var canvas = document.getElementById('zerk_canvas_display');
+
+        var data = canvas.toDataURL('image/png');
 
         window.open(data);
 

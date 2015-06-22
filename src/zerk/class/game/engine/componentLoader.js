@@ -15,7 +15,7 @@ zerk.define({
 
     name: 'zerk.game.engine.componentLoader'
 
-},{
+}, {
 
     /**
      * JSON loader instance
@@ -51,10 +51,10 @@ zerk.define({
      * @param {zerk.jsonLoader} jsonLoader JSON loader instance
      * @param {Object} componentMap Component name to class map
      **/
-    init: function(jsonLoader,componentMap) {
+    init: function(jsonLoader, componentMap) {
 
-        this._jsonLoader=jsonLoader;
-        this._componentMap=componentMap;
+        this._jsonLoader = jsonLoader;
+        this._componentMap = componentMap;
 
     },
 
@@ -67,29 +67,28 @@ zerk.define({
      * @param {Function} errorHandler Event handler for error
      * @async
      **/
-    loadComponents: function(components,successHandler,errorHandler) {
+    loadComponents: function(components, successHandler, errorHandler) {
 
-        var self=this;
+        var self = this;
 
-        var componentResources={};
+        var componentResources = {};
 
-        for (var i=0;i<components.length;i++) {
+        for (var i = 0; i < components.length; i++) {
 
-            if (typeof this._componentMap[components[i]]=='undefined') {
+            if (typeof this._componentMap[components[i]] == 'undefined') {
 
                 zerk.error({
-                    message: 'Component "'+components[i]+'" could not be'
-                        +' resolved to resource. Create a componentMap entry in'
-                        +' engine configuration.',
+                    message: 'Component "' + components[i] + '" could not be' +
+                        ' resolved to resource. Create a componentMap entry in' + ' engine configuration.',
                     source: this,
                     componentName: components[i]
                 });
 
             }
 
-            var componentClass=this._componentMap[components[i]];
+            var componentClass = this._componentMap[components[i]];
 
-            this._component[components[i]]=zerk.create(componentClass);
+            this._component[components[i]] = zerk.create(componentClass);
 
         }
 
@@ -105,11 +104,11 @@ zerk.define({
      * @param {config.entity} config World configuration
      * @return {config.entity} The final entity state
      **/
-    buildComponents: function(entity,config) {
+    buildComponents: function(entity, config) {
 
         for (var component in entity.components) {
 
-            config.components[component]=this._component[component].build(
+            config.components[component] = this._component[component].build(
                 entity.components[component],
                 config.components[component]
             );
@@ -122,8 +121,8 @@ zerk.define({
 
     clear: function() {
 
-        var me=this;
-        me._component={};
+        var me = this;
+        me._component = {};
 
     }
 

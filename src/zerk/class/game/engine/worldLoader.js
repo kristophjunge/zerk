@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.worldLoader'
 
-},{
+}, {
 
     /**
      * JSON loader instance
@@ -82,17 +82,17 @@ zerk.define({
         textureLoader
     ) {
 
-        this._entities=[];
-        this._components=[];
-        this._textures=[];
-        this._spritesheets=[];
+        this._entities = [];
+        this._components = [];
+        this._textures = [];
+        this._spritesheets = [];
 
-        this._jsonLoader=jsonLoader;
-        this._imageLoader=imageLoader;
-        this._componentLoader=componentLoader;
-        this._entityLoader=entityLoader;
-        this._spriteLoader=spriteLoader;
-        this._textureLoader=textureLoader;
+        this._jsonLoader = jsonLoader;
+        this._imageLoader = imageLoader;
+        this._componentLoader = componentLoader;
+        this._entityLoader = entityLoader;
+        this._spriteLoader = spriteLoader;
+        this._textureLoader = textureLoader;
 
     },
 
@@ -105,9 +105,9 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @async
      **/
-    loadWorld: function(name,successFn,errorFn) {
+    loadWorld: function(name, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
         me._componentLoader.clear();
         me._entityLoader.clear();
@@ -123,7 +123,7 @@ zerk.define({
         this._jsonLoader.require(
             [name],
             function(data) {
-                me._onLoadWorld(data[name],successFn,errorFn);
+                me._onLoadWorld(data[name], successFn, errorFn);
             },
             errorFn
         );
@@ -140,29 +140,29 @@ zerk.define({
      * @protected
      * @async
      **/
-    _onLoadWorld: function(world,successFn,errorFn) {
+    _onLoadWorld: function(world, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
-        me.loadWorldConfig(world,successFn,errorFn);
+        me.loadWorldConfig(world, successFn, errorFn);
 
     },
 
-    loadWorldConfig: function(world,successFn,errorFn) {
+    loadWorldConfig: function(world, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
-        var entityIdList=[];
-        for (var i=0;i<world.entities.length;i++) {
+        var entityIdList = [];
+        for (var i = 0; i < world.entities.length; i++) {
             entityIdList.push(world.entities[i].name);
         }
 
-        entityIdList=zerk.arrayUnique(entityIdList);
+        entityIdList = zerk.arrayUnique(entityIdList);
 
         this._entityLoader.loadEntities(
             entityIdList,
             function(entities) {
-                me._onLoadEntities(world,entities,successFn,errorFn);
+                me._onLoadEntities(world, entities, successFn, errorFn);
             },
             errorFn
         );
@@ -179,27 +179,27 @@ zerk.define({
      * @param {Function} errorFn Event handler for error
      * @protected
      **/
-    _onLoadEntities: function(world,entities,successFn,errorFn) {
+    _onLoadEntities: function(world, entities, successFn, errorFn) {
 
-        var me=this;
+        var me = this;
 
-        var components=[];
-        var spritesheets=[];
-        var textures=[];
+        var components = [];
+        var spritesheets = [];
+        var textures = [];
 
         for (var entityKey in entities) {
 
-            var entity=entities[entityKey];
+            var entity = entities[entityKey];
 
             for (var component in entity.components) {
 
                 components.push(component);
 
-                if (component=='render') {
+                if (component == 'render') {
 
                     for (var layerKey in entity.components[component].layers) {
 
-                        var layer=entity.components[component].layers[layerKey];
+                        var layer = entity.components[component].layers[layerKey];
 
                         switch (layer.render) {
                             case 'texture':
@@ -219,18 +219,18 @@ zerk.define({
         }
 
         // Remove duplicates
-        components=zerk.arrayUnique(components);
-        textures=zerk.arrayUnique(textures);
-        spritesheets=zerk.arrayUnique(spritesheets);
+        components = zerk.arrayUnique(components);
+        textures = zerk.arrayUnique(textures);
+        spritesheets = zerk.arrayUnique(spritesheets);
 
-        var loadedComponenets=false;
-        var loadedSprites=false;
-        var loadedTextures=false;
+        var loadedComponenets = false;
+        var loadedSprites = false;
+        var loadedTextures = false;
 
         me._componentLoader.loadComponents(
             components,
             function() {
-                loadedComponenets=true;
+                loadedComponenets = true;
                 if (loadedTextures && loadedSprites) {
                     successFn(world);
                 }
@@ -241,7 +241,7 @@ zerk.define({
         me._textureLoader.loadTextures(
             textures,
             function() {
-                loadedTextures=true;
+                loadedTextures = true;
                 if (loadedComponenets && loadedSprites) {
                     successFn(world);
                 }
@@ -252,7 +252,7 @@ zerk.define({
         me._spriteLoader.loadSprites(
             spritesheets,
             function() {
-                loadedSprites=true;
+                loadedSprites = true;
                 if (loadedTextures && loadedComponenets) {
                     successFn(world);
                 }

@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.trigger',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -49,14 +49,14 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system.trigger').init.apply(
             this,
             arguments
         );
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
     },
 
@@ -69,7 +69,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='trigger');
+        return (name == 'trigger');
 
     },
 
@@ -101,13 +101,13 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactBegin: function(sourceInfo,targetInfo) {
+    _onContactBegin: function(sourceInfo, targetInfo) {
 
-        if (typeof targetInfo.entity.components.trigger=='undefined') {
+        if (typeof targetInfo.entity.components.trigger == 'undefined') {
             return true;
         }
 
-        var componentTrigger=targetInfo.entity.components.trigger;
+        var componentTrigger = targetInfo.entity.components.trigger;
 
         if (!componentTrigger.targetEntityTag) {
             console.log('No target entity specified');
@@ -124,15 +124,15 @@ zerk.define({
             return;
         }
 
-        var system=this._engine.getSystem(
+        var system = this._engine.getSystem(
             componentTrigger.targetSystem
         );
 
-        var entities=this._engine.getEntitiesByTags(
+        var entities = this._engine.getEntitiesByTags(
             componentTrigger.targetEntityTag
         );
 
-        for (var i=0;i<entities.length;i++) {
+        for (var i = 0; i < entities.length; i++) {
 
             system[componentTrigger.targetMethod](entities[i]);
 

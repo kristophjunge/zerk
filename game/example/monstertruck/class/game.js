@@ -29,7 +29,7 @@ zerk.define({
         'monstertruck.game.engine.system.monstertruck'
     ]
 
-},{
+}, {
 
     _systemControl: null,
 
@@ -37,7 +37,7 @@ zerk.define({
 
     run: function(config) {
 
-        var me=this;
+        var me = this;
 
         if (!zerk.parent('monstertruck.game').run.apply(
                 me,
@@ -74,9 +74,9 @@ zerk.define({
 
     _startGame: function() {
 
-        this._systemControl=this._engine.getSystem('control');
+        this._systemControl = this._engine.getSystem('control');
 
-        this._systemMessage=this._engine.getSystem('message');
+        this._systemMessage = this._engine.getSystem('message');
 
         this._systemControl.keyboard.on(
             'keypress',
@@ -88,27 +88,27 @@ zerk.define({
 
     _onKeyPress: function(event) {
 
-        var me=this;
+        var me = this;
 
-        if (event.keyCode==43) {
+        if (event.keyCode == 43) {
 
             me._demoWorldIndex++;
-            if (me._demoWorldIndex>me._demoWorlds.length-1) {
-                me._demoWorldIndex=0;
+            if (me._demoWorldIndex > me._demoWorlds.length - 1) {
+                me._demoWorldIndex = 0;
             }
 
             me.loadDemo(me._demoWorlds[me._demoWorldIndex]);
 
-        } else if (event.keyCode==45) {
+        } else if (event.keyCode == 45) {
 
             me._demoWorldIndex--;
-            if (me._demoWorldIndex<0) {
-                me._demoWorldIndex=me._demoWorlds.length-1;
+            if (me._demoWorldIndex < 0) {
+                me._demoWorldIndex = me._demoWorlds.length - 1;
             }
 
             me.loadDemo(me._demoWorlds[me._demoWorldIndex]);
 
-        } else if (event.keyCode==115) {
+        } else if (event.keyCode == 115) {
 
             zerk.screenshot();
 

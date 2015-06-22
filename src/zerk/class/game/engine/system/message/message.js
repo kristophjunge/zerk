@@ -11,7 +11,7 @@ zerk.define({
 
     name: 'zerk.game.engine.system.message.message'
 
-},{
+}, {
 
     /**
      * Unique ID of the message
@@ -96,14 +96,26 @@ zerk.define({
      * @param {Integer} size Font size
      * @param {String} color Font color
      */
-    init: function (id,x,y,text,size,color) {
+    init: function(id, x, y, text, size, color) {
 
-        if (typeof id!=='undefined') this.id=id;
-        if (typeof x!=='undefined') this.x=x;
-        if (typeof y!=='undefined') this.y=y;
-        if (typeof text!=='undefined') this.text=text;
-        if (typeof size!=='undefined') this.size=size;
-        if (typeof color!=='undefined') this.color=color;
+        if (typeof id !== 'undefined') {
+            this.id = id;
+        }
+        if (typeof x !== 'undefined') {
+            this.x = x;
+        }
+        if (typeof y !== 'undefined') {
+            this.y = y;
+        }
+        if (typeof text !== 'undefined') {
+            this.text = text;
+        }
+        if (typeof size !== 'undefined') {
+            this.size = size;
+        }
+        if (typeof color !== 'undefined') {
+            this.color = color;
+        }
 
     }
 

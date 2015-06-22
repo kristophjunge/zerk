@@ -28,11 +28,11 @@ zerk.define({
 
     ]
 
-},{
+}, {
 
     run: function(config) {
 
-        var me=this;
+        var me = this;
 
         if (!zerk.parent('entityeditor.game').run.apply(
             me,
@@ -49,31 +49,34 @@ zerk.define({
 
         editorContainer.setAttribute('class', 'zerk-editor');
 
-        editorContainer.innerHTML=
-            '<div class="zerk-panel">'+
-                '<div class="zerk-panel-header">Editor State</div>'+
-                '<div id="zerk-editor-state">idle</div>'+
-            '</div>'+
-            '<div class="zerk-panel">'+
-                '<div class="zerk-panel-header">Background</div>'+
-                'Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>'+
-                'Sprite: <input id="editor-sprite" value="full"/>'+
-                '<div>'+
-                    '<a class="zerk-button" href="#" onclick="zerk.game.editorSetBackground('+
-                        'document.getElementById(\'editor-spritesheet\').value,'+
-                        'document.getElementById(\'editor-sprite\').value'+
-                    ')"><span class="zerk-button-label">Set Background</span></a>'+
-                '</div>'+
-            '</div>'+
-            '<div class="zerk-panel">'+
-                '<div class="zerk-panel-header">Add Fixture</div>'+
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'polygon\')"><span class="zerk-button-label">Polygon</span></a>'+
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'box\')"><span class="zerk-button-label">Box</span></a>'+
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'circle\')"><span class="zerk-button-label">Circle</span></a>'+
-            '</div>'+
-            '<div class="zerk-panel">'+
-                '<div class="zerk-panel-header">Inspector</div>'+
-                '<div class="zerk-editor-inspector" id="zerk-editor-inspector"></div>'+
+        editorContainer.innerHTML =
+            '<div class="zerk-panel">' +
+                '<div class="zerk-panel-header">Editor State</div>' +
+                '<div id="zerk-editor-state">idle</div>' +
+            '</div>' +
+            '<div class="zerk-panel">' +
+                '<div class="zerk-panel-header">Background</div>' +
+                'Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>' +
+                'Sprite: <input id="editor-sprite" value="full"/>' +
+                '<div>' +
+                    '<a class="zerk-button" href="#" onclick="zerk.game.editorSetBackground(' +
+                        'document.getElementById(\'editor-spritesheet\').value,' +
+                        'document.getElementById(\'editor-sprite\').value' +
+                    ')"><span class="zerk-button-label">Set Background</span></a>' +
+                '</div>' +
+            '</div>' +
+            '<div class="zerk-panel">' +
+                '<div class="zerk-panel-header">Add Fixture</div>' +
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'polygon\')">' +
+                '<span class="zerk-button-label">Polygon</span></a>' +
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'box\')">' +
+                '<span class="zerk-button-label">Box</span></a>' +
+                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'circle\')">' +
+                '<span class="zerk-button-label">Circle</span></a>' +
+            '</div>' +
+            '<div class="zerk-panel">' +
+                '<div class="zerk-panel-header">Inspector</div>' +
+                '<div class="zerk-editor-inspector" id="zerk-editor-inspector"></div>' +
             '</div>';
 
         document.body.appendChild(editorContainer);
@@ -88,27 +91,25 @@ zerk.define({
 
         me._engine.loadWorldConfig(
             {
-                "name": "empty",
-                "config": {
-                    "systems": {
-                        "physics": {
-                            "gravityX": 0,
-                            "gravityY": 0
+                name: 'empty',
+                config: {
+                    systems: {
+                        physics: {
+                            gravityX: 0,
+                            gravityY: 0
                         }
                     }
                 },
-                "entities": [
+                entities: [
                     {
-                        //"name": "entityeditor.entity.empty",
-                        "name": "monstertruck.entity.monstertruck",
-                        //"name": "sandbox.entity.crate",
+                        name: 'monstertruck.entity.monstertruck',
                         tags: [
                             'editor'
                         ],
-                        "components": {
-                            "position": {
-                                "x": 0,
-                                "y": 0
+                        components: {
+                            position: {
+                                x: 0,
+                                y: 0
                             }
                         }
                     }
@@ -118,12 +119,10 @@ zerk.define({
 
                 me._engine.getSystem('physics').setEnabled(false);
 
-                var entities=me._engine.getEntitiesByTags('editor');
-                var entity=entities[0];
+                var entities = me._engine.getEntitiesByTags('editor');
+                var entity = entities[0];
 
                 me._engine.getSystem('entityeditor').setEditEntity(entity.id);
-
-                //var control=me._engine.getSystem('control');
 
             },
             function(error) {
@@ -135,21 +134,21 @@ zerk.define({
 
     },
 
-    editorSetBackground: function(spritesheet,sprite) {
+    editorSetBackground: function(spritesheet, sprite) {
 
-        var me=this;
+        var me = this;
 
-        var editor=me._engine.getSystem('entityeditor');
+        var editor = me._engine.getSystem('entityeditor');
 
-        editor.setBackground(spritesheet,sprite);
+        editor.setBackground(spritesheet, sprite);
 
     },
 
     editorAddFixture: function(shape) {
 
-        var me=this;
+        var me = this;
 
-        var editor=me._engine.getSystem('entityeditor');
+        var editor = me._engine.getSystem('entityeditor');
 
         console.log('CALL');
 
@@ -159,9 +158,9 @@ zerk.define({
 
     editorDumpFixture: function() {
 
-        var me=this;
+        var me = this;
 
-        var editor=me._engine.getSystem('entityeditor');
+        var editor = me._engine.getSystem('entityeditor');
 
         editor.editorDumpFixture();
 

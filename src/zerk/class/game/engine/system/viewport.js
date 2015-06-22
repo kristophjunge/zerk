@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system.viewport',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -169,7 +169,6 @@ zerk.define({
      **/
     _height: 0,
 
-
     _autoSize: 0,
     _maxWidth: 0,
     _maxHeight: 0,
@@ -181,21 +180,21 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
-        var me=this;
+        var me = this;
 
         zerk.parent('zerk.game.engine.system.viewport').init.apply(
             me,
             arguments
         );
 
-        me._worldScale=me._config.worldScale;
-        me._zoom=me._config.zoomDefault;
+        me._worldScale = me._config.worldScale;
+        me._zoom = me._config.zoomDefault;
 
-        me._maxWidth=me._config.maxWidth;
-        me._maxHeight=me._config.maxHeight;
-        me._autoSize=me._config.autoSize;
+        me._maxWidth = me._config.maxWidth;
+        me._maxHeight = me._config.maxHeight;
+        me._autoSize = me._config.autoSize;
 
         me.createBuffers({
             display: {
@@ -222,11 +221,11 @@ zerk.define({
 
         if (me._autoSize) {
             me.autoSizeViewport();
-            zerk.browser.registerEvent(window,'resize',function(e) {
+            zerk.browser.registerEvent(window, 'resize', function(e) {
                 me.autoSizeViewport(e);
             });
         } else {
-            me.setViewportSize(me._config.width,me._config.height);
+            me.setViewportSize(me._config.width, me._config.height);
         }
 
         me._log('Ready');
@@ -235,36 +234,33 @@ zerk.define({
 
     autoSizeViewport: function(e) {
 
-        var me=this;
-        var windowSize=zerk.browser.getViewportSize();
+        var me = this;
+        var windowSize = zerk.browser.getViewportSize();
 
-        me.setViewportSize(windowSize.width,windowSize.height);
+        me.setViewportSize(windowSize.width, windowSize.height);
 
     },
 
-    setViewportSize: function(width,height) {
+    setViewportSize: function(width, height) {
 
         //var viewportSize=me.getBufferSize('display');
-        var me=this;
+        var me = this;
 
-        if (me._maxWidth>0 && width>me._maxWidth) {
-            width=me._maxWidth;
+        if (me._maxWidth > 0 && width > me._maxWidth) {
+            width = me._maxWidth;
         }
 
-        if (me._maxHeight>0 && height>me._maxHeight) {
-            height=me._maxHeight;
+        if (me._maxHeight > 0 && height > me._maxHeight) {
+            height = me._maxHeight;
         }
 
-        me._width=width;
-        me._height=height;
+        me._width = width;
+        me._height = height;
 
-        me.setBufferSize('display',width,height);
+        me.setBufferSize('display', width, height);
 
         me._log(
-            'Scale '
-            +me._x+':'+me._y
-            +' at '
-            +me._width+'x'+me._height
+            'Scale ' + me._x + ':' + me._y + ' at ' + me._width + 'x' + me._height
         );
 
     },
@@ -346,7 +342,7 @@ zerk.define({
             arguments
         );
 
-        this._log('Stopped ('+this._frameCount+' Frames)');
+        this._log('Stopped (' + this._frameCount + ' Frames)');
 
         this.reset();
 
@@ -365,7 +361,6 @@ zerk.define({
         );
 
         this.bufferClear('display');
-
 
         /*
         var bg=document.getElementById('bg');
@@ -386,15 +381,12 @@ zerk.define({
         );
         */
 
-
-
-
         // Sync view with player entity
         if (this._config.trackPlayer) {
 
-            var players=this._engine.getEntitiesByTags('player');
+            var players = this._engine.getEntitiesByTags('player');
 
-            if (players.length>0) {
+            if (players.length > 0) {
 
                 this._setViewPosition(
                     players[0].components.position.x,
@@ -413,20 +405,19 @@ zerk.define({
             this._renderWorldCenterIndicator();
         }
 
-
         // Increase frame counter
         this._frameCount++;
 
         // Calculate FPS
-        var date=new Date();
-        var second=date.getSeconds();
+        var date = new Date();
+        var second = date.getSeconds();
 
-        if (second!=this._fpsSecond) {
-            this._fps=this._fpsCounter;
-            this._fpsCounter=0;
+        if (second != this._fpsSecond) {
+            this._fps = this._fpsCounter;
+            this._fpsCounter = 0;
         }
 
-        this._fpsSecond=second;
+        this._fpsSecond = second;
 
         this._fpsCounter++;
 
@@ -439,7 +430,7 @@ zerk.define({
      **/
     reset: function() {
 
-        this._frameCount=0;
+        this._frameCount = 0;
 
     },
 
@@ -475,7 +466,7 @@ zerk.define({
      **/
     setX: function(value) {
 
-        this._x=value;
+        this._x = value;
 
     },
 
@@ -487,7 +478,7 @@ zerk.define({
      **/
     setY: function(value) {
 
-        this._y=value;
+        this._y = value;
 
     },
 
@@ -550,7 +541,7 @@ zerk.define({
      **/
     toZoom: function(value) {
 
-        return (value/100)*this._zoom;
+        return (value / 100) * this._zoom;
 
     },
 
@@ -563,7 +554,7 @@ zerk.define({
      **/
     fromZoom: function(value) {
 
-        return (value/this._zoom)*100;
+        return (value / this._zoom) * 100;
 
     },
 
@@ -576,10 +567,12 @@ zerk.define({
      **/
     fromPixel: function(value) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof value==='undefined' || value==0) return 0;
-        return value/me._worldScale;
+        if (typeof value === 'undefined' || value == 0) {
+            return 0;
+        }
+        return value / me._worldScale;
 
     },
 
@@ -592,10 +585,12 @@ zerk.define({
      **/
     toPixel: function(value) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof value==='undefined' || value==0) return 0;
-        return value*me._worldScale;
+        if (typeof value === 'undefined' || value == 0) {
+            return 0;
+        }
+        return value * me._worldScale;
 
     },
 
@@ -607,14 +602,14 @@ zerk.define({
     zoomIn: function() {
 
         //var value=this._zoom+10;
-        var value=this._zoom+(10*(this._zoom/100));
+        var value = this._zoom + (10 * (this._zoom / 100));
 
-        value=Math.ceil(value);
+        value = Math.ceil(value);
 
-        if (value>=this._config.zoomMax) {
-            this._zoom=this._config.zoomMax;
+        if (value >= this._config.zoomMax) {
+            this._zoom = this._config.zoomMax;
         } else {
-            this._zoom=value;
+            this._zoom = value;
         }
 
     },
@@ -627,14 +622,14 @@ zerk.define({
     zoomOut: function() {
 
         //var value=this._zoom-10;
-        var value=this._zoom-(10*(this._zoom/100));
+        var value = this._zoom - (10 * (this._zoom / 100));
 
-        value=Math.ceil(value);
+        value = Math.ceil(value);
 
-        if (value<=this._config.zoomMin) {
-            this._zoom=this._config.zoomMin;
+        if (value <= this._config.zoomMin) {
+            this._zoom = this._config.zoomMin;
         } else {
-            this._zoom=value;
+            this._zoom = value;
         }
 
     },
@@ -672,25 +667,25 @@ zerk.define({
      **/
     getEntitiesInViewport: function() {
 
-        var me=this;
+        var me = this;
 
-        var x1=me.fromPixel(
-            this._x+this.fromZoom(0-(this._width/2))
+        var x1 = me.fromPixel(
+            this._x + this.fromZoom(0 - (this._width / 2))
         );
 
-        var y1=me.fromPixel(
-            this._y+this.fromZoom(0-(this._height/2))
+        var y1 = me.fromPixel(
+            this._y + this.fromZoom(0 - (this._height / 2))
         );
 
-        var x2=me.fromPixel(
-            this._x+this.fromZoom(this._width-(this._width/2))
+        var x2 = me.fromPixel(
+            this._x + this.fromZoom(this._width - (this._width / 2))
         );
 
-        var y2=me.fromPixel(
-            this._y+this.fromZoom(this._height-(this._height/2))
+        var y2 = me.fromPixel(
+            this._y + this.fromZoom(this._height - (this._height / 2))
         );
 
-        return this._getSystem('physics').getEntitiesInArea(x1,y1,x2,y2);
+        return this._getSystem('physics').getEntitiesInArea(x1, y1, x2, y2);
 
     },
 
@@ -704,29 +699,29 @@ zerk.define({
     /*
      * TODO Document mehtod '_getCanvasX'
      */
-    _getCanvasX: function(meter,pixel) {
+    _getCanvasX: function(meter, pixel) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof meter==='undefined') {
+        if (typeof meter === 'undefined') {
 
-            meter=0;
-
-        }
-
-        if (typeof pixel==='undefined') {
-
-            pixel=0;
+            meter = 0;
 
         }
 
-        var value=this.toZoom(
-            me.toPixel(meter)+pixel-this._x
+        if (typeof pixel === 'undefined') {
+
+            pixel = 0;
+
+        }
+
+        var value = this.toZoom(
+            me.toPixel(meter) + pixel - this._x
         );
 
         //return Math.ceil(value+(this._width/2));
 
-        return value+(this._width/2);
+        return value + (this._width / 2);
         //return ~~(0.5+value+(this._width/2));
 
     },
@@ -741,28 +736,28 @@ zerk.define({
     /*
      * TODO Document mehtod '_getCanvasY'
      */
-    _getCanvasY: function(meter,pixel) {
+    _getCanvasY: function(meter, pixel) {
 
-        var me=this;
+        var me = this;
 
-        if (typeof meter==='undefined') {
+        if (typeof meter === 'undefined') {
 
-            meter=0;
-
-        }
-
-        if (typeof pixel==='undefined') {
-
-            pixel=0;
+            meter = 0;
 
         }
 
-        var value=this.toZoom(
-            me.toPixel(meter)+pixel-this._y
+        if (typeof pixel === 'undefined') {
+
+            pixel = 0;
+
+        }
+
+        var value = this.toZoom(
+            me.toPixel(meter) + pixel - this._y
         );
 
         //return Math.ceil(value+(this._height/2));
-        return value+(this._height/2);
+        return value + (this._height / 2);
         //return ~~(0.5+value+(this._height/2));
 
     },
@@ -775,12 +770,12 @@ zerk.define({
      * @param {Float} y
      * @protected
      **/
-    _setViewPosition: function(x,y) {
+    _setViewPosition: function(x, y) {
 
-        var me=this;
+        var me = this;
 
-        this._x=me.toPixel(x);
-        this._y=me.toPixel(y);
+        this._x = me.toPixel(x);
+        this._y = me.toPixel(y);
 
     },
 

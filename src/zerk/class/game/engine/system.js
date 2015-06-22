@@ -13,7 +13,7 @@ zerk.define({
     name: 'zerk.game.engine.system',
     extend: 'zerk.observable'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -90,24 +90,24 @@ zerk.define({
      * @param {zerk.game.engine} engine Engine instance
      * @param {Object} config System configuration
      **/
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('zerk.game.engine.system').init.apply(
             this,
             arguments
         );
 
-        this._entities=[];
+        this._entities = [];
 
-        this._engine=engine;
+        this._engine = engine;
 
         // Get a handle in the registry
-        this._config=this._engine.getRegistry().register(
-            'engine.systems.'+this._name,
+        this._config = this._engine.getRegistry().register(
+            'engine.systems.' + this._name,
             this._getConfigDefaults()
         );
 
-        zerk.apply(this._config,config);
+        zerk.apply(this._config, config);
 
         this._log('Init');
 
@@ -169,11 +169,11 @@ zerk.define({
      **/
     removeEntity: function(entity) {
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            if (this._entities[i].id==entity.id) {
+            if (this._entities[i].id == entity.id) {
 
-                this._entities.splice(i,1);
+                this._entities.splice(i, 1);
 
                 return true;
             }
@@ -252,19 +252,19 @@ zerk.define({
      * @param {Integer} severity Log severity
      * @protected
      **/
-    _log: function(message,severity) {
+    _log: function(message, severity) {
 
         if (!zerk.isDefined(severity)) {
 
-            severity=0;
+            severity = 0;
 
         }
 
-        severity+=4;
+        severity += 4;
 
         zerk.log({
             message: message,
-            group: 'System ['+this._name+']',
+            group: 'System [' + this._name + ']',
             severity: severity
         });
 

@@ -13,7 +13,7 @@ zerk.define({
     name: 'monstertruck.game.engine.system.monstertruck',
     extend: 'zerk.game.engine.system'
 
-},{
+}, {
 
     /**
      * Name of the system
@@ -60,7 +60,6 @@ zerk.define({
      **/
     _keyReleased: true,
 
-
     _keyRailMiddleLeftUp: 81,
     _keyRailMiddleLeftDown: 65,
 
@@ -70,8 +69,6 @@ zerk.define({
     _keyMotorLeftUp: 87,
     _keyMotorLeftDown: 83,
 
-
-
     /**
      * Class constructor
      *
@@ -79,16 +76,16 @@ zerk.define({
      * @param {zerk.game.engine} engine Game engine
      * @param {Object} config System configuration
      */
-    init: function(engine,config) {
+    init: function(engine, config) {
 
         zerk.parent('monstertruck.game.engine.system.monstertruck').init.apply(
             this,
             arguments
         );
 
-        this._keyboard=this._getSystem('control').keyboard;
+        this._keyboard = this._getSystem('control').keyboard;
 
-        this._physics=this._getSystem('physics');
+        this._physics = this._getSystem('physics');
 
         if (!this._physics) {
 
@@ -107,7 +104,7 @@ zerk.define({
      **/
     useComponent: function(name) {
 
-        return (name=='snakebot');
+        return (name == 'snakebot');
 
     },
 
@@ -207,9 +204,11 @@ zerk.define({
 
         zerk.parent('monstertruck.game.engine.system.monstertruck').update.apply();
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            if (!this._entities[i].components.snakebot.enableControl) return;
+            if (!this._entities[i].components.snakebot.enableControl) {
+                return;
+            }
 
             /*
             if (this._keyboard.pressedSpace) {
@@ -237,7 +236,7 @@ zerk.define({
      **/
     win: function(entity) {
 
-        this.fireEvent('win',entity);
+        this.fireEvent('win', entity);
 
     },
 
@@ -249,9 +248,9 @@ zerk.define({
      **/
     dead: function(entity) {
 
-        this._physics.setBodyMoveable(entity,'main',false);
+        this._physics.setBodyMoveable(entity, 'main', false);
 
-        this.fireEvent('dead',entity);
+        this.fireEvent('dead', entity);
 
     },
 
@@ -264,32 +263,34 @@ zerk.define({
      **/
     _onKeyDown: function(event) {
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var componentState=this._entities[i].components.snakebot;
+            var componentState = this._entities[i].components.snakebot;
 
-            if (!componentState.enableControl) continue;
+            if (!componentState.enableControl) {
+                continue;
+            }
 
             switch (event.keyCode) {
                 case this._keyMotorLeftUp:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'motorLeft',20);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'motorLeft', 20);
                     break;
                 case this._keyMotorLeftDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'motorLeft',-20);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'motorLeft', -20);
                     break;
 
                 case this._keyRailMiddleLeftUp:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railMiddleLeft',2);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railMiddleLeft', 2);
                     break;
                 case this._keyRailMiddleLeftDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railMiddleLeft',-2);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railMiddleLeft', -2);
                     break;
 
                 case this._keyRailLeftRightUp:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railLeftRight',2);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railLeftRight', 2);
                     break;
                 case this._keyRailLeftRightDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railLeftRight',-2);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railLeftRight', -2);
                     break;
 
             }
@@ -307,26 +308,28 @@ zerk.define({
      **/
     _onKeyUp: function(event) {
 
-        for (var i=0;i<this._entities.length;i++) {
+        for (var i = 0; i < this._entities.length; i++) {
 
-            var componentState=this._entities[i].components.snakebot;
+            var componentState = this._entities[i].components.snakebot;
 
-            if (!componentState.enableControl) continue;
+            if (!componentState.enableControl) {
+                continue;
+            }
 
             switch (event.keyCode) {
                 case this._keyMotorLeftUp:
                 case this._keyMotorLeftDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'motorLeft',0);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'motorLeft', 0);
                     break;
 
                 case this._keyRailMiddleLeftUp:
                 case this._keyRailMiddleLeftDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railMiddleLeft',0);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railMiddleLeft', 0);
                     break;
 
                 case this._keyRailLeftRightUp:
                 case this._keyRailLeftRightDown:
-                    this._physics.jointSetMotorSpeed(this._entities[i],'railLeftRight',0);
+                    this._physics.jointSetMotorSpeed(this._entities[i], 'railLeftRight', 0);
                     break;
 
             }
@@ -343,32 +346,32 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactBegin: function(sourceInfo,targetInfo) {
+    _onContactBegin: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.snakebot=='undefined'
-        && typeof targetInfo.entity.components.snakebot=='undefined') {
+        if (typeof sourceInfo.entity.components.snakebot == 'undefined' &&
+        typeof targetInfo.entity.components.snakebot == 'undefined') {
             return true;
         }
 
-        var info=((typeof sourceInfo.entity.components.snakebot!='undefined')
-            ? sourceInfo
+        var info = ((typeof sourceInfo.entity.components.snakebot != 'undefined') ?
+            sourceInfo
             : targetInfo);
 
-        var entity=info.entity;
+        var entity = info.entity;
 
-        var componentState=entity.components.snakebot;
+        var componentState = entity.components.snakebot;
 
-        if (info.fixture=='foot') {
+        if (info.fixture == 'foot') {
 
             componentState.contactCount++;
 
-            if (componentState.contactCount>0) {
+            if (componentState.contactCount > 0) {
 
-                componentState.grounded=true;
+                componentState.grounded = true;
 
-                componentState.jumping=false;
+                componentState.jumping = false;
 
-                componentState.jumpCounter=0;
+                componentState.jumpCounter = 0;
 
             }
 
@@ -384,28 +387,28 @@ zerk.define({
      * @param {Object} targetInfo Contact target information
      * @protected
      **/
-    _onContactEnd: function(sourceInfo,targetInfo) {
+    _onContactEnd: function(sourceInfo, targetInfo) {
 
-        if (typeof sourceInfo.entity.components.snakebot=='undefined'
-        && typeof targetInfo.entity.components.snakebot=='undefined') {
+        if (typeof sourceInfo.entity.components.snakebot == 'undefined' &&
+        typeof targetInfo.entity.components.snakebot == 'undefined') {
             return true;
         }
 
-        var info=((typeof sourceInfo.entity.components.snakebot!='undefined')
-            ? sourceInfo
+        var info = ((typeof sourceInfo.entity.components.snakebot != 'undefined') ?
+            sourceInfo
             : targetInfo);
 
-        var entity=info.entity;
+        var entity = info.entity;
 
-        var componentState=entity.components.snakebot;
+        var componentState = entity.components.snakebot;
 
-        if (info.fixture=='foot') {
+        if (info.fixture == 'foot') {
 
             componentState.contactCount--;
 
-            if (componentState.contactCount==0) {
+            if (componentState.contactCount == 0) {
 
-                componentState.grounded=false;
+                componentState.grounded = false;
 
             }
 
@@ -421,19 +424,21 @@ zerk.define({
      **/
     actionWalkLeft: function(entity) {
 
-        var componentState=entity.components.snakebot;
+        var componentState = entity.components.snakebot;
 
-        var velocity=this._physics.getBodyLinearVelocity(entity,'main');
+        var velocity = this._physics.getBodyLinearVelocity(entity, 'main');
 
-        if (velocity.x<=-6) return;
-
-        var power=0.3;
-
-        if (componentState.jumping) {
-            power=0.75;
+        if (velocity.x <= -6) {
+            return;
         }
 
-        this._physics.bodyApplyImpulse(entity,'main',180,power);
+        var power = 0.3;
+
+        if (componentState.jumping) {
+            power = 0.75;
+        }
+
+        this._physics.bodyApplyImpulse(entity, 'main', 180, power);
 
     },
 
@@ -445,19 +450,21 @@ zerk.define({
      **/
     actionWalkRight: function(entity) {
 
-        var componentState=entity.components.snakebot;
+        var componentState = entity.components.snakebot;
 
-        var velocity=this._physics.getBodyLinearVelocity(entity,'main');
+        var velocity = this._physics.getBodyLinearVelocity(entity, 'main');
 
-        if (velocity.x>=6) return;
-
-        var power=0.3;
-
-        if (componentState.jumping) {
-            power=0.75;
+        if (velocity.x >= 6) {
+            return;
         }
 
-        this._physics.bodyApplyImpulse(entity,'main',0,power);
+        var power = 0.3;
+
+        if (componentState.jumping) {
+            power = 0.75;
+        }
+
+        this._physics.bodyApplyImpulse(entity, 'main', 0, power);
 
     }
 

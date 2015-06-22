@@ -9,13 +9,13 @@ zerk.define({
     name: 'jumpandrun.game.engine.component.madStone',
     extend: 'zerk.game.engine.component'
 
-},{
+}, {
 
     _name: 'madStone',
 
-    build: function(entityConfig,worldConfig) {
+    build: function(entityConfig, worldConfig) {
 
-        var defaultConfig={
+        var defaultConfig = {
             speed: 1.5,
             releaseDelay: 250,
             status: 'wait_to_fall',
@@ -23,7 +23,7 @@ zerk.define({
         };
 
         // Create new state
-        var state={};
+        var state = {};
 
         // Apply default configuration
         zerk.apply(
