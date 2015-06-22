@@ -18,7 +18,7 @@ More information can be found here [kristophjunge.com](https://kristophjunge.com
 
 ##Installation
 
-Zerk is installed via npm.
+Zerk can be installed via npm.
 
 ```bash
 $ npm install -g zerk
@@ -64,7 +64,7 @@ $ zerk dev
 
 ##License
 
-Zerk is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+Zerk is licensed under the MIT License.
 
 
 ##Documentation
