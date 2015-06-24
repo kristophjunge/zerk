@@ -32,19 +32,7 @@ zerk.define({
             return;
         }
 
-        me._engine.loadWorld(
-            'rendertest.world.rendertest',
-            function() {
-
-                me._startGame();
-
-            },
-            function(error) {
-
-                console.log(error);
-
-            }
-        );
+        me._engine.loadWorld('rendertest.world.rendertest');
 
     }
 

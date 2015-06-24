@@ -32,19 +32,7 @@ zerk.define({
             return;
         }
 
-        me._engine.loadWorld(
-            'stones.world.stones',
-            function() {
-
-                me._startGame();
-
-            },
-            function(error) {
-
-                console.log(error);
-
-            }
-        );
+        me._engine.loadWorld('stones.world.stones');
 
     }
 
