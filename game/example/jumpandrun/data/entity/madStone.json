@@ -67,19 +67,19 @@
                     "body": "frame1",
                     "fixture": "main",
                     "render": "texture",
-                    "texture": "sandbox.texture.rock"
+                    "texture": "sandbox.texture.rockface-cave-1"
                 },
                 "texture3": {
                     "body": "frame2",
                     "fixture": "main",
                     "render": "texture",
-                    "texture": "sandbox.texture.rock"
+                    "texture": "sandbox.texture.rockface-cave-1"
                 },
                 "texture4": {
                     "body": "frame3",
                     "fixture": "main",
                     "render": "texture",
-                    "texture": "sandbox.texture.rock"
+                    "texture": "sandbox.texture.rockface-cave-1"
                 }
             }
         }

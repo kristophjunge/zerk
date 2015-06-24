@@ -4,7 +4,7 @@
         "systems": {
             "physics": {
                 "gravityX": 0,
-                "gravityY": 0
+                "gravityY": 20
             }
         }
     },

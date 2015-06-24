@@ -24,7 +24,7 @@
                     "body": "main",
                     "fixture": "main",
                     "render": "texture",
-                    "texture": "sandbox.texture.rock"
+                    "texture": "sandbox.texture.rockface-canyon-1"
                 }
             }
         }
