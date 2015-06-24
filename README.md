@@ -1,6 +1,6 @@
 # Zerk Game Engine
 
-Zerk is a JavaScript game engine developed by Kristoph Junge and others.
+Zerk is a JavaScript game engine developed by Kristoph Junge and [others](https://github.com/kristophjunge/zerk/graphs/contributors).
 
 Zerk is based on an [Entity-Component-System](http://en.wikipedia.org/wiki/Entity_component_system) architecture.
 
