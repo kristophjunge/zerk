@@ -18,7 +18,9 @@
     "dependencies" : {
         "express" : "4.x",
         "hogan.js": "*",
-        "companion": "*"
+        "companion": "*",
+        "prompt": "0.2.x",
+        "mkdirp": "0.5.x"
     },
     "bugs": {
         "url": "https://github.com/kristophjunge/zerk/issues"

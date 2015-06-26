@@ -49,7 +49,6 @@ var app = express();
 var arguments = process.argv.splice(2);
 var currentGameConfig = JSON.parse(arguments[0]);
 var currentGameDir = arguments[1];
-var port = 8000;
 
 var deps = require(zerkDir + '/server/helper/dependencyTreeGenerator')(zerkDir);
 
@@ -67,7 +66,8 @@ console.log('Current game:', currentGameConfig.game);
 
 setupFileServers();
 
-var server = app.listen(currentGameConfig.dev.port, function() {
+var serverPort = currentGameConfig.dev && currentGameConfig.dev.port || 8337;
+var server = app.listen(serverPort, function() {
 
     app.get('/', function(req, res) {
 
@@ -94,7 +94,7 @@ var server = app.listen(currentGameConfig.dev.port, function() {
 
     });
 
-    console.log('Listening at http://localhost:' + currentGameConfig.dev.port);
+    console.log('Listening at http://localhost:' + serverPort);
     console.log('');
 
 });

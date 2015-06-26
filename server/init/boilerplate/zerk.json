@@ -1,0 +1,11 @@
+{
+    "game": "{{name}}",
+    "bootstrapClass": "{{name}}.game",
+    "namespaces": {
+        "{{name}}": "./"
+    },
+    "log": {
+        "enabled": "{{log.enabled}}",
+        "severity": "{{log.severity}}"
+    }
+}

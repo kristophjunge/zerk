@@ -1,0 +1,47 @@
+{
+    "engine": {
+        "systems": {
+            "wireframe": {
+                "showBodyAngleIndicator": false,
+                "showEntityOriginIndicator": false,
+                "showFixtureBoundingBox": true
+            },
+            "control": {
+                "mouse": {
+                    "enableJoint": true
+                }
+            },
+            "viewport": {
+                "worldScale": "{{viewport.worldScale}}"
+            },
+            "physics": {
+                "enableMouseJoint": true,
+                "physicsScale": "{{physics.scale}}"
+            }
+        },
+        "defaultSystems": [
+            "physics",
+            "viewport",
+            "render",
+            "wireframe",
+            "message",
+            "debuginfo",
+            "control"
+        ],
+        "componentMap": {
+            "position": "zerk.game.engine.component.position",
+            "physics": "zerk.game.engine.component.physics",
+            "render": "zerk.game.engine.component.render",
+            "trigger": "zerk.game.engine.component.trigger"
+        },
+        "systemMap": {
+            "physics": "zerk.game.engine.system.physics.box2d",
+            "viewport": "zerk.game.engine.system.viewport.canvas",
+            "render": "zerk.game.engine.system.render",
+            "wireframe": "zerk.game.engine.system.wireframe",
+            "message": "zerk.game.engine.system.message",
+            "debuginfo": "zerk.game.engine.system.debuginfo",
+            "control": "zerk.game.engine.system.control"
+        }
+    }
+}
