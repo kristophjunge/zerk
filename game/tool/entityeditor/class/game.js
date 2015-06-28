@@ -59,20 +59,20 @@ zerk.define({
                 'Spritesheet: <input id="editor-spritesheet" value="monstertruck.spritesheet.monstertruck"/>' +
                 'Sprite: <input id="editor-sprite" value="full"/>' +
                 '<div>' +
-                    '<a class="zerk-button" href="#" onclick="zerk.game.editorSetBackground(' +
+                    '<span class="zerk-button" onclick="zerk.game.editorSetBackground(' +
                         'document.getElementById(\'editor-spritesheet\').value,' +
                         'document.getElementById(\'editor-sprite\').value' +
-                    ')"><span class="zerk-button-label">Set Background</span></a>' +
+                    ')"><span class="zerk-button-label">Set Background</span></span>' +
                 '</div>' +
             '</div>' +
             '<div class="zerk-panel">' +
                 '<div class="zerk-panel-header">Add Fixture</div>' +
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'polygon\')">' +
-                '<span class="zerk-button-label">Polygon</span></a>' +
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'box\')">' +
-                '<span class="zerk-button-label">Box</span></a>' +
-                '<a class="zerk-button" href="#" onclick="zerk.game.editorAddFixture(\'circle\')">' +
-                '<span class="zerk-button-label">Circle</span></a>' +
+                '<span class="zerk-button" onclick="zerk.game.editorAddFixture(\'polygon\')">' +
+                '<span class="zerk-button-label">Polygon</span></span>' +
+                '<span class="zerk-button" onclick="zerk.game.editorAddFixture(\'box\')">' +
+                '<span class="zerk-button-label">Box</span></span>' +
+                '<span class="zerk-button" onclick="zerk.game.editorAddFixture(\'circle\')">' +
+                '<span class="zerk-button-label">Circle</span></span>' +
             '</div>' +
             '<div class="zerk-panel">' +
                 '<div class="zerk-panel-header">Inspector</div>' +
@@ -150,8 +150,6 @@ zerk.define({
 
         var editor = me._engine.getSystem('entityeditor');
 
-        console.log('CALL');
-
         editor.placeFixture(shape);
 
     },
@@ -163,6 +161,18 @@ zerk.define({
         var editor = me._engine.getSystem('entityeditor');
 
         editor.editorDumpFixture();
+
+    },
+
+    toggleSelectionFixture: function(button, entityId, bodyKey, fixtureKey) {
+
+        var me = this;
+
+        var editor = me._engine.getSystem('entityeditor');
+
+        editor.addSelectionFixtureReplace(entityId, bodyKey, fixtureKey);
+
+        editor.updateInspector();
 
     }
 

@@ -95,32 +95,18 @@ zerk.helper.calculateDistance = function(x1, y1, x2, y2) {
  * @param {Array} polygon Polygon array
  * @return {Object} Returns an object containing x and y position
  **/
-zerk.helper.getCenterOfPolygon = function(polygon) {
+zerk.helper.getCenterOfPolygon = function(vertices) {
 
-    var x = 0;
-    var y = 0;
-    var z = 0;
-    var pointX;
-    var pointY;
+    var centroidX = 0;
+    var centroidY = 0;
 
-    for (var i = 0; i < polygon.length; i++) {
-
-        pointX = polygon[i][0] * Math.PI / 180;
-        pointY = polygon[i][1] * Math.PI / 180;
-
-        x += Math.cos(pointX) * Math.cos(pointY);
-        y += Math.cos(pointX) * Math.sin(pointY);
-        z += Math.sin(pointX);
-
+    for (var i = 0; i < vertices.length; i++) {
+        centroidX += vertices[i][0];
+        centroidY += vertices[i][1];
     }
-
-    var hyp = Math.atan2(y, x) * 180 / Math.PI;
-    var resultX = Math.sqrt(x * x + y * y);
-    var resultY = Math.atan2(z, hyp) * 180 / Math.PI;
-
     return {
-        x: resultX,
-        y: resultY
+        x: centroidX / vertices.length,
+        y: centroidY / vertices.length
     };
 
 };

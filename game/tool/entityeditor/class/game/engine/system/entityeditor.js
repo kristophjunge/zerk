@@ -408,8 +408,6 @@ zerk.define({
 
         var me = this;
 
-        console.log('ADD FIXTURE');
-
         me._setEditorState('add_fixture');
 
         if (me._editorFixtureShape == 'box' || me._editorFixtureShape == 'circle') {
@@ -424,12 +422,10 @@ zerk.define({
 
         var me = this;
 
-        console.log('APPLY FIXTURE');
-
         var entity = me.getEntity();
         var body = entity.components.physics._bodyList[0];
 
-        var newKey = 'fixture' + body._fixtureList.length;
+        var newKey = 'fixture' + (body._fixtureList.length + 1);
 
         me.clearSelectionFixtures();
 
@@ -442,57 +438,23 @@ zerk.define({
             }
             */
 
-            var vertices = [];
-
-            // Calculate polygon center
-            var center = zerk.helper.getCenterOfPolygon(me._editorVertices);
-
-            me._editorFixtureX = center.x;
-            me._editorFixtureY = center.y;
-
-            // Calculate positions relative to fixture origin
-            for (var i = 0; i < me._editorVertices.length; i++) {
-                vertices.push([
-                    me._editorVertices[i][0] - center.x,
-                    me._editorVertices[i][1] - center.y
-                ]);
-            }
-
-            console.log('VERT', vertices);
-
+            // Split if not convex
             if (!me._editorVerticesValid) {
-                console.log('Polygon is not valid');
 
                 var concave = new decomp.Polygon();
                 var convex = new decomp.Polygon();
-                concave.vertices = vertices;
-                //convex.vertices = concave.decomp();
+                concave.vertices = me._editorVertices;
                 convex.vertices = concave.quickDecomp()
 
                 for (var i = 0; i < convex.vertices.length; i++) {
-                    me.applyFixtureVertices(convex.vertices[i].vertices, i);
+                    me.applyFixtureVertices(convex.vertices[i].vertices);
                 };
+
             } else {
-                me.applyFixtureVertices(vertices);
+
+                me.applyFixtureVertices(me._editorVertices);
+
             }
-
-            /*
-            var fixture={
-                key: newKey,
-                x: me._editorFixtureX,
-                y: me._editorFixtureY,
-                angle: 0,
-                shape: 'polygon',
-                vertices: vertices
-            };
-
-            me._physics.addFixture(
-                entity,
-                body,
-                newKey,
-                fixture
-            );
-            */
 
         } else if (me._editorFixtureShape == 'box') {
 
@@ -523,7 +485,7 @@ zerk.define({
                 y: me._editorFixtureY,
                 angle: 0,
                 shape: 'circle',
-                radius: 0.25,
+                radius: 0.25
             };
 
             me._physics.addFixture(
@@ -543,26 +505,36 @@ zerk.define({
         me._editorVertices = [];
         me._setEditorState('');
 
-        console.log('AFTER ADD');
-
-        me._updateInspector();
+        me.updateInspector();
 
     },
 
-    applyFixtureVertices: function(vertices, key) {
+    applyFixtureVertices: function(vertices) {
+
         var me = this;
         var entity = me.getEntity();
         var body = entity.components.physics._bodyList[0];
+        var newKey = 'fixture' + (body._fixtureList.length + 1);
 
-        var newKey = 'fixture' + body._fixtureList.length;
+        // Calculate polygon center
+        var center = zerk.helper.getCenterOfPolygon(vertices);
+
+        // Calculate positions relative to polygon center
+        var verticesCentered = [];
+        for (var i = 0; i < vertices.length; i++) {
+            verticesCentered.push([
+                vertices[i][0] - center.x,
+                vertices[i][1] - center.y
+            ]);
+        }
 
         var fixture = {
             key: newKey,
-            x: me._editorFixtureX,
-            y: me._editorFixtureY,
+            x: center.x,
+            y: center.y,
             angle: 0,
             shape: 'polygon',
-            vertices: vertices
+            vertices: verticesCentered
         };
 
         me._physics.addFixture(
@@ -589,15 +561,6 @@ zerk.define({
         me._setEditorState('');
 
     },
-
-    /*
-    getFocusFixture: function() {
-
-        var me=this;
-
-
-    },
-    */
 
     _onMouseDown: function(event) {
 
@@ -730,8 +693,6 @@ zerk.define({
 
             } else if (me._isEditorState('draw_polygon')) {
 
-                console.log('PLACE POINT');
-
                 me.addVertice(
                     me._control.mouse.mouseX,
                     me._control.mouse.mouseY
@@ -743,13 +704,9 @@ zerk.define({
 
                 if (focus) {
 
-                    if (!me._control.keyboard.pressedCtrl && !me._control.keyboard.pressedShift) {
-                        me.clearSelectionFixtures();
-                    }
+                    me.addSelectionFixtureReplace(focus.entity.id, focus.body, focus.fixture);
 
-                    me.addSelectionFixture(focus.entity.id, focus.body, focus.fixture);
-
-                    me._updateInspector();
+                    me.updateInspector();
 
                 }
 
@@ -782,7 +739,19 @@ zerk.define({
 
     },
 
-    _updateInspector: function() {
+    addSelectionFixtureReplace: function(entityId, bodyKey, fixtureKey) {
+
+        var me = this;
+
+        if (!me._control.keyboard.pressedCtrl && !me._control.keyboard.pressedShift) {
+            me.clearSelectionFixtures();
+        }
+
+        me.addSelectionFixture(entityId, bodyKey, fixtureKey);
+
+    },
+
+    updateInspector: function() {
 
         var me = this;
 
@@ -795,9 +764,12 @@ zerk.define({
         var i = 0;
         var x = 0;
 
+        var entityId = entity.id;
+
         for (i = 0; i < entity.components.physics._bodyList.length; i++) {
 
             var body = entity.components.physics._bodyList[i];
+            var bodyKey = body.key;
 
             var bodyWrapper = document.createElement('div');
             bodyWrapper.setAttribute('class', 'zerk-body-wrapper');
@@ -821,6 +793,11 @@ zerk.define({
 
                 var fixtureContainer = document.createElement('div');
                 fixtureContainer.setAttribute('class', fixtureContainerClass);
+
+                var fixtureKey = body._fixtureList[x].key;
+                fixtureContainer.setAttribute('onclick', 'zerk.game.toggleSelectionFixture(this,\'' + entityId +
+                    '\',\'' + bodyKey + '\',\'' + fixtureKey + '\');');
+
                 bodyWrapper.appendChild(fixtureContainer);
 
                 var fixtureLabel = document.createElement('span');
@@ -870,7 +847,7 @@ zerk.define({
 
         me._editorFocusEntity = entityId;
 
-        me._updateInspector();
+        me.updateInspector();
 
     },
 

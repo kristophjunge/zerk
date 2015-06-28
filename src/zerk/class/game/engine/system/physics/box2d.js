@@ -1158,8 +1158,6 @@ zerk.define({
 
     addFixture: function(entity, body, key, fixture) {
 
-        console.log('BODY', body);
-
         body.fixtures[key] = fixture;
         body._fixtureList.push(fixture);
 

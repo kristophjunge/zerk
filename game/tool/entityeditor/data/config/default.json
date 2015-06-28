@@ -2,12 +2,12 @@
     "engine": {
         "systems": {
             "viewport": {
-                "showWorldCenterIndicator": false,
+                "showWorldCenterIndicator": true,
                 "trackPlayer": false,
                 "worldScale": 60,
                 "autoSize": true,
                 "zoomMax": 1000,
-                "zoomMin": 10,
+                "zoomMin": 1,
                 "zoomDefault": 200
             },
             "wireframe": {

@@ -776,6 +776,8 @@ zerk.define({
         fixturePosition.x += fixture.x;
         fixturePosition.y += fixture.y;
 
+        //console.log('DRAW',fixturePosition.x + ':' + fixturePosition.y);
+
         this._viewport.drawLines(
             'display',
             [

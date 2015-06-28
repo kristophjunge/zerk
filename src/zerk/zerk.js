@@ -1132,12 +1132,16 @@ var zerk = {
 
     rtrim: function(value, chars) {
 
+        if (!zerk.isDefined(chars)) {
+            chars = [' '];
+        }
+
         var chars = ((zerk.isArray(chars)) ? chars : [chars]);
         var value = String(value);
 
         var lastChar = value.substr(-1, 1);
         while (zerk.inArray(lastChar, chars)) {
-            value = value.substr(0, -1);
+            value = value.substr(0, value.length - 1);
             lastChar = value.substr(-1, 1);
         }
 
