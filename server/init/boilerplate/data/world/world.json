@@ -1,0 +1,22 @@
+{
+    "name": "{{name}}",
+    "config": {
+        "systems": {
+            "physics": {
+                "gravityX": 0,
+                "gravityY": 0
+            }
+        }
+    },
+    "entities": [
+        {
+            "name": "{{name}}.entity.entity",
+            "components": {
+                "position": {
+                    "x": 0,
+                    "y": 3.5
+                }
+            }
+        }
+    ]
+}

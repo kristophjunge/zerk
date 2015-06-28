@@ -7,9 +7,16 @@ var userArgs = process.argv.splice(2);
 var mode = userArgs.splice(0, 1)[0];
 
 switch (mode) {
+    case 'init': 
+        initZerk(userArgs);
+        break;
     case 'dev': 
         startDevServer(userArgs);
         break;
+}
+
+function initZerk(userArgs) {
+    require('./server/init/run.js')(userArgs);
 }
 
 function startDevServer(userArgs) {
