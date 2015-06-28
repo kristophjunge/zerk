@@ -64,9 +64,13 @@ zerk.define({
 
     _editorFixtureShape: '',
 
+    _editorFixtureKey: '',
+
     _editorFocusEntity: 0,
 
     _editorSelectionFixtures: {},
+
+    _editorFixtureIndex: 0,
 
     /**
      * Class constructor
@@ -327,7 +331,7 @@ zerk.define({
 
         me.drawBackground(entity);
 
-        if (me._isEditorState('draw_polygon')) {
+        if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
             me.drawVertices();
 
         }
@@ -348,7 +352,7 @@ zerk.define({
 
         var me = this;
 
-        if (me._isEditorState('draw_polygon')) {
+        if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
 
             if (me._editorVerticeIndex < me._editorVertices.length) {
                 me._editorVertices.splice(me._editorVerticeIndex, 0, [x, y]);
@@ -394,7 +398,7 @@ zerk.define({
 
         if (me._editorFixtureShape == 'polygon') {
 
-            me._setEditorState('draw_polygon');
+            me._setEditorState('add_polygon');
 
         } else {
 
@@ -418,6 +422,21 @@ zerk.define({
 
     },
 
+    _getNewFixtureKey: function(entity, bodyKey) {
+
+        var body = entity.components.physics.bodies[bodyKey];
+
+        var index = body._fixtureList.length;
+        var result = 'fixture' + index;
+        do {
+            index++;
+            result = 'fixture' + index;
+        } while (zerk.isDefined(entity.components.physics.bodies[bodyKey].fixtures[result]));
+
+        return result;
+
+    },
+
     applyFixture: function() {
 
         var me = this;
@@ -425,7 +444,15 @@ zerk.define({
         var entity = me.getEntity();
         var body = entity.components.physics._bodyList[0];
 
-        var newKey = 'fixture' + (body._fixtureList.length + 1);
+        //me._isEditorState('add_polygon')
+        //me._isEditorState('edit_polygon')
+
+        var fixtureKey;
+        if (me._isEditorState('edit_polygon')) {
+            fixtureKey = me._editorFixtureKey;
+        } else {
+            fixtureKey = me._getNewFixtureKey(entity, body.key);
+        }
 
         me.clearSelectionFixtures();
 
@@ -447,19 +474,19 @@ zerk.define({
                 convex.vertices = concave.quickDecomp()
 
                 for (var i = 0; i < convex.vertices.length; i++) {
-                    me.applyFixtureVertices(convex.vertices[i].vertices);
-                };
+                    me.applyFixtureVertices(convex.vertices[i].vertices, fixtureKey, i);
+                }
 
             } else {
 
-                me.applyFixtureVertices(me._editorVertices);
+                me.applyFixtureVertices(me._editorVertices, fixtureKey);
 
             }
 
         } else if (me._editorFixtureShape == 'box') {
 
             var fixture = {
-                key: newKey,
+                key: fixtureKey,
                 x: me._editorFixtureX,
                 y: me._editorFixtureY,
                 angle: 0,
@@ -471,16 +498,16 @@ zerk.define({
             me._physics.addFixture(
                 entity,
                 body,
-                newKey,
+                fixtureKey,
                 fixture
             );
 
-            me.addSelectionFixture(entity.id, body.key, newKey);
+            me.addSelectionFixture(entity.id, body.key, fixtureKey);
 
         } else if (me._editorFixtureShape == 'circle') {
 
             var fixture = {
-                key: newKey,
+                key: fixtureKey,
                 x: me._editorFixtureX,
                 y: me._editorFixtureY,
                 angle: 0,
@@ -491,14 +518,17 @@ zerk.define({
             me._physics.addFixture(
                 entity,
                 body,
-                newKey,
+                fixtureKey,
                 fixture
             );
 
-            me.addSelectionFixture(entity.id, body.key, newKey);
+            me.addSelectionFixture(entity.id, body.key, fixtureKey);
 
         }
 
+        me._editorFixtureKey = '';
+        me._editorFixtureIndex = 0;
+        me._editorFixtureShape = '';
         me._editorVerticesValid = true;
         me._editorMovingPoint = false;
         me._editorVerticeIndex = null;
@@ -509,12 +539,15 @@ zerk.define({
 
     },
 
-    applyFixtureVertices: function(vertices) {
+    applyFixtureVertices: function(vertices, fixtureKey, subIndex) {
 
         var me = this;
         var entity = me.getEntity();
         var body = entity.components.physics._bodyList[0];
-        var newKey = 'fixture' + (body._fixtureList.length + 1);
+
+        if (zerk.isDefined(subIndex)) {
+            fixtureKey += '_' + (subIndex + 1);
+        }
 
         // Calculate polygon center
         var center = zerk.helper.getCenterOfPolygon(vertices);
@@ -529,7 +562,7 @@ zerk.define({
         }
 
         var fixture = {
-            key: newKey,
+            key: fixtureKey,
             x: center.x,
             y: center.y,
             angle: 0,
@@ -537,14 +570,21 @@ zerk.define({
             vertices: verticesCentered
         };
 
+        var fixtureIndex = null;
+
+        if (me._isEditorState('edit_polygon')) {
+            fixtureIndex = me._editorFixtureIndex + subIndex;
+        }
+
         me._physics.addFixture(
             entity,
             body,
-            newKey,
-            fixture
+            fixtureKey,
+            fixture,
+            fixtureIndex
         );
 
-        me.addSelectionFixture(entity.id, body.key, newKey);
+        me.addSelectionFixture(entity.id, body.key, fixtureKey);
 
     },
 
@@ -566,14 +606,23 @@ zerk.define({
 
         var me = this;
 
-        if (me._control.mouse.mouseRightDown) {
+        if (me._control.mouse.mouseLeftDown) {
 
-            if (me._isEditorState('draw_polygon')) {
+            if (me._isEditorState('place_fixture')) {
+
+                me._editorFixtureX = me._control.mouse.mouseX;
+                me._editorFixtureY = me._control.mouse.mouseY;
+
+                me.addFixture();
+
+            } else if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
 
                 var pointSizePixel = 10;
 
-                var pointWidth = me._viewport.fromPixel(viewport.fromZoom(pointSizePixel));
-                var pointHeight = me._viewport.fromPixel(viewport.fromZoom(pointSizePixel));
+                var pointWidth = me._viewport.fromPixel(me._viewport.fromZoom(pointSizePixel));
+                var pointHeight = me._viewport.fromPixel(me._viewport.fromZoom(pointSizePixel));
+
+                var clickedPoint = false;
 
                 for (var i = 0; i < me._editorVertices.length; i++) {
 
@@ -586,9 +635,30 @@ zerk.define({
                         me._editorMovingPoint = true;
                         me._editorVerticeIndex = i + 1;
 
-                        console.log('VERTICE INDEX AT', me._editorVerticeIndex);
+                        clickedPoint = true;
+
+                        //console.log('SELECTED VERTICE', me._editorVerticeIndex);
 
                     }
+
+                }
+
+                if (!clickedPoint) {
+                    me.addVertice(
+                        me._control.mouse.mouseX,
+                        me._control.mouse.mouseY
+                    );
+                }
+
+            } else if (me._isEditorState('')) {
+
+                var focus = this._physics.getFixtureAtMouse();
+
+                if (focus) {
+
+                    me.addSelectionFixtureReplace(focus.entity.id, focus.body, focus.fixture);
+
+                    me.updateInspector();
 
                 }
 
@@ -602,7 +672,7 @@ zerk.define({
 
         var me = this;
 
-        if (me._isEditorState('draw_polygon')) {
+        if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
 
             if (me._editorMovingPoint) {
 
@@ -628,11 +698,9 @@ zerk.define({
 
         var me = this;
 
-        console.log('KEY', event.keyCode);
-
         if (event.keyCode == 114) { // r
 
-            if (me._isEditorState('draw_polygon')) {
+            if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
                 if (me._editorVerticeIndex != null) {
                     me._editorVertices.splice(me._editorVerticeIndex - 1, 1);
 
@@ -648,20 +716,16 @@ zerk.define({
 
         } else if (event.keyCode == 32) { // Space
 
-            if (me._isEditorState('draw_polygon')) {
+            if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
                 me.applyFixture();
             }
 
         } else if (event.keyCode == 99) { // c
 
             if (me._isEditorState('edit_fixture')) {
-
                 me._setEditorState('');
-
-            } else if (me._isEditorState('draw_polygon')) {
-
+            } else if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
                 me.cancelAddFixture();
-
             }
 
         }
@@ -684,33 +748,6 @@ zerk.define({
 
         if (event.button == 0) {
 
-            if (me._isEditorState('place_fixture')) {
-
-                me._editorFixtureX = me._control.mouse.mouseX;
-                me._editorFixtureY = me._control.mouse.mouseY;
-
-                me.addFixture();
-
-            } else if (me._isEditorState('draw_polygon')) {
-
-                me.addVertice(
-                    me._control.mouse.mouseX,
-                    me._control.mouse.mouseY
-                );
-
-            } else if (me._isEditorState('')) {
-
-                var focus = this._physics.getFixtureAtMouse();
-
-                if (focus) {
-
-                    me.addSelectionFixtureReplace(focus.entity.id, focus.body, focus.fixture);
-
-                    me.updateInspector();
-
-                }
-
-            }
 
         }
 
@@ -727,7 +764,7 @@ zerk.define({
                 // Check if the double click takes place on current focus fixture
                 var focus = this._physics.getFixtureAtMouse();
 
-                if (focus && me.isFocusFixture(focus.entity.id, focus.body, focus.fixture)) {
+                if (focus && me.isSelectionFixture(focus.entity.id, focus.body, focus.fixture)) {
 
                     me._editFixture();
 
@@ -743,11 +780,17 @@ zerk.define({
 
         var me = this;
 
+        if (!me._isEditorState('')) {
+            return;
+        }
+
         if (!me._control.keyboard.pressedCtrl && !me._control.keyboard.pressedShift) {
             me.clearSelectionFixtures();
         }
 
         me.addSelectionFixture(entityId, bodyKey, fixtureKey);
+
+        me.updateInspector();
 
     },
 
@@ -787,7 +830,7 @@ zerk.define({
 
                 var fixtureContainerClass = 'zerk-fixture-container';
 
-                if (me.isFocusFixture(entity.id, body.key, body._fixtureList[x].key)) {
+                if (me.isSelectionFixture(entity.id, body.key, body._fixtureList[x].key)) {
                     fixtureContainerClass += ' zerk-selected';
                 }
 
@@ -817,9 +860,59 @@ zerk.define({
 
         var me = this;
 
-        console.log('START EDIT FIXTURE', me._editorSelectionFixtures);
+        if (me.getSelectionFixtureCount() > 1) {
+            alert('Cannot edit multiple fixtures at a time');
+            return;
+        }
 
-        me._setEditorState('edit_fixture');
+        var selection = me.getSelectionFixtureSingle();
+
+        if (!selection) {
+            return;
+        }
+
+        if (selection.fixture.shape == 'polygon') {
+
+            // Convert positions for editor
+            var vertices = [];
+            for (var i = 0; i < selection.fixture.vertices.length; i++) {
+                vertices.push([
+                    selection.fixture.x + selection.fixture.vertices[i][0],
+                    selection.fixture.y + selection.fixture.vertices[i][1]
+                ]);
+            }
+
+            // Find index of edited fixture inside its body
+            for (var fixtureIndex = 0; fixtureIndex < selection.body._fixtureList.length; fixtureIndex++) {
+                if (selection.body._fixtureList[fixtureIndex].key == selection.fixture.key) {
+                    break;
+                }
+            }
+
+            me._editorFixtureShape = 'polygon';
+            me._editorFixtureKey = selection.fixture.key;
+            me._editorVerticeIndex = selection.fixture.vertices.length - 1; // Start edit at last vertice
+            me._editorFixtureX = selection.fixture.x;
+            me._editorFixtureY = selection.fixture.y;
+            me._editorVertices = vertices;
+
+            me._editorFixtureIndex = fixtureIndex;
+
+            me._physics.destroyFixture(
+                selection.entity,
+                selection.body.key,
+                selection.fixture.key
+            );
+
+            me.clearSelectionFixtures();
+
+            me._setEditorState('edit_polygon');
+
+        } else {
+
+            me._setEditorState('edit_fixture');
+
+        }
 
     },
 
@@ -833,11 +926,15 @@ zerk.define({
 
     },
 
-    _isEditorState: function(state) {
+    _isEditorState: function(states) {
 
         var me = this;
 
-        return (me._editorState == state);
+        if (!zerk.isArray(states)) {
+            states = [states];
+        }
+
+        return zerk.inArray(me._editorState, states);
 
     },
 
@@ -851,7 +948,47 @@ zerk.define({
 
     },
 
-    isFocusFixture: function(entityId, bodyKey, fixtureKey) {
+    getSelectionFixtureCount: function() {
+
+        var me = this;
+        var count = 0;
+
+        for (var entityId in me._editorSelectionFixtures) {
+            for (var bodyKey in me._editorSelectionFixtures[entityId]) {
+                for (var i = 0; i < me._editorSelectionFixtures[entityId][bodyKey].length; i++) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+    },
+
+    getSelectionFixtureSingle: function() {
+
+        var me = this;
+
+        for (var entityId in me._editorSelectionFixtures) {
+            var entity = this._engine.getEntityById(entityId);
+            for (var bodyKey in me._editorSelectionFixtures[entityId]) {
+                for (var i = 0; i < me._editorSelectionFixtures[entityId][bodyKey].length; i++) {
+                    var fixtureKey = me._editorSelectionFixtures[entityId][bodyKey];
+                    var body = entity.components.physics.bodies[bodyKey];
+                    return {
+                        entity: entity,
+                        body: body,
+                        fixture: body.fixtures[fixtureKey]
+                    };
+                }
+            }
+        }
+
+        return false;
+
+    },
+
+    isSelectionFixture: function(entityId, bodyKey, fixtureKey) {
 
         var me = this;
 

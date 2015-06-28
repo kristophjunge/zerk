@@ -172,8 +172,6 @@ zerk.define({
 
         editor.addSelectionFixtureReplace(entityId, bodyKey, fixtureKey);
 
-        editor.updateInspector();
-
     }
 
 });

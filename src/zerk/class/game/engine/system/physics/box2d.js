@@ -75,11 +75,20 @@ zerk.define({
     /**
      * List of joints to be destroyed after current simulation tick
      *
-     * @property __destroyJointList
+     * @property _destroyJointList
      * @type Array
      * @protected
      */
     _destroyJointList: null,
+
+    /**
+     * List of fixtures to be destroyed after current simulation tick
+     *
+     * @property _destroyFixtureList
+     * @type Array
+     * @protected
+     */
+    _destroyFixtureList: null,
 
     /**
      * Shortcut for Box2D.Common.Math.b2Vec2
@@ -251,6 +260,7 @@ zerk.define({
 
         this._destroyBodyList = [];
         this._destroyJointList = [];
+        this._destroyFixtureList = [];
 
         this._world = new this._b2World(
             new this._b2Vec2(
@@ -543,7 +553,7 @@ zerk.define({
     /**
      * Destroys given body
      *
-     * @method _destroyBody
+     * @method destroyBody
      * @param {String} bodyKey
      * @protected
      */
@@ -580,6 +590,46 @@ zerk.define({
     },
 
     /**
+     * Destroys given fixture
+     *
+     * @method destroyFixture
+     * @param {Sting} bodyKey
+     * @param {Sting} fixtureKey
+     * @protected
+     */
+    destroyFixture: function(entity, bodyKey, fixtureKey) {
+
+        // Detroy the physics fixture
+        this._scheduleDestroyFixture(
+            entity.components.physics.bodies[bodyKey].fixtures[fixtureKey]._physicsHandle
+        );
+
+        // Delete the fixture
+        delete entity.components.physics.bodies[bodyKey].fixtures[fixtureKey];
+
+        // Delete the fixtureList entry
+        var found = false;
+
+        for (var i = 0; i < entity.components.physics.bodies[bodyKey]._fixtureList.length; i++) {
+
+            if (entity.components.physics.bodies[bodyKey]._fixtureList[i].key == fixtureKey) {
+                found = true;
+                break;
+            }
+
+        }
+
+        if (!found) {
+            return;
+        }
+
+        entity.components.physics.bodies[bodyKey]._fixtureList.splice(i, 1);
+
+        return true;
+
+    },
+
+    /**
      * Destroy bodies and joints schedules to be removed from the world
      *
      * @method _cleanup
@@ -588,21 +638,21 @@ zerk.define({
     _cleanup: function() {
 
         for (var i = 0; i < this._destroyJointList.length; i++) {
-
             this._destroyJoint(this._destroyJointList[i]);
             this._destroyJointList[i] = null;
-
         }
-
         this._destroyJointList = [];
 
-        for (var i = 0; i < this._destroyBodyList.length; i++) {
-
-            this._destroyBody(this._destroyBodyList[i]);
-            this._destroyBody[i] = null;
-
+        for (var i = 0; i < this._destroyFixtureList.length; i++) {
+            this._destroyFixture(this._destroyFixtureList[i]);
+            this._destroyFixtureList[i] = null;
         }
+        this._destroyFixtureList = [];
 
+        for (var i = 0; i < this._destroyBodyList.length; i++) {
+            this._destroyBody(this._destroyBodyList[i]);
+            this._destroyBodyList[i] = null;
+        }
         this._destroyBodyList = [];
 
     },
@@ -634,6 +684,18 @@ zerk.define({
     },
 
     /**
+     * Schedules a fixture to be destroyed after current simulation tick
+     *
+     * @method _scheduleDestroyFixture
+     * @param {} physicsHandle Physics handle
+     */
+    _scheduleDestroyFixture: function(physicsHandle) {
+
+        this._destroyFixtureList.push(physicsHandle);
+
+    },
+
+    /**
      * Destroys a body
      *
      * @method _destroyBody
@@ -650,6 +712,23 @@ zerk.define({
         }
 
         this._world.DestroyBody(physicsHandle);
+
+    },
+
+    /**
+     * Destroys a fixture
+     *
+     * @method _destroyFixture
+     * @param {} physicsHandle Physics handle
+     * @protected
+     */
+    _destroyFixture: function(physicsHandle) {
+
+        if (this._world.IsLocked()) {
+            console.error('Cannot destroy fixture, world is locked');
+        }
+
+        this._world.DestroyFixture(physicsHandle);
 
     },
 
@@ -1156,7 +1235,27 @@ zerk.define({
         return body._physicsHandle;
     },
 
-    addFixture: function(entity, body, key, fixture) {
+    addFixture: function(entity, body, key, fixture, index) {
+
+        body.fixtures[key] = fixture;
+
+        if (zerk.isNumber(index)) {
+            body._fixtureList.splice(index, 0, fixture);
+        } else {
+            body._fixtureList.push(fixture);
+        }
+
+        body.fixtures[key]._physicsHandle = body._physicsHandle.CreateFixture(
+            this._createFixture(
+                entity,
+                body,
+                body.fixtures[key]
+            )
+        );
+
+    },
+
+    removeFixture: function(entity, body, key, fixture) {
 
         body.fixtures[key] = fixture;
         body._fixtureList.push(fixture);
