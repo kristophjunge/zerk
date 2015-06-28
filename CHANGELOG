@@ -44,3 +44,13 @@
 * Incomplete snakebot example
 * Incomplete monstertruck example
 * Incomplete entity editor
+
+0.3.1
+* Two new example textures
+* Minor bugfix in some example game classes
+* Removed some unused files
+
+0.3.2
+* Added zerk init command
+* Entity Editor: Fixed polygon creation
+* Entity Editor: Reeditable polygons
