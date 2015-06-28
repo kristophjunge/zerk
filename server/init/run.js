@@ -6,14 +6,15 @@ module.exports = function(userArgs) {
     var fs = require('fs');
     var path = require('path');
     var zerkDir = path.resolve(__dirname, '../../');
-    var boilderplateDir = path.resolve(__dirname, 'boilerplate');
+    var moduleDir = path.resolve(zerkDir, 'node_modules');
+    var skeletonDir = path.resolve(__dirname, 'skeleton/default');
 
     var prompt = require('prompt');
-    var hogan = require('hogan');
+    var hogan = require(moduleDir + '/hogan.js');
     var mkdirp = require('mkdirp');
 
-    prompt.message = "";
-    prompt.delimiter = "";
+    prompt.message = '';
+    prompt.delimiter = '';
 
     var schema = {
         properties: {
@@ -52,22 +53,27 @@ module.exports = function(userArgs) {
         }
     };
 
-    prompt.get(schema, function (err, result) {
-        if (err) { return onErr(err); }
+    prompt.get(schema, function(err, result) {
 
-        walk(boilderplateDir, function(err, files) {
-            if (err) { return onErr(err); }
-            
+        if (err) {
+            return onErr(err);
+        }
+
+        walk(skeletonDir, function(err, files) {
+            if (err) {
+                return onErr(err);
+            }
+
             var templates = [];
             var path = '';
-            for(var i = 0; i < files.length; i++) {
-                path = files[i].replace(boilderplateDir + '/', '');
+            for (var i = 0; i < files.length; i++) {
+                path = files[i].replace(skeletonDir + '/', '');
                 templates.push({
                     name: path,
                     content: generateTemplate(path, result)
                 });
             }
-            
+
             saveTemplates(templates);
         });
     });
@@ -83,7 +89,7 @@ module.exports = function(userArgs) {
         var template;
         var fileName = '';
         var fileExists;
-        for(var i = 0; i < templates.length; i++) {
+        for (var i = 0; i < templates.length; i++) {
             template = templates[i];
             fileName = path.resolve(userArgPath, template.name);
             fileExists = fs.existsSync(fileName);
@@ -99,14 +105,16 @@ module.exports = function(userArgs) {
     }
 
     function writeFile(name, contents, cb) {
-        mkdirp(path.dirname(name), function (err) {
-            if (err) { return onErr(err); }
+        mkdirp(path.dirname(name), function(err) {
+            if (err) {
+                return onErr(err);
+            }
             fs.writeFile(name, contents, cb)
         })
     }
 
     function generateTemplate(template, data) {
-        var template = fs.readFileSync(boilderplateDir + '/' + template, {encoding: 'UTF-8'})
+        var template = fs.readFileSync(skeletonDir + '/' + template, {encoding: 'UTF-8'})
         var compiled = hogan.compile(template);
         return compiled.render(data);
     }
@@ -114,20 +122,28 @@ module.exports = function(userArgs) {
     function walk(dir, done) {
         var results = [];
         fs.readdir(dir, function(err, list) {
-            if (err) return done(err);
+            if (err) {
+                return done(err);
+            }
             var pending = list.length;
-            if (!pending) return done(null, results);
+            if (!pending) {
+                return done(null, results);
+            }
             list.forEach(function(file) {
                 file = path.resolve(dir, file);
                 fs.stat(file, function(err, stat) {
                     if (stat && stat.isDirectory()) {
                         walk(file, function(err, res) {
                             results = results.concat(res);
-                            if (!--pending) done(null, results);
+                            if (!--pending) {
+                                done(null, results);
+                            }
                         });
                     } else {
                         results.push(file);
-                        if (!--pending) done(null, results);
+                        if (!--pending) {
+                            done(null, results);
+                        }
                     }
                 });
             });

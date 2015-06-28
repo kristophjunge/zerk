@@ -130,12 +130,6 @@ zerk.define({
         );
 
         me._control.mouse.on(
-            'click',
-            me._onClick,
-            me
-        );
-
-        me._control.mouse.on(
             'doubleclick',
             me._onDoubleClick,
             me
@@ -739,17 +733,6 @@ zerk.define({
         var data = JSON.stringify(me._editorVertices);
 
         console.log(data);
-
-    },
-
-    _onClick: function(event) {
-
-        var me = this;
-
-        if (event.button == 0) {
-
-
-        }
 
     },
 
