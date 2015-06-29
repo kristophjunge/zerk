@@ -371,7 +371,7 @@ zerk.define({
 
     },
 
-    _onClick: function() {
+    _onClick: function(event) {
 
         var me = this;
 

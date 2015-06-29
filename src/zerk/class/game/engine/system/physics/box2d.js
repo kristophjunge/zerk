@@ -599,9 +599,10 @@ zerk.define({
      */
     destroyFixture: function(entity, bodyKey, fixtureKey) {
 
-        // Detroy the physics fixture
+        // Destroy the physics fixture
         this._scheduleDestroyFixture(
-            entity.components.physics.bodies[bodyKey].fixtures[fixtureKey]._physicsHandle
+            entity.components.physics.bodies[bodyKey],
+            entity.components.physics.bodies[bodyKey].fixtures[fixtureKey]
         );
 
         // Delete the fixture
@@ -644,7 +645,7 @@ zerk.define({
         this._destroyJointList = [];
 
         for (var i = 0; i < this._destroyFixtureList.length; i++) {
-            this._destroyFixture(this._destroyFixtureList[i]);
+            this._destroyFixture(this._destroyFixtureList[i].body, this._destroyFixtureList[i].fixture);
             this._destroyFixtureList[i] = null;
         }
         this._destroyFixtureList = [];
@@ -689,9 +690,12 @@ zerk.define({
      * @method _scheduleDestroyFixture
      * @param {} physicsHandle Physics handle
      */
-    _scheduleDestroyFixture: function(physicsHandle) {
+    _scheduleDestroyFixture: function(body, fixture) {
 
-        this._destroyFixtureList.push(physicsHandle);
+        this._destroyFixtureList.push({
+            body: body._physicsHandle,
+            fixture: fixture._physicsHandle
+        });
 
     },
 
@@ -722,13 +726,16 @@ zerk.define({
      * @param {} physicsHandle Physics handle
      * @protected
      */
-    _destroyFixture: function(physicsHandle) {
+    _destroyFixture: function(physicsBody, physicsFixture) {
 
         if (this._world.IsLocked()) {
             console.error('Cannot destroy fixture, world is locked');
         }
 
-        this._world.DestroyFixture(physicsHandle);
+        console.log('DEST BODY', physicsBody);
+        console.log('DEST FIX', physicsFixture);
+
+        physicsBody.DestroyFixture(physicsFixture);
 
     },
 

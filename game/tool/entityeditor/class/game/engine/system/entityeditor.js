@@ -124,8 +124,8 @@ zerk.define({
         );
 
         me._control.keyboard.on(
-            'keypress',
-            me._onKeyPress,
+            'keydown',
+            me._onKeyDown,
             me
         );
 
@@ -366,8 +366,7 @@ zerk.define({
 
     validatePolygon: function() {
 
-        this._editorVerticesValid = (zerk.helper.isPolygonClockwise(this._editorVertices) &&
-            zerk.helper.isPolygonConvex(this._editorVertices));
+        this._editorVerticesValid = zerk.helper.isPolygonConvex(this._editorVertices);
 
     },
 
@@ -459,6 +458,11 @@ zerk.define({
             }
             */
 
+            // Reverse if anti-clockwise
+            if (!zerk.helper.isPolygonClockwise(this._editorVertices)) {
+                this._editorVertices.reverse();
+            }
+
             // Split if not convex
             if (!me._editorVerticesValid) {
 
@@ -534,6 +538,11 @@ zerk.define({
     },
 
     applyFixtureVertices: function(vertices, fixtureKey, subIndex) {
+
+        // Reverse if anti-clockwise
+        if (!zerk.helper.isPolygonClockwise(vertices)) {
+            vertices.reverse();
+        }
 
         var me = this;
         var entity = me.getEntity();
@@ -688,7 +697,7 @@ zerk.define({
 
     },
 
-    _onKeyPress: function(event) {
+    _onKeyDown: function(event) {
 
         var me = this;
 
@@ -708,11 +717,19 @@ zerk.define({
                 }
             }
 
+            event.preventDefault();
+
+            return false;
+
         } else if (event.keyCode == 32) { // Space
 
             if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
                 me.applyFixture();
             }
+
+            event.preventDefault();
+
+            return false;
 
         } else if (event.keyCode == 99) { // c
 
@@ -721,6 +738,10 @@ zerk.define({
             } else if (me._isEditorState(['add_polygon', 'edit_polygon'])) {
                 me.cancelAddFixture();
             }
+
+            event.preventDefault();
+
+            return false;
 
         }
 
@@ -806,7 +827,7 @@ zerk.define({
 
             var bodyLabel = document.createElement('span');
             bodyLabel.setAttribute('class', 'zerk-label');
-            bodyLabel.innerText = body.key;
+            bodyLabel.textContent = body.key;
             bodyContainer.appendChild(bodyLabel);
 
             for (x = 0; x < body._fixtureList.length; x++) {
@@ -828,7 +849,8 @@ zerk.define({
 
                 var fixtureLabel = document.createElement('span');
                 fixtureLabel.setAttribute('class', 'zerk-label');
-                fixtureLabel.innerText = body._fixtureList[x].key;
+
+                fixtureLabel.textContent = body._fixtureList[x].key;
                 fixtureContainer.appendChild(fixtureLabel);
 
             }

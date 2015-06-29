@@ -759,24 +759,14 @@ zerk.define({
 
         var size = 0.2;
 
-        var fixturePosition = {
-            x: position.x + body.x,
-            y: position.y + body.y
-        };
-
-        /*
-        // Rotate with body angle
-        fixturePosition=zerk.helper.rotatePosition(
-            fixturePosition.x,
-            fixturePosition.y,
+        var fixturePosition = zerk.helper.rotatePosition(
+            fixture.x,
+            fixture.y,
             body.angle
         );
-        */
 
-        fixturePosition.x += fixture.x;
-        fixturePosition.y += fixture.y;
-
-        //console.log('DRAW',fixturePosition.x + ':' + fixturePosition.y);
+        fixturePosition.x += body.x + position.x;
+        fixturePosition.y += body.y + position.y;
 
         this._viewport.drawLines(
             'display',

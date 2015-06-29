@@ -24,8 +24,9 @@
                 "showPosition": true
             },
             "physics": {
-                "enableMouseJoint": true,
-                "physicsScale": 1
+                "enableMouseJoint": false,
+                "physicsScale": 1,
+                "debugDraw": true
             },
             "control": {
                 "mouse": {
