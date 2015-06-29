@@ -906,7 +906,8 @@ zerk.define({
             me._physics.destroyFixture(
                 selection.entity,
                 selection.body.key,
-                selection.fixture.key
+                selection.fixture.key,
+                true // Instant
             );
 
             me.clearSelectionFixtures();
